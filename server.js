@@ -10,6 +10,7 @@
  */
 const express = require("express");
 const mongoose = require("mongoose");
+const nodemailer = require("nodemailer");
 const cors = require("cors");
 
 const app = express();
@@ -53,6 +54,17 @@ const BlueprintSession = mongoose.model("BlueprintSession", new mongoose.Schema(
   createdAt: { type: Date, default: Date.now }
 }));
 
+/* ---------- Email Transporter ---------- */
+const transporter = nodemailer.createTransport({
+  host: process.env.SMTP_HOST || "smtp.gmail.com",
+  port: parseInt(process.env.SMTP_PORT || "465"),
+  secure: true,
+  auth: {
+    user: process.env.SMTP_USER,
+    pass: process.env.SMTP_PASS,
+  },
+});
+
 /* ---------- Helpers ---------- */
 const isEmail = (v) => typeof v === "string" && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
 
@@ -64,9 +76,25 @@ app.post("/api/leads", async (req, res) => {
     const { email, source } = req.body || {};
     if (!isEmail(email)) return res.status(400).json({ ok: false, error: "Invalid email" });
     const lead = await Lead.create({ email, source });
+
+    // Send notification email
+    if (process.env.SMTP_USER && process.env.SMTP_PASS) {
+      try {
+        await transporter.sendMail({
+          from: `"Instive AI Alerts" <${process.env.SMTP_USER}>`,
+          to: "tahilbansal@instiveai.com",
+          subject: `New Lead: ${email}`,
+          text: `A new lead has subscribed.\nEmail: ${email}\nSource: ${source}`
+        });
+      } catch (mailErr) {
+        console.error("Email notification failed:", mailErr.message);
+      }
+    }
+
     res.json({ ok: true, id: lead._id });
   } catch (e) {
-    res.status(500).json({ ok: false, error: "Server error" });
+    console.error("Lead Error:", e);
+    res.status(500).json({ ok: false, error: e.message });
   }
 });
 
@@ -75,9 +103,25 @@ app.post("/api/blueprint-sessions", async (req, res) => {
     const { name, email, company, domain, notes, source } = req.body || {};
     if (!name || !isEmail(email)) return res.status(400).json({ ok: false, error: "Name and valid email required" });
     const doc = await BlueprintSession.create({ name, email, company, domain, notes, source });
+
+    // Send notification email
+    if (process.env.SMTP_USER && process.env.SMTP_PASS) {
+      try {
+        await transporter.sendMail({
+          from: `"Instive AI Alerts" <${process.env.SMTP_USER}>`,
+          to: "tahilbansal@instiveai.com",
+          subject: `New Blueprint Session: ${company}`,
+          text: `Name: ${name}\nEmail: ${email}\nCompany: ${company}\nDomain: ${domain}\nNotes: ${notes}\nSource: ${source}`
+        });
+      } catch (mailErr) {
+        console.error("Email notification failed:", mailErr.message);
+      }
+    }
+
     res.json({ ok: true, id: doc._id });
   } catch (e) {
-    res.status(500).json({ ok: false, error: "Server error" });
+    console.error("Blueprint Error:", e);
+    res.status(500).json({ ok: false, error: e.message });
   }
 });
 
