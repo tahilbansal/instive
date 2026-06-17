@@ -10,7 +10,6 @@
  */
 const express = require("express");
 const mongoose = require("mongoose");
-const path = require("path");
 const cors = require("cors");
 
 const app = express();
@@ -19,6 +18,23 @@ app.use(cors()); // tighten origin in production: cors({ origin: "https://instiv
 
 const MONGODB_URI = process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/instive";
 const PORT = process.env.PORT || 4000;
+
+/* ---------- Database Connection (Serverless Friendly) ---------- */
+const connectDB = async () => {
+  if (mongoose.connection.readyState >= 1) return;
+  return mongoose.connect(MONGODB_URI);
+};
+
+// Middleware to ensure DB connection for every request
+app.use(async (req, res, next) => {
+  try {
+    await connectDB();
+    next();
+  } catch (err) {
+    console.error("DB Connection Error:", err);
+    res.status(500).json({ ok: false, error: "Database connection failed" });
+  }
+});
 
 /* ---------- Schemas ---------- */
 const Lead = mongoose.model("Lead", new mongoose.Schema({
@@ -65,14 +81,9 @@ app.post("/api/blueprint-sessions", async (req, res) => {
   }
 });
 
-// Serve about.html when /about is accessed
-app.get("/about", (_req, res) => {
-  res.sendFile(path.join(__dirname, "about.html"));
-});
-
 /* ---------- Boot ---------- */
 if (require.main === module) {
-  mongoose.connect(MONGODB_URI)
+  connectDB()
     .then(() => app.listen(PORT, () => console.log(`Instive API on :${PORT}`)))
     .catch((err) => { console.error("Mongo connection failed:", err.message); process.exit(1); });
 }
