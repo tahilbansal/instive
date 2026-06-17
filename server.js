@@ -10,6 +10,7 @@
  */
 const express = require("express");
 const mongoose = require("mongoose");
+const path = require("path");
 const cors = require("cors");
 
 const app = express();
@@ -62,6 +63,11 @@ app.post("/api/blueprint-sessions", async (req, res) => {
   } catch (e) {
     res.status(500).json({ ok: false, error: "Server error" });
   }
+});
+
+// Serve about.html when /about is accessed
+app.get("/about", (_req, res) => {
+  res.sendFile(path.join(__dirname, "about.html"));
 });
 
 /* ---------- Boot ---------- */
