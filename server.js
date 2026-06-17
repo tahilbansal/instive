@@ -17,13 +17,18 @@ const app = express();
 app.use(express.json());
 app.use(cors()); // tighten origin in production: cors({ origin: "https://instive.ai" })
 
-const MONGODB_URI = process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/instive";
+const MONGODB_URI = process.env.MONGODB_URI;
 const PORT = process.env.PORT || 4000;
 
 /* ---------- Database Connection (Serverless Friendly) ---------- */
 const connectDB = async () => {
+  if (!MONGODB_URI) {
+    throw new Error("MONGODB_URI is not defined in environment variables");
+  }
   if (mongoose.connection.readyState >= 1) return;
-  return mongoose.connect(MONGODB_URI);
+  return mongoose.connect(MONGODB_URI, {
+    serverSelectionTimeoutMS: 5000,
+  });
 };
 
 // Middleware to ensure DB connection for every request

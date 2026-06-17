@@ -262,7 +262,10 @@ function validEmail(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
 async function postJSON(path, data){
   if (!API_BASE) { await new Promise(r => setTimeout(r, 650)); return { ok:true, demo:true }; }
   const res = await fetch(API_BASE + path, { method:"POST", headers:{ "Content-Type":"application/json" }, body: JSON.stringify(data) });
-  if (!res.ok) throw new Error("Request failed");
+  if (!res.ok) {
+    const errData = await res.json().catch(() => ({}));
+    throw new Error(errData.error || "Request failed");
+  }
   return res.json();
 }
 async function submitBlueprint(){
@@ -281,7 +284,7 @@ async function submitBlueprint(){
     const r = await postJSON("/api/blueprint-sessions", payload);
     msg.textContent = r.demo ? "Received (demo mode). Connect a backend to persist." : "Request received — we’ll confirm a slot by email.";
     msg.className = "form-msg ok";
-  } catch(e){ msg.textContent = "Couldn’t submit just now. Please retry."; msg.className = "form-msg err"; }
+  } catch(e){ msg.textContent = e.message; msg.className = "form-msg err"; }
 }
 </script>
 </body>
