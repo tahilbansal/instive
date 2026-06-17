@@ -71,6 +71,10 @@ app.get("/about", (_req, res) => {
 });
 
 /* ---------- Boot ---------- */
-mongoose.connect(MONGODB_URI)
-  .then(() => app.listen(PORT, () => console.log(`Instive API on :${PORT}`)))
-  .catch((err) => { console.error("Mongo connection failed:", err.message); process.exit(1); });
+if (require.main === module) {
+  mongoose.connect(MONGODB_URI)
+    .then(() => app.listen(PORT, () => console.log(`Instive API on :${PORT}`)))
+    .catch((err) => { console.error("Mongo connection failed:", err.message); process.exit(1); });
+}
+
+module.exports = app;
