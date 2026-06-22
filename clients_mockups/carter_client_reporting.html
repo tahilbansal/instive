@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Client Reporting — Carter Distribution × Instive AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0F1E18;--ink-soft:#1C3329;--canvas:#ECF1EE;--surface:#fff;--line:#DDE6E1;--steel:#5C6E66;--steel-2:#8A9C93;--accent:#2E7D5B;--brand:#2E7D5B;--good:#1F9D6B;--good-bg:#E8F5EF;--watch:#D9941F;--watch-bg:#FBF1DE;--flag:#D64A45;--flag-bg:#FBE9E8;--mono:"IBM Plex Mono",monospace;--sans:"Inter",system-ui,sans-serif;--r:14px;--sh:0 1px 2px rgba(15,30,24,.05),0 6px 18px rgba(15,30,24,.07)}
+*{box-sizing:border-box;margin:0;padding:0}body{font-family:var(--sans);background:var(--canvas);color:var(--ink);line-height:1.45;-webkit-font-smoothing:antialiased;padding-bottom:40px}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}button{font-family:inherit;cursor:pointer}
+.topbar{background:var(--ink);color:#fff}.topbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:16px 20px;flex-wrap:wrap}
+.cobrand{display:flex;align-items:center;gap:14px}.logo-co{font-weight:800;font-size:14px;color:#fff;background:var(--brand);padding:8px 12px;border-radius:9px;line-height:1.1;box-shadow:inset 0 0 0 1px rgba(255,255,255,.12)}.logo-co small{display:block;font-family:var(--mono);font-weight:500;font-size:7.5px;letter-spacing:.1em;margin-top:3px;opacity:.85}
+.xmul{font-family:var(--mono);font-size:15px;color:var(--steel-2)}.logo-in{display:flex;align-items:center;gap:9px}.mark{width:34px;height:34px;border-radius:8px;background:linear-gradient(145deg,#3a9e74,#2E7D5B);display:grid;place-items:center;box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}.mark svg{width:19px;height:19px}.logo-in .nm{font-size:15px;font-weight:600}
+.vrule{width:1px;height:30px;background:rgba(255,255,255,.16)}.product .eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#9FC9B5}.product .pname{font-size:14.5px;font-weight:600;margin-top:1px}
+.topright{display:flex;align-items:center;gap:9px;flex-wrap:wrap}.chip{font-family:var(--mono);font-size:11px;padding:6px 11px;border-radius:999px;display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.08);color:#D2E2DA;border:1px solid rgba(255,255,255,.1)}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--good);animation:pulse 2.4s infinite}@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(31,157,107,.55)}70%{box-shadow:0 0 0 6px rgba(31,157,107,0)}100%{box-shadow:0 0 0 0 rgba(31,157,107,0)}}.chip.demo{background:rgba(217,148,31,.16);color:#F0C97E;border-color:rgba(217,148,31,.3)}
+main{margin-top:34px}.sec-label{font-family:var(--mono);font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--steel);margin:0 0 11px 2px;display:flex;gap:8px}.sec-label .ix{color:var(--brand)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--sh)}
+.clientbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:24px}.clabel{font-family:var(--mono);font-size:11px;color:var(--steel);letter-spacing:.04em}.cpick{display:flex;gap:7px;flex-wrap:wrap}.cbtn{font-size:13px;font-weight:600;padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--ink-soft);display:flex;align-items:center;gap:8px}.cbtn .av{width:20px;height:20px;border-radius:6px;display:grid;place-items:center;color:#fff;font-size:10px;font-weight:700}.cbtn.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:26px}.kpi{padding:16px 18px;border:1px solid var(--line);background:var(--surface);border-radius:var(--r);box-shadow:var(--sh);transition:.15s}.kpi .kl{font-size:12px;color:var(--steel);font-weight:500}.kpi .kv{font-family:var(--mono);font-size:26px;font-weight:600;letter-spacing:-.02em;margin-top:8px}.kpi .ks{font-family:var(--mono);font-size:11.5px;margin-top:6px}
+.up{color:var(--good)}.down{color:var(--flag)}.neutral{color:var(--steel)}
+.hero{padding:0;margin-bottom:26px;overflow:hidden}.hero-grid{display:grid;grid-template-columns:1fr 1.05fr}.hero-left{padding:22px 24px}.hl-eye{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--brand)}.hl-h{font-size:19px;font-weight:700;margin-top:8px}.hl-p{font-size:13.5px;color:var(--ink-soft);margin-top:10px}.acts{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}
+.btn{font-size:13px;font-weight:600;border-radius:9px;padding:9px 15px;border:1px solid transparent;transition:.15s}.btn-primary{background:var(--brand);color:#fff}.btn-primary:hover{filter:brightness(1.08)}.btn-ghost{background:#fff;color:var(--ink-soft);border-color:var(--line)}.btn-ghost:hover{background:#F2F6F4}.btn-sm{font-size:12px;padding:7px 12px}
+.preview{background:#F4F8F6;border-left:1px solid var(--line);padding:20px 22px}.email{background:#fff;border:1px solid var(--line);border-radius:11px;box-shadow:0 4px 14px rgba(15,30,24,.06);overflow:hidden}.em-h{padding:13px 16px;border-bottom:1px solid var(--line);font-size:12px}.em-h .frm{color:var(--steel);font-family:var(--mono);font-size:10.5px}.em-h .sub{font-weight:700;margin-top:3px}.em-b{padding:15px 16px;font-size:12.5px;color:var(--ink-soft)}.em-row{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px dashed #E4ECE7}.em-row:last-child{border-bottom:none}.em-row .v{font-family:var(--mono);font-weight:600;color:var(--ink)}.em-foot{font-family:var(--mono);font-size:10px;color:var(--steel-2);padding:10px 16px;background:#FAFCFB;border-top:1px solid var(--line)}
+.tcard{padding:6px;margin-bottom:26px;overflow:hidden}table{width:100%;border-collapse:collapse}thead th{font-family:var(--mono);font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--steel);font-weight:500;text-align:right;padding:14px 14px 12px;border-bottom:1px solid var(--line);white-space:nowrap}thead th.l{text-align:left}tbody td{padding:13px 14px;border-bottom:1px solid #EDF2EF;font-size:13.5px;text-align:right;vertical-align:middle}tbody tr{cursor:pointer;transition:.12s}tbody tr:last-child td{border-bottom:none}tbody tr:hover{background:#F4F8F6}td.l{text-align:left}
+.nm2{font-weight:600;font-size:14px}.sub2{font-weight:400;color:var(--steel);font-size:11.5px;font-family:var(--mono);margin-top:2px}.num{font-family:var(--mono);font-weight:500}
+.status{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:11px;font-weight:600;text-transform:uppercase;padding:5px 10px;border-radius:7px}.s-good{background:var(--good-bg);color:var(--good)}.s-watch{background:var(--watch-bg);color:var(--watch)}.s-flag{background:var(--flag-bg);color:var(--flag)}
+.chev{color:var(--steel-2);font-size:16px;transition:.15s}tbody tr:hover .chev{color:var(--accent);transform:translateX(3px)}.hint{font-family:var(--mono);font-size:10.5px;color:var(--steel-2);padding:8px 14px 2px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-bottom:26px}.panel{padding:18px 20px 20px}.panel h3{font-size:14.5px;font-weight:600;margin-bottom:2px}.panel .ps{font-size:12px;color:var(--steel);margin-bottom:16px}
+.pipe{display:flex;gap:8px}.pstep{flex:1;text-align:center;background:#F4F8F6;border:1px solid var(--line);border-radius:10px;padding:12px 6px}.pstep .pv{font-family:var(--mono);font-size:20px;font-weight:600}.pstep .pl{font-size:10.5px;color:var(--steel);margin-top:4px}
+.bars{display:flex;align-items:flex-end;gap:10px;height:120px;padding-top:10px}.bcol{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:6px}.bcol .bb{width:60%;background:var(--brand);border-radius:5px 5px 0 0;opacity:.85}.bcol .bl{font-family:var(--mono);font-size:9.5px;color:var(--steel)}
+.stack{padding:22px 24px;margin-bottom:22px;position:relative;overflow:hidden;background:linear-gradient(135deg,#0F1E18,#1a3327 60%,#1f3d2e);border:none;color:#fff;border-radius:var(--r)}.stack::after{content:"";position:absolute;right:-40px;top:-40px;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(46,125,91,.45),transparent 70%)}.sh{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:18px;position:relative;z-index:1}.sht{font-size:16px;font-weight:600}.sht .ab{display:inline-block;width:18px;height:3px;background:var(--good);border-radius:2px;vertical-align:middle;margin-right:9px}.shn{font-family:var(--mono);font-size:11px;color:#9FC9B5}.sgr{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;position:relative;z-index:1}.sg{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:11px;padding:13px 14px 15px}.gl{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#9FC9B5;margin-bottom:11px}.tool{display:inline-flex;align-items:center;gap:7px;background:#fff;color:var(--ink);border-radius:8px;padding:6px 10px 6px 7px;font-size:12px;font-weight:600;box-shadow:0 2px 6px rgba(0,0,0,.18)}.tool .lg{width:17px;height:17px;border-radius:5px;display:grid;place-items:center;font-family:var(--mono);font-weight:600;font-size:8.5px;color:#fff}.sf{margin-top:15px;font-size:11.5px;color:#9FC9B5;position:relative;z-index:1}.sf b{color:#D6E8DF;font-weight:500}
+footer .wrap{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;padding-top:4px}.roi{font-family:var(--mono);font-size:11.5px;color:var(--ink-soft)}.roi b{color:var(--brand)}.made{font-size:11.5px;color:var(--steel)}.made b{color:var(--ink)}
+.scrim{position:fixed;inset:0;background:rgba(10,20,15,.5);backdrop-filter:blur(2px);opacity:0;pointer-events:none;transition:.25s;z-index:40}.scrim.open{opacity:1;pointer-events:auto}.drawer{position:fixed;top:0;right:0;height:100%;width:420px;max-width:92vw;background:var(--surface);box-shadow:-12px 0 40px rgba(10,20,15,.25);transform:translateX(100%);transition:transform .28s cubic-bezier(.22,.61,.36,1);z-index:50;display:flex;flex-direction:column}.drawer.open{transform:none}.dh{padding:20px 22px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:flex-start;gap:12px}.dn{font-size:17px;font-weight:700}.dm{font-family:var(--mono);font-size:11.5px;color:var(--steel);margin-top:3px}.dc{width:32px;height:32px;border-radius:8px;border:1px solid var(--line);background:#fff;color:var(--steel);font-size:18px}.db{padding:18px 22px;overflow-y:auto;flex:1}.dmini{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:20px}.dstat{background:#F4F8F6;border:1px solid var(--line);border-radius:10px;padding:11px 13px}.dstat .l{font-size:11px;color:var(--steel)}.dstat .v{font-family:var(--mono);font-size:18px;font-weight:600;margin-top:4px}.dt{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--steel);margin:0 0 10px}.rec{font-size:13px;background:#F4F8F6;border:1px solid var(--line);border-radius:9px;padding:11px 13px;color:var(--ink-soft)}.rec b{color:var(--ink)}.df{padding:16px 22px;border-top:1px solid var(--line);display:flex;gap:9px;background:#FAFCFB}
+.toasts{position:fixed;bottom:22px;right:22px;display:flex;flex-direction:column;gap:10px;z-index:80}.toast{background:var(--ink);color:#fff;padding:13px 16px;border-radius:11px;font-size:13px;box-shadow:0 10px 30px rgba(10,20,15,.3);display:flex;align-items:center;gap:11px;min-width:240px;max-width:340px;transform:translateX(120%);transition:.3s cubic-bezier(.22,.61,.36,1)}.toast.show{transform:none}.toast .ti{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:700;background:var(--good)}
+@media(max-width:860px){.kpis{grid-template-columns:repeat(2,1fr)}.hero-grid{grid-template-columns:1fr}.preview{border-left:none;border-top:1px solid var(--line)}.grid2{grid-template-columns:1fr}.sgr{grid-template-columns:1fr 1fr}thead th.hide,tbody td.hide{display:none}}
+@media(max-width:480px){.kpis{grid-template-columns:1fr 1fr}.vrule,.product{display:none}.sgr{grid-template-columns:1fr}}
+.fade{opacity:0;transform:translateY(8px);animation:rise .5s ease forwards}@media(prefers-reduced-motion:reduce){.fade{animation:none;opacity:1;transform:none}.dot{animation:none}*{transition:none!important}}@keyframes rise{to{opacity:1;transform:none}}
+</style></head>
+<body>
+<header class="topbar"><div class="wrap"><div class="cobrand">
+<div class="logo-co">CARTER<small>DISTRIBUTION · D2C FULFILLMENT</small></div><span class="xmul">✕</span>
+<div class="logo-in"><span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M3 17V7l5 3 4-5 4 6 5-2v8"/><circle cx="12" cy="19" r="1.4" fill="#fff" stroke="none"/></svg></span><span class="nm">Instive&nbsp;AI</span></div>
+<span class="vrule"></span><div class="product"><div class="eyebrow">Demo for Carter Distribution</div><div class="pname">Automated Client Reporting</div></div></div>
+<div class="topright"><span class="chip"><span class="dot"></span> Live · syncing orders</span><span class="chip demo">Sample data</span></div></div></header>
+<main class="wrap">
+<div class="clientbar"><span class="clabel">CLIENT VIEW:</span><div class="cpick" id="cpick">
+<button class="cbtn active" data-c="peak"><span class="av" style="background:#2E7D5B">PK</span>Peak Supplements</button>
+<button class="cbtn" data-c="wasatch"><span class="av" style="background:#B5611F">WW</span>Wasatch Wellness</button>
+<button class="cbtn" data-c="granite"><span class="av" style="background:#3A6EA5">GC</span>Granite CPG</button>
+</div></div>
+<section class="kpis" id="kpis"></section>
+<p class="sec-label"><span class="ix">▍</span> This week's auto-generated report</p>
+<section class="card hero"><div class="hero-grid">
+<div class="hero-left"><div class="hl-eye">Ready to send · <span id="cnameEye">Peak Supplements</span></div>
+<div class="hl-h">Every client's weekly report, written for them, on its own.</div>
+<div class="hl-p">The portal pulls from your WMS, parcel and store data, and drafts each client's weekly summary, inventory, orders, on-time rate and returns, so your ops team is not rebuilding spreadsheets every Friday. Clients can also open a live view any time.</div>
+<div class="acts"><button class="btn btn-primary" onclick="toast('Report sent','Weekly report emailed to '+CUR.name+'.')">Send this report</button><button class="btn btn-ghost" onclick="toast('Portal link copied','Live portal link copied for '+CUR.name+'.')">Copy live portal link</button></div></div>
+<div class="preview"><div class="email"><div class="em-h"><div class="frm">from reports@carterdc.com · weekly</div><div class="sub" id="emSub">Peak Supplements, week of Jun 16</div></div>
+<div class="em-b" id="emBody"></div><div class="em-foot">Auto-generated by Carter Distribution · powered by Instive AI</div></div></div>
+</div></section>
+<p class="sec-label" id="invsec"><span class="ix">▍</span> Inventory · <span id="cname2" style="color:var(--brand)">Peak Supplements</span></p>
+<section class="card tcard"><table><thead><tr><th class="l">SKU</th><th class="hide">Lot / expiry</th><th>On hand</th><th>Daily orders</th><th>Days cover</th><th>Status</th><th></th></tr></thead><tbody id="rows"></tbody></table><div class="hint">↳ Click a SKU for lot detail, velocity and reorder timing, the same view your client sees.</div></section>
+<div class="grid2">
+<section class="card panel"><h3>Order pipeline · today</h3><p class="ps" id="pipeps">Peak Supplements</p>
+<div class="pipe" id="pipe"></div>
+<div class="rec" style="margin-top:16px"><b>On-time fulfillment</b> is holding above SLA; the report calls this out automatically for the client.</div></section>
+<section class="card panel"><h3>Returns trend</h3><p class="ps">Return rate · last 6 weeks</p>
+<div class="bars" id="bars"></div>
+<div class="rec" style="margin-top:14px" id="retnote"></div></section>
+</div>
+<section class="card stack"><div class="sh"><div class="sht"><span class="ab"></span>Plugs into the stack Carter already runs</div><div class="shn">read-only · no rip-and-replace · ~4–6 week build</div></div>
+<div class="sgr">
+<div class="sg"><div class="gl">WMS</div><div class="tool"><span class="lg" style="background:#1f6feb">WM</span>your WMS</div></div>
+<div class="sg"><div class="gl">Parcel</div><div class="tool"><span class="lg" style="background:#e2640b">SS</span>ShipStation</div></div>
+<div class="sg"><div class="gl">Ecommerce</div><div class="tool"><span class="lg" style="background:#5b8d3e">Sh</span>Shopify</div></div>
+<div class="sg"><div class="gl">ERP</div><div class="tool"><span class="lg" style="background:#15397a">ER</span>your ERP</div></div></div>
+<div class="sf">→ <b>Tell us your exact systems and we map the connectors to them.</b> Reports build from your existing data, nothing migrates.</div></section>
+</main>
+<footer class="wrap"><div class="roi">Saves <b>10+ hours</b> of manual client reporting per ops person per week.</div><div class="made">Mockup by <b>Instive AI</b> for Carter Distribution · sample data</div></footer>
+<div class="scrim" id="scrim" onclick="closeD()"></div><aside class="drawer" id="drawer"></aside>
+<div class="toasts" id="toasts"></div>
+<script>
+const DATA={
+peak:{name:"Peak Supplements",kpis:[["Orders shipped · wk","4,210","up","▲ 8% WoW"],["On-time fulfillment","99.1%","up","▲ above 98% SLA"],["Inventory units","86,400","neutral","42 SKUs"],["Return rate","1.9%","up","▼ 0.3 pts"]],
+email:[["Orders shipped","4,210"],["On-time fulfillment","99.1%"],["Units on hand","86,400"],["Return rate","1.9%"],["SKUs needing reorder","3"]],
+pipe:[["Received","612"],["Picking","318"],["Packed","204"],["Shipped","4,210"]],
+returns:[2.6,2.4,2.3,2.2,2.0,1.9],retnote:"Returns trending down six weeks running, worth highlighting to Peak.",
+rows:{"WHEY-CHOC-2LB":{lot:"L2418 · exp 03/2026",oh:"9,200",ord:"410",cover:22,status:"good",sl:"Healthy",why:"Strong, steady velocity. No action."},"CREATINE-300G":{lot:"L2402 · exp 11/2025",oh:"1,180",ord:"260",cover:5,status:"flag",sl:"Reorder",why:"5 days of cover at current pace. Recommend reorder now; nearest-expiry lot ships first."},"PREWORK-FRUIT":{lot:"L2421 · exp 06/2026",oh:"3,400",ord:"150",cover:23,status:"good",sl:"Healthy",why:"Healthy cover."},"MULTIVIT-90CT":{lot:"L2399 · exp 09/2025",oh:"640",ord:"95",cover:7,status:"watch",sl:"Watch",why:"Reorder within a week; oldest lot nearing expiry, FEFO flagged."}}},
+wasatch:{name:"Wasatch Wellness",kpis:[["Orders shipped · wk","1,860","up","▲ 5% WoW"],["On-time fulfillment","98.4%","up","▲ above SLA"],["Inventory units","41,200","neutral","28 SKUs"],["Return rate","2.4%","neutral","flat"]],
+email:[["Orders shipped","1,860"],["On-time fulfillment","98.4%"],["Units on hand","41,200"],["Return rate","2.4%"],["SKUs needing reorder","2"]],
+pipe:[["Received","288"],["Picking","142"],["Packed","96"],["Shipped","1,860"]],
+returns:[2.7,2.6,2.5,2.5,2.4,2.4],retnote:"Returns flat; one SKU (gummies) drives most of it, flagged for review.",
+rows:{"COLLAGEN-UNFL":{lot:"L1180 · exp 02/2026",oh:"5,100",ord:"180",cover:28,status:"good",sl:"Healthy",why:"Healthy cover."},"SLEEP-GUMMY-60":{lot:"L1166 · exp 10/2025",oh:"820",ord:"140",cover:6,status:"flag",sl:"Reorder",why:"6 days cover and highest return rate in the catalog; reorder and review packaging."},"OMEGA3-120":{lot:"L1175 · exp 05/2026",oh:"2,300",ord:"70",cover:33,status:"good",sl:"Healthy",why:"Healthy."},"GREENS-POWDER":{lot:"L1159 · exp 08/2025",oh:"540",ord:"60",cover:9,status:"watch",sl:"Watch",why:"Reorder soon; expiry approaching."}}},
+granite:{name:"Granite CPG",kpis:[["Orders shipped · wk","2,940","up","▲ 11% WoW"],["On-time fulfillment","97.8%","watch","▼ near SLA floor"],["Inventory units","58,900","neutral","35 SKUs"],["Return rate","1.4%","up","▼ 0.2 pts"]],
+email:[["Orders shipped","2,940"],["On-time fulfillment","97.8%"],["Units on hand","58,900"],["Return rate","1.4%"],["SKUs needing reorder","4"]],
+pipe:[["Received","402"],["Picking","266"],["Packed","158"],["Shipped","2,940"]],
+returns:[1.8,1.7,1.6,1.6,1.5,1.4],retnote:"Lowest return rate of the three brands; on-time dipped near SLA, flagged early.",
+rows:{"SNACK-BAR-12PK":{lot:"L7720 · exp 04/2026",oh:"7,400",ord:"320",cover:23,status:"good",sl:"Healthy",why:"Healthy."},"COLD-BREW-CAN":{lot:"L7701 · exp 12/2025",oh:"1,020",ord:"210",cover:5,status:"flag",sl:"Reorder",why:"5 days cover on a fast-growing SKU; reorder now to protect on-time."},"TRAIL-MIX-BULK":{lot:"L7715 · exp 03/2026",oh:"3,900",ord:"120",cover:32,status:"good",sl:"Healthy",why:"Healthy."},"ELECTRO-DRINK":{lot:"L7698 · exp 09/2025",oh:"700",ord:"88",cover:8,status:"watch",sl:"Watch",why:"Reorder within the week; oldest lot nears expiry."}}}};
+let CUR=DATA.peak;
+function render(){
+document.getElementById('kpis').innerHTML=CUR.kpis.map(k=>`<div class="kpi fade"><div class="kl">${k[0]}</div><div class="kv">${k[1]}</div><div class="ks ${k[2]}">${k[3]}</div></div>`).join("");
+document.getElementById('cnameEye').textContent=CUR.name;document.getElementById('cname2').textContent=CUR.name;document.getElementById('pipeps').textContent=CUR.name;
+document.getElementById('emSub').textContent=CUR.name+", week of Jun 16";
+document.getElementById('emBody').innerHTML=CUR.email.map(r=>`<div class="em-row"><span>${r[0]}</span><span class="v">${r[1]}</span></div>`).join("");
+document.getElementById('rows').innerHTML=Object.entries(CUR.rows).map(([sku,r])=>{const cc=r.status==='good'?'var(--good)':r.status==='watch'?'var(--watch)':'var(--flag)';return `<tr tabindex="0" onclick="openSku('${sku}')" onkeydown="if(event.key==='Enter')openSku('${sku}')"><td class="l"><div class="nm2">${sku}</div></td><td class="num hide">${r.lot}</td><td class="num">${r.oh}</td><td class="num">${r.ord}</td><td class="num" style="color:${cc};font-weight:700">${r.cover}d</td><td><span class="status s-${r.status}">● ${r.sl}</span></td><td><span class="chev">›</span></td></tr>`;}).join("");
+document.getElementById('pipe').innerHTML=CUR.pipe.map(p=>`<div class="pstep"><div class="pv">${p[1]}</div><div class="pl">${p[0]}</div></div>`).join("");
+const mx=Math.max(...CUR.returns);document.getElementById('bars').innerHTML=CUR.returns.map((v,i)=>`<div class="bcol"><div class="bb" style="height:${(v/mx)*92}px"></div><div class="bl">${v}%</div></div>`).join("");
+document.getElementById('retnote').innerHTML="<b>→</b> "+CUR.retnote;}
+document.querySelectorAll('.cbtn').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.cbtn').forEach(x=>x.classList.toggle('active',x===b));CUR=DATA[b.dataset.c];render();}));
+const drawer=document.getElementById('drawer'),scrim=document.getElementById('scrim');
+function openSku(sku){const r=CUR.rows[sku];const cc=r.status==='good'?'var(--good)':r.status==='watch'?'var(--watch)':'var(--flag)';
+drawer.innerHTML=`<div class="dh"><div><div class="dn">${sku}</div><div class="dm">${CUR.name} · ${r.lot}</div></div><button class="dc" onclick="closeD()">×</button></div>
+<div class="db"><div style="margin-bottom:18px"><span class="status s-${r.status}">● ${r.sl}</span></div>
+<div class="dmini"><div class="dstat"><div class="l">On hand</div><div class="v">${r.oh}</div></div><div class="dstat"><div class="l">Daily orders</div><div class="v">${r.ord}</div></div><div class="dstat"><div class="l">Days of cover</div><div class="v" style="color:${cc}">${r.cover}</div></div><div class="dstat"><div class="l">Lot / expiry</div><div class="v" style="font-size:13px">${r.lot}</div></div></div>
+<p class="dt">What the client sees</p><div class="rec">${r.why}</div></div>
+<div class="df"><button class="btn btn-primary" onclick="closeD();toast('Added to report','${sku} note added to '+CUR.name+' report.')">Add note to report</button><button class="btn btn-ghost" onclick="closeD()">Close</button></div>`;
+drawer.classList.add('open');scrim.classList.add('open');document.body.style.overflow='hidden';}
+function closeD(){drawer.classList.remove('open');scrim.classList.remove('open');document.body.style.overflow='';}
+function toast(title,msg){const e=document.createElement('div');e.className='toast';e.innerHTML=`<span class="ti">✓</span><span><b>${title}</b><br><span style="opacity:.8;font-size:12px">${msg||''}</span></span>`;document.getElementById('toasts').appendChild(e);requestAnimationFrame(()=>e.classList.add('show'));setTimeout(()=>{e.classList.remove('show');setTimeout(()=>e.remove(),350);},3600);}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeD();});
+render();
+</script></body></html>

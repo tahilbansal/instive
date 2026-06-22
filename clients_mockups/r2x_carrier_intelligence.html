@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Carrier Intelligence — R2X × Instive AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0E1A2B;--ink-soft:#1B2C42;--canvas:#EEF1F5;--surface:#FFFFFF;--line:#E1E6EC;
+    --steel:#61708A;--steel-2:#8A98AC;--accent:#3A6EA5;--r2x:#C8102E;
+    --good:#1F9D6B;--good-bg:#E8F5EF;--watch:#D9941F;--watch-bg:#FBF1DE;--flag:#D64A45;--flag-bg:#FBE9E8;
+    --mono:"IBM Plex Mono",ui-monospace,monospace;--sans:"Inter",-apple-system,system-ui,sans-serif;
+    --radius:14px;--shadow:0 1px 2px rgba(14,26,43,.04),0 6px 18px rgba(14,26,43,.06);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--sans);background:var(--canvas);color:var(--ink);line-height:1.45;-webkit-font-smoothing:antialiased;padding-bottom:40px}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+  button{font-family:inherit;cursor:pointer}
+
+  /* top bar / co-brand */
+  .topbar{background:var(--ink);color:#fff}
+  .topbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:16px 20px;flex-wrap:wrap}
+  .cobrand{display:flex;align-items:center;gap:14px}
+  .logo-r2x{font-weight:800;font-size:18px;letter-spacing:-.01em;color:#fff;background:var(--r2x);padding:8px 12px;border-radius:9px;line-height:1;box-shadow:inset 0 0 0 1px rgba(255,255,255,.12)}
+  .logo-r2x small{display:block;font-family:var(--mono);font-weight:500;font-size:7.5px;letter-spacing:.18em;margin-top:3px;opacity:.85}
+  .xmul{font-family:var(--mono);font-size:15px;color:var(--steel-2);font-weight:500}
+  .logo-instive{display:flex;align-items:center;gap:9px}
+  .mark{width:34px;height:34px;border-radius:8px;flex:none;background:linear-gradient(145deg,#3A6EA5,#244a73);display:grid;place-items:center;box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}
+  .mark svg{width:19px;height:19px}
+  .logo-instive .nm{font-size:15px;font-weight:600;letter-spacing:-.01em}
+  .vrule{width:1px;height:30px;background:rgba(255,255,255,.14)}
+  .product .eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#8FB0CF}
+  .product .pname{font-size:14.5px;font-weight:600;letter-spacing:-.01em;margin-top:1px}
+  .topright{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+  .chip{font-family:var(--mono);font-size:11px;letter-spacing:.02em;padding:6px 11px;border-radius:999px;display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.07);color:#CCD8E6;border:1px solid rgba(255,255,255,.09)}
+  .dot{width:7px;height:7px;border-radius:50%;background:var(--good);animation:pulse 2.4s infinite}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(31,157,107,.55)}70%{box-shadow:0 0 0 6px rgba(31,157,107,0)}100%{box-shadow:0 0 0 0 rgba(31,157,107,0)}}
+  .chip.demo{background:rgba(217,148,31,.14);color:#F0C97E;border-color:rgba(217,148,31,.3)}
+
+  main{margin-top:68px}
+  .sec-label{font-family:var(--mono);font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--steel);margin:0 0 11px 2px;display:flex;align-items:center;gap:8px}
+  .sec-label .ix{color:var(--r2x)}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
+
+  /* KPIs */
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:26px}
+  .kpi{padding:16px 18px;text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:var(--radius);box-shadow:var(--shadow);transition:transform .15s,box-shadow .15s;width:100%}
+  .kpi:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(14,26,43,.1)}
+  .kpi .k-label{font-size:12px;color:var(--steel);font-weight:500;display:flex;align-items:center;justify-content:space-between}
+  .kpi .k-label .go{color:var(--steel-2);font-size:14px}
+  .kpi .k-val{font-family:var(--mono);font-size:27px;font-weight:600;letter-spacing:-.02em;margin-top:8px}
+  .kpi .k-sub{font-family:var(--mono);font-size:11.5px;margin-top:6px;display:flex;align-items:center;gap:5px}
+  .up{color:var(--good)}.down{color:var(--flag)}.neutral{color:var(--steel)}
+  .kpi .k-val.warn{color:var(--watch)}
+
+  /* early warning */
+  .warn-card{padding:20px 22px;margin-bottom:26px;border-left:4px solid var(--flag);background:linear-gradient(90deg,#fff,#fffdfd)}
+  .badge-flag{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;background:var(--flag-bg);color:var(--flag);padding:4px 9px;border-radius:6px;font-weight:600}
+  .warn-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:26px;align-items:center;margin-top:14px}
+  .warn-h{font-size:18px;font-weight:600;letter-spacing:-.01em}
+  .warn-h b{color:var(--flag)}
+  .warn-p{font-size:13.5px;color:var(--ink-soft);margin-top:8px;max-width:46ch}
+  .warn-rec{margin-top:14px;font-size:13px;background:#F4F7FA;border:1px solid var(--line);border-radius:9px;padding:11px 13px;color:var(--ink-soft)}
+  .warn-rec b{color:var(--ink)}
+  .warn-actions{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
+  .btn{font-size:13px;font-weight:600;border-radius:9px;padding:9px 15px;border:1px solid transparent;transition:filter .15s,background .15s}
+  .btn-primary{background:var(--ink);color:#fff}
+  .btn-primary:hover{filter:brightness(1.18)}
+  .btn-ghost{background:#fff;color:var(--ink-soft);border-color:var(--line)}
+  .btn-ghost:hover{background:#F4F7FA}
+  .btn-sm{font-size:12px;padding:7px 12px}
+  .lead-note{font-family:var(--mono);font-size:11px;color:var(--steel);text-align:center;margin-top:8px;letter-spacing:.02em}
+  .spark-wrap{background:#FAFBFC;border:1px solid var(--line);border-radius:11px;padding:14px 14px 8px}
+  .spark-cap{display:flex;justify-content:space-between;font-family:var(--mono);font-size:10.5px;color:var(--steel);letter-spacing:.04em;margin-bottom:6px}
+
+  /* filter tabs */
+  .tabs{display:flex;gap:6px;margin-bottom:11px;flex-wrap:wrap}
+  .tab{font-family:var(--mono);font-size:11.5px;letter-spacing:.02em;padding:7px 13px;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--steel);transition:.15s}
+  .tab:hover{color:var(--ink);border-color:var(--steel-2)}
+  .tab.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .tab .cnt{opacity:.6;margin-left:5px}
+
+  /* scorecard table */
+  .tbl-card{padding:6px;margin-bottom:26px;overflow:hidden}
+  table{width:100%;border-collapse:collapse}
+  thead th{font-family:var(--mono);font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--steel);font-weight:500;text-align:right;padding:14px 14px 12px;border-bottom:1px solid var(--line);white-space:nowrap}
+  thead th.l{text-align:left}
+  tbody td{padding:13px 14px;border-bottom:1px solid #EFF2F6;font-size:13.5px;text-align:right;vertical-align:middle}
+  tbody tr{cursor:pointer;transition:background .12s}
+  tbody tr:last-child td{border-bottom:none}
+  tbody tr:hover{background:#F6F9FC}
+  tbody tr:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+  td.l{text-align:left}
+  .carrier{font-weight:600;font-size:14px}
+  .carrier .sub{font-weight:400;color:var(--steel);font-size:11.5px;font-family:var(--mono);margin-top:2px}
+  .num{font-family:var(--mono);font-weight:500;letter-spacing:-.01em}
+  .score{font-family:var(--mono);font-weight:600;font-size:15px}
+  .status{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.03em;text-transform:uppercase;padding:5px 10px;border-radius:7px}
+  .s-good{background:var(--good-bg);color:var(--good)}.s-watch{background:var(--watch-bg);color:var(--watch)}.s-flag{background:var(--flag-bg);color:var(--flag)}
+  .trend{display:inline-flex;align-items:center;gap:6px;justify-content:flex-end;font-family:var(--mono);font-size:12px}
+  .chev{color:var(--steel-2);font-size:16px;transition:transform .15s,color .15s}
+  tbody tr:hover .chev{color:var(--accent);transform:translateX(3px)}
+  .hint{font-family:var(--mono);font-size:10.5px;color:var(--steel-2);padding:8px 14px 2px}
+
+  /* two col */
+  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-bottom:26px}
+  .panel{padding:18px 20px 20px}
+  .panel h3{font-size:14.5px;font-weight:600;margin-bottom:2px}
+  .panel .ph-sub{font-size:12px;color:var(--steel);margin-bottom:16px}
+  .lane{margin-bottom:15px;cursor:pointer;border-radius:8px;padding:5px 6px;margin-left:-6px;margin-right:-6px;transition:background .12s}
+  .lane:hover{background:#F6F9FC}
+  .lane:last-child{margin-bottom:0}
+  .lane-top{display:flex;justify-content:space-between;align-items:baseline;font-size:13px;margin-bottom:6px}
+  .lane-name{font-weight:500}
+  .lane-name .tag{font-family:var(--mono);font-size:9.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--accent);background:#EAF1F8;padding:2px 6px;border-radius:5px;margin-left:7px;vertical-align:middle}
+  .lane-margin{font-family:var(--mono);font-weight:600}
+  .bar{height:8px;border-radius:5px;background:#EDF0F4;overflow:hidden}
+  .bar span{display:block;height:100%;border-radius:5px}
+  .lane-foot{font-family:var(--mono);font-size:10.5px;color:var(--steel);margin-top:5px}
+  .inv{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 0;border-bottom:1px solid #EFF2F6}
+  .inv:last-child{border-bottom:none;padding-bottom:0}
+  .inv:first-child{padding-top:0}
+  .inv-l .inv-id{font-family:var(--mono);font-size:11px;color:var(--steel);letter-spacing:.03em}
+  .inv-l .inv-car{font-size:13px;font-weight:500;margin-top:2px}
+  .inv-l .inv-why{font-size:11.5px;color:var(--steel);margin-top:3px}
+  .inv-r{text-align:right;white-space:nowrap;display:flex;flex-direction:column;align-items:flex-end;gap:6px}
+  .inv-r .delta{font-family:var(--mono);font-weight:600;color:var(--flag);font-size:14px}
+  .recover{margin-top:16px;background:var(--good-bg);border:1px solid #CDEBDD;border-radius:9px;padding:11px 13px;display:flex;justify-content:space-between;align-items:center}
+  .recover .rl{font-size:12px;color:#157551;font-weight:500}
+  .recover .rv{font-family:var(--mono);font-weight:600;color:var(--good);font-size:15px}
+
+  /* integration band */
+  .stack-band{padding:22px 24px;margin-bottom:22px;position:relative;overflow:hidden;background:linear-gradient(135deg,#0E1A2B,#16263c 60%,#1c3450);border:none;color:#fff;border-radius:var(--radius)}
+  .stack-band::after{content:"";position:absolute;right:-40px;top:-40px;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(58,110,165,.35),transparent 70%)}
+  .stack-head{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:18px;position:relative;z-index:1}
+  .sh-title{font-size:16px;font-weight:600;letter-spacing:-.01em}
+  .sh-title .accent-bar{display:inline-block;width:18px;height:3px;background:var(--good);border-radius:2px;vertical-align:middle;margin-right:9px}
+  .sh-note{font-family:var(--mono);font-size:11px;color:#9FB4CC;letter-spacing:.02em}
+  .stack-groups{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;position:relative;z-index:1}
+  .stack-group{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);border-radius:11px;padding:13px 14px 15px}
+  .grp-label{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#8FB0CF;margin-bottom:11px}
+  .tools{display:flex;flex-wrap:wrap;gap:8px}
+  .tool{display:inline-flex;align-items:center;gap:7px;background:#fff;color:var(--ink);border-radius:8px;padding:6px 11px 6px 7px;font-size:12.5px;font-weight:600;letter-spacing:-.01em;box-shadow:0 2px 6px rgba(0,0,0,.18)}
+  .tool .lg{width:18px;height:18px;border-radius:5px;display:grid;place-items:center;font-family:var(--mono);font-weight:600;font-size:9px;color:#fff;flex:none}
+  .stack-foot{margin-top:15px;font-size:11.5px;color:#9FB4CC;position:relative;z-index:1}
+  .stack-foot b{color:#D8E4F0;font-weight:500}
+
+  footer .wrap{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;padding-top:4px}
+  .roi-foot{font-family:var(--mono);font-size:11.5px;color:var(--ink-soft)}
+  .roi-foot b{color:var(--r2x)}
+  .madeby{font-size:11.5px;color:var(--steel)}
+  .madeby b{color:var(--ink)}
+
+  /* ---------- DRAWER ---------- */
+  .scrim{position:fixed;inset:0;background:rgba(8,15,26,.5);backdrop-filter:blur(2px);opacity:0;pointer-events:none;transition:opacity .25s;z-index:40}
+  .scrim.open{opacity:1;pointer-events:auto}
+  .drawer{position:fixed;top:0;right:0;height:100%;width:430px;max-width:92vw;background:var(--surface);box-shadow:-12px 0 40px rgba(8,15,26,.25);transform:translateX(100%);transition:transform .28s cubic-bezier(.22,.61,.36,1);z-index:50;display:flex;flex-direction:column}
+  .drawer.open{transform:none}
+  .dr-head{padding:20px 22px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+  .dr-name{font-size:18px;font-weight:700;letter-spacing:-.01em}
+  .dr-mc{font-family:var(--mono);font-size:11.5px;color:var(--steel);margin-top:3px}
+  .dr-close{width:32px;height:32px;border-radius:8px;border:1px solid var(--line);background:#fff;color:var(--steel);font-size:18px;line-height:1;flex:none}
+  .dr-close:hover{background:#F4F7FA;color:var(--ink)}
+  .dr-body{padding:18px 22px;overflow-y:auto;flex:1}
+  .dr-statusrow{display:flex;align-items:center;gap:10px;margin-bottom:18px}
+  .dr-mini{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:20px}
+  .dr-stat{background:#F7F9FB;border:1px solid var(--line);border-radius:10px;padding:11px 13px}
+  .dr-stat .l{font-size:11px;color:var(--steel)}
+  .dr-stat .v{font-family:var(--mono);font-size:19px;font-weight:600;margin-top:4px}
+  .dr-sec-t{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--steel);margin:0 0 10px}
+  .dr-chart{background:#FAFBFC;border:1px solid var(--line);border-radius:10px;padding:12px;margin-bottom:20px}
+  .dr-lane,.dr-load{display:flex;justify-content:space-between;align-items:center;font-size:13px;padding:9px 0;border-bottom:1px solid #EFF2F6}
+  .dr-lane:last-child,.dr-load:last-child{border-bottom:none}
+  .dr-lane .ln{font-weight:500}.dr-lane .mg{font-family:var(--mono);font-weight:600}
+  .dr-load .ld{font-family:var(--mono);font-size:12px;color:var(--ink-soft)}
+  .pill-ld{font-family:var(--mono);font-size:10px;font-weight:600;padding:3px 8px;border-radius:6px}
+  .ld-ok{background:var(--good-bg);color:var(--good)}.ld-late{background:var(--flag-bg);color:var(--flag)}
+  .dr-foot{padding:16px 22px;border-top:1px solid var(--line);display:flex;gap:9px;flex-wrap:wrap;background:#FBFCFD}
+
+  /* ---------- MODAL ---------- */
+  .modal-scrim{position:fixed;inset:0;background:rgba(8,15,26,.5);backdrop-filter:blur(2px);opacity:0;pointer-events:none;transition:opacity .2s;z-index:60;display:grid;place-items:center;padding:20px}
+  .modal-scrim.open{opacity:1;pointer-events:auto}
+  .modal{background:#fff;border-radius:16px;max-width:520px;width:100%;box-shadow:0 24px 60px rgba(8,15,26,.35);transform:translateY(10px) scale(.98);transition:transform .2s;overflow:hidden}
+  .modal-scrim.open .modal{transform:none}
+  .md-head{padding:18px 22px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
+  .md-head h3{font-size:16px;font-weight:700}
+  .md-head .sub{font-family:var(--mono);font-size:11px;color:var(--steel);margin-top:2px}
+  .md-body{padding:20px 22px}
+  .md-doc{background:#F7F9FB;border:1px solid var(--line);border-radius:10px;padding:16px 18px;font-size:13px;line-height:1.6;color:var(--ink-soft);white-space:pre-line;font-family:var(--mono);max-height:300px;overflow:auto}
+  .md-foot{padding:14px 22px 20px;display:flex;gap:10px;justify-content:flex-end}
+
+  /* ---------- TOAST ---------- */
+  .toasts{position:fixed;bottom:22px;right:22px;display:flex;flex-direction:column;gap:10px;z-index:80}
+  .toast{background:var(--ink);color:#fff;padding:13px 16px;border-radius:11px;font-size:13px;box-shadow:0 10px 30px rgba(8,15,26,.3);display:flex;align-items:center;gap:11px;min-width:240px;max-width:340px;transform:translateX(120%);transition:transform .3s cubic-bezier(.22,.61,.36,1)}
+  .toast.show{transform:none}
+  .toast .ti{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;flex:none;font-size:12px;font-weight:700}
+  .toast.ok .ti{background:var(--good)}.toast.info .ti{background:var(--accent)}
+  .toast b{font-weight:600}
+
+  @media (max-width:860px){
+    .kpis{grid-template-columns:repeat(2,1fr)}
+    .warn-grid{grid-template-columns:1fr;gap:18px}
+    .grid-2{grid-template-columns:1fr}
+    .stack-groups{grid-template-columns:1fr}
+    thead th.hide,tbody td.hide{display:none}
+  }
+  @media (max-width:480px){.kpis{grid-template-columns:1fr 1fr;gap:10px}.kpi .k-val{font-size:22px}.vrule,.product{display:none}}
+  .fade{opacity:0;transform:translateY(8px);animation:rise .5s ease forwards}
+  @media (prefers-reduced-motion:reduce){.fade{animation:none;opacity:1;transform:none}.dot{animation:none}*{transition:none!important}}
+  @keyframes rise{to{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap">
+    <div class="cobrand">
+      <!-- ▼ Replace with R2X's real logo: <img src="r2x-logo.svg" height="38" alt="R2X"> ▼ -->
+      <div class="logo-r2x">R2X<small>READY-2-XECUTE</small></div>
+      <span class="xmul">✕</span>
+      <div class="logo-instive">
+        <span class="mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17V7l5 3 4-5 4 6 5-2v8"/><circle cx="12" cy="19" r="1.4" fill="#fff" stroke="none"/></svg></span>
+        <span class="nm">Instive&nbsp;AI</span>
+      </div>
+      <span class="vrule"></span>
+      <div class="product"><div class="eyebrow">Demo for Ready-2-Xecute</div><div class="pname">Carrier Intelligence</div></div>
+    </div>
+    <div class="topright">
+      <span class="chip"><span class="dot"></span> Live · synced 4 min ago</span>
+      <span class="chip demo">Sample data</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="kpis">
+    <button class="kpi fade" onclick="toast('info','i','Drill-down','On-time across 14 lanes — 94.2%, up 1.1 pts.')"><div class="k-label">On-time delivery <span class="go">›</span></div><div class="k-val">94.2%</div><div class="k-sub up">▲ 1.1 pts vs. May</div></button>
+    <button class="kpi fade" onclick="document.getElementById('scorecard').scrollIntoView({behavior:'smooth'})"><div class="k-label">Active carriers <span class="go">›</span></div><div class="k-val">38</div><div class="k-sub neutral">across 14 lanes</div></button>
+    <button class="kpi fade" onclick="openInvoice('all')"><div class="k-label">Overbilling flagged · June <span class="go">›</span></div><div class="k-val warn">$11,480</div><div class="k-sub down">7 invoices · recoverable</div></button>
+    <button class="kpi fade" onclick="filterTo('flag')"><div class="k-label">Lanes at margin risk <span class="go">›</span></div><div class="k-val">2<span style="font-size:16px;color:var(--steel-2)"> / 14</span></div><div class="k-sub neutral">flagged for review</div></button>
+  </section>
+
+  <p class="sec-label"><span class="ix">▍</span> Early-warning</p>
+  <section class="card warn-card">
+    <span class="badge-flag">● Client-complaint risk</span>
+    <div class="warn-grid">
+      <div>
+        <div class="warn-h"><b>Rincon Transport</b> is trending toward a customer escalation.</div>
+        <div class="warn-p">On-time fell from 96% to 88% over three weeks and claims doubled — the same pattern that preceded the last two complaints on this account. Caught now, ~3 weeks before it usually reaches the customer.</div>
+        <div class="warn-rec"><b>Recommended:</b> shift Laredo → Monterrey volume to Midwest Hauling Co. (97% on-time, +6% margin) until Rincon recovers.</div>
+        <div class="warn-actions">
+          <button class="btn btn-primary" onclick="toast('ok','✓','Recommendation applied','Laredo → Monterrey volume routed to Midwest Hauling Co.')">Apply recommendation</button>
+          <button class="btn btn-ghost" onclick="openCarrier('rincon')">View Rincon profile</button>
+          <button class="btn btn-ghost btn-sm" onclick="toast('info','i','Snoozed','We\'ll re-check Rincon in 7 days.')">Snooze 1 week</button>
+        </div>
+      </div>
+      <div>
+        <div class="spark-wrap">
+          <div class="spark-cap"><span>RINCON · ON-TIME %</span><span>6-WEEK TREND</span></div>
+          <svg viewBox="0 0 320 120" width="100%" height="120" role="img" aria-label="Rincon on-time declining from 96 to 88 percent">
+            <line x1="0" y1="100" x2="320" y2="100" stroke="#E1E6EC" stroke-width="1"/>
+            <line x1="0" y1="56" x2="320" y2="56" stroke="#D64A45" stroke-width="1.3" stroke-dasharray="5 4" opacity=".7"/>
+            <text x="318" y="50" text-anchor="end" font-family="IBM Plex Mono" font-size="9" fill="#D64A45">complaint-risk threshold (90%)</text>
+            <rect x="232" y="8" width="88" height="92" fill="#FBE9E8" opacity=".55"/>
+            <polyline points="14,28 74,34 134,40 194,52 254,66 312,78" fill="none" stroke="#D64A45" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="14" cy="28" r="3" fill="#fff" stroke="#D64A45" stroke-width="2"/><circle cx="74" cy="34" r="3" fill="#fff" stroke="#D64A45" stroke-width="2"/><circle cx="134" cy="40" r="3" fill="#fff" stroke="#D64A45" stroke-width="2"/><circle cx="194" cy="52" r="3.4" fill="#D64A45" stroke="#fff" stroke-width="1.6"/><circle cx="254" cy="66" r="3" fill="#fff" stroke="#D64A45" stroke-width="2"/><circle cx="312" cy="78" r="3" fill="#fff" stroke="#D64A45" stroke-width="2"/>
+            <line x1="194" y1="52" x2="194" y2="14" stroke="#0E1A2B" stroke-width="1" stroke-dasharray="3 3" opacity=".4"/>
+            <text x="194" y="11" text-anchor="middle" font-family="IBM Plex Mono" font-size="9" fill="#0E1A2B">flagged here</text>
+          </svg>
+          <div class="lead-note">~3 weeks of lead time before a typical client complaint</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <p class="sec-label" id="scorecard"><span class="ix">▍</span> Carrier scorecard</p>
+  <div class="tabs" id="tabs">
+    <button class="tab active" data-filter="all">All <span class="cnt">6</span></button>
+    <button class="tab" data-filter="good">On track <span class="cnt">4</span></button>
+    <button class="tab" data-filter="watch">Watch <span class="cnt">1</span></button>
+    <button class="tab" data-filter="flag">Flagged <span class="cnt">1</span></button>
+  </div>
+  <section class="card tbl-card">
+    <table>
+      <thead><tr><th class="l">Carrier</th><th class="hide">Loads (30d)</th><th>On-time</th><th class="hide">Claims</th><th>Cost / mi</th><th>Score</th><th>Trend</th><th>Status</th><th></th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+    <div class="hint">↳ Click any carrier to open its full profile, trend history and recent loads.</div>
+  </section>
+
+  <div class="grid-2">
+    <section class="card panel">
+      <h3>Lane profitability</h3><p class="ph-sub">Margin by lane · trailing 30 days · click to inspect</p>
+      <div class="lane" onclick="toast('info','i','Indianapolis → Dallas','+22% margin · 312 loads · best-performing lane.')"><div class="lane-top"><span class="lane-name">Indianapolis, IN → Dallas, TX</span><span class="lane-margin" style="color:var(--good)">+22%</span></div><div class="bar"><span style="width:88%;background:var(--good)"></span></div><div class="lane-foot">$214K revenue · 312 loads</div></div>
+      <div class="lane" onclick="toast('info','i','Tampa → Charlotte','+19% margin · 88 loads · new lane from the Tampa office.')"><div class="lane-top"><span class="lane-name">Tampa, FL → Charlotte, NC <span class="tag">new</span></span><span class="lane-margin" style="color:var(--good)">+19%</span></div><div class="bar"><span style="width:76%;background:var(--good)"></span></div><div class="lane-foot">$88K revenue · 88 loads</div></div>
+      <div class="lane" onclick="toast('info','i','Chicago → Atlanta','+15% margin · 204 loads.')"><div class="lane-top"><span class="lane-name">Chicago, IL → Atlanta, GA</span><span class="lane-margin" style="color:var(--good)">+15%</span></div><div class="bar"><span style="width:60%;background:var(--good)"></span></div><div class="lane-foot">$176K revenue · 204 loads</div></div>
+      <div class="lane" onclick="toast('info','i','Detroit → Toronto','+7% margin · 74 loads · flagged for review.')"><div class="lane-top"><span class="lane-name">Detroit, MI → Toronto, ON</span><span class="lane-margin" style="color:var(--watch)">+7%</span></div><div class="bar"><span style="width:28%;background:var(--watch)"></span></div><div class="lane-foot">$61K revenue · 74 loads · review</div></div>
+      <div class="lane" onclick="toast('info','i','Laredo → Monterrey','+3% margin · 96 loads · dragged down by Rincon. See recommendation above.')"><div class="lane-top"><span class="lane-name">Laredo, TX → Monterrey, MX</span><span class="lane-margin" style="color:var(--flag)">+3%</span></div><div class="bar"><span style="width:12%;background:var(--flag)"></span></div><div class="lane-foot">$52K revenue · 96 loads · Rincon-driven</div></div>
+    </section>
+
+    <section class="card panel">
+      <h3>Overbilling alerts</h3><p class="ph-sub">Billed rate vs. quoted rate · this week</p>
+      <div class="inv"><div class="inv-l"><div class="inv-id">INV #88142</div><div class="inv-car">Apex Freight Lines</div><div class="inv-why">Fuel surcharge applied above contracted rate</div></div><div class="inv-r"><div class="delta">+$240</div><button class="btn btn-ghost btn-sm" onclick="openInvoice('88142')">View dispute</button></div></div>
+      <div class="inv"><div class="inv-l"><div class="inv-id">INV #88097</div><div class="inv-car">Rincon Transport</div><div class="inv-why">Detention billed — no authorization on file</div></div><div class="inv-r"><div class="delta">+$195</div><button class="btn btn-ghost btn-sm" onclick="openInvoice('88097')">View dispute</button></div></div>
+      <div class="inv"><div class="inv-l"><div class="inv-id">INV #88203</div><div class="inv-car">Coastline Drayage</div><div class="inv-why">Accessorial not on the original quote</div></div><div class="inv-r"><div class="delta">+$240</div><button class="btn btn-ghost btn-sm" onclick="openInvoice('88203')">View dispute</button></div></div>
+      <div class="recover"><span class="rl">Auto-drafted dispute summaries ready</span><span class="rv">$675</span></div>
+    </section>
+  </div>
+
+  <section class="card stack-band">
+    <div class="stack-head">
+      <div class="sh-title"><span class="accent-bar"></span>Plugs into the stack R2X already runs</div>
+      <div class="sh-note">read-only · no rip-and-replace · ~6–8 week build</div>
+    </div>
+    <div class="stack-groups">
+      <div class="stack-group"><div class="grp-label">Transportation mgmt (TMS)</div><div class="tools"><span class="tool"><span class="lg" style="background:#1f6feb">Mc</span>McLeod</span><span class="tool"><span class="lg" style="background:#0aa1a1">Ta</span>Tai</span><span class="tool"><span class="lg" style="background:#5b48d6">Sh</span>Shipwell</span></div></div>
+      <div class="stack-group"><div class="grp-label">Real-time visibility</div><div class="tools"><span class="tool"><span class="lg" style="background:#16a34a">4K</span>FourKites</span><span class="tool"><span class="lg" style="background:#e2640b">p44</span>project44</span></div></div>
+      <div class="stack-group"><div class="grp-label">Accounting / ERP</div><div class="tools"><span class="tool"><span class="lg" style="background:#15397a">NS</span>NetSuite</span><span class="tool"><span class="lg" style="background:#2ca01c">QB</span>QuickBooks</span></div></div>
+    </div>
+    <div class="stack-foot">→ <b>Tell us your exact systems and we map the connectors to them</b> — the dashboard reads from what you have, nothing migrates.</div>
+  </section>
+</main>
+
+<footer class="wrap">
+  <div class="roi-foot">Flags slipping carriers <b>~3–4 weeks</b> before they become client complaints.</div>
+  <div class="madeby">Mockup by <b>Instive AI</b> for Ready-2-Xecute · sample data</div>
+</footer>
+
+<!-- DRAWER -->
+<div class="scrim" id="scrim" onclick="closeDrawer()"></div>
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="Carrier detail"></aside>
+
+<!-- MODAL -->
+<div class="modal-scrim" id="modalScrim" onclick="if(event.target===this)closeModal()">
+  <div class="modal" role="dialog" aria-modal="true" aria-label="Dispute summary">
+    <div class="md-head"><div><h3 id="mdTitle">Dispute summary</h3><div class="sub" id="mdSub"></div></div><button class="dr-close" onclick="closeModal()" aria-label="Close">×</button></div>
+    <div class="md-body"><div class="md-doc" id="mdDoc"></div></div>
+    <div class="md-foot"><button class="btn btn-ghost" onclick="toast('ok','✓','Copied','Dispute summary copied to clipboard.')">Copy</button><button class="btn btn-primary" onclick="closeModal();toast('ok','✓','Dispute sent','Summary emailed to the carrier\'s billing contact.')">Send to carrier</button></div>
+  </div>
+</div>
+
+<div class="toasts" id="toasts"></div>
+
+<script>
+const CARRIERS={
+  midwest:{name:"Midwest Hauling Co.",mc:"MC-448201 · dry van",status:"good",sl:"On track",onTime:97.4,claims:0.3,cost:2.18,loads:312,score:"A+",series:[96.5,97,97.2,97.1,97.6,97.4],
+    lanes:[["Indianapolis → Dallas","+24%","good"],["Chicago → Atlanta","+17%","good"],["Columbus → Nashville","+15%","good"]],
+    recent:[["#L-90412","Indy → Dallas","ok"],["#L-90388","Chicago → Atlanta","ok"],["#L-90355","Indy → Dallas","ok"],["#L-90310","Columbus → Nashville","ok"]]},
+  bluegrass:{name:"Bluegrass Carriers",mc:"MC-512887 · temp-controlled",status:"good",sl:"On track",onTime:96.1,claims:0.6,cost:2.41,loads:204,score:"A",series:[95,95.4,95.8,96,96.2,96.1],
+    lanes:[["Louisville → Memphis","+18%","good"],["Cincinnati → St. Louis","+12%","good"]],
+    recent:[["#L-90401","Louisville → Memphis","ok"],["#L-90377","Cincinnati → St. Louis","ok"],["#L-90340","Louisville → Memphis","late"]]},
+  apex:{name:"Apex Freight Lines",mc:"MC-390114 · dry van",status:"watch",sl:"Watch",onTime:91.8,claims:1.4,cost:2.36,loads:178,score:"B",series:[95,94.2,93.5,92.8,92.1,91.8],
+    lanes:[["Dallas → Phoenix","+9%","watch"],["Houston → Denver","+11%","good"]],
+    recent:[["#L-90395","Dallas → Phoenix","late"],["#L-90362","Houston → Denver","ok"],["#L-90329","Dallas → Phoenix","ok"],["#L-90301","Houston → Denver","late"]]},
+  rincon:{name:"Rincon Transport",mc:"MC-471330 · cross-border MX",status:"flag",sl:"Flag",onTime:88.0,claims:2.1,cost:2.59,loads:96,score:"C",series:[96,95,94,92,90,88],
+    lanes:[["Laredo → Monterrey","+3%","flag"],["San Antonio → Laredo","+6%","watch"]],
+    recent:[["#L-90390","Laredo → Monterrey","late"],["#L-90371","Laredo → Monterrey","late"],["#L-90344","San Antonio → Laredo","ok"],["#L-90318","Laredo → Monterrey","late"]],
+    note:"Pattern matches the two prior complaints on this account. Recommended: shift Laredo → Monterrey volume to Midwest Hauling Co."},
+  greatplains:{name:"Great Plains Logistics",mc:"MC-528470 · power only",status:"good",sl:"On track",onTime:95.0,claims:0.7,cost:2.27,loads:141,score:"A",series:[94.6,94.8,95.1,94.9,95,95],
+    lanes:[["KC → Omaha","+14%","good"],["Wichita → Tulsa","+13%","good"]],
+    recent:[["#L-90405","KC → Omaha","ok"],["#L-90369","Wichita → Tulsa","ok"],["#L-90333","KC → Omaha","ok"]]},
+  coastline:{name:"Coastline Drayage",mc:"MC-336902 · drayage / Tampa",status:"good",sl:"On track",onTime:93.2,claims:0.9,cost:2.44,loads:88,score:"A–",series:[91,91.8,92.4,92.8,93,93.2],
+    lanes:[["Tampa → Charlotte","+19%","good"],["Tampa Port → Orlando","+10%","good"]],
+    recent:[["#L-90400","Tampa → Charlotte","ok"],["#L-90364","Tampa Port → Orlando","ok"],["#L-90327","Tampa → Charlotte","ok"]]}
+};
+const INVOICES={
+ "88142":{car:"Apex Freight Lines",delta:"$240",q:"$2,450",b:"$2,690",doc:"DISPUTE — INV #88142  ·  Apex Freight Lines (MC-390114)\n\nLane: Dallas, TX → Phoenix, AZ\nQuoted (rate con #RC-22841): $2,450.00\nBilled: $2,690.00\nVariance: +$240.00\n\nFinding: Fuel surcharge of $240 applied at 18% vs. the 12% contracted FSC on file. Rate confirmation does not authorize the higher percentage.\n\nRequested adjustment: reduce FSC to contracted 12% → revised total $2,450.00.\nSupporting docs: RC-22841, signed BOL, contracted FSC schedule."},
+ "88097":{car:"Rincon Transport",delta:"$195",q:"$1,820",b:"$2,015",doc:"DISPUTE — INV #88097  ·  Rincon Transport (MC-471330)\n\nLane: Laredo, TX → Monterrey, MX\nQuoted (rate con #RC-22790): $1,820.00\nBilled: $2,015.00\nVariance: +$195.00\n\nFinding: Detention charge of $195 (2.6 hrs) billed with no detention authorization or check-in/out timestamps on file.\n\nRequested adjustment: remove unauthorized detention → revised total $1,820.00.\nSupporting docs: RC-22790, gate logs (none on file), driver check-in record requested."},
+ "88203":{car:"Coastline Drayage",delta:"$240",q:"$3,100",b:"$3,340",doc:"DISPUTE — INV #88203  ·  Coastline Drayage (MC-336902)\n\nLane: Tampa Port → Charlotte, NC\nQuoted (rate con #RC-22905): $3,100.00\nBilled: $3,340.00\nVariance: +$240.00\n\nFinding: Chassis split + pre-pull accessorial ($240) not present on the original quote and not pre-approved.\n\nRequested adjustment: remove un-quoted accessorial → revised total $3,100.00.\nSupporting docs: RC-22905, terminal receipt, accessorial approval (none on file)."},
+ "all":{car:"7 flagged invoices",delta:"$11,480",q:"",b:"",doc:"OVERBILLING SUMMARY — June 2026\n\n7 invoices flagged where billed rate exceeded the quoted/contracted rate.\nTotal recoverable: $11,480\n\nTop items:\n• #88142 Apex Freight Lines  +$240  (FSC over contract)\n• #88203 Coastline Drayage  +$240  (un-quoted accessorial)\n• #88097 Rincon Transport  +$195  (unauthorized detention)\n• 4 more invoices  +$10,805\n\nAuto-drafted dispute summaries are ready to send for each."}
+};
+
+/* line chart from a % series */
+function lineChart(series,color){
+  const w=360,h=96,pl=8,pr=8,pt=10,pb=14,min=85,max=100;
+  const n=series.length, iw=w-pl-pr, ih=h-pt-pb;
+  const pts=series.map((v,i)=>{const x=pl+(iw*i/(n-1));const y=pt+ih-((v-min)/(max-min))*ih;return [x,y];});
+  const poly=pts.map(p=>p[0].toFixed(1)+","+p[1].toFixed(1)).join(" ");
+  const area=`${pl},${pt+ih} `+poly+` ${pl+iw},${pt+ih}`;
+  const dots=pts.map(p=>`<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="2.6" fill="#fff" stroke="${color}" stroke-width="2"/>`).join("");
+  const thr=pt+ih-((90-min)/(max-min))*ih;
+  return `<svg viewBox="0 0 ${w} ${h}" width="100%" height="${h}">
+    <line x1="0" y1="${thr.toFixed(1)}" x2="${w}" y2="${thr.toFixed(1)}" stroke="#D64A45" stroke-width="1" stroke-dasharray="4 4" opacity=".55"/>
+    <polygon points="${area}" fill="${color}" opacity=".08"/>
+    <polyline points="${poly}" fill="none" stroke="${color}" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>${dots}
+    <text x="${w-4}" y="${(thr-4).toFixed(1)}" text-anchor="end" font-family="IBM Plex Mono" font-size="8.5" fill="#D64A45">90% threshold</text>
+  </svg>`;
+}
+
+function rowHtml(id,c){
+  const col=c.status==='good'?'var(--good)':c.status==='watch'?'var(--watch)':'var(--flag)';
+  const dir=c.series[c.series.length-1]>=c.series[0]?'up':'down';
+  const arrow=dir==='up'?'▲':(c.status==='good'?'–':'▼');
+  const tcol=dir==='up'?'#1F9D6B':(c.status==='good'?'#8A98AC':col);
+  const sp=c.series.map((v,i)=>`${2+i*9.5},${16-((v-85)/15)*13}`).join(" ");
+  return `<tr data-status="${c.status}" tabindex="0" role="button" onclick="openCarrier('${id}')" onkeydown="if(event.key==='Enter')openCarrier('${id}')">
+    <td class="l"><div class="carrier" style="${c.status==='flag'?'':''}">${c.name}<div class="sub">${c.mc}</div></div></td>
+    <td class="num hide">${c.loads}</td>
+    <td class="num" style="${c.status==='flag'?'color:var(--flag);font-weight:700':''}">${c.onTime.toFixed(1)}%</td>
+    <td class="num hide">${c.claims}%</td>
+    <td class="num">$${c.cost.toFixed(2)}</td>
+    <td class="score" style="color:${col}">${c.score}</td>
+    <td><span class="trend" style="color:${tcol}">${arrow} <svg width="42" height="16"><polyline points="${sp}" fill="none" stroke="${tcol}" stroke-width="1.8"/></svg></span></td>
+    <td><span class="status s-${c.status}">● ${c.sl}</span></td>
+    <td><span class="chev">›</span></td>
+  </tr>`;
+}
+const rowsEl=document.getElementById('rows');
+rowsEl.innerHTML=Object.entries(CARRIERS).map(([id,c])=>rowHtml(id,c)).join("");
+
+/* filters */
+document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>filterTo(t.dataset.filter)));
+function filterTo(f){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t.dataset.filter===f));
+  document.querySelectorAll('#rows tr').forEach(r=>{r.style.display=(f==='all'||r.dataset.status===f)?'':'none';});
+  document.getElementById('scorecard').scrollIntoView({behavior:'smooth'});
+}
+
+/* drawer */
+const drawer=document.getElementById('drawer'),scrim=document.getElementById('scrim');
+function openCarrier(id){
+  const c=CARRIERS[id];const col=c.status==='good'?'var(--good)':c.status==='watch'?'var(--watch)':'var(--flag)';
+  drawer.innerHTML=`
+    <div class="dr-head">
+      <div><div class="dr-name">${c.name}</div><div class="dr-mc">${c.mc}</div></div>
+      <button class="dr-close" onclick="closeDrawer()" aria-label="Close">×</button>
+    </div>
+    <div class="dr-body">
+      <div class="dr-statusrow"><span class="status s-${c.status}">● ${c.sl}</span><span class="score" style="color:${col};font-size:18px">${c.score}</span></div>
+      <div class="dr-mini">
+        <div class="dr-stat"><div class="l">On-time (30d)</div><div class="v" style="color:${c.status==='flag'?'var(--flag)':'var(--ink)'}">${c.onTime.toFixed(1)}%</div></div>
+        <div class="dr-stat"><div class="l">Claims rate</div><div class="v">${c.claims}%</div></div>
+        <div class="dr-stat"><div class="l">Cost / mile</div><div class="v">$${c.cost.toFixed(2)}</div></div>
+        <div class="dr-stat"><div class="l">Loads (30d)</div><div class="v">${c.loads}</div></div>
+      </div>
+      <p class="dr-sec-t">On-time · 6-week trend</p>
+      <div class="dr-chart">${lineChart(c.series,col.startsWith('var')? (c.status==='good'?'#1F9D6B':c.status==='watch'?'#D9941F':'#D64A45'):col)}</div>
+      ${c.note?`<div class="warn-rec" style="margin-bottom:20px"><b>⚑ Alert:</b> ${c.note}</div>`:''}
+      <p class="dr-sec-t">Lane mix</p>
+      <div style="margin-bottom:20px">${c.lanes.map(l=>`<div class="dr-lane"><span class="ln">${l[0]}</span><span class="mg" style="color:var(--${l[2]})">${l[1]}</span></div>`).join("")}</div>
+      <p class="dr-sec-t">Recent loads</p>
+      <div>${c.recent.map(r=>`<div class="dr-load"><span class="ld">${r[0]} · ${r[1]}</span><span class="pill-ld ld-${r[2]==='ok'?'ok':'late'}">${r[2]==='ok'?'On-time':'Late'}</span></div>`).join("")}</div>
+    </div>
+    <div class="dr-foot">
+      ${c.status!=='good'?`<button class="btn btn-primary" onclick="closeDrawer();toast('ok','✓','Volume rebalanced','Routed away from ${c.name} to a top performer.')">Rebalance volume</button>`:''}
+      <button class="btn btn-ghost" onclick="toast('info','i','Flagged for review','${c.name} added to this week\\'s review list.')">Flag for review</button>
+      <button class="btn btn-ghost" onclick="toast('info','i','Opening in TMS','Jumping to ${c.name} in your TMS…')">Open in TMS</button>
+    </div>`;
+  drawer.classList.add('open');scrim.classList.add('open');document.body.style.overflow='hidden';
+}
+function closeDrawer(){drawer.classList.remove('open');scrim.classList.remove('open');document.body.style.overflow='';}
+
+/* modal */
+const modalScrim=document.getElementById('modalScrim');
+function openInvoice(id){
+  const v=INVOICES[id];
+  document.getElementById('mdTitle').textContent= id==='all'?'Overbilling summary · June':'Dispute summary';
+  document.getElementById('mdSub').textContent= id==='all'?('Recoverable '+v.delta):(v.car+'  ·  '+v.q+' → '+v.b+'  ·  +'+v.delta);
+  document.getElementById('mdDoc').textContent=v.doc;
+  modalScrim.classList.add('open');document.body.style.overflow='hidden';
+}
+function closeModal(){modalScrim.classList.remove('open');if(!drawer.classList.contains('open'))document.body.style.overflow='';}
+
+/* toast */
+let tid=0;
+function toast(type,icon,title,msg){
+  const el=document.createElement('div');el.className='toast '+type;
+  el.innerHTML=`<span class="ti">${icon}</span><span><b>${title}</b><br><span style="opacity:.8;font-size:12px">${msg||''}</span></span>`;
+  document.getElementById('toasts').appendChild(el);
+  requestAnimationFrame(()=>el.classList.add('show'));
+  setTimeout(()=>{el.classList.remove('show');setTimeout(()=>el.remove(),350);},3600);
+}
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeDrawer();closeModal();}});
+</script>
+</body>
+</html>
