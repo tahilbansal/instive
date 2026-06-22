@@ -7,112 +7,259 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-:root{--ink:#15161A;--ink-soft:#26282F;--canvas:#EFEFF1;--surface:#fff;--line:#E0E0E4;--steel:#666A76;--steel-2:#9296A2;--accent:#C0202E;--brand:#C0202E;--good:#1F9D6B;--good-bg:#E8F5EF;--watch:#D9941F;--watch-bg:#FBF1DE;--flag:#D64A45;--flag-bg:#FBE9E8;--mono:"IBM Plex Mono",monospace;--sans:"Inter",system-ui,sans-serif;--r:14px;--sh:0 1px 2px rgba(21,22,26,.05),0 6px 18px rgba(21,22,26,.07)}
-*{box-sizing:border-box;margin:0;padding:0}body{font-family:var(--sans);background:var(--canvas);color:var(--ink);line-height:1.45;-webkit-font-smoothing:antialiased;padding-bottom:40px}
-.wrap{max-width:1080px;margin:0 auto;padding:0 20px}button{font-family:inherit;cursor:pointer}
-.topbar{background:var(--ink);color:#fff}.topbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:16px 20px;flex-wrap:wrap}
-.cobrand{display:flex;align-items:center;gap:14px}.logo-co{font-weight:800;font-size:16px;color:#fff;background:var(--brand);padding:8px 12px;border-radius:9px;line-height:1.1;box-shadow:inset 0 0 0 1px rgba(255,255,255,.12)}.logo-co small{display:block;font-family:var(--mono);font-weight:500;font-size:7.5px;letter-spacing:.1em;margin-top:3px;opacity:.85}
-.xmul{font-family:var(--mono);font-size:15px;color:var(--steel-2)}.logo-in{display:flex;align-items:center;gap:9px}.mark{width:34px;height:34px;border-radius:8px;background:linear-gradient(145deg,#3A6EA5,#244a73);display:grid;place-items:center;box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}.mark svg{width:19px;height:19px}.logo-in .nm{font-size:15px;font-weight:600}
-.vrule{width:1px;height:30px;background:rgba(255,255,255,.16)}.product .eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#C7989C}.product .pname{font-size:14.5px;font-weight:600;margin-top:1px}
-.topright{display:flex;align-items:center;gap:9px;flex-wrap:wrap}.chip{font-family:var(--mono);font-size:11px;padding:6px 11px;border-radius:999px;display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.08);color:#D6D7DD;border:1px solid rgba(255,255,255,.1)}
-.dot{width:7px;height:7px;border-radius:50%;background:var(--good);animation:pulse 2.4s infinite}@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(31,157,107,.55)}70%{box-shadow:0 0 0 6px rgba(31,157,107,0)}100%{box-shadow:0 0 0 0 rgba(31,157,107,0)}}.chip.demo{background:rgba(217,148,31,.16);color:#F0C97E;border-color:rgba(217,148,31,.3)}
-main{margin-top:40px}.sec-label{font-family:var(--mono);font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--steel);margin:0 0 11px 2px;display:flex;gap:8px}.sec-label .ix{color:var(--brand)}
+:root{
+--ink:#2A0E12;--ink-2:#391318;--ink-soft:#4E1F25;--canvas:#F2ECED;--surface:#fff;--line:#E4D6D8;--line-2:#EEE3E4;
+--steel:#7C6166;--steel-2:#A88E92;--brand:#D62839;--brand-2:#E0892E;--accent:#B81F2E;
+--good:#1F9D6B;--good-bg:#E8F5EF;--watch:#D9941F;--watch-bg:#FBF1DE;--flag:#D62839;--flag-bg:#FBE7E9;
+--mono:"IBM Plex Mono",monospace;--sans:"Inter",system-ui,sans-serif;--r:14px;
+--sh:0 1px 2px rgba(42,14,18,.04),0 6px 18px rgba(42,14,18,.07);--sh-lg:0 12px 34px rgba(42,14,18,.14)}
+*{box-sizing:border-box;margin:0;padding:0}html,body{height:100%}
+body{font-family:var(--sans);background:var(--canvas);color:var(--ink);line-height:1.45;-webkit-font-smoothing:antialiased}
+button{font-family:inherit;cursor:pointer}
+.app{display:flex;min-height:100vh}
+.sidebar{width:252px;flex-shrink:0;background:linear-gradient(180deg,#2A0E12,#391318 70%,#481a20);color:#fff;position:sticky;top:0;height:100vh;display:flex;flex-direction:column;z-index:60;transition:transform .25s}
+.sb-brand{padding:20px 20px 18px;border-bottom:1px solid rgba(255,255,255,.08)}
+.lockup{display:flex;align-items:center;gap:11px}.mk{width:32px;height:32px;flex-shrink:0}.mk svg{width:32px;height:32px}
+.lk-txt{font-weight:800;font-size:14px;letter-spacing:-.01em;line-height:1}.lk-txt small{display:block;font-family:var(--mono);font-weight:500;font-size:7.5px;letter-spacing:.08em;color:#B79DA1;margin-top:4px}
+.sb-x{display:flex;align-items:center;gap:8px;margin-top:14px;font-size:11px;color:#B79DA1}.sb-x .by{width:22px;height:22px;border-radius:6px;background:linear-gradient(145deg,var(--brand),#9e1c29);display:grid;place-items:center}.sb-x .by svg{width:13px;height:13px}
+.nav{padding:16px 12px;flex:1;overflow-y:auto}.nav-h{font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:#74585D;padding:8px 12px}
+.nav-i{display:flex;align-items:center;gap:11px;width:100%;background:transparent;border:none;color:#CDBABE;font-size:13.5px;font-weight:500;padding:10px 12px;border-radius:9px;text-align:left;position:relative;transition:.14s}
+.nav-i svg{width:17px;height:17px;flex-shrink:0;opacity:.85}.nav-i:hover{background:rgba(255,255,255,.06);color:#fff}
+.nav-i.active{background:rgba(214,40,57,.36);color:#fff}.nav-i.active::before{content:"";position:absolute;left:-12px;top:8px;bottom:8px;width:3px;border-radius:0 3px 3px 0;background:var(--brand-2)}
+.nav-i .tag{margin-left:auto;font-family:var(--mono);font-size:9.5px;background:rgba(214,40,57,.95);color:#fff;padding:2px 6px;border-radius:5px;font-weight:700}
+.sb-foot{padding:14px 16px;border-top:1px solid rgba(255,255,255,.08)}.who{display:flex;align-items:center;gap:10px}.who .av{width:32px;height:32px;border-radius:9px;background:linear-gradient(145deg,#D62839,#E0892E);display:grid;place-items:center;font-weight:700;font-size:12px}
+.who .nm{font-size:12.5px;font-weight:600;line-height:1.2}.who .rl{font-size:10.5px;color:#B79DA1}
+.demo-pill{margin-top:12px;font-family:var(--mono);font-size:10px;text-align:center;background:rgba(214,40,57,.16);color:#EE9099;border:1px solid rgba(214,40,57,.32);padding:6px;border-radius:7px}
+.main{flex:1;min-width:0;display:flex;flex-direction:column}
+.topbar{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.86);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:16px;padding:14px 28px}
+.burger{display:none;background:none;border:1px solid var(--line);border-radius:8px;width:36px;height:36px;color:var(--ink)}
+.tb-title{font-size:17px;font-weight:700;letter-spacing:-.01em}.tb-crumb{font-family:var(--mono);font-size:11px;color:var(--steel);margin-top:1px}
+.tb-right{margin-left:auto;display:flex;align-items:center;gap:12px}.search{display:flex;align-items:center;gap:8px;background:var(--canvas);border:1px solid var(--line);border-radius:9px;padding:8px 12px;color:var(--steel);font-size:12.5px;min-width:200px}.search svg{width:14px;height:14px}
+.live{font-family:var(--mono);font-size:11px;padding:7px 11px;border-radius:999px;display:inline-flex;align-items:center;gap:7px;background:#fff;border:1px solid var(--line);color:var(--ink-soft)}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--flag);animation:pulse 2s infinite}@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(214,40,57,.55)}70%{box-shadow:0 0 0 6px rgba(214,40,57,0)}100%{box-shadow:0 0 0 0 rgba(214,40,57,0)}}
+.content{padding:26px 28px 56px;max-width:1320px;width:100%}.view{display:none}.view.active{display:block;animation:rise .4s ease}@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.sec-label{font-family:var(--mono);font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--steel);margin:0 0 12px 2px;display:flex;gap:8px;align-items:center}.sec-label .ix{color:var(--brand)}.sec-label .more{margin-left:auto;font-family:var(--sans);text-transform:none;letter-spacing:0;font-size:12px;color:var(--brand);font-weight:600;cursor:pointer}
 .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--sh)}
-.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:26px}.kpi{padding:16px 18px;text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:var(--r);box-shadow:var(--sh);transition:.15s;width:100%}.kpi:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(21,22,26,.12)}.kpi .kl{font-size:12px;color:var(--steel);font-weight:500;display:flex;justify-content:space-between}.kpi .kl .go{color:var(--steel-2)}.kpi .kv{font-family:var(--mono);font-size:26px;font-weight:600;letter-spacing:-.02em;margin-top:8px}.kpi .ks{font-family:var(--mono);font-size:11.5px;margin-top:6px}
-.up{color:var(--good)}.down{color:var(--flag)}.neutral{color:var(--steel)}.kv.warn{color:var(--watch)}.kv.brand{color:var(--brand)}
-.hero{padding:20px 22px;margin-bottom:26px;border-left:4px solid var(--flag);background:linear-gradient(90deg,#fff,#fffdfd)}.badge{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;background:var(--flag-bg);color:var(--flag);padding:4px 9px;border-radius:6px;font-weight:600}
-.hgrid{display:grid;grid-template-columns:1.15fr .85fr;gap:26px;align-items:center;margin-top:14px}.hh{font-size:18px;font-weight:600}.hh b{color:var(--flag)}.hp{font-size:13.5px;color:var(--ink-soft);margin-top:8px;max-width:48ch}.rec{margin-top:14px;font-size:13px;background:#F5F5F7;border:1px solid var(--line);border-radius:9px;padding:11px 13px;color:var(--ink-soft)}.rec b{color:var(--ink)}.acts{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
-.btn{font-size:13px;font-weight:600;border-radius:9px;padding:9px 15px;border:1px solid transparent;transition:.15s}.btn-primary{background:var(--ink);color:#fff}.btn-primary:hover{filter:brightness(1.5)}.btn-ghost{background:#fff;color:var(--ink-soft);border-color:var(--line)}.btn-ghost:hover{background:#F5F5F7}.btn-sm{font-size:12px;padding:7px 12px}
-.maprail{background:#0F1013;border-radius:11px;padding:14px;position:relative;overflow:hidden}.mapcap{font-family:var(--mono);font-size:10px;color:#8A8F9C;letter-spacing:.08em;margin-bottom:8px}
-.tabs{display:flex;gap:6px;margin-bottom:11px;flex-wrap:wrap}.tab{font-family:var(--mono);font-size:11.5px;padding:7px 13px;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--steel)}.tab.active{background:var(--ink);color:#fff;border-color:var(--ink)}.tab .c{opacity:.6;margin-left:5px}
-.tcard{padding:6px;margin-bottom:26px;overflow:hidden}table{width:100%;border-collapse:collapse}thead th{font-family:var(--mono);font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--steel);font-weight:500;text-align:right;padding:14px 14px 12px;border-bottom:1px solid var(--line);white-space:nowrap}thead th.l{text-align:left}tbody td{padding:13px 14px;border-bottom:1px solid #ECECEF;font-size:13.5px;text-align:right;vertical-align:middle}tbody tr{cursor:pointer;transition:.12s}tbody tr:last-child td{border-bottom:none}tbody tr:hover{background:#F7F7F9}td.l{text-align:left}
-.nm2{font-weight:600;font-size:14px}.sub{font-weight:400;color:var(--steel);font-size:11.5px;font-family:var(--mono);margin-top:2px}.num{font-family:var(--mono);font-weight:500}.acc{font-family:var(--mono);font-weight:600;color:var(--watch)}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px}.kpi{padding:16px 18px;text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:var(--r);box-shadow:var(--sh);transition:.15s;width:100%}.kpi:hover{transform:translateY(-2px);box-shadow:var(--sh-lg)}.kpi .kl{font-size:12px;color:var(--steel);font-weight:500;display:flex;justify-content:space-between;align-items:center}.kpi .ic{width:26px;height:26px;border-radius:7px;display:grid;place-items:center;background:var(--canvas)}.kpi .ic svg{width:14px;height:14px;color:var(--brand)}.kpi .kv{font-family:var(--mono);font-size:27px;font-weight:600;letter-spacing:-.02em;margin-top:10px}.kpi .ks{font-family:var(--mono);font-size:11.5px;margin-top:6px}
+.up{color:var(--good)}.down{color:var(--flag)}.neutral{color:var(--steel)}.kv.warn{color:var(--watch)}.kv.brand{color:var(--brand)}.kv.flag{color:var(--flag)}.kv.good{color:var(--good)}
+.hero{padding:22px 24px;margin-bottom:24px;border-left:4px solid var(--brand);background:linear-gradient(100deg,#fff,#fffafb)}
+.badge{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;background:var(--flag-bg);color:var(--flag);padding:5px 10px;border-radius:6px;font-weight:600;display:inline-block}
+.hgrid{display:grid;grid-template-columns:1.1fr .9fr;gap:30px;align-items:center;margin-top:16px}
+.hh{font-size:20px;font-weight:700;letter-spacing:-.01em}.hh b{color:var(--brand)}.hp{font-size:13.5px;color:var(--ink-soft);margin-top:10px;max-width:52ch}
+.rec{margin-top:16px;font-size:13px;background:#F7EEEF;border:1px solid var(--line);border-radius:10px;padding:12px 14px;color:var(--ink-soft)}.rec b{color:var(--ink)}
+.acts{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+.btn{font-size:13px;font-weight:600;border-radius:9px;padding:10px 16px;border:1px solid transparent;transition:.15s}.btn-primary{background:var(--brand);color:#fff}.btn-primary:hover{filter:brightness(1.08)}.btn-ghost{background:#fff;color:var(--ink-soft);border-color:var(--line)}.btn-ghost:hover{background:#F7EEEF}
+.clockbox{background:#FBF6F6;border:1px solid var(--line);border-radius:12px;padding:18px;text-align:center}.clabel{font-family:var(--mono);font-size:10.5px;color:var(--steel);letter-spacing:.06em;margin-bottom:6px}.clock{font-family:var(--mono);font-size:38px;font-weight:600;color:var(--flag);letter-spacing:.02em}.csub{font-family:var(--mono);font-size:11px;color:var(--steel);margin-top:6px}
+.tl{margin-top:16px;text-align:left}.tlrow{display:flex;gap:11px;align-items:flex-start;font-size:12px;padding:6px 0}.tldot{width:10px;height:10px;border-radius:50%;margin-top:3px;flex-shrink:0}.tlrow .tlt{font-family:var(--mono);font-size:10px;color:var(--steel)}
+.tabs{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}.tab{font-family:var(--mono);font-size:11.5px;padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--steel)}.tab.active{background:var(--ink);color:#fff;border-color:var(--ink)}.tab .c{opacity:.6;margin-left:5px}
+.tcard{padding:6px;margin-bottom:24px;overflow:hidden}table{width:100%;border-collapse:collapse}thead th{font-family:var(--mono);font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--steel);font-weight:500;text-align:right;padding:14px 16px 12px;border-bottom:1px solid var(--line);white-space:nowrap}thead th.l{text-align:left}
+tbody td{padding:14px 16px;border-bottom:1px solid var(--line-2);font-size:13.5px;text-align:right;vertical-align:middle}tbody tr{cursor:pointer;transition:.12s}tbody tr:last-child td{border-bottom:none}tbody tr:hover{background:#FAF3F4}td.l{text-align:left}
+.nm2{font-weight:600;font-size:14px}.sub{font-weight:400;color:var(--steel);font-size:11.5px;font-family:var(--mono);margin-top:2px}.num{font-family:var(--mono);font-weight:500}
+.hv{font-family:var(--mono);font-size:9px;font-weight:700;padding:2px 6px;border-radius:4px;background:#FBEFD9;color:#A66A1E;margin-left:6px}
 .status{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:11px;font-weight:600;text-transform:uppercase;padding:5px 10px;border-radius:7px}.s-good{background:var(--good-bg);color:var(--good)}.s-watch{background:var(--watch-bg);color:var(--watch)}.s-flag{background:var(--flag-bg);color:var(--flag)}
-.chev{color:var(--steel-2);font-size:16px;transition:.15s}tbody tr:hover .chev{color:var(--accent);transform:translateX(3px)}.hint{font-family:var(--mono);font-size:10.5px;color:var(--steel-2);padding:8px 14px 2px}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-bottom:26px}.panel{padding:18px 20px 20px}.panel h3{font-size:14.5px;font-weight:600;margin-bottom:2px}.panel .ps{font-size:12px;color:var(--steel);margin-bottom:16px}
-.row{display:flex;justify-content:space-between;align-items:baseline;font-size:13px}.mb{margin-bottom:14px}.bar{height:8px;border-radius:5px;background:#E9E9EC;overflow:hidden;margin-top:6px}.bar span{display:block;height:100%;border-radius:5px}.rowf{font-family:var(--mono);font-size:10.5px;color:var(--steel);margin-top:4px}.drow{display:flex;justify-content:space-between;align-items:center;font-size:13px;padding:10px 0;border-bottom:1px solid #ECECEF}.drow:last-child{border-bottom:none}
-.stack{padding:22px 24px;margin-bottom:22px;position:relative;overflow:hidden;background:linear-gradient(135deg,#15161A,#26282F 60%,#322329);border:none;color:#fff;border-radius:var(--r)}.stack::after{content:"";position:absolute;right:-40px;top:-40px;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(192,32,46,.4),transparent 70%)}.sh{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:18px;position:relative;z-index:1}.sht{font-size:16px;font-weight:600}.sht .ab{display:inline-block;width:18px;height:3px;background:var(--good);border-radius:2px;vertical-align:middle;margin-right:9px}.shn{font-family:var(--mono);font-size:11px;color:#C7989C}.sgr{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;position:relative;z-index:1}.sg{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:11px;padding:13px 14px 15px}.gl{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#C7989C;margin-bottom:11px}.tools{display:flex;flex-wrap:wrap;gap:8px}.tool{display:inline-flex;align-items:center;gap:7px;background:#fff;color:var(--ink);border-radius:8px;padding:6px 11px 6px 7px;font-size:12.5px;font-weight:600;box-shadow:0 2px 6px rgba(0,0,0,.18)}.tool .lg{width:18px;height:18px;border-radius:5px;display:grid;place-items:center;font-family:var(--mono);font-weight:600;font-size:9px;color:#fff}.sf{margin-top:15px;font-size:11.5px;color:#C7989C;position:relative;z-index:1}.sf b{color:#E8D2D5;font-weight:500}
-footer .wrap{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;padding-top:4px}.roi{font-family:var(--mono);font-size:11.5px;color:var(--ink-soft)}.roi b{color:var(--brand)}.made{font-size:11.5px;color:var(--steel)}.made b{color:var(--ink)}
-.scrim{position:fixed;inset:0;background:rgba(15,16,19,.5);backdrop-filter:blur(2px);opacity:0;pointer-events:none;transition:.25s;z-index:40}.scrim.open{opacity:1;pointer-events:auto}.drawer{position:fixed;top:0;right:0;height:100%;width:440px;max-width:92vw;background:var(--surface);box-shadow:-12px 0 40px rgba(15,16,19,.3);transform:translateX(100%);transition:transform .28s cubic-bezier(.22,.61,.36,1);z-index:50;display:flex;flex-direction:column}.drawer.open{transform:none}.dh{padding:20px 22px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:flex-start;gap:12px}.dn{font-size:17px;font-weight:700}.dm{font-family:var(--mono);font-size:11.5px;color:var(--steel);margin-top:3px}.dc{width:32px;height:32px;border-radius:8px;border:1px solid var(--line);background:#fff;color:var(--steel);font-size:18px}.db{padding:18px 22px;overflow-y:auto;flex:1}.dmini{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:20px}.dstat{background:#F5F5F7;border:1px solid var(--line);border-radius:10px;padding:11px 13px}.dstat .l{font-size:11px;color:var(--steel)}.dstat .v{font-family:var(--mono);font-size:17px;font-weight:600;margin-top:4px}.dt{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--steel);margin:0 0 10px}
-.tl{position:relative;padding-left:20px;margin-bottom:20px}.tl::before{content:"";position:absolute;left:5px;top:4px;bottom:4px;width:2px;background:var(--line)}.tli{position:relative;padding:0 0 14px 0;font-size:12.5px}.tli::before{content:"";position:absolute;left:-18px;top:3px;width:9px;height:9px;border-radius:50%;background:var(--steel-2);border:2px solid #fff}.tli.done::before{background:var(--good)}.tli.now::before{background:var(--flag);animation:pulse 2s infinite}.tli .tt{font-family:var(--mono);font-size:10.5px;color:var(--steel)}
-.df{padding:16px 22px;border-top:1px solid var(--line);display:flex;gap:9px;flex-wrap:wrap;background:#FAFAFB}
-.toasts{position:fixed;bottom:22px;right:22px;display:flex;flex-direction:column;gap:10px;z-index:80}.toast{background:var(--ink);color:#fff;padding:13px 16px;border-radius:11px;font-size:13px;box-shadow:0 10px 30px rgba(15,16,19,.3);display:flex;align-items:center;gap:11px;min-width:240px;max-width:340px;transform:translateX(120%);transition:.3s cubic-bezier(.22,.61,.36,1)}.toast.show{transform:none}.toast .ti{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:700}.toast.ok .ti{background:var(--good)}.toast.info .ti{background:#3A6EA5}
-@media(max-width:860px){.kpis{grid-template-columns:repeat(2,1fr)}.hgrid{grid-template-columns:1fr}.grid2{grid-template-columns:1fr}.sgr{grid-template-columns:1fr}thead th.hide,tbody td.hide{display:none}}
-@media(max-width:480px){.kpis{grid-template-columns:1fr 1fr}.vrule,.product{display:none}}
-.fade{opacity:0;transform:translateY(8px);animation:rise .5s ease forwards}@media(prefers-reduced-motion:reduce){.fade{animation:none;opacity:1;transform:none}.dot{animation:none}*{transition:none!important}}@keyframes rise{to{opacity:1;transform:none}}
+.chev{color:var(--steel-2);font-size:16px;transition:.15s}tbody tr:hover .chev{color:var(--brand);transform:translateX(3px)}.hint{font-family:var(--mono);font-size:10.5px;color:var(--steel-2);padding:9px 16px 3px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:24px}.panel{padding:18px 20px 20px}.panel h3{font-size:14.5px;font-weight:600;margin-bottom:2px}.panel .ps{font-size:12px;color:var(--steel);margin-bottom:16px}
+.row{display:flex;justify-content:space-between;align-items:baseline;font-size:13px}.mb{margin-bottom:14px}.bar{height:8px;border-radius:5px;background:#ECE0E1;overflow:hidden;margin-top:6px}.bar span{display:block;height:100%;border-radius:5px}
+.drow{display:flex;justify-content:space-between;align-items:center;font-size:13px;padding:11px 0;border-bottom:1px solid var(--line-2)}.drow:last-child{border-bottom:none}.metric{font-family:var(--mono);font-weight:600}
+.stack{padding:24px 26px;margin-bottom:24px;position:relative;overflow:hidden;background:linear-gradient(135deg,#2A0E12,#481a20 55%,#D62839 250%);border:none;color:#fff;border-radius:var(--r)}.stack::after{content:"";position:absolute;right:-30px;top:-50px;width:240px;height:240px;border-radius:50%;background:radial-gradient(circle,rgba(214,40,57,.45),transparent 70%)}
+.sh{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:18px;position:relative;z-index:1}.sht{font-size:16px;font-weight:600}.sht .ab{display:inline-block;width:18px;height:3px;background:var(--brand-2);border-radius:2px;vertical-align:middle;margin-right:9px}.shn{font-family:var(--mono);font-size:11px;color:#B79DA1}
+.sgr{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;position:relative;z-index:1}.sg{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:11px;padding:14px 14px 16px}.gl{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#B79DA1;margin-bottom:11px}
+.tool{display:inline-flex;align-items:center;gap:7px;background:#fff;color:var(--ink);border-radius:8px;padding:6px 10px 6px 7px;font-size:12px;font-weight:600;box-shadow:0 2px 6px rgba(0,0,0,.18);margin:0 6px 6px 0}.tool .lg{width:17px;height:17px;border-radius:5px;display:grid;place-items:center;font-family:var(--mono);font-weight:600;font-size:8.5px;color:#fff}
+.sf{margin-top:14px;font-size:11.5px;color:#B79DA1;position:relative;z-index:1}.sf b{color:#E6CFD2;font-weight:500}
+.fac-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:24px}.fac{padding:18px 20px}.fac .fn{font-size:15px;font-weight:700}.fac .fl{font-family:var(--mono);font-size:11px;color:var(--steel);margin-bottom:12px}
+.foot{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;padding:6px 2px 0}.roi{font-family:var(--mono);font-size:11.5px;color:var(--ink-soft)}.roi b{color:var(--brand)}.made{font-size:11.5px;color:var(--steel)}.made b{color:var(--ink)}
+.scrim{position:fixed;inset:0;background:rgba(20,6,8,.5);backdrop-filter:blur(2px);opacity:0;pointer-events:none;transition:.25s;z-index:90}.scrim.open{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;right:0;height:100%;width:480px;max-width:94vw;background:var(--surface);box-shadow:-12px 0 40px rgba(20,6,8,.28);transform:translateX(100%);transition:transform .28s cubic-bezier(.22,.61,.36,1);z-index:100;display:flex;flex-direction:column}.drawer.open{transform:none}
+.dh{padding:22px 24px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:flex-start;gap:12px}.dn{font-size:18px;font-weight:700}.dm{font-family:var(--mono);font-size:11.5px;color:var(--steel);margin-top:3px}.dc{width:34px;height:34px;border-radius:9px;border:1px solid var(--line);background:#fff;color:var(--steel);font-size:18px}.dc:hover{background:#F7EEEF}
+.db{padding:20px 24px;overflow-y:auto;flex:1}.dmini{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:22px}.dstat{background:#FAF3F4;border:1px solid var(--line);border-radius:10px;padding:12px 14px}.dstat .l{font-size:11px;color:var(--steel)}.dstat .v{font-family:var(--mono);font-size:18px;font-weight:600;margin-top:4px}.dt{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--steel);margin:0 0 11px}.dchart{background:#FAF3F4;border:1px solid var(--line);border-radius:10px;padding:13px;margin-bottom:22px}.acc{background:#FBEFD9;border:1px solid #F0DCB4;border-radius:10px;padding:13px 14px;font-size:13px;color:#8A5712;margin-bottom:22px}.acc b{color:#6E440D}.df{padding:18px 24px;border-top:1px solid var(--line);display:flex;gap:10px;flex-wrap:wrap;background:#FBF6F6}
+.toasts{position:fixed;bottom:24px;right:24px;display:flex;flex-direction:column;gap:10px;z-index:120}.toast{background:var(--ink);color:#fff;padding:14px 17px;border-radius:11px;font-size:13px;box-shadow:var(--sh-lg);display:flex;align-items:center;gap:12px;min-width:250px;max-width:360px;transform:translateX(130%);transition:.3s cubic-bezier(.22,.61,.36,1)}.toast.show{transform:none}.toast .ti{width:23px;height:23px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:700;flex-shrink:0}.toast.ok .ti{background:var(--good)}.toast.info .ti{background:var(--brand-2)}
+@media(max-width:1140px){.fac-grid{grid-template-columns:1fr}.sgr{grid-template-columns:1fr 1fr}}
+@media(max-width:980px){.sidebar{position:fixed;transform:translateX(-100%);box-shadow:var(--sh-lg)}.sidebar.open{transform:none}.burger{display:grid;place-items:center}.search{display:none}.kpis{grid-template-columns:repeat(2,1fr)}.hgrid{grid-template-columns:1fr}}
+@media(max-width:680px){.grid2,.fac-grid{grid-template-columns:1fr}.sgr{grid-template-columns:1fr}.content{padding:18px 16px 48px}.topbar{padding:12px 16px}thead th.hide,tbody td.hide{display:none}}
+@media(max-width:520px){.kpis{grid-template-columns:1fr 1fr}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}.dot{animation:none}}
 </style></head>
 <body>
-<header class="topbar"><div class="wrap"><div class="cobrand">
-<div class="logo-co">VSS<small>CARRIERS · EXPEDITED</small></div><span class="xmul">✕</span>
-<div class="logo-in"><span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M3 17V7l5 3 4-5 4 6 5-2v8"/><circle cx="12" cy="19" r="1.4" fill="#fff" stroke="none"/></svg></span><span class="nm">Instive&nbsp;AI</span></div>
-<span class="vrule"></span><div class="product"><div class="eyebrow">Demo for VSS Carriers</div><div class="pname">Load Intelligence + Exceptions</div></div></div>
-<div class="topright"><span class="chip"><span class="dot"></span> Live · GPS feed on</span><span class="chip demo">Sample data</span></div></div></header>
-<main class="wrap">
-<section class="kpis">
-<button class="kpi fade"><div class="kl">Active loads <span class="go">›</span></div><div class="kv">42</div><div class="ks neutral">high-value · time-sensitive</div></button>
-<button class="kpi fade"><div class="kl">On-time delivery <span class="go">›</span></div><div class="kv">96.8%</div><div class="ks up">▲ rolling 30d</div></button>
-<button class="kpi fade"><div class="kl">At-risk loads <span class="go">›</span></div><div class="kv warn">5</div><div class="ks down">exceptions open now</div></button>
-<button class="kpi fade"><div class="kl">Accessorials captured <span class="go">›</span></div><div class="kv brand">$11,300</div><div class="ks up">▲ that used to slip · 30d</div></button>
-</section>
-<p class="sec-label"><span class="ix">▍</span> Catch it before the customer calls</p>
-<section class="card hero">
-<span class="badge">● ETA slip · high-value</span>
-<div class="hgrid"><div>
-<div class="hh">Load <b>VSS-7841</b> (medical devices) is trending <b>~2 hrs late</b> into Dallas.</div>
-<div class="hp">The GPS feed shows the truck stopped 41 minutes at a weigh station outside Texarkana and is now behind a slowing traffic band on I-30. ETA has slipped past the delivery window. On time-sensitive, high-value freight, the customer would rather hear it from VSS first.</div>
-<div class="rec"><b>Recommended:</b> send the consignee a proactive ETA update now, and start the detention clock since the receiver appointment was fixed.</div>
-<div class="acts"><button class="btn btn-primary" onclick="toast('ok','✓','Customer notified','Proactive ETA update sent to consignee for VSS-7841.')">Notify customer</button><button class="btn btn-ghost" onclick="openLoad('VSS-7841')">Open load</button></div>
-</div><div><div class="maprail"><div class="mapcap">VSS-7841 · LIVE TRACK · LITTLE ROCK → DALLAS</div>
-<svg viewBox="0 0 300 150" width="100%" height="150"><rect width="300" height="150" fill="#0F1013"/><path d="M20 40 C 90 40, 110 90, 180 100 S 270 120, 285 120" fill="none" stroke="#2A2C33" stroke-width="3"/><path d="M20 40 C 90 40, 110 90, 170 98" fill="none" stroke="#C0202E" stroke-width="3"/><circle cx="20" cy="40" r="5" fill="#1F9D6B"/><text x="28" y="36" font-family="IBM Plex Mono" font-size="8" fill="#8A8F9C">Little Rock</text><circle cx="170" cy="98" r="6" fill="#C0202E" stroke="#fff" stroke-width="1.5"/><text x="120" y="120" font-family="IBM Plex Mono" font-size="8" fill="#C0202E">● now · slowed</text><circle cx="285" cy="120" r="5" fill="none" stroke="#8A8F9C" stroke-width="2"/><text x="232" y="138" font-family="IBM Plex Mono" font-size="8" fill="#8A8F9C">Dallas</text></svg></div></div></div>
-</section>
-<p class="sec-label" id="loads"><span class="ix">▍</span> Live loads</p>
-<div class="tabs" id="tabs"><button class="tab active" data-f="all">All <span class="c">6</span></button><button class="tab" data-f="flag">Exceptions <span class="c">2</span></button><button class="tab" data-f="watch">Watch <span class="c">2</span></button><button class="tab" data-f="good">On track <span class="c">2</span></button></div>
-<section class="card tcard"><table><thead><tr><th class="l">Load · commodity</th><th class="hide">Lane</th><th>ETA</th><th>Exception</th><th>Accessorial owed</th><th>Status</th><th></th></tr></thead><tbody id="rows"></tbody></table><div class="hint">↳ Click a load for the live timeline, exception detail and one-click accessorial capture.</div></section>
-<div class="grid2">
-<section class="card panel"><h3>Accessorials waiting to be billed</h3><p class="ps">Detention / layover the system has timed but not yet invoiced</p>
-<div class="drow"><span>Detention (VSS-7841)</span><span class="acc">$320 · running</span></div>
-<div class="drow"><span>Layover (VSS-7798)</span><span class="acc">$450</span></div>
-<div class="drow"><span>Detention (VSS-7765)</span><span class="acc">$240</span></div>
-<div class="drow"><span>Driver assist (VSS-7740)</span><span class="acc">$180</span></div>
-<div class="rec" style="margin-top:14px"><b>$1,190</b> in billable accessorials sitting uncaptured right now. Over a month that is the <b>$11,300</b> up top.</div></section>
-<section class="card panel"><h3>Exception types · 30 days</h3><p class="ps">What is putting loads at risk</p>
-<div class="mb"><div class="row"><span>ETA slip (traffic / dwell)</span><span class="num">44%</span></div><div class="bar"><span style="width:88%;background:var(--flag)"></span></div></div>
-<div class="mb"><div class="row"><span>Detention at receiver</span><span class="num">28%</span></div><div class="bar"><span style="width:56%;background:var(--watch)"></span></div></div>
-<div class="mb"><div class="row"><span>Geofence dwell (unplanned stop)</span><span class="num">18%</span></div><div class="bar"><span style="width:36%;background:var(--watch)"></span></div></div>
-<div class="row"><span>Temp / security alert</span><span class="num">10%</span></div><div class="bar"><span style="width:20%;background:var(--accent)"></span></div></section>
+<div class="app">
+<aside class="sidebar" id="sidebar">
+  <div class="sb-brand"><div class="lockup">
+    <span class="mk"><svg viewBox="0 0 32 32" fill="none"><rect x="2" y="2" width="28" height="28" rx="8" fill="url(#g)"/><rect x="6" y="12" width="11" height="9" rx="1" stroke="#fff" stroke-width="1.8" fill="none"/><path d="M17 15h4l3 3v3h-7z" stroke="#fff" stroke-width="1.8" fill="none" stroke-linejoin="round"/><circle cx="10" cy="22" r="1.8" fill="#E0892E"/><circle cx="20" cy="22" r="1.8" fill="#E0892E"/><defs><linearGradient id="g" x1="0" y1="0" x2="32" y2="32"><stop offset="0" stop-color="#E63B4A"/><stop offset="1" stop-color="#9e1c29"/></linearGradient></defs></svg></span>
+    <span class="lk-txt">VSS CARRIERS<small>TIME-SENSITIVE FREIGHT</small></span></div>
+    <div class="sb-x"><span class="by"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M3 17V7l5 3 4-5 4 6 5-2v8"/></svg></span> powered by <b style="color:#e6cfd2;font-weight:600">Instive&nbsp;AI</b></div></div>
+  <nav class="nav">
+    <div class="nav-h">Operations</div>
+    <button class="nav-i active" data-v="board"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg> Live Load Board <span class="tag">1</span></button>
+    <button class="nav-i" data-v="carriers"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg> Carrier Scorecard</button>
+    <button class="nav-i" data-v="acc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg> Lanes &amp; Accessorials</button>
+    <div class="nav-h" style="margin-top:10px">Account</div>
+    <button class="nav-i" onclick="toast('info','i','Settings','Connector mapping lives here in the live build.')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-2.82 1.17V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 7 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 2.6 14H2a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 7l.06-.06A2 2 0 1 1 7.46 4l.06.06A1.65 1.65 0 0 0 9.34 4.6 1.65 1.65 0 0 0 11 3V2a2 2 0 1 1 4 0v.09A1.65 1.65 0 0 0 17 4.6l.06-.06A2 2 0 1 1 20 7.46l-.06.06A1.65 1.65 0 0 0 19.4 9V11a2 2 0 1 1 0 4z"/></svg> Connectors &amp; settings</button>
+  </nav>
+  <div class="sb-foot"><div class="who"><span class="av">NM</span><div><div class="nm">Nikola Mircetic</div><div class="rl">VSS Carriers</div></div></div><div class="demo-pill">DEMO · sample data only</div></div>
+</aside>
+
+<div class="main">
+  <header class="topbar">
+    <button class="burger" onclick="document.getElementById('sidebar').classList.toggle('open')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg></button>
+    <div><div class="tb-title" id="tbTitle">Live Load Board</div><div class="tb-crumb" id="tbCrumb">VSS · high-value, time-sensitive freight · live</div></div>
+    <div class="tb-right"><span class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg> Search loads, carriers…</span><span class="live"><span class="dot"></span> Live · 2 exceptions</span></div>
+  </header>
+  <div class="content">
+
+  <!-- LOAD BOARD -->
+  <section class="view active" id="view-board">
+    <section class="kpis">
+      <button class="kpi"><div class="kl">Loads in motion <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1" y="3" width="15" height="13"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2"/><circle cx="18.5" cy="18.5" r="2"/></svg></span></div><div class="kv">47</div><div class="ks neutral">high-value freight</div></button>
+      <button class="kpi"><div class="kl">Exceptions now <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg></span></div><div class="kv flag">2</div><div class="ks down">before the customer calls</div></button>
+      <button class="kpi"><div class="kl">Detention running <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span></div><div class="kv warn">1</div><div class="ks neutral">clock live</div></button>
+      <button class="kpi"><div class="kl">Accessorials · MTD <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span></div><div class="kv good">$41.8K</div><div class="ks up">captured, not lost</div></button>
+    </section>
+
+    <p class="sec-label"><span class="ix">◆</span> An ETA slip on a medical-devices load, with the detention clock already running</p>
+    <section class="card hero">
+      <span class="badge">● Exception · ETA slip · medical devices · VSS-7741</span>
+      <div class="hgrid">
+        <div>
+          <div class="hh">Load VSS-7741 is <b>slipping</b>, and the detention clock is live.</div>
+          <div class="hp">A high-value medical-devices load on the Memphis to Dallas lane is running behind its committed ETA, and the receiver's detention window has started. The board caught the slip from the GPS feed, surfaced it before the customer noticed, and the accessorial is one tap away from being captured instead of written off. Time-sensitive freight is exactly where a missed exception costs the most.</div>
+          <div class="rec"><b>Recommended:</b> notify the customer proactively on VSS-7741 and capture the detention accessorial now, before it ages out of the window.</div>
+          <div class="acts">
+            <button class="btn btn-primary" onclick="openLoad('VSS-7741')">Open the load</button>
+            <button class="btn btn-ghost" onclick="document.querySelector('[data-f=flag]').click();document.getElementById('loadAnchor').scrollIntoView({behavior:'smooth'})">See exceptions</button>
+          </div>
+        </div>
+        <div><div class="clockbox"><div class="clabel">VSS-7741 · DETENTION CLOCK</div><div class="clock">01:42</div><div class="csub">past the 2-hr free window · accruing</div>
+          <div class="tl"><div class="tlrow"><span class="tldot" style="background:var(--good)"></span><div>Picked up · on time<div class="tlt">06:10</div></div></div>
+          <div class="tlrow"><span class="tldot" style="background:var(--watch)"></span><div>ETA slipped +90 min<div class="tlt">11:25 · traffic + reroute</div></div></div>
+          <div class="tlrow"><span class="tldot" style="background:var(--flag)"></span><div>Detention window started<div class="tlt">13:40 · clock live</div></div></div></div>
+          </div></div>
+      </div>
+    </section>
+
+    <p class="sec-label" id="loadAnchor"><span class="ix">◆</span> Live loads <span class="more" onclick="toast('info','i','Refresh','Board refreshes from GPS in the live build.')">Refresh</span></p>
+    <div class="tabs" id="tabs">
+      <button class="tab active" data-f="all">All <span class="c">6</span></button>
+      <button class="tab" data-f="flag">Exception <span class="c">2</span></button>
+      <button class="tab" data-f="watch">Watch <span class="c">1</span></button>
+      <button class="tab" data-f="good">On track <span class="c">3</span></button>
+    </div>
+    <section class="card tcard"><table>
+      <thead><tr><th class="l">Load · commodity</th><th class="hide">Lane</th><th>Carrier</th><th>ETA</th><th>Accessorial</th><th>Status</th><th></th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table><div class="hint">↳ Click any load for the live timeline and one-tap accessorial capture.</div></section>
+
+    <div class="grid2">
+      <section class="card panel"><h3>Why exceptions are the game</h3><p class="ps">Time-sensitive, high-value</p>
+        <div class="rec">On high-value freight, the cost of a missed exception is not the freight, it is the customer relationship and the uncaptured accessorial. The board flags the slip from the GPS feed and surfaces it before the phone rings.</div>
+        <div class="drow" style="margin-top:14px"><span>Exceptions caught proactively</span><span class="metric" style="color:var(--good)">91%</span></div>
+        <div class="drow"><span>Before the customer called</span><span class="metric" style="color:var(--good)">most</span></div></section>
+      <section class="card panel"><h3>Accessorials captured</h3><p class="ps">MTD · would otherwise leak</p>
+        <div class="mb"><div class="row"><span>Detention</span><span class="num" style="color:var(--good)">$23.4K</span></div><div class="bar"><span style="width:78%;background:var(--good)"></span></div></div>
+        <div class="mb"><div class="row"><span>Layover / TONU</span><span class="num" style="color:var(--good)">$11.2K</span></div><div class="bar"><span style="width:48%;background:var(--accent)"></span></div></div>
+        <div class="row"><span>Reconsignment</span><span class="num">$7.2K</span></div><div class="bar"><span style="width:30%;background:var(--brand)"></span></div></section>
+    </div>
+
+    <section class="card stack"><div class="sh"><div class="sht"><span class="ab"></span>Plugs into the stack VSS already runs</div><div class="shn">read-only · works with your GPS &amp; load data · ~4–6 week build</div></div>
+      <div class="sgr">
+        <div class="sg"><div class="gl">GPS / telematics</div><span class="tool"><span class="lg" style="background:#D62839">GP</span>GPS feed</span></div>
+        <div class="sg"><div class="gl">TMS / load data</div><span class="tool"><span class="lg" style="background:#E0892E">TM</span>your TMS</span></div>
+        <div class="sg"><div class="gl">Visibility</div><span class="tool"><span class="lg" style="background:#3B5BA8">p44</span>project44</span></div>
+        <div class="sg"><div class="gl">Billing</div><span class="tool"><span class="lg" style="background:#481a20">BL</span>accessorials</span></div>
+      </div>
+      <div class="sf">→ <b>Tell us your exact systems and we map the connectors to them.</b> It reads your GPS and load feeds and flags the exception with the accessorial ready to capture. Nothing migrates.</div>
+    </section>
+    <div class="foot"><div class="roi">Every detention and accessorial captured; <b>exceptions caught before the customer calls</b>.</div><div class="made">Mockup by <b>Instive AI</b> for VSS Carriers · sample data</div></div>
+  </section>
+
+  <!-- CARRIER SCORECARD -->
+  <section class="view" id="view-carriers">
+    <p class="sec-label"><span class="ix">◆</span> Carriers · scored for time-sensitive freight</p>
+    <section class="card tcard"><table>
+      <thead><tr><th class="l">Carrier</th><th>On-time</th><th class="hide">Exception rate</th><th>Accessorial capture</th><th>Score</th><th>Status</th></tr></thead>
+      <tbody id="crows"></tbody>
+    </table><div class="hint">↳ Scored on what matters for high-value loads: on-time, exceptions and clean accessorial handling.</div></section>
+    <div class="grid2">
+      <section class="card panel"><h3>Exception rate movers</h3><p class="ps">Last 3 weeks</p>
+        <div class="mb"><div class="row"><span>Rapid Line Express</span><span class="num" style="color:var(--flag)">▲ 2.1%</span></div><div class="bar"><span style="width:70%;background:var(--flag)"></span></div></div>
+        <div class="mb"><div class="row"><span>Summit Freight</span><span class="num" style="color:var(--watch)">▲ 0.8%</span></div><div class="bar"><span style="width:42%;background:var(--watch)"></span></div></div>
+        <div class="row"><span>Vanguard Carriers</span><span class="num" style="color:var(--good)">▼ 0.4%</span></div><div class="bar"><span style="width:24%;background:var(--good)"></span></div></section>
+      <section class="card panel"><h3>What the score weighs</h3><p class="ps">Tuned for time-sensitive</p>
+        <div class="drow"><span>On-time (committed ETA)</span><span class="metric">40%</span></div>
+        <div class="drow"><span>Exception frequency</span><span class="metric">30%</span></div>
+        <div class="drow"><span>Accessorial cleanliness</span><span class="metric">20%</span></div>
+        <div class="drow"><span>Communication</span><span class="metric">10%</span></div></section>
+    </div>
+    <div class="foot"><div class="roi">The carriers that slip on high-value freight surface before they cost a customer.</div><div class="made">Carrier view · Instive AI for VSS · sample data</div></div>
+  </section>
+
+  <!-- LANES & ACCESSORIALS -->
+  <section class="view" id="view-acc">
+    <p class="sec-label"><span class="ix">◆</span> Where exceptions and accessorials concentrate</p>
+    <div class="fac-grid">
+      <section class="card fac"><div class="fn">Medical / pharma</div><div class="fl">high-value · time-critical</div>
+        <div class="drow"><span>Loads · MTD</span><span class="metric">210</span></div>
+        <div class="drow"><span>Exception rate</span><span class="metric" style="color:var(--watch)">3.1%</span></div>
+        <div class="drow"><span>Accessorials</span><span class="metric" style="color:var(--good)">$18.4K</span></div></section>
+      <section class="card fac"><div class="fn">Electronics</div><div class="fl">high-value</div>
+        <div class="drow"><span>Loads · MTD</span><span class="metric">180</span></div>
+        <div class="drow"><span>Exception rate</span><span class="metric">2.2%</span></div>
+        <div class="drow"><span>Accessorials</span><span class="metric" style="color:var(--good)">$13.1K</span></div></section>
+      <section class="card fac"><div class="fn">Expedited general</div><div class="fl">time-sensitive</div>
+        <div class="drow"><span>Loads · MTD</span><span class="metric">240</span></div>
+        <div class="drow"><span>Exception rate</span><span class="metric">1.8%</span></div>
+        <div class="drow"><span>Accessorials</span><span class="metric">$10.3K</span></div></section>
+    </div>
+    <section class="card stack"><div class="sh"><div class="sht"><span class="ab"></span>One board, every high-value lane</div><div class="shn">exceptions + accessorials in one view</div></div>
+      <div class="sf" style="margin-top:0;color:#e6cfd2;font-size:13px">Medical, electronics and expedited freight all read from the <b>same</b> GPS and load feeds. An ETA slip on a pharma load and a detention on an electronics load both surface the same way, with the accessorial ready to capture before it ages out.</div></section>
+    <div class="foot"><div class="roi">One AI layer · <b>exception + accessorial capture</b> across every lane.</div><div class="made">Mockup by <b>Instive AI</b> for VSS Carriers · sample data</div></div>
+  </section>
+
+  </div>
 </div>
-<section class="card stack"><div class="sh"><div class="sht"><span class="ab"></span>Plugs into the stack VSS already runs</div><div class="shn">read-only · no rip-and-replace · ~6–8 week build</div></div>
-<div class="sgr">
-<div class="sg"><div class="gl">Telematics / GPS</div><div class="tools"><span class="tool"><span class="lg" style="background:#e2640b">Mo</span>Motive</span><span class="tool"><span class="lg" style="background:#1f6feb">Sm</span>Samsara</span></div></div>
-<div class="sg"><div class="gl">TMS (expedited)</div><div class="tools"><span class="tool"><span class="lg" style="background:#0aa1a1">TM</span>your TMS</span></div></div>
-<div class="sg"><div class="gl">Billing</div><div class="tools"><span class="tool"><span class="lg" style="background:#2ca01c">AR</span>your AR</span></div></div></div>
-<div class="sf">→ <b>Tell us your exact systems and we map the connectors to them.</b> The board reads your GPS and load data, flags exceptions, and times accessorials for billing.</div></section>
-</main>
-<footer class="wrap"><div class="roi">Every detention/accessorial charge captured; exceptions caught <b>before the customer calls</b>.</div><div class="made">Mockup by <b>Instive AI</b> for VSS Carriers · sample data</div></footer>
-<div class="scrim" id="scrim" onclick="closeD()"></div><aside class="drawer" id="drawer"></aside>
-<div class="toasts" id="toasts"></div>
+</div>
+<div class="scrim" id="scrim" onclick="closeD()"></div><aside class="drawer" id="drawer"></aside><div class="toasts" id="toasts"></div>
 <script>
-const LOADS={
-"VSS-7841":{comm:"Medical devices",lane:"Little Rock, AR → Dallas, TX",eta:"~2h late",exc:"ETA slip + detention",acc:"$320 running",status:"flag",sl:"Exception",val:"$84,000",timeline:[["Picked up · Little Rock","done","06:10"],["Weigh station dwell 41 min","done","09:48"],["Slowed on I-30","now","11:22 (now)"],["Receiver appt · Dallas","","12:00 window"]],note:"GPS dwell + traffic put ETA past the window. Notify consignee; detention clock started at the fixed appointment."},
-"VSS-7798":{comm:"Trade-show exhibit",lane:"Houston, TX → Las Vegas, NV",eta:"On time",exc:"Layover (billable)",acc:"$450",status:"watch",sl:"Watch",val:"$120,000",timeline:[["Picked up · Houston","done","Mon 14:00"],["Overnight layover · El Paso","done","Mon 23:00"],["Rolling to Vegas","now","now"],["Show dock appt","","Wed 08:00"]],note:"On schedule, but an authorized layover is billable and should be captured before invoicing."},
-"VSS-7765":{comm:"Aerospace components",lane:"Wichita, KS → Fort Worth, TX",eta:"On time",exc:"Detention at receiver",acc:"$240",status:"watch",sl:"Watch",val:"$66,000",timeline:[["Picked up · Wichita","done","07:30"],["In transit","done","—"],["Detained at receiver 2.0h","now","now"],["Unloading","","pending"]],note:"Receiver is running behind; detention is accruing and should be logged."},
-"VSS-7740":{comm:"High-value electronics",lane:"Dallas, TX → Denver, CO",eta:"On time",exc:"Driver assist (billable)",acc:"$180",status:"good",sl:"On track",val:"$54,000",timeline:[["Picked up · Dallas","done","05:00"],["In transit","now","now"],["Receiver · Denver","","18:00"]],note:"On track; driver-assist unload at pickup is billable, queued for capture."},
-"VSS-7712":{comm:"Pharma (cold)",lane:"Memphis, TN → Oklahoma City, OK",eta:"On time",exc:"None",acc:"—",status:"good",sl:"On track",val:"$98,000",timeline:[["Picked up · Memphis","done","04:20"],["Temp nominal","done","—"],["Rolling","now","now"],["Receiver · OKC","","15:30"]],note:"Temp within range, on schedule. No action."},
-"VSS-7688":{comm:"Time-critical auto parts",lane:"San Antonio, TX → Laredo, TX",eta:"Early",exc:"None",acc:"—",status:"good",sl:"On track",val:"$31,000",timeline:[["Picked up · San Antonio","done","08:00"],["Rolling","now","now"],["Receiver · Laredo","","12:30"]],note:"Running ahead of schedule. No action."}};
-function rowHtml(id,l){const cc=l.status==='good'?'var(--good)':l.status==='watch'?'var(--watch)':'var(--flag)';const ec=l.eta.includes('late')?'color:var(--flag);font-weight:700':l.eta==='Early'?'color:var(--good)':'';
-return `<tr data-status="${l.status}" tabindex="0" onclick="openLoad('${id}')" onkeydown="if(event.key==='Enter')openLoad('${id}')"><td class="l"><div class="nm2">${id}<div class="sub">${l.comm}</div></div></td><td class="num hide">${l.lane}</td><td class="num" style="${ec}">${l.eta}</td><td class="num" style="font-family:var(--sans);font-weight:500">${l.exc}</td><td class="acc">${l.acc}</td><td><span class="status s-${l.status}">● ${l.sl}</span></td><td><span class="chev">›</span></td></tr>`;}
-const rows=document.getElementById('rows');rows.innerHTML=Object.entries(LOADS).map(([id,l])=>rowHtml(id,l)).join("");
-document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x===t));document.querySelectorAll('#rows tr').forEach(r=>r.style.display=(t.dataset.f==='all'||r.dataset.status===t.dataset.f)?'':'none');document.getElementById('loads').scrollIntoView({behavior:'smooth'});}));
+const TITLES={board:["Live Load Board","VSS · high-value, time-sensitive freight · live"],carriers:["Carrier Scorecard","VSS · carriers scored for time-sensitive freight"],acc:["Lanes &amp; Accessorials","VSS · where exceptions concentrate"]};
+document.querySelectorAll('.nav-i[data-v]').forEach(b=>b.addEventListener('click',()=>{const v=b.dataset.v;document.querySelectorAll('.nav-i[data-v]').forEach(x=>x.classList.toggle('active',x===b));document.querySelectorAll('.view').forEach(s=>s.classList.toggle('active',s.id==='view-'+v));document.getElementById('tbTitle').innerHTML=TITLES[v][0];document.getElementById('tbCrumb').innerHTML=TITLES[v][1];document.getElementById('sidebar').classList.remove('open');window.scrollTo({top:0,behavior:'smooth'});}));
+
+const LOAD={
+ "VSS-7741":{commodity:"Medical devices",lane:"Memphis → Dallas",carrier:"Rapid Line Express",eta:"+1h 30m",acc:"detention",accVal:"$280",st:"flag",hv:1,
+  tl:[["Picked up · on time","06:10","good"],["ETA slipped +90 min","11:25 · traffic + reroute","watch"],["Detention window started","13:40 · clock live","flag"]],
+  why:"GPS shows the load behind its committed ETA and the receiver's detention window has started. High-value medical freight, so the customer should hear it from VSS first.",
+  accNote:"Detention accruing past the 2-hr free window. At the contracted rate, the captured accessorial is about $280 and counting. Capture now before it ages out."},
+ "VSS-7702":{commodity:"Electronics",lane:"Dallas → Phoenix",carrier:"Summit Freight",eta:"+20m",acc:"watch",accVal:"—",st:"watch",hv:1,
+  tl:[["Picked up · on time","07:00","good"],["Minor ETA drift","midday","watch"]],
+  why:"Small ETA drift, within tolerance for now. Flagged to watch in case it widens.",
+  accNote:"No accessorial yet. Monitoring the ETA."},
+ "VSS-7758":{commodity:"Pharma (cold)",lane:"Atlanta → Miami",carrier:"Vanguard Carriers",eta:"on time",acc:"layover",accVal:"$190",st:"flag",hv:1,
+  tl:[["Picked up · on time","05:30","good"],["Layover at terminal","overnight hold","flag"]],
+  why:"An unplanned overnight layover triggered a layover accessorial. Caught from the load feed.",
+  accNote:"Layover accessorial of about $190 ready to capture against the contracted rate."},
+ "VSS-7710":{commodity:"Electronics",lane:"Memphis → Atlanta",carrier:"Vanguard Carriers",eta:"on time",acc:"clean",accVal:"$0",st:"good",hv:1,
+  tl:[["Picked up · on time","06:45","good"],["In transit · on ETA","midday","good"]],
+  why:"On track, no exceptions.",accNote:"No accessorial. Clean run."},
+ "VSS-7725":{commodity:"Expedited general",lane:"Dallas → Houston",carrier:"Summit Freight",eta:"on time",acc:"clean",accVal:"$0",st:"good",hv:0,
+  tl:[["Picked up · on time","08:00","good"],["In transit · on ETA","midday","good"]],
+  why:"On track.",accNote:"No accessorial."},
+ "VSS-7733":{commodity:"Medical devices",lane:"Nashville → STL",carrier:"Rapid Line Express",eta:"on time",acc:"clean",accVal:"$0",st:"good",hv:1,
+  tl:[["Picked up · on time","07:30","good"],["In transit · on ETA","midday","good"]],
+  why:"On track.",accNote:"No accessorial."}};
+function loadRow(id,l){return `<tr data-status="${l.st}" tabindex="0" onclick="openLoad('${id}')" onkeydown="if(event.key==='Enter')openLoad('${id}')"><td class="l"><div class="nm2">${id}${l.hv?'<span class="hv">HIGH VALUE</span>':''}<div class="sub">${l.commodity}</div></div></td><td class="num hide">${l.lane}</td><td class="num">${l.carrier}</td><td class="num" style="${l.st==='flag'?'color:var(--flag);font-weight:700':l.st==='watch'?'color:var(--watch)':''}">${l.eta}</td><td class="num" style="${l.accVal!=='$0'&&l.accVal!=='—'?'color:var(--good);font-weight:700':''}">${l.accVal}</td><td><span class="status s-${l.st}">● ${l.st==='good'?'On track':l.st==='watch'?'Watch':'Exception'}</span></td><td><span class="chev">›</span></td></tr>`;}
+document.getElementById('rows').innerHTML=Object.entries(LOAD).map(([id,l])=>loadRow(id,l)).join("");
+document.querySelectorAll('#tabs .tab').forEach(t=>t.addEventListener('click',()=>{document.querySelectorAll('#tabs .tab').forEach(x=>x.classList.toggle('active',x===t));document.querySelectorAll('#rows tr').forEach(r=>r.style.display=(t.dataset.f==='all'||r.dataset.status===t.dataset.f)?'':'none');document.getElementById('loadAnchor').scrollIntoView({behavior:'smooth'});}));
 const drawer=document.getElementById('drawer'),scrim=document.getElementById('scrim');
-function openLoad(id){const l=LOADS[id];const cc=l.status==='good'?'var(--good)':l.status==='watch'?'var(--watch)':'var(--flag)';
-drawer.innerHTML=`<div class="dh"><div><div class="dn">${id}</div><div class="dm">${l.comm} · ${l.lane}</div></div><button class="dc" onclick="closeD()">×</button></div>
-<div class="db"><div style="margin-bottom:18px"><span class="status s-${l.status}">● ${l.sl}</span></div>
-<div class="dmini"><div class="dstat"><div class="l">ETA status</div><div class="v" style="color:${cc};font-size:15px">${l.eta}</div></div><div class="dstat"><div class="l">Cargo value</div><div class="v">${l.val}</div></div><div class="dstat"><div class="l">Exception</div><div class="v" style="font-size:13px">${l.exc}</div></div><div class="dstat"><div class="l">Accessorial owed</div><div class="v" style="color:var(--watch)">${l.acc}</div></div></div>
-<p class="dt">Live timeline</p><div class="tl">${l.timeline.map(t=>`<div class="tli ${t[1]}"><div>${t[0]}</div><div class="tt">${t[2]}</div></div>`).join("")}</div>
-<p class="dt">Recommended</p><div class="rec">${l.note}</div></div>
-<div class="df"><button class="btn btn-primary" onclick="closeD();toast('ok','✓','Customer notified','Proactive ETA update sent for ${id}.')">Notify customer</button><button class="btn btn-ghost" onclick="toast('ok','✓','Accessorial logged','${l.acc} captured to billing for ${id}.')">Capture accessorial</button></div>`;
-drawer.classList.add('open');scrim.classList.add('open');document.body.style.overflow='hidden';}
+function openLoad(id){const l=LOAD[id];
+  drawer.innerHTML=`<div class="dh"><div><div class="dn">${id}</div><div class="dm">${l.commodity} · ${l.lane}</div></div><button class="dc" onclick="closeD()">×</button></div>
+  <div class="db"><div style="margin-bottom:18px"><span class="status s-${l.st}">● ${l.st==='good'?'On track':l.st==='watch'?'Watch':'Exception'}</span></div>
+  <div class="dmini"><div class="dstat"><div class="l">Carrier</div><div class="v" style="font-size:14px">${l.carrier}</div></div><div class="dstat"><div class="l">ETA</div><div class="v" style="color:${l.st==='flag'?'var(--flag)':'inherit'}">${l.eta}</div></div></div>
+  <p class="dt">Live timeline</p><div class="dchart"><div class="tl" style="margin-top:0">${l.tl.map(t=>`<div class="tlrow"><span class="tldot" style="background:var(--${t[2]})"></span><div>${t[0]}<div class="tlt">${t[1]}</div></div></div>`).join("")}</div></div>
+  <p class="dt">Why it surfaced</p><div class="rec" style="margin-bottom:22px">${l.why}</div>
+  <p class="dt">Accessorial</p><div class="acc"><b>${l.acc==='clean'?'No accessorial':l.acc.charAt(0).toUpperCase()+l.acc.slice(1)+' · '+l.accVal}</b><br><span style="font-size:12px">${l.accNote}</span></div></div>
+  <div class="df">${l.accVal!=='$0'&&l.accVal!=='—'?`<button class="btn btn-primary" onclick="closeD();toast('ok','✓','Accessorial captured','${id} ${l.acc} captured · ${l.accVal}.')">Capture accessorial</button><button class="btn btn-ghost" onclick="closeD();toast('info','i','Customer notified','${id} update sent to the customer.')">Notify customer</button>`:`<button class="btn btn-ghost" onclick="closeD()">Close</button>`}</div>`;
+  drawer.classList.add('open');scrim.classList.add('open');document.body.style.overflow='hidden';}
 function closeD(){drawer.classList.remove('open');scrim.classList.remove('open');document.body.style.overflow='';}
-function toast(type,icon,title,msg){const e=document.createElement('div');e.className='toast '+type;e.innerHTML=`<span class="ti">${icon}</span><span><b>${title}</b><br><span style="opacity:.8;font-size:12px">${msg||''}</span></span>`;document.getElementById('toasts').appendChild(e);requestAnimationFrame(()=>e.classList.add('show'));setTimeout(()=>{e.classList.remove('show');setTimeout(()=>e.remove(),350);},3600);}
+const CARR={"Vanguard Carriers":["98.1%","1.1%","99%","A","good"],"Summit Freight":["95.4%","2.0%","94%","B","watch"],"Rapid Line Express":["92.8%","3.2%","88%","C+","flag"],"Apex Hotshot":["97.2%","1.4%","96%","A-","good"],"Delta Expedite":["96.0%","1.8%","93%","B+","good"]};
+document.getElementById('crows').innerHTML=Object.entries(CARR).map(([n,c])=>{const sc=c[4]==='good'?'color:var(--good)':c[4]==='watch'?'color:var(--watch)':'color:var(--flag)';return `<tr><td class="l"><div class="nm2">${n}</div></td><td class="num">${c[0]}</td><td class="num hide">${c[1]}</td><td class="num">${c[2]}</td><td class="num" style="${sc};font-weight:700">${c[3]}</td><td><span class="status s-${c[4]}">● ${c[4]==='good'?'Strong':c[4]==='watch'?'Watch':'Flagged'}</span></td></tr>`;}).join("");
+function toast(type,icon,title,msg){const e=document.createElement('div');e.className='toast '+type;e.innerHTML=`<span class="ti">${icon}</span><span><b>${title}</b><br><span style="opacity:.82;font-size:12px">${msg||''}</span></span>`;document.getElementById('toasts').appendChild(e);requestAnimationFrame(()=>e.classList.add('show'));setTimeout(()=>{e.classList.remove('show');setTimeout(()=>e.remove(),350);},3600);}
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeD();});
-</script></body></html>
+</script>
+</body></html>

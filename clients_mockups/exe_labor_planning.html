@@ -7,118 +7,257 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-:root{--ink:#1E140A;--ink-soft:#33240F;--canvas:#F2EEE9;--surface:#fff;--line:#E6DDD2;--steel:#766757;--steel-2:#A4948181;--accent:#C76A1E;--brand:#E07B2B;--good:#1F9D6B;--good-bg:#E8F5EF;--watch:#D9941F;--watch-bg:#FBF1DE;--flag:#D64A45;--flag-bg:#FBE9E8;--mono:"IBM Plex Mono",monospace;--sans:"Inter",system-ui,sans-serif;--r:14px;--sh:0 1px 2px rgba(30,20,10,.05),0 6px 18px rgba(30,20,10,.07)}
-*{box-sizing:border-box;margin:0;padding:0}body{font-family:var(--sans);background:var(--canvas);color:var(--ink);line-height:1.45;-webkit-font-smoothing:antialiased;padding-bottom:40px}
-.wrap{max-width:1080px;margin:0 auto;padding:0 20px}button{font-family:inherit;cursor:pointer}
-.topbar{background:var(--ink);color:#fff}.topbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:16px 20px;flex-wrap:wrap}
-.cobrand{display:flex;align-items:center;gap:14px}.logo-co{font-weight:800;font-size:16px;color:#fff;background:var(--brand);padding:8px 12px;border-radius:9px;line-height:1.1;box-shadow:inset 0 0 0 1px rgba(255,255,255,.12)}.logo-co small{display:block;font-family:var(--mono);font-weight:500;font-size:7.5px;letter-spacing:.1em;margin-top:3px;opacity:.9}
-.xmul{font-family:var(--mono);font-size:15px;color:#A49481}.logo-in{display:flex;align-items:center;gap:9px}.mark{width:34px;height:34px;border-radius:8px;background:linear-gradient(145deg,#3A6EA5,#244a73);display:grid;place-items:center;box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}.mark svg{width:19px;height:19px}.logo-in .nm{font-size:15px;font-weight:600}
-.vrule{width:1px;height:30px;background:rgba(255,255,255,.16)}.product .eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#E0B88E}.product .pname{font-size:14.5px;font-weight:600;margin-top:1px}
-.topright{display:flex;align-items:center;gap:9px;flex-wrap:wrap}.chip{font-family:var(--mono);font-size:11px;padding:6px 11px;border-radius:999px;display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.08);color:#E6D8C9;border:1px solid rgba(255,255,255,.1)}
-.dot{width:7px;height:7px;border-radius:50%;background:var(--good);animation:pulse 2.4s infinite}@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(31,157,107,.55)}70%{box-shadow:0 0 0 6px rgba(31,157,107,0)}100%{box-shadow:0 0 0 0 rgba(31,157,107,0)}}.chip.demo{background:rgba(217,148,31,.16);color:#F0C97E;border-color:rgba(217,148,31,.3)}
-main{margin-top:40px}.sec-label{font-family:var(--mono);font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--steel);margin:0 0 11px 2px;display:flex;gap:8px}.sec-label .ix{color:var(--brand)}
+:root{
+--ink:#2A1606;--ink-2:#371E0A;--ink-soft:#4C2D12;--canvas:#F3EEE6;--surface:#fff;--line:#E4DACC;--line-2:#EEE7DC;
+--steel:#7A6A55;--steel-2:#A89884;--brand:#E07B1F;--brand-2:#2B6CB0;--accent:#F0934A;
+--good:#1F9D6B;--good-bg:#E8F5EF;--watch:#D9941F;--watch-bg:#FBF1DE;--flag:#D64A45;--flag-bg:#FBE9E8;
+--mono:"IBM Plex Mono",monospace;--sans:"Inter",system-ui,sans-serif;--r:14px;
+--sh:0 1px 2px rgba(42,22,6,.04),0 6px 18px rgba(42,22,6,.07);--sh-lg:0 12px 34px rgba(42,22,6,.14)}
+*{box-sizing:border-box;margin:0;padding:0}html,body{height:100%}
+body{font-family:var(--sans);background:var(--canvas);color:var(--ink);line-height:1.45;-webkit-font-smoothing:antialiased}
+button{font-family:inherit;cursor:pointer}
+.app{display:flex;min-height:100vh}
+.sidebar{width:252px;flex-shrink:0;background:linear-gradient(180deg,#2A1606,#371E0A 70%,#43250d);color:#fff;position:sticky;top:0;height:100vh;display:flex;flex-direction:column;z-index:60;transition:transform .25s}
+.sb-brand{padding:20px 20px 18px;border-bottom:1px solid rgba(255,255,255,.08)}
+.lockup{display:flex;align-items:center;gap:11px}.mk{width:32px;height:32px;flex-shrink:0}.mk svg{width:32px;height:32px}
+.lk-txt{font-weight:800;font-size:14px;letter-spacing:-.01em;line-height:1}.lk-txt small{display:block;font-family:var(--mono);font-weight:500;font-size:7.5px;letter-spacing:.08em;color:#B5A48F;margin-top:4px}
+.sb-x{display:flex;align-items:center;gap:8px;margin-top:14px;font-size:11px;color:#B5A48F}.sb-x .by{width:22px;height:22px;border-radius:6px;background:linear-gradient(145deg,var(--brand),#b05f12);display:grid;place-items:center}.sb-x .by svg{width:13px;height:13px}
+.nav{padding:16px 12px;flex:1;overflow-y:auto}.nav-h{font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:#6F5C47;padding:8px 12px}
+.nav-i{display:flex;align-items:center;gap:11px;width:100%;background:transparent;border:none;color:#CCBCAA;font-size:13.5px;font-weight:500;padding:10px 12px;border-radius:9px;text-align:left;position:relative;transition:.14s}
+.nav-i svg{width:17px;height:17px;flex-shrink:0;opacity:.85}.nav-i:hover{background:rgba(255,255,255,.06);color:#fff}
+.nav-i.active{background:rgba(224,123,31,.34);color:#fff}.nav-i.active::before{content:"";position:absolute;left:-12px;top:8px;bottom:8px;width:3px;border-radius:0 3px 3px 0;background:var(--brand)}
+.nav-i .tag{margin-left:auto;font-family:var(--mono);font-size:9.5px;background:rgba(224,123,31,.95);color:#fff;padding:2px 6px;border-radius:5px;font-weight:700}
+.sb-foot{padding:14px 16px;border-top:1px solid rgba(255,255,255,.08)}.who{display:flex;align-items:center;gap:10px}.who .av{width:32px;height:32px;border-radius:9px;background:linear-gradient(145deg,#E07B1F,#2B6CB0);display:grid;place-items:center;font-weight:700;font-size:12px}
+.who .nm{font-size:12.5px;font-weight:600;line-height:1.2}.who .rl{font-size:10.5px;color:#B5A48F}
+.demo-pill{margin-top:12px;font-family:var(--mono);font-size:10px;text-align:center;background:rgba(224,123,31,.16);color:#EEA869;border:1px solid rgba(224,123,31,.32);padding:6px;border-radius:7px}
+.main{flex:1;min-width:0;display:flex;flex-direction:column}
+.topbar{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.86);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:16px;padding:14px 28px}
+.burger{display:none;background:none;border:1px solid var(--line);border-radius:8px;width:36px;height:36px;color:var(--ink)}
+.tb-title{font-size:17px;font-weight:700;letter-spacing:-.01em}.tb-crumb{font-family:var(--mono);font-size:11px;color:var(--steel);margin-top:1px}
+.tb-right{margin-left:auto;display:flex;align-items:center;gap:12px}.search{display:flex;align-items:center;gap:8px;background:var(--canvas);border:1px solid var(--line);border-radius:9px;padding:8px 12px;color:var(--steel);font-size:12.5px;min-width:200px}.search svg{width:14px;height:14px}
+.live{font-family:var(--mono);font-size:11px;padding:7px 11px;border-radius:999px;display:inline-flex;align-items:center;gap:7px;background:#fff;border:1px solid var(--line);color:var(--ink-soft)}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--good);animation:pulse 2.4s infinite}@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(31,157,107,.55)}70%{box-shadow:0 0 0 6px rgba(31,157,107,0)}100%{box-shadow:0 0 0 0 rgba(31,157,107,0)}}
+.content{padding:26px 28px 56px;max-width:1320px;width:100%}.view{display:none}.view.active{display:block;animation:rise .4s ease}@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.sec-label{font-family:var(--mono);font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--steel);margin:0 0 12px 2px;display:flex;gap:8px;align-items:center}.sec-label .ix{color:var(--brand)}.sec-label .more{margin-left:auto;font-family:var(--sans);text-transform:none;letter-spacing:0;font-size:12px;color:var(--brand-2);font-weight:600;cursor:pointer}
 .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--sh)}
-.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:26px}.kpi{padding:16px 18px;text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:var(--r);box-shadow:var(--sh);transition:.15s;width:100%}.kpi:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(30,20,10,.12)}.kpi .kl{font-size:12px;color:var(--steel);font-weight:500;display:flex;justify-content:space-between}.kpi .kl .go{color:#A49481}.kpi .kv{font-family:var(--mono);font-size:26px;font-weight:600;letter-spacing:-.02em;margin-top:8px}.kpi .ks{font-family:var(--mono);font-size:11.5px;margin-top:6px}
-.up{color:var(--good)}.down{color:var(--flag)}.neutral{color:var(--steel)}.kv.brand{color:var(--brand)}
-.hero{padding:20px 22px;margin-bottom:26px;border-left:4px solid var(--flag);background:linear-gradient(90deg,#fff,#fffdfb)}.badge{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;background:var(--flag-bg);color:var(--flag);padding:4px 9px;border-radius:6px;font-weight:600}
-.hgrid{display:grid;grid-template-columns:1.15fr .85fr;gap:26px;align-items:center;margin-top:14px}.hh{font-size:18px;font-weight:600}.hh b{color:var(--flag)}.hp{font-size:13.5px;color:var(--ink-soft);margin-top:8px;max-width:48ch}.rec{margin-top:14px;font-size:13px;background:#FAF6F1;border:1px solid var(--line);border-radius:9px;padding:11px 13px;color:var(--ink-soft)}.rec b{color:var(--ink)}.acts{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
-.btn{font-size:13px;font-weight:600;border-radius:9px;padding:9px 15px;border:1px solid transparent;transition:.15s}.btn-primary{background:var(--ink);color:#fff}.btn-primary:hover{filter:brightness(1.6)}.btn-ghost{background:#fff;color:var(--ink-soft);border-color:var(--line)}.btn-ghost:hover{background:#FAF6F1}.btn-sm{font-size:12px;padding:7px 12px}
-.chartbox{background:#FAF7F3;border:1px solid var(--line);border-radius:11px;padding:14px 14px 8px}.cap{display:flex;justify-content:space-between;font-family:var(--mono);font-size:10.5px;color:var(--steel);margin-bottom:6px}.note{font-family:var(--mono);font-size:11px;color:var(--steel);text-align:center;margin-top:8px}
-.tabs{display:flex;gap:6px;margin-bottom:11px;flex-wrap:wrap}.tab{font-family:var(--mono);font-size:11.5px;padding:7px 13px;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--steel)}.tab.active{background:var(--ink);color:#fff;border-color:var(--ink)}.tab .c{opacity:.6;margin-left:5px}
-.tcard{padding:6px;margin-bottom:26px;overflow:hidden}table{width:100%;border-collapse:collapse}thead th{font-family:var(--mono);font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--steel);font-weight:500;text-align:right;padding:14px 14px 12px;border-bottom:1px solid var(--line);white-space:nowrap}thead th.l{text-align:left}tbody td{padding:13px 14px;border-bottom:1px solid #F0E9E0;font-size:13.5px;text-align:right;vertical-align:middle}tbody tr{cursor:pointer;transition:.12s}tbody tr:last-child td{border-bottom:none}tbody tr:hover{background:#FAF7F3}td.l{text-align:left}
+.hubbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:22px}.hlabel{font-family:var(--mono);font-size:11px;color:var(--steel);letter-spacing:.04em}
+.hbtn{font-size:13px;font-weight:600;padding:9px 15px;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--ink-soft);display:flex;align-items:center;gap:8px}.hbtn .dotc{width:8px;height:8px;border-radius:50%}.hbtn.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px}.kpi{padding:16px 18px;text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:var(--r);box-shadow:var(--sh);transition:.15s;width:100%}.kpi:hover{transform:translateY(-2px);box-shadow:var(--sh-lg)}.kpi .kl{font-size:12px;color:var(--steel);font-weight:500;display:flex;justify-content:space-between;align-items:center}.kpi .ic{width:26px;height:26px;border-radius:7px;display:grid;place-items:center;background:var(--canvas)}.kpi .ic svg{width:14px;height:14px;color:var(--brand)}.kpi .kv{font-family:var(--mono);font-size:27px;font-weight:600;letter-spacing:-.02em;margin-top:10px}.kpi .ks{font-family:var(--mono);font-size:11.5px;margin-top:6px}
+.up{color:var(--good)}.down{color:var(--flag)}.neutral{color:var(--steel)}.kv.warn{color:var(--watch)}.kv.brand{color:var(--brand)}.kv.good{color:var(--good)}
+.hero{padding:22px 24px;margin-bottom:24px;border-left:4px solid var(--brand);background:linear-gradient(100deg,#fff,#fffaf3)}
+.badge{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;background:var(--watch-bg);color:#B26B12;padding:5px 10px;border-radius:6px;font-weight:600;display:inline-block}
+.hgrid{display:grid;grid-template-columns:1.05fr .95fr;gap:30px;align-items:center;margin-top:16px}
+.hh{font-size:20px;font-weight:700;letter-spacing:-.01em}.hh b{color:var(--brand)}.hp{font-size:13.5px;color:var(--ink-soft);margin-top:10px;max-width:52ch}
+.rec{margin-top:16px;font-size:13px;background:#F6F1E9;border:1px solid var(--line);border-radius:10px;padding:12px 14px;color:var(--ink-soft)}.rec b{color:var(--ink)}
+.acts{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+.btn{font-size:13px;font-weight:600;border-radius:9px;padding:10px 16px;border:1px solid transparent;transition:.15s}.btn-primary{background:var(--brand);color:#fff}.btn-primary:hover{filter:brightness(1.08)}.btn-ghost{background:#fff;color:var(--ink-soft);border-color:var(--line)}.btn-ghost:hover{background:#F6F1E9}
+.curve{background:#FBF8F2;border:1px solid var(--line);border-radius:12px;padding:16px 16px 10px}.cap{display:flex;justify-content:space-between;font-family:var(--mono);font-size:10.5px;color:var(--steel);margin-bottom:8px}
+.hours{display:flex;align-items:flex-end;gap:5px;height:120px;padding-top:6px}.hr{flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;justify-content:flex-end}.hr .hb{width:100%;border-radius:3px 3px 0 0}.hr .hl{font-family:var(--mono);font-size:8px;color:var(--steel)}
+.cnote{font-family:var(--mono);font-size:11px;color:var(--steel);text-align:center;margin-top:10px}
+.tcard{padding:6px;margin-bottom:24px;overflow:hidden}table{width:100%;border-collapse:collapse}thead th{font-family:var(--mono);font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--steel);font-weight:500;text-align:right;padding:14px 16px 12px;border-bottom:1px solid var(--line);white-space:nowrap}thead th.l{text-align:left}
+tbody td{padding:14px 16px;border-bottom:1px solid var(--line-2);font-size:13.5px;text-align:right;vertical-align:middle}tbody tr{cursor:pointer;transition:.12s}tbody tr:last-child td{border-bottom:none}tbody tr:hover{background:#F8F3EB}td.l{text-align:left}
 .nm2{font-weight:600;font-size:14px}.sub{font-weight:400;color:var(--steel);font-size:11.5px;font-family:var(--mono);margin-top:2px}.num{font-family:var(--mono);font-weight:500}
 .status{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:11px;font-weight:600;text-transform:uppercase;padding:5px 10px;border-radius:7px}.s-good{background:var(--good-bg);color:var(--good)}.s-watch{background:var(--watch-bg);color:var(--watch)}.s-flag{background:var(--flag-bg);color:var(--flag)}
-.chev{color:#A49481;font-size:16px;transition:.15s}tbody tr:hover .chev{color:var(--accent);transform:translateX(3px)}.hint{font-family:var(--mono);font-size:10.5px;color:#A49481;padding:8px 14px 2px}
 .gap-pos{color:var(--flag);font-weight:700}.gap-neg{color:var(--watch)}.gap-ok{color:var(--good)}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-bottom:26px}.panel{padding:18px 20px 20px}.panel h3{font-size:14.5px;font-weight:600;margin-bottom:2px}.panel .ps{font-size:12px;color:var(--steel);margin-bottom:16px}
-.drow{display:flex;justify-content:space-between;align-items:center;font-size:13px;padding:10px 0;border-bottom:1px solid #F0E9E0}.drow:last-child{border-bottom:none}.metric{font-family:var(--mono);font-weight:600}
-.bar{height:8px;border-radius:5px;background:#ECE4D9;overflow:hidden;margin-top:6px}.bar span{display:block;height:100%;border-radius:5px}.row{display:flex;justify-content:space-between;align-items:baseline;font-size:13px}.mb{margin-bottom:14px}.rowf{font-family:var(--mono);font-size:10.5px;color:var(--steel);margin-top:4px}
-.stack{padding:22px 24px;margin-bottom:22px;position:relative;overflow:hidden;background:linear-gradient(135deg,#1E140A,#33240f 60%,#412d14);border:none;color:#fff;border-radius:var(--r)}.stack::after{content:"";position:absolute;right:-40px;top:-40px;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(224,123,43,.4),transparent 70%)}.sh{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:18px;position:relative;z-index:1}.sht{font-size:16px;font-weight:600}.sht .ab{display:inline-block;width:18px;height:3px;background:var(--good);border-radius:2px;vertical-align:middle;margin-right:9px}.shn{font-family:var(--mono);font-size:11px;color:#E0B88E}.sgr{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;position:relative;z-index:1}.sg{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:11px;padding:13px 14px 15px}.gl{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#E0B88E;margin-bottom:11px}.tools{display:flex;flex-wrap:wrap;gap:8px}.tool{display:inline-flex;align-items:center;gap:7px;background:#fff;color:var(--ink);border-radius:8px;padding:6px 11px 6px 7px;font-size:12.5px;font-weight:600;box-shadow:0 2px 6px rgba(0,0,0,.18)}.tool .lg{width:18px;height:18px;border-radius:5px;display:grid;place-items:center;font-family:var(--mono);font-weight:600;font-size:9px;color:#fff}.sf{margin-top:15px;font-size:11.5px;color:#E0B88E;position:relative;z-index:1}.sf b{color:#F2DDC8;font-weight:500}
-footer .wrap{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;padding-top:4px}.roi{font-family:var(--mono);font-size:11.5px;color:var(--ink-soft)}.roi b{color:var(--brand)}.made{font-size:11.5px;color:var(--steel)}.made b{color:var(--ink)}
-.scrim{position:fixed;inset:0;background:rgba(20,14,8,.5);backdrop-filter:blur(2px);opacity:0;pointer-events:none;transition:.25s;z-index:40}.scrim.open{opacity:1;pointer-events:auto}.drawer{position:fixed;top:0;right:0;height:100%;width:430px;max-width:92vw;background:var(--surface);box-shadow:-12px 0 40px rgba(20,14,8,.25);transform:translateX(100%);transition:transform .28s cubic-bezier(.22,.61,.36,1);z-index:50;display:flex;flex-direction:column}.drawer.open{transform:none}.dh{padding:20px 22px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:flex-start;gap:12px}.dn{font-size:18px;font-weight:700}.dm{font-family:var(--mono);font-size:11.5px;color:var(--steel);margin-top:3px}.dc{width:32px;height:32px;border-radius:8px;border:1px solid var(--line);background:#fff;color:var(--steel);font-size:18px}.db{padding:18px 22px;overflow-y:auto;flex:1}.dmini{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:20px}.dstat{background:#FAF7F3;border:1px solid var(--line);border-radius:10px;padding:11px 13px}.dstat .l{font-size:11px;color:var(--steel)}.dstat .v{font-family:var(--mono);font-size:19px;font-weight:600;margin-top:4px}.dt{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--steel);margin:0 0 10px}.dchart{background:#FAF7F3;border:1px solid var(--line);border-radius:10px;padding:12px;margin-bottom:20px}.df{padding:16px 22px;border-top:1px solid var(--line);display:flex;gap:9px;flex-wrap:wrap;background:#FCFAF7}
-.toasts{position:fixed;bottom:22px;right:22px;display:flex;flex-direction:column;gap:10px;z-index:80}.toast{background:var(--ink);color:#fff;padding:13px 16px;border-radius:11px;font-size:13px;box-shadow:0 10px 30px rgba(20,14,8,.3);display:flex;align-items:center;gap:11px;min-width:240px;max-width:340px;transform:translateX(120%);transition:.3s cubic-bezier(.22,.61,.36,1)}.toast.show{transform:none}.toast .ti{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:700}.toast.ok .ti{background:var(--good)}.toast.info .ti{background:var(--accent)}
-@media(max-width:860px){.kpis{grid-template-columns:repeat(2,1fr)}.hgrid{grid-template-columns:1fr}.grid2{grid-template-columns:1fr}.sgr{grid-template-columns:1fr}thead th.hide,tbody td.hide{display:none}}
-@media(max-width:480px){.kpis{grid-template-columns:1fr 1fr}.vrule,.product{display:none}}
-.fade{opacity:0;transform:translateY(8px);animation:rise .5s ease forwards}@media(prefers-reduced-motion:reduce){.fade{animation:none;opacity:1;transform:none}.dot{animation:none}*{transition:none!important}}@keyframes rise{to{opacity:1;transform:none}}
+.chev{color:var(--steel-2);font-size:16px;transition:.15s}tbody tr:hover .chev{color:var(--brand);transform:translateX(3px)}.hint{font-family:var(--mono);font-size:10.5px;color:var(--steel-2);padding:9px 16px 3px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:24px}.panel{padding:18px 20px 20px}.panel h3{font-size:14.5px;font-weight:600;margin-bottom:2px}.panel .ps{font-size:12px;color:var(--steel);margin-bottom:16px}
+.row{display:flex;justify-content:space-between;align-items:baseline;font-size:13px}.mb{margin-bottom:14px}.bar{height:8px;border-radius:5px;background:#ECE2D5;overflow:hidden;margin-top:6px}.bar span{display:block;height:100%;border-radius:5px}
+.drow{display:flex;justify-content:space-between;align-items:center;font-size:13px;padding:11px 0;border-bottom:1px solid var(--line-2)}.drow:last-child{border-bottom:none}.metric{font-family:var(--mono);font-weight:600}
+.cmgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-bottom:24px}.cmcard{padding:18px 20px}.cmcard .ct{font-size:14px;font-weight:700;display:flex;justify-content:space-between;align-items:center}.cmcard .cb{font-family:var(--mono);font-size:9.5px;font-weight:700;color:#fff;padding:3px 8px;border-radius:5px}
+.stack{padding:24px 26px;margin-bottom:24px;position:relative;overflow:hidden;background:linear-gradient(135deg,#2A1606,#43250d 55%,#E07B1F 250%);border:none;color:#fff;border-radius:var(--r)}.stack::after{content:"";position:absolute;right:-30px;top:-50px;width:240px;height:240px;border-radius:50%;background:radial-gradient(circle,rgba(224,123,31,.4),transparent 70%)}
+.sh{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:18px;position:relative;z-index:1}.sht{font-size:16px;font-weight:600}.sht .ab{display:inline-block;width:18px;height:3px;background:var(--brand);border-radius:2px;vertical-align:middle;margin-right:9px}.shn{font-family:var(--mono);font-size:11px;color:#B5A48F}
+.sgr{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;position:relative;z-index:1}.sg{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:11px;padding:14px 14px 16px}.gl{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#B5A48F;margin-bottom:11px}
+.tool{display:inline-flex;align-items:center;gap:7px;background:#fff;color:var(--ink);border-radius:8px;padding:6px 10px 6px 7px;font-size:12px;font-weight:600;box-shadow:0 2px 6px rgba(0,0,0,.18);margin:0 6px 6px 0}.tool .lg{width:17px;height:17px;border-radius:5px;display:grid;place-items:center;font-family:var(--mono);font-weight:600;font-size:8.5px;color:#fff}
+.sf{margin-top:14px;font-size:11.5px;color:#B5A48F;position:relative;z-index:1}.sf b{color:#E6D6C4;font-weight:500}
+.fac-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:24px}.fac{padding:18px 20px}.fac .fn{font-size:15px;font-weight:700}.fac .fl{font-family:var(--mono);font-size:11px;color:var(--steel);margin-bottom:12px}
+.foot{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;padding:6px 2px 0}.roi{font-family:var(--mono);font-size:11.5px;color:var(--ink-soft)}.roi b{color:var(--brand)}.made{font-size:11.5px;color:var(--steel)}.made b{color:var(--ink)}
+.scrim{position:fixed;inset:0;background:rgba(20,10,4,.5);backdrop-filter:blur(2px);opacity:0;pointer-events:none;transition:.25s;z-index:90}.scrim.open{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;right:0;height:100%;width:460px;max-width:94vw;background:var(--surface);box-shadow:-12px 0 40px rgba(20,10,4,.28);transform:translateX(100%);transition:transform .28s cubic-bezier(.22,.61,.36,1);z-index:100;display:flex;flex-direction:column}.drawer.open{transform:none}
+.dh{padding:22px 24px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:flex-start;gap:12px}.dn{font-size:18px;font-weight:700}.dm{font-family:var(--mono);font-size:11.5px;color:var(--steel);margin-top:3px}.dc{width:34px;height:34px;border-radius:9px;border:1px solid var(--line);background:#fff;color:var(--steel);font-size:18px}.dc:hover{background:#F6F1E9}
+.db{padding:20px 24px;overflow-y:auto;flex:1}.dmini{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:22px}.dstat{background:#F8F3EB;border:1px solid var(--line);border-radius:10px;padding:12px 14px}.dstat .l{font-size:11px;color:var(--steel)}.dstat .v{font-family:var(--mono);font-size:18px;font-weight:600;margin-top:4px}.dt{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--steel);margin:0 0 11px}.dchart{background:#F8F3EB;border:1px solid var(--line);border-radius:10px;padding:13px;margin-bottom:22px}.df{padding:18px 24px;border-top:1px solid var(--line);display:flex;gap:10px;flex-wrap:wrap;background:#FBF8F2}
+.toasts{position:fixed;bottom:24px;right:24px;display:flex;flex-direction:column;gap:10px;z-index:120}.toast{background:var(--ink);color:#fff;padding:14px 17px;border-radius:11px;font-size:13px;box-shadow:var(--sh-lg);display:flex;align-items:center;gap:12px;min-width:250px;max-width:360px;transform:translateX(130%);transition:.3s cubic-bezier(.22,.61,.36,1)}.toast.show{transform:none}.toast .ti{width:23px;height:23px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:700;flex-shrink:0}.toast.ok .ti{background:var(--good)}.toast.info .ti{background:var(--brand-2)}
+@media(max-width:1140px){.fac-grid{grid-template-columns:1fr}.sgr{grid-template-columns:1fr 1fr}}
+@media(max-width:980px){.sidebar{position:fixed;transform:translateX(-100%);box-shadow:var(--sh-lg)}.sidebar.open{transform:none}.burger{display:grid;place-items:center}.search{display:none}.kpis{grid-template-columns:repeat(2,1fr)}.hgrid{grid-template-columns:1fr}}
+@media(max-width:680px){.grid2,.fac-grid,.cmgrid{grid-template-columns:1fr}.sgr{grid-template-columns:1fr}.content{padding:18px 16px 48px}.topbar{padding:12px 16px}thead th.hide,tbody td.hide{display:none}}
+@media(max-width:520px){.kpis{grid-template-columns:1fr 1fr}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}.dot{animation:none}}
 </style></head>
 <body>
-<header class="topbar"><div class="wrap"><div class="cobrand">
-<div class="logo-co">EXE<small>LOGISTICS · 3PL</small></div><span class="xmul">✕</span>
-<div class="logo-in"><span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M3 17V7l5 3 4-5 4 6 5-2v8"/><circle cx="12" cy="19" r="1.4" fill="#fff" stroke="none"/></svg></span><span class="nm">Instive&nbsp;AI</span></div>
-<span class="vrule"></span><div class="product"><div class="eyebrow">Demo for EXE Logistics</div><div class="pname">Labor Planning · stop hoping, start knowing</div></div></div>
-<div class="topright"><span class="chip"><span class="dot"></span> Live · synced 7 min ago</span><span class="chip demo">Sample data</span></div></div></header>
-<main class="wrap">
-<section class="kpis">
-<button class="kpi fade"><div class="kl">Tomorrow · recommended crew <span class="go">›</span></div><div class="kv">96</div><div class="ks neutral">vs. 108 scheduled</div></button>
-<button class="kpi fade"><div class="kl">OT hours saved · wk <span class="go">›</span></div><div class="kv brand">410</div><div class="ks up">▲ vs. 4-wk avg</div></button>
-<button class="kpi fade"><div class="kl">Plan vs. actual fill <span class="go">›</span></div><div class="kv">97%</div><div class="ks up">crew showed to plan</div></button>
-<button class="kpi fade"><div class="kl">Forecast accuracy <span class="go">›</span></div><div class="kv">92.6%</div><div class="ks up">▲ 2.8 pts</div></button>
-</section>
-<p class="sec-label"><span class="ix">▍</span> Tomorrow's flag</p>
-<section class="card hero">
-<span class="badge">● Understaffing risk · Packing</span>
-<div class="hgrid"><div>
-<div class="hh"><b>Packing</b> is short 6 for tomorrow's afternoon order surge.</div>
-<div class="hp">Order data from two D2C clients shows a promo wave landing after 13:00, about 30% above a normal Thursday. Receiving is over-crewed in the morning while Packing will fall behind in the afternoon, which is the exact gap that quietly burns overtime and dents on-time numbers your clients watch.</div>
-<div class="rec"><b>Recommended:</b> shift 4 from Receiving to Packing at midday and confirm 2 flex/temp pickers; no overtime needed if set today.</div>
-<div class="acts"><button class="btn btn-primary" onclick="toast('ok','✓','Plan published','Tomorrow plan sent to floor leads and clients metrics feed.')">Publish tomorrow's plan</button><button class="btn btn-ghost" onclick="openFn('packing')">Open Packing</button></div>
-</div><div><div class="chartbox"><div class="cap"><span>PACKING · ORDERS BY HOUR</span><span>TOMORROW</span></div>
-<svg viewBox="0 0 320 120" width="100%" height="120"><line x1="0" y1="100" x2="320" y2="100" stroke="#E6DDD2"/>
-<rect x="18" y="74" width="26" height="26" fill="#1F9D6B" rx="2"/><rect x="54" y="70" width="26" height="30" fill="#1F9D6B" rx="2"/><rect x="90" y="64" width="26" height="36" fill="#1F9D6B" rx="2"/><rect x="126" y="40" width="26" height="60" fill="#D9941F" rx="2"/><rect x="162" y="24" width="26" height="76" fill="#D64A45" rx="2"/><rect x="198" y="20" width="26" height="80" fill="#D64A45" rx="2"/><rect x="234" y="34" width="26" height="66" fill="#D9941F" rx="2"/><rect x="270" y="60" width="26" height="40" fill="#1F9D6B" rx="2"/>
-<line x1="0" y1="44" x2="320" y2="44" stroke="#1E140A" stroke-dasharray="3 3" opacity=".35"/><text x="318" y="40" text-anchor="end" font-family="IBM Plex Mono" font-size="8.5" fill="#1E140A">crew capacity</text>
-<text x="195" y="116" text-anchor="middle" font-family="IBM Plex Mono" font-size="8" fill="#D64A45">13:00–16:00 surge</text></svg>
-<div class="note">Afternoon promo wave runs above crewed capacity</div></div></div></div>
-</section>
-<p class="sec-label" id="plan"><span class="ix">▍</span> Tomorrow's plan · by function</p>
-<div class="tabs" id="tabs"><button class="tab active" data-f="all">All <span class="c">5</span></button><button class="tab" data-f="flag">Understaffed <span class="c">1</span></button><button class="tab" data-f="watch">Watch <span class="c">1</span></button><button class="tab" data-f="good">Balanced <span class="c">3</span></button></div>
-<section class="card tcard"><table><thead><tr><th class="l">Function</th><th class="hide">Forecast volume</th><th>Units / head</th><th>Recommended</th><th>Scheduled</th><th>Gap</th><th>Status</th><th></th></tr></thead><tbody id="rows"></tbody></table><div class="hint">↳ Click a function for the hour-by-hour curve and recommended moves.</div></section>
-<div class="grid2">
-<section class="card panel"><h3>Daily client metrics</h3><p class="ps">Auto-published so clients see it, not just hear it</p>
-<div class="drow"><span>On-time order fulfillment</span><span class="metric" style="color:var(--good)">98.7%</span></div>
-<div class="drow"><span>Units shipped today</span><span class="metric">52,400</span></div>
-<div class="drow"><span>Avg dock-to-stock</span><span class="metric" style="color:var(--good)">2.1 hrs</span></div>
-<div class="drow"><span>Labor cost / unit</span><span class="metric">$0.41</span></div>
-<div class="rec" style="margin-top:14px"><b>"Stop hoping, start knowing."</b> The same numbers that drive the staffing plan get shared with clients automatically.</div></section>
-<section class="card panel"><h3>Flex & temp fill</h3><p class="ps">Coverage for tomorrow's gaps</p>
-<div class="drow"><span>Cross-trained internal flex</span><span class="metric" style="color:var(--good)">8 available</span></div>
-<div class="drow"><span>Temp request (Instawork)</span><span class="metric" style="color:var(--watch)">2 requested</span></div>
-<div class="drow"><span>Confirmed for AM</span><span class="metric" style="color:var(--good)">filled</span></div>
-<div class="drow"><span>Confirmed for PM surge</span><span class="metric" style="color:var(--watch)">pending 2</span></div>
-<div class="rec" style="margin-top:14px"><b>Tip:</b> 8 internal flex cover most of the midday move; only 2 temps needed for the PM surge.</div></section>
+<div class="app">
+<aside class="sidebar" id="sidebar">
+  <div class="sb-brand"><div class="lockup">
+    <span class="mk"><svg viewBox="0 0 32 32" fill="none"><rect x="2" y="2" width="28" height="28" rx="8" fill="url(#g)"/><path d="M7 21l4-7 4 4 3-6 4 9" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="22" cy="11" r="2" fill="#2B6CB0"/><defs><linearGradient id="g" x1="0" y1="0" x2="32" y2="32"><stop offset="0" stop-color="#F0934A"/><stop offset="1" stop-color="#b05f12"/></linearGradient></defs></svg></span>
+    <span class="lk-txt">EXE LOGISTICS<small>FULFILLMENT</small></span></div>
+    <div class="sb-x"><span class="by"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M3 17V7l5 3 4-5 4 6 5-2v8"/></svg></span> powered by <b style="color:#e6d6c4;font-weight:600">Instive&nbsp;AI</b></div></div>
+  <nav class="nav">
+    <div class="nav-h">Operations</div>
+    <button class="nav-i active" data-v="staffing"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 20v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 20v-2a4 4 0 0 0-3-3.87"/></svg> Staffing Plan <span class="tag">1</span></button>
+    <button class="nav-i" data-v="metrics"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h5"/></svg> Client Metrics</button>
+    <button class="nav-i" data-v="network"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9h18M9 21V9"/><rect x="3" y="3" width="18" height="18" rx="2"/></svg> Functions &amp; Network</button>
+    <div class="nav-h" style="margin-top:10px">Account</div>
+    <button class="nav-i" onclick="toast('info','i','Settings','Connector mapping lives here in the live build.')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-2.82 1.17V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 7 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 2.6 14H2a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 7l.06-.06A2 2 0 1 1 7.46 4l.06.06A1.65 1.65 0 0 0 9.34 4.6 1.65 1.65 0 0 0 11 3V2a2 2 0 1 1 4 0v.09A1.65 1.65 0 0 0 17 4.6l.06-.06A2 2 0 1 1 20 7.46l-.06.06A1.65 1.65 0 0 0 19.4 9V11a2 2 0 1 1 0 4z"/></svg> Connectors &amp; settings</button>
+  </nav>
+  <div class="sb-foot"><div class="who"><span class="av">JL</span><div><div class="nm">Jeff Lubarsky</div><div class="rl">EXE Logistics</div></div></div><div class="demo-pill">DEMO · sample data only</div></div>
+</aside>
+
+<div class="main">
+  <header class="topbar">
+    <button class="burger" onclick="document.getElementById('sidebar').classList.toggle('open')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg></button>
+    <div><div class="tb-title" id="tbTitle">Staffing Plan</div><div class="tb-crumb" id="tbCrumb">EXE · per-shift plan · tomorrow · Sat Jun 21</div></div>
+    <div class="tb-right"><span class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg> Search functions, clients…</span><span class="live"><span class="dot"></span> Live · planning tomorrow</span></div>
+  </header>
+  <div class="content">
+
+  <!-- STAFFING -->
+  <section class="view active" id="view-staffing">
+    <div class="hubbar"><span class="hlabel">FACILITY:</span>
+      <button class="hbtn active" data-h="atlanta"><span class="dotc" style="background:var(--flag)"></span>DC-Atlanta</button>
+      <button class="hbtn" data-h="dallas"><span class="dotc" style="background:var(--good)"></span>DC-Dallas</button>
+      <button class="hbtn" data-h="reno"><span class="dotc" style="background:var(--good)"></span>DC-Reno</button>
+    </div>
+    <section class="kpis" id="skpis"></section>
+
+    <p class="sec-label"><span class="ix">◆</span> Stop hoping, start knowing, before the shift</p>
+    <section class="card hero">
+      <span class="badge">● Afternoon surge · DC-Atlanta · packing</span>
+      <div class="hgrid">
+        <div>
+          <div class="hh">An <b>afternoon packing surge</b> the morning crew plan would miss.</div>
+          <div class="hp">Tomorrow's order forecast shows packing volume spiking after 2pm at DC-Atlanta, well past what the standing morning-heavy crew plan covers. Left alone, that is overtime and a late cut-off. The planner reads the order forecast the night before and recommends shifting hours into the afternoon, and the same numbers roll straight into the daily client-metrics view your clients see.</div>
+          <div class="rec"><b>Recommended:</b> move 5 packers to a 12pm to 8pm window and pull two pickers forward; the morning runs lean, the afternoon is covered, no overtime.</div>
+          <div class="acts">
+            <button class="btn btn-primary" onclick="toast('ok','✓','Plan published','Tomorrow\\'s DC-Atlanta plan sent to the floor.')">Publish plan</button>
+            <button class="btn btn-ghost" onclick="document.getElementById('fnAnchor').scrollIntoView({behavior:'smooth'})">See functions</button>
+          </div>
+        </div>
+        <div><div class="curve"><div class="cap"><span>DC-ATLANTA · PACKING DEMAND vs. PLANNED CREW</span><span>BY HOUR</span></div>
+          <div class="hours" id="heroHours"></div>
+          <div class="cnote">Volume spikes after 2pm; standing plan is morning-heavy</div></div></div>
+      </div>
+    </section>
+
+    <p class="sec-label" id="fnAnchor"><span class="ix">◆</span> Tomorrow's plan · <span id="hubName" style="color:var(--brand)">DC-Atlanta</span></p>
+    <section class="card tcard"><table>
+      <thead><tr><th class="l">Function</th><th class="hide">Forecast driver</th><th>Units / head</th><th>Rec.</th><th>Sched.</th><th>Gap</th><th>Status</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table><div class="hint">↳ Click any function for the hour-by-hour curve behind the recommendation.</div></section>
+
+    <div class="grid2">
+      <section class="card panel"><h3>Overtime trend</h3><p class="ps" id="otps">DC-Atlanta OT · last 6 weeks</p>
+        <div class="mb"><div class="row"><span>Two weeks ago</span><span class="num">480 hrs</span></div><div class="bar"><span style="width:84%;background:var(--flag)"></span></div></div>
+        <div class="mb"><div class="row"><span>Last week</span><span class="num">390 hrs</span></div><div class="bar"><span style="width:62%;background:var(--watch)"></span></div></div>
+        <div class="mb"><div class="row"><span>This week (proj.)</span><span class="num" style="color:var(--good)">300 hrs</span></div><div class="bar"><span style="width:48%;background:var(--good)"></span></div></div>
+        <div class="rec" style="margin-top:12px">Most overtime traced to afternoon surges the morning-heavy plan could not see.</div></section>
+      <section class="card panel"><h3>One plan, two outputs</h3><p class="ps">Staffing + client metrics</p>
+        <div class="drow"><span>Per-shift staffing rec</span><span class="metric" style="color:var(--good)">before each shift</span></div>
+        <div class="drow"><span>Feeds client-metrics view</span><span class="metric" style="color:var(--good)">same numbers</span></div>
+        <div class="drow"><span>Projected OT cut</span><span class="metric" style="color:var(--good)">~25%</span></div>
+        <div class="rec" style="margin-top:14px">The throughput numbers that size the crew are the same ones clients see, so the floor and the report never disagree.</div></section>
+    </div>
+
+    <section class="card stack"><div class="sh"><div class="sht"><span class="ab"></span>Plugs into the stack EXE already runs</div><div class="shn">read-only · works with your order forecast &amp; time-clock data · ~4–6 week build</div></div>
+      <div class="sgr">
+        <div class="sg"><div class="gl">Order forecast / OMS</div><span class="tool"><span class="lg" style="background:#E07B1F">OM</span>order data</span></div>
+        <div class="sg"><div class="gl">Time &amp; attendance</div><span class="tool"><span class="lg" style="background:#2B6CB0">TC</span>time-clock</span></div>
+        <div class="sg"><div class="gl">WMS / throughput</div><span class="tool"><span class="lg" style="background:#1F9D6B">WM</span>WMS</span></div>
+        <div class="sg"><div class="gl">Client metrics</div><span class="tool"><span class="lg" style="background:#43250d">CM</span>client view</span></div>
+      </div>
+      <div class="sf">→ <b>Tell us your exact systems and we map the connectors to them.</b> It reads the order forecast and crew availability, hands back a per-shift plan, and feeds the client view. Nothing migrates.</div>
+    </section>
+    <div class="foot"><div class="roi">A staffing recommendation before every shift, with overtime around <b>25%</b> down.</div><div class="made">Mockup by <b>Instive AI</b> for EXE Logistics · sample data</div></div>
+  </section>
+
+  <!-- CLIENT METRICS -->
+  <section class="view" id="view-metrics">
+    <section class="kpis">
+      <button class="kpi"><div class="kl">Clients on the view</div><div class="kv">9</div><div class="ks neutral">daily metrics</div></button>
+      <button class="kpi"><div class="kl">Orders shipped · today</div><div class="kv">14,280</div><div class="ks up">on the cut-off</div></button>
+      <button class="kpi"><div class="kl">On-time ship rate</div><div class="kv good">99.1%</div><div class="ks up">▲ 0.5 pts</div></button>
+      <button class="kpi"><div class="kl">Same numbers</div><div class="kv good">as staffing</div><div class="ks up">no second pull</div></button>
+    </section>
+    <p class="sec-label"><span class="ix">◆</span> The daily client view the staffing numbers feed</p>
+    <div class="cmgrid">
+      <section class="card cmcard"><div class="ct">Summit Retail <span class="cb" style="background:#E07B1F">DAILY</span></div>
+        <div class="drow"><span>Orders shipped</span><span class="metric">5,120</span></div>
+        <div class="drow"><span>On-time</span><span class="metric" style="color:var(--good)">99.4%</span></div>
+        <div class="drow"><span>Units packed</span><span class="metric">18,900</span></div>
+        <div class="drow"><span>Cut-off met</span><span class="metric" style="color:var(--good)">yes</span></div></section>
+      <section class="card cmcard"><div class="ct">Northpeak DTC <span class="cb" style="background:#2B6CB0">DAILY</span></div>
+        <div class="drow"><span>Orders shipped</span><span class="metric">3,640</span></div>
+        <div class="drow"><span>On-time</span><span class="metric" style="color:var(--good)">98.8%</span></div>
+        <div class="drow"><span>Units packed</span><span class="metric">11,200</span></div>
+        <div class="drow"><span>Cut-off met</span><span class="metric" style="color:var(--good)">yes</span></div></section>
+    </div>
+    <section class="card panel" style="margin-bottom:24px"><h3>Why staffing and metrics share a source</h3><p class="ps">One number, two uses</p>
+      <div class="rec">The throughput forecast that sizes tomorrow's crew is the same feed that fills today's client metrics. When the afternoon surge gets staffed, the cut-off gets met, and the client view shows it, without anyone pulling a separate report.</div>
+      <div class="drow" style="margin-top:14px"><span>Afternoon surge staffed</span><span class="metric" style="color:var(--good)">yes</span></div>
+      <div class="drow"><span>Cut-offs met today</span><span class="metric" style="color:var(--good)">9 / 9 clients</span></div></section>
+    <div class="foot"><div class="roi">The staffing forecast and the client metrics read from one source.</div><div class="made">Client-metrics view · Instive AI for EXE · sample data</div></div>
+  </section>
+
+  <!-- FUNCTIONS & NETWORK -->
+  <section class="view" id="view-network">
+    <p class="sec-label"><span class="ix">◆</span> Functions across the network</p>
+    <div class="fac-grid">
+      <section class="card fac"><div class="fn">DC-Atlanta</div><div class="fl">high-volume DTC</div>
+        <div class="drow"><span>Tomorrow</span><span class="metric" style="color:var(--watch)">PM surge</span></div>
+        <div class="drow"><span>OT trend</span><span class="metric" style="color:var(--good)">down</span></div>
+        <div class="drow"><span>Cut-offs met</span><span class="metric">99%</span></div></section>
+      <section class="card fac"><div class="fn">DC-Dallas</div><div class="fl">retail replenishment</div>
+        <div class="drow"><span>Tomorrow</span><span class="metric" style="color:var(--good)">on plan</span></div>
+        <div class="drow"><span>OT trend</span><span class="metric" style="color:var(--good)">flat</span></div>
+        <div class="drow"><span>Cut-offs met</span><span class="metric">99%</span></div></section>
+      <section class="card fac"><div class="fn">DC-Reno</div><div class="fl">west-coast DTC</div>
+        <div class="drow"><span>Tomorrow</span><span class="metric" style="color:var(--good)">light</span></div>
+        <div class="drow"><span>OT trend</span><span class="metric" style="color:var(--good)">down</span></div>
+        <div class="drow"><span>Cut-offs met</span><span class="metric">98%</span></div></section>
+    </div>
+    <section class="card stack"><div class="sh"><div class="sht"><span class="ab"></span>One planner, every DC</div><div class="shn">staffing + client metrics from the same feeds</div></div>
+      <div class="sf" style="margin-top:0;color:#e6d6c4;font-size:13px">Every DC reads from the <b>same</b> order forecast and time-clock feeds. A PM packing surge at Atlanta and a steady day at Dallas both turn into a per-shift plan the night before, and the same throughput rolls into the client view, so labor stops being the thing that gets hoped through the shift.</div></section>
+    <div class="foot"><div class="roi">One AI layer · <b>labor planning</b> feeding staffing and client metrics.</div><div class="made">Mockup by <b>Instive AI</b> for EXE Logistics · sample data</div></div>
+  </section>
+
+  </div>
 </div>
-<section class="card stack"><div class="sh"><div class="sht"><span class="ab"></span>Plugs into the stack EXE already runs</div><div class="shn">read-only · no rip-and-replace · ~5–7 week build</div></div>
-<div class="sgr">
-<div class="sg"><div class="gl">WMS</div><div class="tools"><span class="tool"><span class="lg" style="background:#1f6feb">WM</span>your WMS</span></div></div>
-<div class="sg"><div class="gl">Labor / temp staffing</div><div class="tools"><span class="tool"><span class="lg" style="background:#e2640b">Iw</span>Instawork</span><span class="tool"><span class="lg" style="background:#15397a">AD</span>ADP</span></div></div>
-<div class="sg"><div class="gl">Client reporting</div><div class="tools"><span class="tool"><span class="lg" style="background:#E07B2B">Mx</span>metrics feed</span></div></div></div>
-<div class="sf">→ <b>Tell us your exact systems and we map the connectors to them.</b> The plan reads your order forecast and time-clock data, nothing migrates.</div></section>
-</main>
-<footer class="wrap"><div class="roi">A staffing recommendation before every shift, overtime <b>~25%</b> down.</div><div class="made">Mockup by <b>Instive AI</b> for EXE Logistics · sample data</div></footer>
-<div class="scrim" id="scrim" onclick="closeD()"></div><aside class="drawer" id="drawer"></aside>
-<div class="toasts" id="toasts"></div>
+</div>
+<div class="scrim" id="scrim" onclick="closeD()"></div><aside class="drawer" id="drawer"></aside><div class="toasts" id="toasts"></div>
 <script>
-const FN={
-receiving:{name:"Receiving",sub:"inbound · putaway",fc:"86 inbound PO lines",tp:9.5,rec:9,sch:13,status:"good",sl:"Over-crewed",curve:[70,64,58,54,50,48,46,44],roles:[["Unload / dock","4 → 4","good"],["Putaway","5 → 5","good"]],actions:"Over-crewed in the AM; move 4 to Packing for the afternoon surge."},
-picking:{name:"Picking",sub:"order pick",fc:"12,400 units",tp:130,rec:24,sch:24,status:"good",sl:"Balanced",curve:[48,52,56,58,56,54,50,46],roles:[["Zone pick","18 → 18","good"],["Replen","6 → 6","good"]],actions:"On plan. No action."},
-packing:{name:"Packing",sub:"pack · label · stage",fc:"11,800 orders",tp:95,rec:30,sch:24,status:"flag",sl:"Understaffed",curve:[26,30,36,60,76,80,66,40],roles:[["Pack stations","20 → 26","flag"],["Label / QC","4 → 4","watch"]],actions:"Short 6 for the 13:00–16:00 surge; shift 4 from Receiving + 2 temps."},
-shipping:{name:"Shipping",sub:"manifest · load",fc:"410 parcels + 22 LTL",tp:60,rec:14,sch:15,status:"good",sl:"Balanced",curve:[30,34,40,46,52,58,56,48],roles:[["Manifest","6 → 6","good"],["Load","8 → 8","good"]],actions:"On plan; slightly heavy late, holds fine."},
-returns:{name:"Returns",sub:"receive · disposition",fc:"640 units",tp:80,rec:8,sch:11,status:"watch",sl:"Watch",curve:[40,42,44,42,40,38,36,34],roles:[["Intake","5 → 5","good"],["Disposition","6 → 3","watch"]],actions:"Light day; release 3 to Packing."}};
-function bars(c){const w=360,h=90,bw=36,gap=8;let x=6;return `<svg viewBox="0 0 ${w} ${h}" width="100%" height="${h}"><line x1="0" y1="${h-14}" x2="${w}" y2="${h-14}" stroke="#E6DDD2"/>`+c.map(v=>{const bh=(v/90)*(h-22);const col=v>62?'#D64A45':v>50?'#D9941F':'#1F9D6B';const r=`<rect x="${x}" y="${h-14-bh}" width="${bw}" height="${bh}" rx="2" fill="${col}"/>`;x+=bw+gap;return r;}).join("")+`<line x1="0" y1="${h-14-(62/90)*(h-22)}" x2="${w}" y2="${h-14-(62/90)*(h-22)}" stroke="#1E140A" stroke-dasharray="3 3" opacity=".3"/></svg>`;}
-function rowHtml(id,f){const gap=f.rec-f.sch;const gc=gap>2?'gap-pos':gap>0?'gap-neg':'gap-ok';const gt=gap>0?`+${gap} short`:gap<0?`${gap} over`:'on plan';
-return `<tr data-status="${f.status}" tabindex="0" onclick="openFn('${id}')" onkeydown="if(event.key==='Enter')openFn('${id}')"><td class="l"><div class="nm2">${f.name}<div class="sub">${f.sub}</div></div></td><td class="num hide">${f.fc}</td><td class="num">${f.tp}</td><td class="num">${f.rec}</td><td class="num">${f.sch}</td><td class="num ${gc}">${gt}</td><td><span class="status s-${f.status}">● ${f.sl}</span></td><td><span class="chev">›</span></td></tr>`;}
-const rows=document.getElementById('rows');rows.innerHTML=Object.entries(FN).map(([id,f])=>rowHtml(id,f)).join("");
-document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x===t));document.querySelectorAll('#rows tr').forEach(r=>r.style.display=(t.dataset.f==='all'||r.dataset.status===t.dataset.f)?'':'none');document.getElementById('plan').scrollIntoView({behavior:'smooth'});}));
+const TITLES={staffing:["Staffing Plan","EXE · per-shift plan · tomorrow · Sat Jun 21"],metrics:["Client Metrics","EXE · the daily client view the staffing numbers feed"],network:["Functions &amp; Network","EXE · functions across the network"]};
+document.querySelectorAll('.nav-i[data-v]').forEach(b=>b.addEventListener('click',()=>{const v=b.dataset.v;document.querySelectorAll('.nav-i[data-v]').forEach(x=>x.classList.toggle('active',x===b));document.querySelectorAll('.view').forEach(s=>s.classList.toggle('active',s.id==='view-'+v));document.getElementById('tbTitle').innerHTML=TITLES[v][0];document.getElementById('tbCrumb').innerHTML=TITLES[v][1];document.getElementById('sidebar').classList.remove('open');window.scrollTo({top:0,behavior:'smooth'});}));
+
+const HUBS={
+ atlanta:{name:"DC-Atlanta",
+  kpis:[["Tomorrow · rec crew","58","neutral","vs. 54 standing"],["OT hours saved · wk","180","up","▲ vs. 4-wk avg"],["PM packing gap","+5","down","short on standing plan"],["Cut-offs met","99%","up","▲ 1 pt"]],
+  hero:[44,46,48,50,58,76,92,80],
+  fn:{"Packing · PM":["order forecast",34,18,13,"flag"],"Picking":["order forecast",40,16,15,"watch"],"Receiving":["inbound ASN",30,8,8,"good"],"Shipping / load-out":["cut-off volume",46,9,9,"good"],"Returns":["RMA inflow",24,5,6,"good"]}},
+ dallas:{name:"DC-Dallas",
+  kpis:[["Tomorrow · rec crew","46","neutral","vs. 46 standing"],["OT hours saved · wk","130","up","▲ vs. 4-wk avg"],["Peak gap","0","neutral","on plan"],["Cut-offs met","99%","up","steady"]],
+  hero:[50,54,56,54,52,50,48,46],
+  fn:{"Picking":["order forecast",40,15,15,"good"],"Packing":["order forecast",34,14,14,"good"],"Receiving":["inbound ASN",30,9,9,"good"],"Shipping / load-out":["cut-off volume",46,8,8,"good"]}},
+ reno:{name:"DC-Reno",
+  kpis:[["Tomorrow · rec crew","32","neutral","vs. 34 standing"],["OT hours saved · wk","90","up","▲ vs. 4-wk avg"],["Peak gap","-2","neutral","slightly over"],["Cut-offs met","98%","up","steady"]],
+  hero:[40,42,44,46,44,40,36,32],
+  fn:{"Packing":["order forecast",34,9,10,"good"],"Picking":["order forecast",40,8,9,"good"],"Receiving":["inbound ASN",30,6,6,"good"],"Shipping / load-out":["cut-off volume",46,5,5,"good"]}}};
+let HB=HUBS.atlanta;
+function renderHub(){
+  document.getElementById('skpis').innerHTML=HB.kpis.map(k=>`<div class="kpi"><div class="kl">${k[0]}</div><div class="kv ${k[1]==='+5'?'warn':''}">${k[1]}</div><div class="ks ${k[2]}">${k[3]}</div></div>`).join("");
+  document.getElementById('hubName').textContent=HB.name;document.getElementById('otps').textContent=HB.name+" OT · last 6 weeks";
+  const mx=Math.max(...HB.hero);document.getElementById('heroHours').innerHTML=HB.hero.map((v,i)=>{const hr=['8a','10a','12p','1p','2p','3p','4p','6p'][i];const col=v>=80?'var(--flag)':v>=62?'var(--watch)':'var(--brand)';return `<div class="hr"><div class="hb" style="height:${(v/mx)*104}px;background:${col}"></div><div class="hl">${hr}</div></div>`;}).join("");
+  document.getElementById('rows').innerHTML=Object.entries(HB.fn).map(([n,f])=>{const gap=f[2]-f[3];const gc=gap>2?'gap-pos':gap>0?'gap-neg':'gap-ok';const gt=gap>0?`+${gap} short`:gap<0?`${gap} over`:'on plan';const st=f[4];return `<tr data-fn="${n}" tabindex="0" onclick="openFn('${n.replace(/'/g,"\\'")}')" onkeydown="if(event.key==='Enter')openFn('${n.replace(/'/g,"\\'")}')"><td class="l"><div class="nm2">${n}</div></td><td class="num hide">${f[0]}</td><td class="num">${f[1]}</td><td class="num">${f[2]}</td><td class="num">${f[3]}</td><td class="num ${gc}">${gt}</td><td><span class="status s-${st}">● ${st==='good'?'Balanced':st==='watch'?'Watch':'Short'}</span></td></tr>`;}).join("");
+}
+document.querySelectorAll('.hbtn').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.hbtn').forEach(x=>x.classList.toggle('active',x===b));HB=HUBS[b.dataset.h];renderHub();}));
 const drawer=document.getElementById('drawer'),scrim=document.getElementById('scrim');
-function openFn(id){const f=FN[id];const col=f.status==='good'?'var(--good)':f.status==='watch'?'var(--watch)':'var(--flag)';
-drawer.innerHTML=`<div class="dh"><div><div class="dn">${f.name}</div><div class="dm">${f.sub}</div></div><button class="dc" onclick="closeD()">×</button></div>
-<div class="db"><div style="margin-bottom:18px"><span class="status s-${f.status}">● ${f.sl}</span></div>
-<div class="dmini"><div class="dstat"><div class="l">Forecast volume</div><div class="v" style="font-size:14px">${f.fc}</div></div><div class="dstat"><div class="l">Units / head</div><div class="v">${f.tp}</div></div><div class="dstat"><div class="l">Recommended</div><div class="v" style="color:${col}">${f.rec}</div></div><div class="dstat"><div class="l">Scheduled</div><div class="v">${f.sch}</div></div></div>
-<p class="dt">Volume by hour</p><div class="dchart">${bars(f.curve)}</div>
-<p class="dt">Role-level recommendation</p><div style="margin-bottom:20px">${f.roles.map(r=>`<div class="drow"><span>${r[0]}</span><span class="metric" style="color:var(--${r[2]})">${r[1]}</span></div>`).join("")}</div>
-<div class="rec"><b>Recommended:</b> ${f.actions}</div></div>
-<div class="df"><button class="btn btn-primary" onclick="closeD();toast('ok','✓','Plan published','${f.name} plan sent to floor leads.')">Publish plan</button><button class="btn btn-ghost" onclick="toast('info','i','Temps requested','Instawork request sent for ${f.name}.')">Request temps</button></div>`;
-drawer.classList.add('open');scrim.classList.add('open');document.body.style.overflow='hidden';}
+function openFn(n){const f=HB.fn[n];const gap=f[2]-f[3];const st=f[4];const col=st==='good'?'var(--good)':st==='watch'?'var(--watch)':'var(--flag)';
+  drawer.innerHTML=`<div class="dh"><div><div class="dn">${n}</div><div class="dm">${HB.name} · ${f[0]}</div></div><button class="dc" onclick="closeD()">×</button></div>
+  <div class="db"><div style="margin-bottom:18px"><span class="status s-${st}">● ${st==='good'?'Balanced':st==='watch'?'Watch':'Short'}</span></div>
+  <div class="dmini"><div class="dstat"><div class="l">Recommended</div><div class="v">${f[2]}</div></div><div class="dstat"><div class="l">Scheduled</div><div class="v">${f[3]}</div></div><div class="dstat"><div class="l">Gap</div><div class="v" style="color:${col}">${gap>0?'+'+gap:gap}</div></div><div class="dstat"><div class="l">Units / head</div><div class="v">${f[1]}</div></div></div>
+  <p class="dt">Hour-by-hour need</p><div class="dchart"><div class="hours">${HB.hero.map((v,i)=>{const hr=['8a','10a','12p','1p','2p','3p','4p','6p'][i];const c=v>=80?'var(--flag)':v>=62?'var(--watch)':'var(--brand)';return `<div class="hr"><div class="hb" style="height:${(v/Math.max(...HB.hero))*70}px;background:${c}"></div><div class="hl">${hr}</div></div>`;}).join("")}</div></div>
+  <p class="dt">Recommendation</p><div class="rec">${gap>0?`The order forecast shows the need outrunning the standing plan by ${gap} for this function, concentrated in the afternoon. Shifting ${gap} into a later window covers the surge without overtime.`:'Sized correctly against the forecast; no change needed.'}</div></div>
+  <div class="df"><button class="btn btn-primary" onclick="closeD();toast('ok','✓','Adjusted','${n} crew updated in tomorrow\\'s plan.')">Apply recommendation</button><button class="btn btn-ghost" onclick="closeD()">Close</button></div>`;
+  drawer.classList.add('open');scrim.classList.add('open');document.body.style.overflow='hidden';}
 function closeD(){drawer.classList.remove('open');scrim.classList.remove('open');document.body.style.overflow='';}
-function toast(type,icon,title,msg){const e=document.createElement('div');e.className='toast '+type;e.innerHTML=`<span class="ti">${icon}</span><span><b>${title}</b><br><span style="opacity:.8;font-size:12px">${msg||''}</span></span>`;document.getElementById('toasts').appendChild(e);requestAnimationFrame(()=>e.classList.add('show'));setTimeout(()=>{e.classList.remove('show');setTimeout(()=>e.remove(),350);},3600);}
+renderHub();
+function toast(type,icon,title,msg){const e=document.createElement('div');e.className='toast '+type;e.innerHTML=`<span class="ti">${icon}</span><span><b>${title}</b><br><span style="opacity:.82;font-size:12px">${msg||''}</span></span>`;document.getElementById('toasts').appendChild(e);requestAnimationFrame(()=>e.classList.add('show'));setTimeout(()=>{e.classList.remove('show');setTimeout(()=>e.remove(),350);},3600);}
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeD();});
-</script></body></html>
+</script>
+</body></html>

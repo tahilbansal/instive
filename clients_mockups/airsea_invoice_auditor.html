@@ -7,105 +7,276 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-:root{--ink:#0C1C2E;--ink-soft:#16304A;--canvas:#EDF1F5;--surface:#fff;--line:#DEE5EC;--steel:#5E6E84;--steel-2:#8A98AC;--accent:#2E6DA4;--brand:#14457A;--good:#1F9D6B;--good-bg:#E8F5EF;--watch:#D9941F;--watch-bg:#FBF1DE;--flag:#D64A45;--flag-bg:#FBE9E8;--air:#2E6DA4;--air-bg:#E7F0F8;--sea:#1B8C8C;--sea-bg:#E2F2F2;--mono:"IBM Plex Mono",monospace;--sans:"Inter",system-ui,sans-serif;--r:14px;--sh:0 1px 2px rgba(12,28,46,.05),0 6px 18px rgba(12,28,46,.07)}
-*{box-sizing:border-box;margin:0;padding:0}body{font-family:var(--sans);background:var(--canvas);color:var(--ink);line-height:1.45;-webkit-font-smoothing:antialiased;padding-bottom:40px}
-.wrap{max-width:1080px;margin:0 auto;padding:0 20px}button{font-family:inherit;cursor:pointer}
-.topbar{background:var(--ink);color:#fff}.topbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:16px 20px;flex-wrap:wrap}
-.cobrand{display:flex;align-items:center;gap:14px}.logo-co{font-weight:800;font-size:14px;color:#fff;background:var(--brand);padding:8px 12px;border-radius:9px;line-height:1.1;box-shadow:inset 0 0 0 1px rgba(255,255,255,.12)}.logo-co small{display:block;font-family:var(--mono);font-weight:500;font-size:7.5px;letter-spacing:.1em;margin-top:3px;opacity:.85}
-.xmul{font-family:var(--mono);font-size:15px;color:var(--steel-2)}.logo-in{display:flex;align-items:center;gap:9px}.mark{width:34px;height:34px;border-radius:8px;background:linear-gradient(145deg,#2E6DA4,#14457A);display:grid;place-items:center;box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}.mark svg{width:19px;height:19px}.logo-in .nm{font-size:15px;font-weight:600}
-.vrule{width:1px;height:30px;background:rgba(255,255,255,.16)}.product .eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#8FB0CF}.product .pname{font-size:14.5px;font-weight:600;margin-top:1px}
-.topright{display:flex;align-items:center;gap:9px;flex-wrap:wrap}.chip{font-family:var(--mono);font-size:11px;padding:6px 11px;border-radius:999px;display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.08);color:#CCD8E6;border:1px solid rgba(255,255,255,.1)}
-.dot{width:7px;height:7px;border-radius:50%;background:var(--good);animation:pulse 2.4s infinite}@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(31,157,107,.55)}70%{box-shadow:0 0 0 6px rgba(31,157,107,0)}100%{box-shadow:0 0 0 0 rgba(31,157,107,0)}}.chip.demo{background:rgba(217,148,31,.16);color:#F0C97E;border-color:rgba(217,148,31,.3)}
-main{margin-top:40px}.sec-label{font-family:var(--mono);font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--steel);margin:0 0 11px 2px;display:flex;gap:8px}.sec-label .ix{color:var(--brand)}
+:root{
+--ink:#102A45;--ink-2:#163553;--ink-soft:#234766;--canvas:#EAF0F5;--surface:#fff;--line:#D6E0EA;--line-2:#E5ECF3;
+--steel:#566B82;--steel-2:#8898AC;--brand:#1A5A8C;--brand-2:#E0892E;--accent:#2E8BC0;
+--good:#1F9D6B;--good-bg:#E8F5EF;--watch:#D9941F;--watch-bg:#FBF1DE;--flag:#D64A45;--flag-bg:#FBE9E8;
+--air:#2E8BC0;--ocean:#15557F;
+--mono:"IBM Plex Mono",monospace;--sans:"Inter",system-ui,sans-serif;--r:14px;
+--sh:0 1px 2px rgba(16,42,69,.04),0 6px 18px rgba(16,42,69,.06);--sh-lg:0 12px 34px rgba(16,42,69,.13)}
+*{box-sizing:border-box;margin:0;padding:0}html,body{height:100%}
+body{font-family:var(--sans);background:var(--canvas);color:var(--ink);line-height:1.45;-webkit-font-smoothing:antialiased}
+button{font-family:inherit;cursor:pointer}
+.app{display:flex;min-height:100vh}
+.sidebar{width:252px;flex-shrink:0;background:linear-gradient(180deg,#102A45,#163553 70%,#1a3f60);color:#fff;position:sticky;top:0;height:100vh;display:flex;flex-direction:column;z-index:60;transition:transform .25s}
+.sb-brand{padding:20px 20px 18px;border-bottom:1px solid rgba(255,255,255,.08)}
+.lockup{display:flex;align-items:center;gap:11px}.mk{width:32px;height:32px;flex-shrink:0}.mk svg{width:32px;height:32px}
+.lk-txt{font-weight:800;font-size:14px;letter-spacing:-.01em;line-height:1}.lk-txt small{display:block;font-family:var(--mono);font-weight:500;font-size:7.5px;letter-spacing:.08em;color:#92A3B8;margin-top:4px}
+.sb-x{display:flex;align-items:center;gap:8px;margin-top:14px;font-size:11px;color:#92A3B8}.sb-x .by{width:22px;height:22px;border-radius:6px;background:linear-gradient(145deg,var(--brand),#0f3f63);display:grid;place-items:center}.sb-x .by svg{width:13px;height:13px}
+.nav{padding:16px 12px;flex:1;overflow-y:auto}.nav-h{font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:#52647A;padding:8px 12px}
+.nav-i{display:flex;align-items:center;gap:11px;width:100%;background:transparent;border:none;color:#B8C5D6;font-size:13.5px;font-weight:500;padding:10px 12px;border-radius:9px;text-align:left;position:relative;transition:.14s}
+.nav-i svg{width:17px;height:17px;flex-shrink:0;opacity:.85}.nav-i:hover{background:rgba(255,255,255,.06);color:#fff}
+.nav-i.active{background:rgba(26,90,140,.45);color:#fff}.nav-i.active::before{content:"";position:absolute;left:-12px;top:8px;bottom:8px;width:3px;border-radius:0 3px 3px 0;background:var(--brand-2)}
+.nav-i .tag{margin-left:auto;font-family:var(--mono);font-size:9.5px;background:rgba(224,137,46,.95);color:#fff;padding:2px 6px;border-radius:5px;font-weight:700}
+.sb-foot{padding:14px 16px;border-top:1px solid rgba(255,255,255,.08)}.who{display:flex;align-items:center;gap:10px}.who .av{width:32px;height:32px;border-radius:9px;background:linear-gradient(145deg,#2E8BC0,#15557F);display:grid;place-items:center;font-weight:700;font-size:12px}
+.who .nm{font-size:12.5px;font-weight:600;line-height:1.2}.who .rl{font-size:10.5px;color:#92A3B8}
+.demo-pill{margin-top:12px;font-family:var(--mono);font-size:10px;text-align:center;background:rgba(26,90,140,.2);color:#8FC1E0;border:1px solid rgba(26,90,140,.4);padding:6px;border-radius:7px}
+.main{flex:1;min-width:0;display:flex;flex-direction:column}
+.topbar{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.86);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:16px;padding:14px 28px}
+.burger{display:none;background:none;border:1px solid var(--line);border-radius:8px;width:36px;height:36px;color:var(--ink)}
+.tb-title{font-size:17px;font-weight:700;letter-spacing:-.01em}.tb-crumb{font-family:var(--mono);font-size:11px;color:var(--steel);margin-top:1px}
+.tb-right{margin-left:auto;display:flex;align-items:center;gap:12px}.search{display:flex;align-items:center;gap:8px;background:var(--canvas);border:1px solid var(--line);border-radius:9px;padding:8px 12px;color:var(--steel);font-size:12.5px;min-width:200px}.search svg{width:14px;height:14px}
+.live{font-family:var(--mono);font-size:11px;padding:7px 11px;border-radius:999px;display:inline-flex;align-items:center;gap:7px;background:#fff;border:1px solid var(--line);color:var(--ink-soft)}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--good);animation:pulse 2.4s infinite}@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(31,157,107,.55)}70%{box-shadow:0 0 0 6px rgba(31,157,107,0)}100%{box-shadow:0 0 0 0 rgba(31,157,107,0)}}
+.content{padding:26px 28px 56px;max-width:1320px;width:100%}.view{display:none}.view.active{display:block;animation:rise .4s ease}@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.sec-label{font-family:var(--mono);font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--steel);margin:0 0 12px 2px;display:flex;gap:8px;align-items:center}.sec-label .ix{color:var(--brand-2)}.sec-label .more{margin-left:auto;font-family:var(--sans);text-transform:none;letter-spacing:0;font-size:12px;color:var(--brand);font-weight:600;cursor:pointer}
 .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--sh)}
-.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:26px}.kpi{padding:16px 18px;text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:var(--r);box-shadow:var(--sh);transition:.15s;width:100%}.kpi:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(12,28,46,.12)}.kpi .kl{font-size:12px;color:var(--steel);font-weight:500;display:flex;justify-content:space-between}.kpi .kl .go{color:var(--steel-2)}.kpi .kv{font-family:var(--mono);font-size:26px;font-weight:600;letter-spacing:-.02em;margin-top:8px}.kpi .ks{font-family:var(--mono);font-size:11.5px;margin-top:6px}
-.up{color:var(--good)}.down{color:var(--flag)}.neutral{color:var(--steel)}.kv.flag{color:var(--flag)}
-.hero{padding:20px 22px;margin-bottom:26px;border-left:4px solid var(--flag);background:linear-gradient(90deg,#fff,#fffdfd)}.badge{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;background:var(--flag-bg);color:var(--flag);padding:4px 9px;border-radius:6px;font-weight:600}
-.hgrid{display:grid;grid-template-columns:1.15fr .85fr;gap:26px;align-items:center;margin-top:14px}.hh{font-size:18px;font-weight:600}.hh b{color:var(--flag)}.hp{font-size:13.5px;color:var(--ink-soft);margin-top:8px;max-width:48ch}.rec{margin-top:14px;font-size:13px;background:#F3F7FB;border:1px solid var(--line);border-radius:9px;padding:11px 13px;color:var(--ink-soft)}.rec b{color:var(--ink)}.acts{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
-.btn{font-size:13px;font-weight:600;border-radius:9px;padding:9px 15px;border:1px solid transparent;transition:.15s}.btn-primary{background:var(--ink);color:#fff}.btn-primary:hover{filter:brightness(1.25)}.btn-ghost{background:#fff;color:var(--ink-soft);border-color:var(--line)}.btn-ghost:hover{background:#F3F7FB}.btn-sm{font-size:12px;padding:7px 12px}
-.recover-box{background:#FAFBFC;border:1px solid var(--line);border-radius:11px;padding:16px}.rb-l{font-family:var(--mono);font-size:10.5px;color:var(--steel);letter-spacing:.04em}.rb-v{font-family:var(--mono);font-size:32px;font-weight:600;color:var(--good);margin-top:6px;letter-spacing:-.02em}.rb-s{font-size:12px;color:var(--ink-soft);margin-top:6px}
-.tabs{display:flex;gap:6px;margin-bottom:11px;flex-wrap:wrap}.tab{font-family:var(--mono);font-size:11.5px;padding:7px 13px;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--steel)}.tab.active{background:var(--ink);color:#fff;border-color:var(--ink)}.tab .c{opacity:.6;margin-left:5px}
-.tcard{padding:6px;margin-bottom:26px;overflow:hidden}table{width:100%;border-collapse:collapse}thead th{font-family:var(--mono);font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--steel);font-weight:500;text-align:right;padding:14px 14px 12px;border-bottom:1px solid var(--line);white-space:nowrap}thead th.l{text-align:left}tbody td{padding:13px 14px;border-bottom:1px solid #EDF1F5;font-size:13.5px;text-align:right;vertical-align:middle}tbody tr{cursor:pointer;transition:.12s}tbody tr:last-child td{border-bottom:none}tbody tr:hover{background:#F5F8FB}td.l{text-align:left}
-.nm2{font-weight:600;font-size:14px}.sub{font-weight:400;color:var(--steel);font-size:11.5px;font-family:var(--mono);margin-top:2px}.num{font-family:var(--mono);font-weight:500}.delta{font-family:var(--mono);font-weight:600;color:var(--flag)}
-.mode{font-family:var(--mono);font-size:9.5px;font-weight:600;padding:3px 7px;border-radius:6px;text-transform:uppercase}.m-air{background:var(--air-bg);color:var(--air)}.m-sea{background:var(--sea-bg);color:var(--sea)}
-.status{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:11px;font-weight:600;text-transform:uppercase;padding:5px 10px;border-radius:7px}.s-open{background:var(--flag-bg);color:var(--flag)}.s-review{background:var(--watch-bg);color:var(--watch)}.s-won{background:var(--good-bg);color:var(--good)}
-.chev{color:var(--steel-2);font-size:16px;transition:.15s}tbody tr:hover .chev{color:var(--accent);transform:translateX(3px)}.hint{font-family:var(--mono);font-size:10.5px;color:var(--steel-2);padding:8px 14px 2px}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-bottom:26px}.panel{padding:18px 20px 20px}.panel h3{font-size:14.5px;font-weight:600;margin-bottom:2px}.panel .ps{font-size:12px;color:var(--steel);margin-bottom:16px}
-.row{display:flex;justify-content:space-between;align-items:baseline;font-size:13px}.mb{margin-bottom:13px}.bar{height:8px;border-radius:5px;background:#EAEFF4;overflow:hidden;margin-top:6px}.bar span{display:block;height:100%;border-radius:5px}.rowf{font-family:var(--mono);font-size:10.5px;color:var(--steel);margin-top:4px}
-.stack{padding:22px 24px;margin-bottom:22px;position:relative;overflow:hidden;background:linear-gradient(135deg,#0C1C2E,#14304a 60%,#173a5c);border:none;color:#fff;border-radius:var(--r)}.stack::after{content:"";position:absolute;right:-40px;top:-40px;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(46,109,164,.4),transparent 70%)}.sh{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:18px;position:relative;z-index:1}.sht{font-size:16px;font-weight:600}.sht .ab{display:inline-block;width:18px;height:3px;background:var(--good);border-radius:2px;vertical-align:middle;margin-right:9px}.shn{font-family:var(--mono);font-size:11px;color:#9FB4CC}.sgr{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;position:relative;z-index:1}.sg{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:11px;padding:13px 14px 15px}.gl{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#8FB0CF;margin-bottom:11px}.tools{display:flex;flex-wrap:wrap;gap:8px}.tool{display:inline-flex;align-items:center;gap:7px;background:#fff;color:var(--ink);border-radius:8px;padding:6px 11px 6px 7px;font-size:12.5px;font-weight:600;box-shadow:0 2px 6px rgba(0,0,0,.18)}.tool .lg{width:18px;height:18px;border-radius:5px;display:grid;place-items:center;font-family:var(--mono);font-weight:600;font-size:9px;color:#fff}.sf{margin-top:15px;font-size:11.5px;color:#9FB4CC;position:relative;z-index:1}.sf b{color:#D8E4F0;font-weight:500}
-footer .wrap{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;padding-top:4px}.roi{font-family:var(--mono);font-size:11.5px;color:var(--ink-soft)}.roi b{color:var(--brand)}.made{font-size:11.5px;color:var(--steel)}.made b{color:var(--ink)}
-.ms{position:fixed;inset:0;background:rgba(8,15,26,.5);backdrop-filter:blur(2px);opacity:0;pointer-events:none;transition:.2s;z-index:60;display:grid;place-items:center;padding:20px}.ms.open{opacity:1;pointer-events:auto}.modal{background:#fff;border-radius:16px;max-width:540px;width:100%;box-shadow:0 24px 60px rgba(8,15,26,.35);transform:translateY(10px) scale(.98);transition:.2s;overflow:hidden}.ms.open .modal{transform:none}.mh{padding:18px 22px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}.mh h3{font-size:16px;font-weight:700}.mh .s{font-family:var(--mono);font-size:11px;color:var(--steel);margin-top:2px}.dc{width:32px;height:32px;border-radius:8px;border:1px solid var(--line);background:#fff;color:var(--steel);font-size:18px}.dc:hover{background:#F3F7FB}.mb2{padding:20px 22px}.doc{background:#F6F9FB;border:1px solid var(--line);border-radius:10px;padding:16px 18px;font-size:12.5px;line-height:1.6;color:var(--ink-soft);white-space:pre-line;font-family:var(--mono);max-height:300px;overflow:auto}.mf{padding:14px 22px 20px;display:flex;gap:10px;justify-content:flex-end}
-.toasts{position:fixed;bottom:22px;right:22px;display:flex;flex-direction:column;gap:10px;z-index:80}.toast{background:var(--ink);color:#fff;padding:13px 16px;border-radius:11px;font-size:13px;box-shadow:0 10px 30px rgba(8,15,26,.3);display:flex;align-items:center;gap:11px;min-width:240px;max-width:340px;transform:translateX(120%);transition:.3s cubic-bezier(.22,.61,.36,1)}.toast.show{transform:none}.toast .ti{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:700}.toast.ok .ti{background:var(--good)}.toast.info .ti{background:var(--accent)}
-@media(max-width:860px){.kpis{grid-template-columns:repeat(2,1fr)}.hgrid{grid-template-columns:1fr}.grid2{grid-template-columns:1fr}.sgr{grid-template-columns:1fr}thead th.hide,tbody td.hide{display:none}}
-@media(max-width:480px){.kpis{grid-template-columns:1fr 1fr}.vrule,.product{display:none}}
-.fade{opacity:0;transform:translateY(8px);animation:rise .5s ease forwards}@media(prefers-reduced-motion:reduce){.fade{animation:none;opacity:1;transform:none}.dot{animation:none}*{transition:none!important}}@keyframes rise{to{opacity:1;transform:none}}
+.modebar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:22px}.mlabel{font-family:var(--mono);font-size:11px;color:var(--steel);letter-spacing:.04em}
+.mbtn{font-size:13px;font-weight:600;padding:9px 15px;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--ink-soft);display:flex;align-items:center;gap:8px}.mbtn .dotc{width:8px;height:8px;border-radius:50%}.mbtn.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px}.kpi{padding:16px 18px;text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:var(--r);box-shadow:var(--sh);transition:.15s;width:100%}.kpi:hover{transform:translateY(-2px);box-shadow:var(--sh-lg)}.kpi .kl{font-size:12px;color:var(--steel);font-weight:500;display:flex;justify-content:space-between;align-items:center}.kpi .ic{width:26px;height:26px;border-radius:7px;display:grid;place-items:center;background:var(--canvas)}.kpi .ic svg{width:14px;height:14px;color:var(--brand)}.kpi .kv{font-family:var(--mono);font-size:27px;font-weight:600;letter-spacing:-.02em;margin-top:10px}.kpi .ks{font-family:var(--mono);font-size:11.5px;margin-top:6px}
+.up{color:var(--good)}.down{color:var(--flag)}.neutral{color:var(--steel)}.kv.warn{color:var(--watch)}.kv.brand{color:var(--brand)}.kv.flag{color:var(--flag)}.kv.good{color:var(--good)}
+.hero{padding:22px 24px;margin-bottom:24px;border-left:4px solid var(--brand-2);background:linear-gradient(100deg,#fff,#fffdf9)}
+.badge{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;background:var(--flag-bg);color:var(--flag);padding:5px 10px;border-radius:6px;font-weight:600;display:inline-block}
+.hgrid{display:grid;grid-template-columns:1.1fr .9fr;gap:30px;align-items:center;margin-top:16px}
+.hh{font-size:20px;font-weight:700;letter-spacing:-.01em}.hh b{color:var(--brand-2)}.hp{font-size:13.5px;color:var(--ink-soft);margin-top:10px;max-width:52ch}
+.rec{margin-top:16px;font-size:13px;background:#EEF3F8;border:1px solid var(--line);border-radius:10px;padding:12px 14px;color:var(--ink-soft)}.rec b{color:var(--ink)}
+.acts{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+.btn{font-size:13px;font-weight:600;border-radius:9px;padding:10px 16px;border:1px solid transparent;transition:.15s}.btn-primary{background:var(--brand);color:#fff}.btn-primary:hover{filter:brightness(1.1)}.btn-ghost{background:#fff;color:var(--ink-soft);border-color:var(--line)}.btn-ghost:hover{background:#EEF3F8}
+.invbox{background:#FAFBFD;border:1px solid var(--line);border-radius:12px;padding:16px}.invc{font-family:var(--mono);font-size:10.5px;color:var(--steel);margin-bottom:12px;display:flex;justify-content:space-between}
+.liner{display:flex;justify-content:space-between;font-size:12.5px;padding:8px 0;border-bottom:1px dashed var(--line)}.liner.bad{color:var(--flag);font-weight:600}.liner .v{font-family:var(--mono)}.liner:last-child{border-bottom:none}
+.delta{margin-top:12px;background:var(--flag-bg);border-radius:8px;padding:10px 12px;font-size:12.5px;color:var(--flag);font-weight:600;display:flex;justify-content:space-between;font-family:var(--mono)}
+.tabs{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}.tab{font-family:var(--mono);font-size:11.5px;padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--steel)}.tab.active{background:var(--ink);color:#fff;border-color:var(--ink)}.tab .c{opacity:.6;margin-left:5px}
+.tcard{padding:6px;margin-bottom:24px;overflow:hidden}table{width:100%;border-collapse:collapse}thead th{font-family:var(--mono);font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--steel);font-weight:500;text-align:right;padding:14px 16px 12px;border-bottom:1px solid var(--line);white-space:nowrap}thead th.l{text-align:left}
+tbody td{padding:14px 16px;border-bottom:1px solid var(--line-2);font-size:13.5px;text-align:right;vertical-align:middle}tbody tr{cursor:pointer;transition:.12s}tbody tr:last-child td{border-bottom:none}tbody tr:hover{background:#F1F5FA}td.l{text-align:left}
+.nm2{font-weight:600;font-size:14px}.sub{font-weight:400;color:var(--steel);font-size:11.5px;font-family:var(--mono);margin-top:2px}.num{font-family:var(--mono);font-weight:500}.amt{font-family:var(--mono);font-weight:700}.amt.flag{color:var(--flag)}
+.modetag{font-family:var(--mono);font-size:9px;font-weight:700;padding:2px 7px;border-radius:5px;text-transform:uppercase}.m-air{background:#E4F1F9;color:var(--air)}.m-ocean{background:#E2ECF3;color:var(--ocean)}
+.status{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:11px;font-weight:600;text-transform:uppercase;padding:5px 10px;border-radius:7px}.s-good{background:var(--good-bg);color:var(--good)}.s-watch{background:var(--watch-bg);color:var(--watch)}.s-flag{background:var(--flag-bg);color:var(--flag)}
+.chev{color:var(--steel-2);font-size:16px;transition:.15s}tbody tr:hover .chev{color:var(--brand);transform:translateX(3px)}.hint{font-family:var(--mono);font-size:10.5px;color:var(--steel-2);padding:9px 16px 3px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:24px}.panel{padding:18px 20px 20px}.panel h3{font-size:14.5px;font-weight:600;margin-bottom:2px}.panel .ps{font-size:12px;color:var(--steel);margin-bottom:16px}
+.row{display:flex;justify-content:space-between;align-items:baseline;font-size:13px}.mb{margin-bottom:14px}.bar{height:8px;border-radius:5px;background:#E4EAF1;overflow:hidden;margin-top:6px}.bar span{display:block;height:100%;border-radius:5px}
+.drow{display:flex;justify-content:space-between;align-items:center;font-size:13px;padding:11px 0;border-bottom:1px solid var(--line-2)}.drow:last-child{border-bottom:none}.metric{font-family:var(--mono);font-weight:600}
+.stack{padding:24px 26px;margin-bottom:24px;position:relative;overflow:hidden;background:linear-gradient(135deg,#102A45,#1a3f60 55%,#1A5A8C 250%);border:none;color:#fff;border-radius:var(--r)}.stack::after{content:"";position:absolute;right:-30px;top:-50px;width:240px;height:240px;border-radius:50%;background:radial-gradient(circle,rgba(46,139,192,.45),transparent 70%)}
+.sh{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:18px;position:relative;z-index:1}.sht{font-size:16px;font-weight:600}.sht .ab{display:inline-block;width:18px;height:3px;background:var(--brand-2);border-radius:2px;vertical-align:middle;margin-right:9px}.shn{font-family:var(--mono);font-size:11px;color:#92A3B8}
+.sgr{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;position:relative;z-index:1}.sg{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:11px;padding:14px 14px 16px}.gl{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#92A3B8;margin-bottom:11px}
+.tool{display:inline-flex;align-items:center;gap:7px;background:#fff;color:var(--ink);border-radius:8px;padding:6px 10px 6px 7px;font-size:12px;font-weight:600;box-shadow:0 2px 6px rgba(0,0,0,.18);margin:0 6px 6px 0}.tool .lg{width:17px;height:17px;border-radius:5px;display:grid;place-items:center;font-family:var(--mono);font-weight:600;font-size:8.5px;color:#fff}
+.sf{margin-top:14px;font-size:11.5px;color:#92A3B8;position:relative;z-index:1}.sf b{color:#D2E2EF;font-weight:500}
+.fac-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:24px}.fac{padding:18px 20px}.fac .fn{font-size:15px;font-weight:700}.fac .fl{font-family:var(--mono);font-size:11px;color:var(--steel);margin-bottom:12px}
+.foot{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;padding:6px 2px 0}.roi{font-family:var(--mono);font-size:11.5px;color:var(--ink-soft)}.roi b{color:var(--brand)}.made{font-size:11.5px;color:var(--steel)}.made b{color:var(--ink)}
+.scrim{position:fixed;inset:0;background:rgba(8,18,30,.5);backdrop-filter:blur(2px);opacity:0;pointer-events:none;transition:.25s;z-index:90}.scrim.open{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;right:0;height:100%;width:480px;max-width:94vw;background:var(--surface);box-shadow:-12px 0 40px rgba(8,18,30,.28);transform:translateX(100%);transition:transform .28s cubic-bezier(.22,.61,.36,1);z-index:100;display:flex;flex-direction:column}.drawer.open{transform:none}
+.dh{padding:22px 24px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:flex-start;gap:12px}.dn{font-size:18px;font-weight:700}.dm{font-family:var(--mono);font-size:11.5px;color:var(--steel);margin-top:3px}.dc{width:34px;height:34px;border-radius:9px;border:1px solid var(--line);background:#fff;color:var(--steel);font-size:18px}.dc:hover{background:#EEF3F8}
+.db{padding:20px 24px;overflow-y:auto;flex:1}.dmini{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:22px}.dstat{background:#F1F5FA;border:1px solid var(--line);border-radius:10px;padding:12px 14px}.dstat .l{font-size:11px;color:var(--steel)}.dstat .v{font-family:var(--mono);font-size:18px;font-weight:600;margin-top:4px}.dt{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--steel);margin:0 0 11px}.letter{background:#F1F5FA;border:1px solid var(--line);border-radius:10px;padding:15px 16px;font-size:12.5px;line-height:1.6;color:var(--ink-soft);margin-bottom:22px}.letter b{color:var(--ink)}.df{padding:18px 24px;border-top:1px solid var(--line);display:flex;gap:10px;flex-wrap:wrap;background:#FAFBFD}
+.toasts{position:fixed;bottom:24px;right:24px;display:flex;flex-direction:column;gap:10px;z-index:120}.toast{background:var(--ink);color:#fff;padding:14px 17px;border-radius:11px;font-size:13px;box-shadow:var(--sh-lg);display:flex;align-items:center;gap:12px;min-width:250px;max-width:360px;transform:translateX(130%);transition:.3s cubic-bezier(.22,.61,.36,1)}.toast.show{transform:none}.toast .ti{width:23px;height:23px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:700;flex-shrink:0}.toast.ok .ti{background:var(--good)}.toast.info .ti{background:var(--brand-2)}
+@media(max-width:1140px){.fac-grid{grid-template-columns:1fr}.sgr{grid-template-columns:1fr 1fr}}
+@media(max-width:980px){.sidebar{position:fixed;transform:translateX(-100%);box-shadow:var(--sh-lg)}.sidebar.open{transform:none}.burger{display:grid;place-items:center}.search{display:none}.kpis{grid-template-columns:repeat(2,1fr)}.hgrid{grid-template-columns:1fr}}
+@media(max-width:680px){.grid2,.fac-grid{grid-template-columns:1fr}.sgr{grid-template-columns:1fr}.content{padding:18px 16px 48px}.topbar{padding:12px 16px}thead th.hide,tbody td.hide{display:none}}
+@media(max-width:520px){.kpis{grid-template-columns:1fr 1fr}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}.dot{animation:none}}
 </style></head>
 <body>
-<header class="topbar"><div class="wrap"><div class="cobrand">
-<div class="logo-co">AIR-SEA<small>FORWARDERS · EST. 1948</small></div><span class="xmul">✕</span>
-<div class="logo-in"><span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M3 17V7l5 3 4-5 4 6 5-2v8"/><circle cx="12" cy="19" r="1.4" fill="#fff" stroke="none"/></svg></span><span class="nm">Instive&nbsp;AI</span></div>
-<span class="vrule"></span><div class="product"><div class="eyebrow">Demo for Air-Sea Forwarders</div><div class="pname">Invoice Auditor · Air & Ocean</div></div></div>
-<div class="topright"><span class="chip"><span class="dot"></span> 10 / 10 branches connected</span><span class="chip demo">Sample data</span></div></div></header>
-<main class="wrap">
-<section class="kpis">
-<button class="kpi fade"><div class="kl">Invoices audited · June <span class="go">›</span></div><div class="kv">2,910</div><div class="ks neutral">air + ocean, all branches</div></button>
-<button class="kpi fade"><div class="kl">Discrepancies flagged <span class="go">›</span></div><div class="kv flag">$38,640</div><div class="ks down">across 10 branches</div></button>
-<button class="kpi fade"><div class="kl">Top issue <span class="go">›</span></div><div class="kv" style="font-size:18px">Chargeable wt</div><div class="ks neutral">42% of flagged $</div></button>
-<button class="kpi fade"><div class="kl">Avg variance / flag <span class="go">›</span></div><div class="kv">$612</div><div class="ks neutral">when an invoice is off</div></button>
-</section>
-<p class="sec-label"><span class="ix">▍</span> Flagged this week</p>
-<section class="card hero">
-<span class="badge">● Chargeable-weight mismatch</span>
-<div class="hgrid"><div>
-<div class="hh">LAX branch: airline billed <b>volumetric weight</b> above the booked figure.</div>
-<div class="hp">On three LAX to NRT consignments the carrier applied a higher chargeable (volumetric) weight than the booked dimensions support. It is the single most common gap across all ten branches, and it almost never gets caught manually because each HAWB has to be re-measured against the rate sheet.</div>
-<div class="rec"><b>Auto-drafted:</b> dispute notes recomputing chargeable weight from the booked dims, with the rate agreement attached.</div>
-<div class="acts"><button class="btn btn-primary" onclick="openInv('all')">Review all flags</button><button class="btn btn-ghost" onclick="toast('ok','✓','Disputes queued','Dispute notes queued to the carriers.')">Send disputes</button></div>
-</div><div><div class="recover-box"><div class="rb-l">RECOVERABLE · MONTH TO DATE</div><div class="rb-v">$38,640</div><div class="rb-s">checked automatically across every branch, every airline and steamship line</div></div></div></div>
-</section>
-<p class="sec-label" id="inv"><span class="ix">▍</span> Flagged invoices</p>
-<div class="tabs" id="tabs"><button class="tab active" data-f="all">All <span class="c">6</span></button><button class="tab" data-f="air">Air <span class="c">4</span></button><button class="tab" data-f="sea">Ocean <span class="c">2</span></button><button class="tab" data-f="open">Open <span class="c">5</span></button></div>
-<section class="card tcard"><table><thead><tr><th class="l">AWB / BL · carrier</th><th>Mode</th><th class="hide">Lane</th><th class="hide">Branch</th><th>Quoted</th><th>Variance</th><th>Issue</th><th></th></tr></thead><tbody id="rows"></tbody></table><div class="hint">↳ Click any line to see the auto-drafted dispute note.</div></section>
-<div class="grid2">
-<section class="card panel"><h3>Flagged dollars by branch</h3><p class="ps">June · all ten branches audited the same way</p>
-<div class="mb"><div class="row"><span>Los Angeles (LAX)</span><span class="num">$9,420</span></div><div class="bar"><span style="width:90%;background:var(--flag)"></span></div></div>
-<div class="mb"><div class="row"><span>New York (JFK)</span><span class="num">$7,180</span></div><div class="bar"><span style="width:68%;background:var(--watch)"></span></div></div>
-<div class="mb"><div class="row"><span>Chicago (ORD)</span><span class="num">$5,640</span></div><div class="bar"><span style="width:54%;background:var(--watch)"></span></div></div>
-<div class="mb"><div class="row"><span>San Francisco (SFO)</span><span class="num">$4,210</span></div><div class="bar"><span style="width:40%;background:var(--accent)"></span></div></div>
-<div class="row"><span>6 other branches</span><span class="num">$12,190</span></div><div class="bar"><span style="width:58%;background:var(--accent)"></span></div></section>
-<section class="card panel"><h3>Issue mix</h3><p class="ps">What the gaps actually are</p>
-<div class="mb"><div class="row"><span>Air chargeable / volumetric weight</span><span class="num">$16,200</span></div><div class="bar"><span style="width:88%;background:var(--air)"></span></div></div>
-<div class="mb"><div class="row"><span>Ocean demurrage / detention</span><span class="num">$9,800</span></div><div class="bar"><span style="width:54%;background:var(--sea)"></span></div></div>
-<div class="mb"><div class="row"><span>Fuel / security surcharge</span><span class="num">$7,140</span></div><div class="bar"><span style="width:40%;background:var(--watch)"></span></div></div>
-<div class="row"><span>Rate / ISC mismatch</span><span class="num">$5,500</span></div><div class="bar"><span style="width:31%;background:var(--accent)"></span></div>
-<div class="rowf" style="margin-top:12px">A 77-year-old, ten-branch forwarder accumulates a lot of these. The auditor checks every branch identically, every day.</div></section>
+<div class="app">
+<aside class="sidebar" id="sidebar">
+  <div class="sb-brand"><div class="lockup">
+    <span class="mk"><svg viewBox="0 0 32 32" fill="none"><rect x="2" y="2" width="28" height="28" rx="8" fill="url(#g)"/><path d="M5 22c2 1.5 4 1.5 6 0s4-1.5 6 0 4 1.5 6 0" stroke="#fff" stroke-width="1.6" fill="none" stroke-linecap="round"/><path d="M16 7l5 6-5 1.5L11 13z" fill="#E0892E"/><defs><linearGradient id="g" x1="0" y1="0" x2="32" y2="32"><stop offset="0" stop-color="#2E8BC0"/><stop offset="1" stop-color="#0f3f63"/></linearGradient></defs></svg></span>
+    <span class="lk-txt">AIR-SEA<small>FORWARDERS · 10 BRANCHES</small></span></div>
+    <div class="sb-x"><span class="by"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M3 17V7l5 3 4-5 4 6 5-2v8"/></svg></span> powered by <b style="color:#d2e2ef;font-weight:600">Instive&nbsp;AI</b></div></div>
+  <nav class="nav">
+    <div class="nav-h">Operations</div>
+    <button class="nav-i active" data-v="audit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 15l2 2 4-4"/></svg> Invoice Audit <span class="tag">1</span></button>
+    <button class="nav-i" data-v="branches"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><circle cx="5" cy="6" r="2"/><circle cx="19" cy="6" r="2"/><circle cx="5" cy="18" r="2"/><circle cx="19" cy="18" r="2"/><path d="M7 7l3 3M17 7l-3 3M7 17l3-3M17 17l-3-3"/></svg> Branches &amp; Modes</button>
+    <button class="nav-i" data-v="qvb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg> Quoted vs Billed</button>
+    <div class="nav-h" style="margin-top:10px">Account</div>
+    <button class="nav-i" onclick="toast('info','i','Settings','Connector mapping lives here in the live build.')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-2.82 1.17V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 7 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 2.6 14H2a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 7l.06-.06A2 2 0 1 1 7.46 4l.06.06A1.65 1.65 0 0 0 9.34 4.6 1.65 1.65 0 0 0 11 3V2a2 2 0 1 1 4 0v.09A1.65 1.65 0 0 0 17 4.6l.06-.06A2 2 0 1 1 20 7.46l-.06.06A1.65 1.65 0 0 0 19.4 9V11a2 2 0 1 1 0 4z"/></svg> Connectors &amp; settings</button>
+  </nav>
+  <div class="sb-foot"><div class="who"><span class="av">PT</span><div><div class="nm">Paul Talley</div><div class="rl">Air-Sea Forwarders</div></div></div><div class="demo-pill">DEMO · sample data only</div></div>
+</aside>
+
+<div class="main">
+  <header class="topbar">
+    <button class="burger" onclick="document.getElementById('sidebar').classList.toggle('open')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg></button>
+    <div><div class="tb-title" id="tbTitle">Invoice Audit</div><div class="tb-crumb" id="tbCrumb">Air-Sea · air &amp; ocean across all 10 branches · June cycle</div></div>
+    <div class="tb-right"><span class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg> Search AWB, BL, branch…</span><span class="live"><span class="dot"></span> Live · auditing invoices</span></div>
+  </header>
+  <div class="content">
+
+  <!-- INVOICE AUDIT -->
+  <section class="view active" id="view-audit">
+    <div class="modebar"><span class="mlabel">MODE:</span>
+      <button class="mbtn active" data-m="all">All modes</button>
+      <button class="mbtn" data-m="air"><span class="dotc" style="background:var(--air)"></span>Air</button>
+      <button class="mbtn" data-m="ocean"><span class="dotc" style="background:var(--ocean)"></span>Ocean</button>
+    </div>
+    <section class="kpis">
+      <button class="kpi"><div class="kl">Invoices audited · MTD <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg></span></div><div class="kv">2,910</div><div class="ks neutral">all 10 branches</div></button>
+      <button class="kpi"><div class="kl">Quoted-vs-billed gaps <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg></span></div><div class="kv flag">31</div><div class="ks down">air + ocean</div></button>
+      <button class="kpi"><div class="kl">Recoverable · MTD <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span></div><div class="kv good">$96.2K</div><div class="ks up">across branches</div></button>
+      <button class="kpi"><div class="kl">Branches reporting <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-3"/></svg></span></div><div class="kv">10 / 10</div><div class="ks up">one standard</div></button>
+    </section>
+
+    <p class="sec-label"><span class="ix">◆</span> A chargeable-weight overstatement on LAX, audited the same way as ocean demurrage</p>
+    <section class="card hero">
+      <span class="badge">● Quoted ≠ billed · LAX air export · Pacific Rim</span>
+      <div class="hgrid">
+        <div>
+          <div class="hh">Chargeable weight <b>overstated</b> on a LAX air export.</div>
+          <div class="hp">On AWB 180-LAX-44192, the carrier billed chargeable weight of 1,240 kg where the booking and the dim calc support 1,080 kg, a 160 kg overstatement at the contracted rate. The same auditor reads an ocean BL on the next line and catches demurrage billed past the free-time clock. Air and ocean, quoted against billed, every branch, one standard.</div>
+          <div class="rec"><b>Recommended:</b> dispute the LAX chargeable-weight gap (about $640) with the dim calc attached; the same overstatement pattern shows on two more Pacific Rim AWBs.</div>
+          <div class="acts">
+            <button class="btn btn-primary" onclick="openInv('180-LAX-44192')">Open the flag</button>
+            <button class="btn btn-ghost" onclick="document.querySelector('[data-f=flag]').click();document.getElementById('invAnchor').scrollIntoView({behavior:'smooth'})">See all 31 gaps</button>
+          </div>
+        </div>
+        <div><div class="invbox"><div class="invc"><span>AWB 180-LAX-44192</span><span>LAX → HKG · AIR</span></div>
+          <div class="liner"><span>Air freight (quoted wt)</span><span class="v">$3,240.00</span></div>
+          <div class="liner bad"><span>Billed @ 1,240 kg</span><span class="v">$3,720.00 ⚠</span></div>
+          <div class="liner"><span>Fuel / security</span><span class="v">$410.00</span></div>
+          <div class="liner"><span>Handling</span><span class="v">$120.00</span></div>
+          <div class="delta"><span>DIM CALC = 1,080 KG</span><span>−$640 due</span></div>
+          </div></div>
+      </div>
+    </section>
+
+    <p class="sec-label" id="invAnchor"><span class="ix">◆</span> Flagged invoices · <span id="modeName" style="color:var(--brand)">all modes</span> <span class="more" onclick="toast('info','i','Export','Flag list exported in the live build.')">Export</span></p>
+    <div class="tabs" id="tabs">
+      <button class="tab active" data-f="all">All <span class="c">6</span></button>
+      <button class="tab" data-f="flag">Gap <span class="c">4</span></button>
+      <button class="tab" data-f="watch">Review <span class="c">1</span></button>
+      <button class="tab" data-f="good">Clean <span class="c">1</span></button>
+    </div>
+    <section class="card tcard"><table>
+      <thead><tr><th class="l">AWB / BL · branch</th><th>Mode</th><th class="hide">Lane</th><th>Billed</th><th>Recoverable</th><th>Status</th><th></th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table><div class="hint">↳ Click any AWB or BL to read the audit and the drafted dispute note.</div></section>
+
+    <div class="grid2">
+      <section class="card panel"><h3>Gaps by type</h3><p class="ps">Recoverable · MTD · air + ocean</p>
+        <div class="mb"><div class="row"><span>Chargeable-weight (air)</span><span class="num" style="color:var(--flag)">$38.4K</span></div><div class="bar"><span style="width:84%;background:var(--air)"></span></div></div>
+        <div class="mb"><div class="row"><span>Demurrage / detention (ocean)</span><span class="num" style="color:var(--flag)">$29.1K</span></div><div class="bar"><span style="width:64%;background:var(--ocean)"></span></div></div>
+        <div class="mb"><div class="row"><span>Accessorials</span><span class="num" style="color:var(--watch)">$16.8K</span></div><div class="bar"><span style="width:40%;background:var(--watch)"></span></div></div>
+        <div class="row"><span>Duplicate / rebill</span><span class="num">$11.9K</span></div><div class="bar"><span style="width:28%;background:var(--brand)"></span></div></section>
+      <section class="card panel"><h3>One standard, ten branches</h3><p class="ps">Why it scales</p>
+        <div class="drow"><span>Branches audited</span><span class="metric">10 / 10</span></div>
+        <div class="drow"><span>Air + ocean</span><span class="metric" style="color:var(--good)">both</span></div>
+        <div class="drow"><span>Manual spot-checks</span><span class="metric" style="color:var(--good)">retired</span></div>
+        <div class="rec" style="margin-top:14px">Every branch's air and ocean invoices get the same quoted-vs-billed check, so a gap in one branch reads the same as a gap in another.</div></section>
+    </div>
+
+    <section class="card stack"><div class="sh"><div class="sht"><span class="ab"></span>Plugs into the stack Air-Sea already runs</div><div class="shn">read-only · works with your forwarding system &amp; rate quotes · ~4–6 week build</div></div>
+      <div class="sgr">
+        <div class="sg"><div class="gl">Forwarding / TMS</div><span class="tool"><span class="lg" style="background:#1A5A8C">FS</span>fwd system</span></div>
+        <div class="sg"><div class="gl">Rate quotes</div><span class="tool"><span class="lg" style="background:#E0892E">RQ</span>quote sheets</span></div>
+        <div class="sg"><div class="gl">Carrier EDI</div><span class="tool"><span class="lg" style="background:#2E8BC0">ED</span>IATA / ocean</span></div>
+        <div class="sg"><div class="gl">Branch ledgers</div><span class="tool"><span class="lg" style="background:#15397a">BR</span>10 branches</span></div>
+      </div>
+      <div class="sf">→ <b>Tell us your exact systems and we map the connectors to them.</b> It reads each branch's quotes against the carrier invoice, air and ocean alike. Nothing migrates.</div>
+    </section>
+    <div class="foot"><div class="roi">Catches <b>quoted-vs-billed gaps</b> across all ten branches automatically.</div><div class="made">Mockup by <b>Instive AI</b> for Air-Sea Forwarders · sample data</div></div>
+  </section>
+
+  <!-- BRANCHES & MODES -->
+  <section class="view" id="view-branches">
+    <p class="sec-label"><span class="ix">◆</span> The ten branches · same audit standard</p>
+    <div class="fac-grid">
+      <section class="card fac"><div class="fn">LAX · Los Angeles</div><div class="fl">air-heavy · Pacific Rim</div>
+        <div class="drow"><span>Invoices · MTD</span><span class="metric">540</span></div>
+        <div class="drow"><span>Gaps</span><span class="metric" style="color:var(--flag)">9</span></div>
+        <div class="drow"><span>Top issue</span><span class="metric">chargeable wt</span></div></section>
+      <section class="card fac"><div class="fn">LGB / Long Beach</div><div class="fl">ocean-heavy</div>
+        <div class="drow"><span>Invoices · MTD</span><span class="metric">480</span></div>
+        <div class="drow"><span>Gaps</span><span class="metric" style="color:var(--flag)">7</span></div>
+        <div class="drow"><span>Top issue</span><span class="metric">demurrage</span></div></section>
+      <section class="card fac"><div class="fn">JFK · New York</div><div class="fl">air export</div>
+        <div class="drow"><span>Invoices · MTD</span><span class="metric">390</span></div>
+        <div class="drow"><span>Gaps</span><span class="metric" style="color:var(--watch)">4</span></div>
+        <div class="drow"><span>Top issue</span><span class="metric">accessorials</span></div></section>
+    </div>
+    <section class="card panel" style="margin-bottom:24px"><h3>Recoverable by branch</h3><p class="ps">MTD · all 10 reporting</p>
+      <div class="mb"><div class="row"><span>LAX</span><span class="num" style="color:var(--flag)">$22.4K</span></div><div class="bar"><span style="width:80%;background:var(--air)"></span></div></div>
+      <div class="mb"><div class="row"><span>Long Beach</span><span class="num" style="color:var(--flag)">$18.1K</span></div><div class="bar"><span style="width:64%;background:var(--ocean)"></span></div></div>
+      <div class="mb"><div class="row"><span>JFK</span><span class="num" style="color:var(--watch)">$12.7K</span></div><div class="bar"><span style="width:45%;background:var(--brand)"></span></div></div>
+      <div class="row"><span>Other 7 branches</span><span class="num">$43.0K combined</span></div><div class="bar"><span style="width:70%;background:var(--accent)"></span></div></section>
+    <div class="foot"><div class="roi">Every branch, air and ocean, on one audit standard.</div><div class="made">Branch view · Instive AI for Air-Sea · sample data</div></div>
+  </section>
+
+  <!-- QUOTED VS BILLED -->
+  <section class="view" id="view-qvb">
+    <p class="sec-label"><span class="ix">◆</span> Quoted vs billed · the core check</p>
+    <div class="grid2">
+      <section class="card panel"><h3>Air · chargeable weight</h3><p class="ps">Booked / dim vs. billed</p>
+        <div class="rec">On air, the gap is usually chargeable weight: billed kilos exceed the booking and the dim calc. The auditor recomputes the dim weight from the dimensions on file and flags the overstatement with the math attached.</div>
+        <div class="drow" style="margin-top:14px"><span>LAX → HKG · 180-44192</span><span class="metric" style="color:var(--flag)">+160 kg</span></div>
+        <div class="drow"><span>Recoverable</span><span class="metric" style="color:var(--good)">$640</span></div></section>
+      <section class="card panel"><h3>Ocean · demurrage &amp; detention</h3><p class="ps">Free-time clock vs. billed</p>
+        <div class="rec">On ocean, the gap is usually demurrage or detention billed past the contracted free time. The auditor reads the gate-in / gate-out against the free-time terms and flags the overcharge.</div>
+        <div class="drow" style="margin-top:14px"><span>LGB → SIN · MBL-77310</span><span class="metric" style="color:var(--flag)">+2 days</span></div>
+        <div class="drow"><span>Recoverable</span><span class="metric" style="color:var(--good)">$910</span></div></section>
+    </div>
+    <section class="card stack"><div class="sh"><div class="sht"><span class="ab"></span>One check, both modes</div><div class="shn">quoted against billed, air and ocean</div></div>
+      <div class="sf" style="margin-top:0;color:#d2e2ef;font-size:13px">Air and ocean look different on the invoice, but the question is the <b>same</b>: does the bill match what was quoted? The auditor asks it on every AWB and every BL, across all ten branches, so the gaps stop hiding in the volume.</div></section>
+    <div class="foot"><div class="roi">One AI layer · <b>quoted-vs-billed audit</b> across air, ocean and every branch.</div><div class="made">Mockup by <b>Instive AI</b> for Air-Sea Forwarders · sample data</div></div>
+  </section>
+
+  </div>
 </div>
-<section class="card stack"><div class="sh"><div class="sht"><span class="ab"></span>Plugs into the stack Air-Sea already runs</div><div class="shn">read-only · no rip-and-replace · ~4–6 week build</div></div>
-<div class="sgr">
-<div class="sg"><div class="gl">Forwarding platform</div><div class="tools"><span class="tool"><span class="lg" style="background:#0a7">CW</span>CargoWise</span></div></div>
-<div class="sg"><div class="gl">Carrier rate sheets</div><div class="tools"><span class="tool"><span class="lg" style="background:#2E6DA4">Ai</span>airline tariffs</span><span class="tool"><span class="lg" style="background:#1B8C8C">SL</span>steamship contracts</span></div></div>
-<div class="sg"><div class="gl">Accounting</div><div class="tools"><span class="tool"><span class="lg" style="background:#15397a">GL</span>your GL / AP</span></div></div></div>
-<div class="sf">→ <b>Tell us your exact systems and we map the connectors to them.</b> The auditor reads invoices and recomputes charges against your booked rates, branch by branch.</div></section>
-</main>
-<footer class="wrap"><div class="roi">Catches quoted-vs-billed gaps across <b>all ten branches</b> automatically.</div><div class="made">Mockup by <b>Instive AI</b> for Air-Sea Forwarders · sample data</div></footer>
-<div class="ms" id="ms" onclick="if(event.target===this)closeM()"><div class="modal"><div class="mh"><div><h3 id="mt">Dispute note</h3><div class="s" id="msb"></div></div><button class="dc" onclick="closeM()">×</button></div><div class="mb2"><div class="doc" id="doc"></div></div><div class="mf"><button class="btn btn-ghost" onclick="toast('ok','✓','Copied','Dispute note copied.')">Copy</button><button class="btn btn-primary" onclick="closeM();toast('ok','✓','Dispute sent','Note sent to carrier billing.')">Send to carrier</button></div></div></div>
-<div class="toasts" id="toasts"></div>
+</div>
+<div class="scrim" id="scrim" onclick="closeD()"></div><aside class="drawer" id="drawer"></aside><div class="toasts" id="toasts"></div>
 <script>
+const TITLES={audit:["Invoice Audit","Air-Sea · air &amp; ocean across all 10 branches · June cycle"],branches:["Branches &amp; Modes","Air-Sea · ten branches, one standard"],qvb:["Quoted vs Billed","Air-Sea · the core check, both modes"]};
+document.querySelectorAll('.nav-i[data-v]').forEach(b=>b.addEventListener('click',()=>{const v=b.dataset.v;document.querySelectorAll('.nav-i[data-v]').forEach(x=>x.classList.toggle('active',x===b));document.querySelectorAll('.view').forEach(s=>s.classList.toggle('active',s.id==='view-'+v));document.getElementById('tbTitle').innerHTML=TITLES[v][0];document.getElementById('tbCrumb').innerHTML=TITLES[v][1];document.getElementById('sidebar').classList.remove('open');window.scrollTo({top:0,behavior:'smooth'});}));
+
 const INV={
-"H-44021":{mode:"air",carrier:"NCA / Nippon Cargo",lane:"LAX → NRT",branch:"Los Angeles",q:"$6,420",b:"$7,090",v:"$670",issue:"Chargeable weight",status:"open",doc:"DISPUTE, HAWB H-44021, Nippon Cargo Airlines\n\nLane: LAX to NRT (Los Angeles branch)\nBooked chargeable weight: 1,180 kg\nBilled chargeable weight: 1,310 kg\nQuoted: $6,420.00  Billed: $7,090.00  Variance: +$670.00\n\nFinding: volumetric weight billed above booked dimensions. Recomputed chargeable weight from booked dims = 1,180 kg.\nRequested adjustment: rebill at 1,180 kg, revised total $6,420.00.\nDocs: booking, dim sheet, rate agreement."},
-"H-43988":{mode:"air",carrier:"Korean Air Cargo",lane:"LAX → ICN",branch:"Los Angeles",q:"$5,180",b:"$5,720",v:"$540",issue:"Chargeable weight",status:"open",doc:"DISPUTE, HAWB H-43988, Korean Air Cargo\n\nLane: LAX to ICN (Los Angeles)\nQuoted: $5,180.00  Billed: $5,720.00  Variance: +$540.00\nFinding: same volumetric overstatement, 2nd this week on this lane.\nRequested adjustment: revised total $5,180.00."},
-"B-22107":{mode:"sea",carrier:"ONE Line",lane:"Shanghai → LGB",branch:"Los Angeles",q:"$3,900",b:"$4,640",v:"$740",issue:"Demurrage",status:"open",doc:"DISPUTE, BL B-22107, ONE Line\n\nLane: Shanghai to Long Beach (Los Angeles)\nQuoted: $3,900.00  Billed: $4,640.00  Variance: +$740.00\nFinding: 4 days demurrage billed; 2 of the 4 fall within the free-time window per the service contract.\nRequested adjustment: credit 2 days, revised total $4,270.00 (further review on remaining 2)."},
-"H-43901":{mode:"air",carrier:"Cathay Cargo",lane:"ORD → HKG",branch:"Chicago",q:"$4,610",b:"$5,050",v:"$440",issue:"Fuel surcharge",status:"open",doc:"DISPUTE, HAWB H-43901, Cathay Cargo\n\nLane: ORD to HKG (Chicago)\nQuoted: $4,610.00  Billed: $5,050.00  Variance: +$440.00\nFinding: fuel surcharge applied at a rate above the contracted FSC for the booking date.\nRequested adjustment: revised total $4,610.00."},
-"H-43855":{mode:"air",carrier:"Lufthansa Cargo",lane:"JFK → FRA",branch:"New York",q:"$5,940",b:"$6,420",v:"$480",issue:"Security / ISC",status:"review",doc:"DISPUTE, HAWB H-43855, Lufthansa Cargo\n\nLane: JFK to FRA (New York)\nQuoted: $5,940.00  Billed: $6,420.00  Variance: +$480.00\nFinding: security/ISC line not on the quote; awaiting carrier confirmation.\nStatus: in review."},
-"B-22044":{mode:"sea",carrier:"Maersk",lane:"Rotterdam → SFO",branch:"San Francisco",q:"$4,120",b:"$4,560",v:"$440",issue:"Detention",status:"open",doc:"DISPUTE, BL B-22044, Maersk\n\nLane: Rotterdam to Oakland (San Francisco branch)\nQuoted: $4,120.00  Billed: $4,560.00  Variance: +$440.00\nFinding: container detention billed without supporting gate-out timestamps.\nRequested adjustment: remove detention pending proof, revised total $4,120.00."},
-"all":{mode:"",carrier:"",lane:"",branch:"",q:"",b:"",v:"$38,640",issue:"",status:"",doc:"RECOVERABLE SUMMARY, June, all branches\n\nTotal flagged: $38,640 across 10 branches.\nTop items:\n• H-44021 Nippon Cargo (LAX)  +$670  chargeable weight\n• B-22107 ONE Line (LAX)  +$740  demurrage\n• H-43988 Korean Air (LAX)  +$540  chargeable weight\n• H-43855 Lufthansa (JFK)  +$480  security/ISC (review)\n• B-22044 Maersk (SFO)  +$440  detention\n• H-43901 Cathay (ORD)  +$440  fuel surcharge\n+ many smaller items across the other branches.\n\nDispute notes auto-drafted for each open item."}};
-function rowHtml(id,v){const mc=v.mode==='air'?'m-air':'m-sea';const ml=v.mode==='air'?'Air':'Ocean';
-return `<tr data-status="${v.status}" data-mode="${v.mode}" tabindex="0" onclick="openInv('${id}')" onkeydown="if(event.key==='Enter')openInv('${id}')"><td class="l"><div class="nm2">${id}<div class="sub">${v.carrier}</div></div></td><td><span class="mode ${mc}">${ml}</span></td><td class="num hide">${v.lane}</td><td class="num hide">${v.branch}</td><td class="num">${v.q}</td><td class="delta">+${v.v}</td><td class="num" style="font-family:var(--sans);font-weight:500">${v.issue}</td><td><span class="chev">›</span></td></tr>`;}
-const rows=document.getElementById('rows');rows.innerHTML=Object.entries(INV).filter(([k])=>k!=='all').map(([id,v])=>rowHtml(id,v)).join("");
-document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x===t));const f=t.dataset.f;document.querySelectorAll('#rows tr').forEach(r=>{let show=(f==='all')||(f==='open'&&r.dataset.status==='open')||(f===r.dataset.mode);r.style.display=show?'':'none';});document.getElementById('inv').scrollIntoView({behavior:'smooth'});}));
-const ms=document.getElementById('ms');
-function openInv(id){const v=INV[id];document.getElementById('mt').textContent=id==='all'?'Recoverable summary':'Dispute note';document.getElementById('msb').textContent=id==='all'?('Recoverable '+v.v):(v.carrier+'  ·  '+v.lane+'  ·  +'+v.v);document.getElementById('doc').textContent=v.doc;ms.classList.add('open');document.body.style.overflow='hidden';}
-function closeM(){ms.classList.remove('open');document.body.style.overflow='';}
-function toast(type,icon,title,msg){const e=document.createElement('div');e.className='toast '+type;e.innerHTML=`<span class="ti">${icon}</span><span><b>${title}</b><br><span style="opacity:.8;font-size:12px">${msg||''}</span></span>`;document.getElementById('toasts').appendChild(e);requestAnimationFrame(()=>e.classList.add('show'));setTimeout(()=>{e.classList.remove('show');setTimeout(()=>e.remove(),350);},3600);}
-document.addEventListener('keydown',e=>{if(e.key==='Escape')closeM();});
-</script></body></html>
+ "180-LAX-44192":{mode:"air",branch:"LAX",lane:"LAX → HKG",billed:"$4,250",rec:"$640",st:"flag",
+  lines:[["Air freight (quoted wt)","$3,240.00",0],["Billed @ 1,240 kg","$3,720.00",1],["Fuel / security","$410.00",0],["Handling","$120.00",0]],
+  why:"Carrier billed 1,240 kg chargeable weight; the booking and dim calc from dimensions on file support 1,080 kg. A 160 kg overstatement at the contracted rate.",
+  letter:"Re: AWB 180-LAX-44192 — chargeable weight correction. Per the booking and dimensional calculation (1,080 kg), the billed chargeable weight of 1,240 kg is overstated by 160 kg. We request a corrected invoice reflecting the contracted rate on 1,080 kg, a reduction of $640.00."},
+ "MBL-77310":{mode:"ocean",branch:"Long Beach",lane:"LGB → SIN",billed:"$5,180",rec:"$910",st:"flag",
+  lines:[["Ocean freight","$3,900.00",0],["BAF / CAF","$540.00",0],["Demurrage 5 days","$910.00",1],["Documentation","$80.00",0]],
+  why:"Demurrage billed for 5 days; gate-in/gate-out and the 3-day contracted free time support 3 days. Two days billed in error.",
+  letter:"Re: MBL-77310 — demurrage adjustment. Gate records show 3 days against the contracted 3-day free time. The 5-day demurrage charge overstates by 2 days. We request a $910.00 correction."},
+ "180-LAX-44260":{mode:"air",branch:"LAX",lane:"LAX → NRT",billed:"$2,980",rec:"$310",st:"flag",
+  lines:[["Air freight","$2,460.00",0],["Billed weight var.","$310.00",1],["Fuel / security","$210.00",0]],
+  why:"Same chargeable-weight pattern as 44192, smaller variance. Flagged with dim calc.",
+  letter:"Re: AWB 180-LAX-44260 — chargeable weight correction. Billed weight exceeds the dim calc; we request a $310.00 correction."},
+ "MBL-77402":{mode:"ocean",branch:"JFK",lane:"NYC → RTM",billed:"$4,420",rec:"$420",st:"flag",
+  lines:[["Ocean freight","$3,600.00",0],["BAF / CAF","$480.00",0],["Detention 1.5 days","$420.00",1],["Documentation","$80.00",0]],
+  why:"Detention billed past the contracted free time per the equipment interchange record.",
+  letter:"Re: MBL-77402 — detention adjustment. Interchange records support free time; we request removal of the $420.00 detention charge."},
+ "180-ORD-51188":{mode:"air",branch:"ORD",lane:"ORD → FRA",billed:"$3,110",rec:"$180",st:"watch",
+  lines:[["Air freight","$2,640.00",0],["Accessorial var.","$180.00",1],["Fuel / security","$290.00",0]],
+  why:"Accessorial slightly above the quote sheet; flagged for a quick review before dispute.",
+  letter:"Re: AWB 180-ORD-51188 — accessorial review. The billed accessorial exceeds the quoted rate; documentation requested."},
+ "MBL-77355":{mode:"ocean",branch:"Long Beach",lane:"LGB → KAO",billed:"$4,010",rec:"$0",st:"good",
+  lines:[["Ocean freight","$3,400.00",0],["BAF / CAF","$520.00",0],["Documentation","$90.00",0]],
+  why:"All charges match the quote and free-time terms. Clean, cleared for payment.",
+  letter:""}};
+let MODE='all';
+function invRow(id,v){return `<tr data-status="${v.st}" data-mode="${v.mode}" tabindex="0" onclick="openInv('${id}')" onkeydown="if(event.key==='Enter')openInv('${id}')"><td class="l"><div class="nm2">${id}<div class="sub">${v.branch}</div></div></td><td><span class="modetag m-${v.mode}">${v.mode}</span></td><td class="num hide">${v.lane}</td><td class="num">${v.billed}</td><td class="amt ${v.st==='good'?'':'flag'}">${v.rec}</td><td><span class="status s-${v.st}">● ${v.st==='good'?'Clean':v.st==='watch'?'Review':'Gap'}</span></td><td><span class="chev">›</span></td></tr>`;}
+document.getElementById('rows').innerHTML=Object.entries(INV).map(([id,v])=>invRow(id,v)).join("");
+function applyFilters(){const f=document.querySelector('#tabs .tab.active').dataset.f;document.querySelectorAll('#rows tr').forEach(r=>{const okF=(f==='all'||r.dataset.status===f);const okM=(MODE==='all'||r.dataset.mode===MODE);r.style.display=(okF&&okM)?'':'none';});}
+document.querySelectorAll('#tabs .tab').forEach(t=>t.addEventListener('click',()=>{document.querySelectorAll('#tabs .tab').forEach(x=>x.classList.toggle('active',x===t));applyFilters();document.getElementById('invAnchor').scrollIntoView({behavior:'smooth'});}));
+document.querySelectorAll('.mbtn').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.mbtn').forEach(x=>x.classList.toggle('active',x===b));MODE=b.dataset.m;document.getElementById('modeName').textContent=MODE==='all'?'all modes':MODE;applyFilters();}));
+const drawer=document.getElementById('drawer'),scrim=document.getElementById('scrim');
+function openInv(id){const v=INV[id];
+  drawer.innerHTML=`<div class="dh"><div><div class="dn">${id}</div><div class="dm">${v.branch} · ${v.lane} · <span class="modetag m-${v.mode}">${v.mode}</span></div></div><button class="dc" onclick="closeD()">×</button></div>
+  <div class="db"><div style="margin-bottom:18px"><span class="status s-${v.st}">● ${v.st==='good'?'Clean':v.st==='watch'?'Review':'Gap'}</span></div>
+  <div class="dmini"><div class="dstat"><div class="l">Billed total</div><div class="v">${v.billed}</div></div><div class="dstat"><div class="l">Recoverable</div><div class="v" style="color:${v.st==='good'?'var(--good)':'var(--flag)'}">${v.rec}</div></div></div>
+  <p class="dt">Line-by-line audit</p><div class="invbox" style="margin-bottom:22px">${v.lines.map(l=>`<div class="liner ${l[2]?'bad':''}"><span>${l[0]}${l[2]?' ⚠':''}</span><span class="v">${l[1]}</span></div>`).join("")}</div>
+  <p class="dt">Why it flagged</p><div class="rec" style="margin-bottom:22px">${v.why}</div>
+  ${v.letter?`<p class="dt">Drafted dispute note</p><div class="letter">${v.letter}</div>`:''}</div>
+  <div class="df">${v.letter?`<button class="btn btn-primary" onclick="closeD();toast('ok','✓','Dispute sent','${id} dispute sent.')">Send dispute</button>`:`<button class="btn btn-primary" onclick="closeD();toast('ok','✓','Cleared','${id} cleared for payment.')">Clear for payment</button>`}<button class="btn btn-ghost" onclick="closeD()">Close</button></div>`;
+  drawer.classList.add('open');scrim.classList.add('open');document.body.style.overflow='hidden';}
+function closeD(){drawer.classList.remove('open');scrim.classList.remove('open');document.body.style.overflow='';}
+function toast(type,icon,title,msg){const e=document.createElement('div');e.className='toast '+type;e.innerHTML=`<span class="ti">${icon}</span><span><b>${title}</b><br><span style="opacity:.82;font-size:12px">${msg||''}</span></span>`;document.getElementById('toasts').appendChild(e);requestAnimationFrame(()=>e.classList.add('show'));setTimeout(()=>{e.classList.remove('show');setTimeout(()=>e.remove(),350);},3600);}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeD();});
+</script>
+</body></html>

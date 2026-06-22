@@ -1,480 +1,258 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Carrier Intelligence — R2X × Instive AI</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Carrier Intelligence — READY-2-XECUTE × Instive AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --ink:#0E1A2B;--ink-soft:#1B2C42;--canvas:#EEF1F5;--surface:#FFFFFF;--line:#E1E6EC;
-    --steel:#61708A;--steel-2:#8A98AC;--accent:#3A6EA5;--r2x:#C8102E;
-    --good:#1F9D6B;--good-bg:#E8F5EF;--watch:#D9941F;--watch-bg:#FBF1DE;--flag:#D64A45;--flag-bg:#FBE9E8;
-    --mono:"IBM Plex Mono",ui-monospace,monospace;--sans:"Inter",-apple-system,system-ui,sans-serif;
-    --radius:14px;--shadow:0 1px 2px rgba(14,26,43,.04),0 6px 18px rgba(14,26,43,.06);
-  }
-  *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:var(--sans);background:var(--canvas);color:var(--ink);line-height:1.45;-webkit-font-smoothing:antialiased;padding-bottom:40px}
-  .wrap{max-width:1080px;margin:0 auto;padding:0 20px}
-  button{font-family:inherit;cursor:pointer}
-
-  /* top bar / co-brand */
-  .topbar{background:var(--ink);color:#fff}
-  .topbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:16px 20px;flex-wrap:wrap}
-  .cobrand{display:flex;align-items:center;gap:14px}
-  .logo-r2x{font-weight:800;font-size:18px;letter-spacing:-.01em;color:#fff;background:var(--r2x);padding:8px 12px;border-radius:9px;line-height:1;box-shadow:inset 0 0 0 1px rgba(255,255,255,.12)}
-  .logo-r2x small{display:block;font-family:var(--mono);font-weight:500;font-size:7.5px;letter-spacing:.18em;margin-top:3px;opacity:.85}
-  .xmul{font-family:var(--mono);font-size:15px;color:var(--steel-2);font-weight:500}
-  .logo-instive{display:flex;align-items:center;gap:9px}
-  .mark{width:34px;height:34px;border-radius:8px;flex:none;background:linear-gradient(145deg,#3A6EA5,#244a73);display:grid;place-items:center;box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}
-  .mark svg{width:19px;height:19px}
-  .logo-instive .nm{font-size:15px;font-weight:600;letter-spacing:-.01em}
-  .vrule{width:1px;height:30px;background:rgba(255,255,255,.14)}
-  .product .eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#8FB0CF}
-  .product .pname{font-size:14.5px;font-weight:600;letter-spacing:-.01em;margin-top:1px}
-  .topright{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
-  .chip{font-family:var(--mono);font-size:11px;letter-spacing:.02em;padding:6px 11px;border-radius:999px;display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.07);color:#CCD8E6;border:1px solid rgba(255,255,255,.09)}
-  .dot{width:7px;height:7px;border-radius:50%;background:var(--good);animation:pulse 2.4s infinite}
-  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(31,157,107,.55)}70%{box-shadow:0 0 0 6px rgba(31,157,107,0)}100%{box-shadow:0 0 0 0 rgba(31,157,107,0)}}
-  .chip.demo{background:rgba(217,148,31,.14);color:#F0C97E;border-color:rgba(217,148,31,.3)}
-
-  main{margin-top:68px}
-  .sec-label{font-family:var(--mono);font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--steel);margin:0 0 11px 2px;display:flex;align-items:center;gap:8px}
-  .sec-label .ix{color:var(--r2x)}
-  .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
-
-  /* KPIs */
-  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:26px}
-  .kpi{padding:16px 18px;text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:var(--radius);box-shadow:var(--shadow);transition:transform .15s,box-shadow .15s;width:100%}
-  .kpi:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(14,26,43,.1)}
-  .kpi .k-label{font-size:12px;color:var(--steel);font-weight:500;display:flex;align-items:center;justify-content:space-between}
-  .kpi .k-label .go{color:var(--steel-2);font-size:14px}
-  .kpi .k-val{font-family:var(--mono);font-size:27px;font-weight:600;letter-spacing:-.02em;margin-top:8px}
-  .kpi .k-sub{font-family:var(--mono);font-size:11.5px;margin-top:6px;display:flex;align-items:center;gap:5px}
-  .up{color:var(--good)}.down{color:var(--flag)}.neutral{color:var(--steel)}
-  .kpi .k-val.warn{color:var(--watch)}
-
-  /* early warning */
-  .warn-card{padding:20px 22px;margin-bottom:26px;border-left:4px solid var(--flag);background:linear-gradient(90deg,#fff,#fffdfd)}
-  .badge-flag{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;background:var(--flag-bg);color:var(--flag);padding:4px 9px;border-radius:6px;font-weight:600}
-  .warn-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:26px;align-items:center;margin-top:14px}
-  .warn-h{font-size:18px;font-weight:600;letter-spacing:-.01em}
-  .warn-h b{color:var(--flag)}
-  .warn-p{font-size:13.5px;color:var(--ink-soft);margin-top:8px;max-width:46ch}
-  .warn-rec{margin-top:14px;font-size:13px;background:#F4F7FA;border:1px solid var(--line);border-radius:9px;padding:11px 13px;color:var(--ink-soft)}
-  .warn-rec b{color:var(--ink)}
-  .warn-actions{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
-  .btn{font-size:13px;font-weight:600;border-radius:9px;padding:9px 15px;border:1px solid transparent;transition:filter .15s,background .15s}
-  .btn-primary{background:var(--ink);color:#fff}
-  .btn-primary:hover{filter:brightness(1.18)}
-  .btn-ghost{background:#fff;color:var(--ink-soft);border-color:var(--line)}
-  .btn-ghost:hover{background:#F4F7FA}
-  .btn-sm{font-size:12px;padding:7px 12px}
-  .lead-note{font-family:var(--mono);font-size:11px;color:var(--steel);text-align:center;margin-top:8px;letter-spacing:.02em}
-  .spark-wrap{background:#FAFBFC;border:1px solid var(--line);border-radius:11px;padding:14px 14px 8px}
-  .spark-cap{display:flex;justify-content:space-between;font-family:var(--mono);font-size:10.5px;color:var(--steel);letter-spacing:.04em;margin-bottom:6px}
-
-  /* filter tabs */
-  .tabs{display:flex;gap:6px;margin-bottom:11px;flex-wrap:wrap}
-  .tab{font-family:var(--mono);font-size:11.5px;letter-spacing:.02em;padding:7px 13px;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--steel);transition:.15s}
-  .tab:hover{color:var(--ink);border-color:var(--steel-2)}
-  .tab.active{background:var(--ink);color:#fff;border-color:var(--ink)}
-  .tab .cnt{opacity:.6;margin-left:5px}
-
-  /* scorecard table */
-  .tbl-card{padding:6px;margin-bottom:26px;overflow:hidden}
-  table{width:100%;border-collapse:collapse}
-  thead th{font-family:var(--mono);font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--steel);font-weight:500;text-align:right;padding:14px 14px 12px;border-bottom:1px solid var(--line);white-space:nowrap}
-  thead th.l{text-align:left}
-  tbody td{padding:13px 14px;border-bottom:1px solid #EFF2F6;font-size:13.5px;text-align:right;vertical-align:middle}
-  tbody tr{cursor:pointer;transition:background .12s}
-  tbody tr:last-child td{border-bottom:none}
-  tbody tr:hover{background:#F6F9FC}
-  tbody tr:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
-  td.l{text-align:left}
-  .carrier{font-weight:600;font-size:14px}
-  .carrier .sub{font-weight:400;color:var(--steel);font-size:11.5px;font-family:var(--mono);margin-top:2px}
-  .num{font-family:var(--mono);font-weight:500;letter-spacing:-.01em}
-  .score{font-family:var(--mono);font-weight:600;font-size:15px}
-  .status{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.03em;text-transform:uppercase;padding:5px 10px;border-radius:7px}
-  .s-good{background:var(--good-bg);color:var(--good)}.s-watch{background:var(--watch-bg);color:var(--watch)}.s-flag{background:var(--flag-bg);color:var(--flag)}
-  .trend{display:inline-flex;align-items:center;gap:6px;justify-content:flex-end;font-family:var(--mono);font-size:12px}
-  .chev{color:var(--steel-2);font-size:16px;transition:transform .15s,color .15s}
-  tbody tr:hover .chev{color:var(--accent);transform:translateX(3px)}
-  .hint{font-family:var(--mono);font-size:10.5px;color:var(--steel-2);padding:8px 14px 2px}
-
-  /* two col */
-  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-bottom:26px}
-  .panel{padding:18px 20px 20px}
-  .panel h3{font-size:14.5px;font-weight:600;margin-bottom:2px}
-  .panel .ph-sub{font-size:12px;color:var(--steel);margin-bottom:16px}
-  .lane{margin-bottom:15px;cursor:pointer;border-radius:8px;padding:5px 6px;margin-left:-6px;margin-right:-6px;transition:background .12s}
-  .lane:hover{background:#F6F9FC}
-  .lane:last-child{margin-bottom:0}
-  .lane-top{display:flex;justify-content:space-between;align-items:baseline;font-size:13px;margin-bottom:6px}
-  .lane-name{font-weight:500}
-  .lane-name .tag{font-family:var(--mono);font-size:9.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--accent);background:#EAF1F8;padding:2px 6px;border-radius:5px;margin-left:7px;vertical-align:middle}
-  .lane-margin{font-family:var(--mono);font-weight:600}
-  .bar{height:8px;border-radius:5px;background:#EDF0F4;overflow:hidden}
-  .bar span{display:block;height:100%;border-radius:5px}
-  .lane-foot{font-family:var(--mono);font-size:10.5px;color:var(--steel);margin-top:5px}
-  .inv{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 0;border-bottom:1px solid #EFF2F6}
-  .inv:last-child{border-bottom:none;padding-bottom:0}
-  .inv:first-child{padding-top:0}
-  .inv-l .inv-id{font-family:var(--mono);font-size:11px;color:var(--steel);letter-spacing:.03em}
-  .inv-l .inv-car{font-size:13px;font-weight:500;margin-top:2px}
-  .inv-l .inv-why{font-size:11.5px;color:var(--steel);margin-top:3px}
-  .inv-r{text-align:right;white-space:nowrap;display:flex;flex-direction:column;align-items:flex-end;gap:6px}
-  .inv-r .delta{font-family:var(--mono);font-weight:600;color:var(--flag);font-size:14px}
-  .recover{margin-top:16px;background:var(--good-bg);border:1px solid #CDEBDD;border-radius:9px;padding:11px 13px;display:flex;justify-content:space-between;align-items:center}
-  .recover .rl{font-size:12px;color:#157551;font-weight:500}
-  .recover .rv{font-family:var(--mono);font-weight:600;color:var(--good);font-size:15px}
-
-  /* integration band */
-  .stack-band{padding:22px 24px;margin-bottom:22px;position:relative;overflow:hidden;background:linear-gradient(135deg,#0E1A2B,#16263c 60%,#1c3450);border:none;color:#fff;border-radius:var(--radius)}
-  .stack-band::after{content:"";position:absolute;right:-40px;top:-40px;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(58,110,165,.35),transparent 70%)}
-  .stack-head{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:18px;position:relative;z-index:1}
-  .sh-title{font-size:16px;font-weight:600;letter-spacing:-.01em}
-  .sh-title .accent-bar{display:inline-block;width:18px;height:3px;background:var(--good);border-radius:2px;vertical-align:middle;margin-right:9px}
-  .sh-note{font-family:var(--mono);font-size:11px;color:#9FB4CC;letter-spacing:.02em}
-  .stack-groups{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;position:relative;z-index:1}
-  .stack-group{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);border-radius:11px;padding:13px 14px 15px}
-  .grp-label{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#8FB0CF;margin-bottom:11px}
-  .tools{display:flex;flex-wrap:wrap;gap:8px}
-  .tool{display:inline-flex;align-items:center;gap:7px;background:#fff;color:var(--ink);border-radius:8px;padding:6px 11px 6px 7px;font-size:12.5px;font-weight:600;letter-spacing:-.01em;box-shadow:0 2px 6px rgba(0,0,0,.18)}
-  .tool .lg{width:18px;height:18px;border-radius:5px;display:grid;place-items:center;font-family:var(--mono);font-weight:600;font-size:9px;color:#fff;flex:none}
-  .stack-foot{margin-top:15px;font-size:11.5px;color:#9FB4CC;position:relative;z-index:1}
-  .stack-foot b{color:#D8E4F0;font-weight:500}
-
-  footer .wrap{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;padding-top:4px}
-  .roi-foot{font-family:var(--mono);font-size:11.5px;color:var(--ink-soft)}
-  .roi-foot b{color:var(--r2x)}
-  .madeby{font-size:11.5px;color:var(--steel)}
-  .madeby b{color:var(--ink)}
-
-  /* ---------- DRAWER ---------- */
-  .scrim{position:fixed;inset:0;background:rgba(8,15,26,.5);backdrop-filter:blur(2px);opacity:0;pointer-events:none;transition:opacity .25s;z-index:40}
-  .scrim.open{opacity:1;pointer-events:auto}
-  .drawer{position:fixed;top:0;right:0;height:100%;width:430px;max-width:92vw;background:var(--surface);box-shadow:-12px 0 40px rgba(8,15,26,.25);transform:translateX(100%);transition:transform .28s cubic-bezier(.22,.61,.36,1);z-index:50;display:flex;flex-direction:column}
-  .drawer.open{transform:none}
-  .dr-head{padding:20px 22px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
-  .dr-name{font-size:18px;font-weight:700;letter-spacing:-.01em}
-  .dr-mc{font-family:var(--mono);font-size:11.5px;color:var(--steel);margin-top:3px}
-  .dr-close{width:32px;height:32px;border-radius:8px;border:1px solid var(--line);background:#fff;color:var(--steel);font-size:18px;line-height:1;flex:none}
-  .dr-close:hover{background:#F4F7FA;color:var(--ink)}
-  .dr-body{padding:18px 22px;overflow-y:auto;flex:1}
-  .dr-statusrow{display:flex;align-items:center;gap:10px;margin-bottom:18px}
-  .dr-mini{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:20px}
-  .dr-stat{background:#F7F9FB;border:1px solid var(--line);border-radius:10px;padding:11px 13px}
-  .dr-stat .l{font-size:11px;color:var(--steel)}
-  .dr-stat .v{font-family:var(--mono);font-size:19px;font-weight:600;margin-top:4px}
-  .dr-sec-t{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--steel);margin:0 0 10px}
-  .dr-chart{background:#FAFBFC;border:1px solid var(--line);border-radius:10px;padding:12px;margin-bottom:20px}
-  .dr-lane,.dr-load{display:flex;justify-content:space-between;align-items:center;font-size:13px;padding:9px 0;border-bottom:1px solid #EFF2F6}
-  .dr-lane:last-child,.dr-load:last-child{border-bottom:none}
-  .dr-lane .ln{font-weight:500}.dr-lane .mg{font-family:var(--mono);font-weight:600}
-  .dr-load .ld{font-family:var(--mono);font-size:12px;color:var(--ink-soft)}
-  .pill-ld{font-family:var(--mono);font-size:10px;font-weight:600;padding:3px 8px;border-radius:6px}
-  .ld-ok{background:var(--good-bg);color:var(--good)}.ld-late{background:var(--flag-bg);color:var(--flag)}
-  .dr-foot{padding:16px 22px;border-top:1px solid var(--line);display:flex;gap:9px;flex-wrap:wrap;background:#FBFCFD}
-
-  /* ---------- MODAL ---------- */
-  .modal-scrim{position:fixed;inset:0;background:rgba(8,15,26,.5);backdrop-filter:blur(2px);opacity:0;pointer-events:none;transition:opacity .2s;z-index:60;display:grid;place-items:center;padding:20px}
-  .modal-scrim.open{opacity:1;pointer-events:auto}
-  .modal{background:#fff;border-radius:16px;max-width:520px;width:100%;box-shadow:0 24px 60px rgba(8,15,26,.35);transform:translateY(10px) scale(.98);transition:transform .2s;overflow:hidden}
-  .modal-scrim.open .modal{transform:none}
-  .md-head{padding:18px 22px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
-  .md-head h3{font-size:16px;font-weight:700}
-  .md-head .sub{font-family:var(--mono);font-size:11px;color:var(--steel);margin-top:2px}
-  .md-body{padding:20px 22px}
-  .md-doc{background:#F7F9FB;border:1px solid var(--line);border-radius:10px;padding:16px 18px;font-size:13px;line-height:1.6;color:var(--ink-soft);white-space:pre-line;font-family:var(--mono);max-height:300px;overflow:auto}
-  .md-foot{padding:14px 22px 20px;display:flex;gap:10px;justify-content:flex-end}
-
-  /* ---------- TOAST ---------- */
-  .toasts{position:fixed;bottom:22px;right:22px;display:flex;flex-direction:column;gap:10px;z-index:80}
-  .toast{background:var(--ink);color:#fff;padding:13px 16px;border-radius:11px;font-size:13px;box-shadow:0 10px 30px rgba(8,15,26,.3);display:flex;align-items:center;gap:11px;min-width:240px;max-width:340px;transform:translateX(120%);transition:transform .3s cubic-bezier(.22,.61,.36,1)}
-  .toast.show{transform:none}
-  .toast .ti{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;flex:none;font-size:12px;font-weight:700}
-  .toast.ok .ti{background:var(--good)}.toast.info .ti{background:var(--accent)}
-  .toast b{font-weight:600}
-
-  @media (max-width:860px){
-    .kpis{grid-template-columns:repeat(2,1fr)}
-    .warn-grid{grid-template-columns:1fr;gap:18px}
-    .grid-2{grid-template-columns:1fr}
-    .stack-groups{grid-template-columns:1fr}
-    thead th.hide,tbody td.hide{display:none}
-  }
-  @media (max-width:480px){.kpis{grid-template-columns:1fr 1fr;gap:10px}.kpi .k-val{font-size:22px}.vrule,.product{display:none}}
-  .fade{opacity:0;transform:translateY(8px);animation:rise .5s ease forwards}
-  @media (prefers-reduced-motion:reduce){.fade{animation:none;opacity:1;transform:none}.dot{animation:none}*{transition:none!important}}
-  @keyframes rise{to{opacity:1;transform:none}}
-</style>
-</head>
+:root{
+--ink:#15213B;--ink-2:#1C2C4D;--ink-soft:#27395F;--canvas:#EEF0F4;--surface:#fff;--line:#DCE1EA;--line-2:#E8ECF2;
+--steel:#5A6580;--steel-2:#8A93A8;--brand:#D8352C;--brand-2:#3B5BA8;--accent:#C22E26;
+--good:#1F9D6B;--good-bg:#E8F5EF;--watch:#D9941F;--watch-bg:#FBF1DE;--flag:#D64A45;--flag-bg:#FBE9E8;
+--mono:"IBM Plex Mono",monospace;--sans:"Inter",system-ui,sans-serif;--r:14px;
+--sh:0 1px 2px rgba(21,33,59,.04),0 6px 18px rgba(21,33,59,.06);--sh-lg:0 12px 34px rgba(21,33,59,.13)}
+*{box-sizing:border-box;margin:0;padding:0}html,body{height:100%}
+body{font-family:var(--sans);background:var(--canvas);color:var(--ink);line-height:1.45;-webkit-font-smoothing:antialiased}
+button{font-family:inherit;cursor:pointer}
+.app{display:flex;min-height:100vh}
+.sidebar{width:250px;flex-shrink:0;background:linear-gradient(180deg,#15213B,#1C2C4D 70%,#22335a);color:#fff;position:sticky;top:0;height:100vh;display:flex;flex-direction:column;z-index:60;transition:transform .25s}
+.sb-brand{padding:20px 20px 18px;border-bottom:1px solid rgba(255,255,255,.08)}
+.lockup{display:flex;align-items:center;gap:11px}.mk{width:32px;height:32px;flex-shrink:0}.mk svg{width:32px;height:32px}
+.lk-txt{font-weight:800;font-size:14px;letter-spacing:-.01em;line-height:1}.lk-txt small{display:block;font-family:var(--mono);font-weight:500;font-size:7.5px;letter-spacing:.08em;color:#94A0BC;margin-top:4px}
+.sb-x{display:flex;align-items:center;gap:8px;margin-top:14px;font-size:11px;color:#94A0BC}.sb-x .by{width:22px;height:22px;border-radius:6px;background:linear-gradient(145deg,var(--brand),#a82820);display:grid;place-items:center}.sb-x .by svg{width:13px;height:13px}
+.nav{padding:16px 12px;flex:1;overflow-y:auto}.nav-h{font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:#56627E;padding:8px 12px}
+.nav-i{display:flex;align-items:center;gap:11px;width:100%;background:transparent;border:none;color:#BCC6DC;font-size:13.5px;font-weight:500;padding:10px 12px;border-radius:9px;text-align:left;position:relative;transition:.14s}
+.nav-i svg{width:17px;height:17px;flex-shrink:0;opacity:.85}.nav-i:hover{background:rgba(255,255,255,.06);color:#fff}
+.nav-i.active{background:rgba(216,53,44,.32);color:#fff}.nav-i.active::before{content:"";position:absolute;left:-12px;top:8px;bottom:8px;width:3px;border-radius:0 3px 3px 0;background:var(--brand)}
+.nav-i .tag{margin-left:auto;font-family:var(--mono);font-size:9.5px;background:rgba(216,53,44,.95);color:#fff;padding:2px 6px;border-radius:5px;font-weight:700}
+.sb-foot{padding:14px 16px;border-top:1px solid rgba(255,255,255,.08)}.who{display:flex;align-items:center;gap:10px}.who .av{width:32px;height:32px;border-radius:9px;background:linear-gradient(145deg,#D8352C,#3B5BA8);display:grid;place-items:center;font-weight:700;font-size:12px}
+.who .nm{font-size:12.5px;font-weight:600;line-height:1.2}.who .rl{font-size:10.5px;color:#94A0BC}
+.demo-pill{margin-top:12px;font-family:var(--mono);font-size:10px;text-align:center;background:rgba(216,53,44,.15);color:#F0A39D;border:1px solid rgba(216,53,44,.3);padding:6px;border-radius:7px}
+.main{flex:1;min-width:0;display:flex;flex-direction:column}
+.topbar{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.86);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:16px;padding:14px 28px}
+.burger{display:none;background:none;border:1px solid var(--line);border-radius:8px;width:36px;height:36px;color:var(--ink)}
+.tb-title{font-size:17px;font-weight:700;letter-spacing:-.01em}.tb-crumb{font-family:var(--mono);font-size:11px;color:var(--steel);margin-top:1px}
+.tb-right{margin-left:auto;display:flex;align-items:center;gap:12px}.search{display:flex;align-items:center;gap:8px;background:var(--canvas);border:1px solid var(--line);border-radius:9px;padding:8px 12px;color:var(--steel);font-size:12.5px;min-width:200px}.search svg{width:14px;height:14px}
+.live{font-family:var(--mono);font-size:11px;padding:7px 11px;border-radius:999px;display:inline-flex;align-items:center;gap:7px;background:#fff;border:1px solid var(--line);color:var(--ink-soft)}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--good);animation:pulse 2.4s infinite}@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(31,157,107,.55)}70%{box-shadow:0 0 0 6px rgba(31,157,107,0)}100%{box-shadow:0 0 0 0 rgba(31,157,107,0)}}
+.content{padding:26px 28px 56px;max-width:1320px;width:100%}.view{display:none}.view.active{display:block;animation:rise .4s ease}@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.sec-label{font-family:var(--mono);font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--steel);margin:0 0 12px 2px;display:flex;gap:8px;align-items:center}.sec-label .ix{color:var(--brand)}.sec-label .more{margin-left:auto;font-family:var(--sans);text-transform:none;letter-spacing:0;font-size:12px;color:var(--brand-2);font-weight:600;cursor:pointer}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--sh)}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px}.kpi{padding:16px 18px;text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:var(--r);box-shadow:var(--sh);transition:.15s;width:100%}.kpi:hover{transform:translateY(-2px);box-shadow:var(--sh-lg)}.kpi .kl{font-size:12px;color:var(--steel);font-weight:500;display:flex;justify-content:space-between;align-items:center}.kpi .ic{width:26px;height:26px;border-radius:7px;display:grid;place-items:center;background:var(--canvas)}.kpi .ic svg{width:14px;height:14px;color:var(--brand)}.kpi .kv{font-family:var(--mono);font-size:27px;font-weight:600;letter-spacing:-.02em;margin-top:10px}.kpi .ks{font-family:var(--mono);font-size:11.5px;margin-top:6px}
+.up{color:var(--good)}.down{color:var(--flag)}.neutral{color:var(--steel)}.kv.warn{color:var(--watch)}.kv.brand{color:var(--brand)}.kv.flag{color:var(--flag)}
+.hero{padding:22px 24px;margin-bottom:24px;border-left:4px solid var(--brand);background:linear-gradient(100deg,#fff,#fffbfb)}
+.badge{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;background:var(--flag-bg);color:var(--flag);padding:5px 10px;border-radius:6px;font-weight:600;display:inline-block}
+.hgrid{display:grid;grid-template-columns:1.1fr .9fr;gap:30px;align-items:center;margin-top:16px}
+.hh{font-size:20px;font-weight:700;letter-spacing:-.01em}.hh b{color:var(--brand)}.hp{font-size:13.5px;color:var(--ink-soft);margin-top:10px;max-width:52ch}
+.rec{margin-top:16px;font-size:13px;background:#F2F4F9;border:1px solid var(--line);border-radius:10px;padding:12px 14px;color:var(--ink-soft)}.rec b{color:var(--ink)}
+.acts{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+.btn{font-size:13px;font-weight:600;border-radius:9px;padding:10px 16px;border:1px solid transparent;transition:.15s}.btn-primary{background:var(--brand);color:#fff}.btn-primary:hover{filter:brightness(1.08)}.btn-ghost{background:#fff;color:var(--ink-soft);border-color:var(--line)}.btn-ghost:hover{background:#F2F4F9}.btn-sm{font-size:12px;padding:8px 13px}
+.chartbox{background:#FAFBFD;border:1px solid var(--line);border-radius:12px;padding:16px 16px 10px}.cap{display:flex;justify-content:space-between;font-family:var(--mono);font-size:10.5px;color:var(--steel);margin-bottom:8px}.cnote{font-family:var(--mono);font-size:11px;color:var(--steel);text-align:center;margin-top:10px}
+.tabs{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}.tab{font-family:var(--mono);font-size:11.5px;padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--steel)}.tab.active{background:var(--ink);color:#fff;border-color:var(--ink)}.tab .c{opacity:.6;margin-left:5px}
+.tcard{padding:6px;margin-bottom:24px;overflow:hidden}table{width:100%;border-collapse:collapse}thead th{font-family:var(--mono);font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--steel);font-weight:500;text-align:right;padding:14px 16px 12px;border-bottom:1px solid var(--line);white-space:nowrap}thead th.l{text-align:left}
+tbody td{padding:14px 16px;border-bottom:1px solid var(--line-2);font-size:13.5px;text-align:right;vertical-align:middle}tbody tr{cursor:pointer;transition:.12s}tbody tr:last-child td{border-bottom:none}tbody tr:hover{background:#F3F5FA}td.l{text-align:left}
+.nm2{font-weight:600;font-size:14px}.sub{font-weight:400;color:var(--steel);font-size:11.5px;font-family:var(--mono);margin-top:2px}.num{font-family:var(--mono);font-weight:500}
+.score{font-family:var(--mono);font-weight:700;font-size:15px}.sc-good{color:var(--good)}.sc-watch{color:var(--watch)}.sc-flag{color:var(--flag)}
+.trend{font-family:var(--mono);font-size:11px;font-weight:600}.tr-down{color:var(--flag)}.tr-up{color:var(--good)}.tr-flat{color:var(--steel)}
+.status{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:11px;font-weight:600;text-transform:uppercase;padding:5px 10px;border-radius:7px}.s-good{background:var(--good-bg);color:var(--good)}.s-watch{background:var(--watch-bg);color:var(--watch)}.s-flag{background:var(--flag-bg);color:var(--flag)}
+.chev{color:var(--steel-2);font-size:16px;transition:.15s}tbody tr:hover .chev{color:var(--brand);transform:translateX(3px)}.hint{font-family:var(--mono);font-size:10.5px;color:var(--steel-2);padding:9px 16px 3px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:24px}.panel{padding:18px 20px 20px}.panel h3{font-size:14.5px;font-weight:600;margin-bottom:2px}.panel .ps{font-size:12px;color:var(--steel);margin-bottom:16px}
+.row{display:flex;justify-content:space-between;align-items:baseline;font-size:13px}.mb{margin-bottom:14px}.bar{height:8px;border-radius:5px;background:#E6EAF1;overflow:hidden;margin-top:6px}.bar span{display:block;height:100%;border-radius:5px}.rowf{font-family:var(--mono);font-size:10.5px;color:var(--steel);margin-top:6px}
+.drow{display:flex;justify-content:space-between;align-items:center;font-size:13px;padding:11px 0;border-bottom:1px solid var(--line-2)}.drow:last-child{border-bottom:none}.metric{font-family:var(--mono);font-weight:600}
+.lanetag{font-family:var(--mono);font-size:9.5px;font-weight:600;padding:2px 7px;border-radius:5px;background:#EAF0FF;color:var(--brand-2);margin-left:6px}
+.stack{padding:24px 26px;margin-bottom:24px;position:relative;overflow:hidden;background:linear-gradient(135deg,#15213B,#22335a 55%,#D8352C 250%);border:none;color:#fff;border-radius:var(--r)}.stack::after{content:"";position:absolute;right:-30px;top:-50px;width:240px;height:240px;border-radius:50%;background:radial-gradient(circle,rgba(216,53,44,.4),transparent 70%)}
+.sh{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:18px;position:relative;z-index:1}.sht{font-size:16px;font-weight:600}.sht .ab{display:inline-block;width:18px;height:3px;background:var(--brand);border-radius:2px;vertical-align:middle;margin-right:9px}.shn{font-family:var(--mono);font-size:11px;color:#94A0BC}
+.sgr{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;position:relative;z-index:1}.sg{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:11px;padding:14px 14px 16px}.gl{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#94A0BC;margin-bottom:11px}
+.tool{display:inline-flex;align-items:center;gap:7px;background:#fff;color:var(--ink);border-radius:8px;padding:6px 10px 6px 7px;font-size:12px;font-weight:600;box-shadow:0 2px 6px rgba(0,0,0,.18);margin:0 6px 6px 0}.tool .lg{width:17px;height:17px;border-radius:5px;display:grid;place-items:center;font-family:var(--mono);font-weight:600;font-size:8.5px;color:#fff}
+.sf{margin-top:14px;font-size:11.5px;color:#94A0BC;position:relative;z-index:1}.sf b{color:#D6DEF0;font-weight:500}
+.fac-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:24px}.fac{padding:18px 20px}.fac .fn{font-size:15px;font-weight:700}.fac .fl{font-family:var(--mono);font-size:11px;color:var(--steel);margin-bottom:12px}
+.foot{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;padding:6px 2px 0}.roi{font-family:var(--mono);font-size:11.5px;color:var(--ink-soft)}.roi b{color:var(--brand)}.made{font-size:11.5px;color:var(--steel)}.made b{color:var(--ink)}
+.scrim{position:fixed;inset:0;background:rgba(10,16,30,.5);backdrop-filter:blur(2px);opacity:0;pointer-events:none;transition:.25s;z-index:90}.scrim.open{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;right:0;height:100%;width:460px;max-width:94vw;background:var(--surface);box-shadow:-12px 0 40px rgba(10,16,30,.28);transform:translateX(100%);transition:transform .28s cubic-bezier(.22,.61,.36,1);z-index:100;display:flex;flex-direction:column}.drawer.open{transform:none}
+.dh{padding:22px 24px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:flex-start;gap:12px}.dn{font-size:18px;font-weight:700}.dm{font-family:var(--mono);font-size:11.5px;color:var(--steel);margin-top:3px}.dc{width:34px;height:34px;border-radius:9px;border:1px solid var(--line);background:#fff;color:var(--steel);font-size:18px}.dc:hover{background:#F2F4F9}
+.db{padding:20px 24px;overflow-y:auto;flex:1}.dmini{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:22px}.dstat{background:#F3F5FA;border:1px solid var(--line);border-radius:10px;padding:12px 14px}.dstat .l{font-size:11px;color:var(--steel)}.dstat .v{font-family:var(--mono);font-size:18px;font-weight:600;margin-top:4px}.dt{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--steel);margin:0 0 11px}.dchart{background:#F3F5FA;border:1px solid var(--line);border-radius:10px;padding:13px;margin-bottom:22px}.df{padding:18px 24px;border-top:1px solid var(--line);display:flex;gap:10px;flex-wrap:wrap;background:#FAFBFD}
+.toasts{position:fixed;bottom:24px;right:24px;display:flex;flex-direction:column;gap:10px;z-index:120}.toast{background:var(--ink);color:#fff;padding:14px 17px;border-radius:11px;font-size:13px;box-shadow:var(--sh-lg);display:flex;align-items:center;gap:12px;min-width:250px;max-width:360px;transform:translateX(130%);transition:.3s cubic-bezier(.22,.61,.36,1)}.toast.show{transform:none}.toast .ti{width:23px;height:23px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:700;flex-shrink:0}.toast.ok .ti{background:var(--good)}.toast.info .ti{background:var(--brand-2)}
+@media(max-width:1140px){.fac-grid{grid-template-columns:1fr}.sgr{grid-template-columns:1fr 1fr}}
+@media(max-width:980px){.sidebar{position:fixed;transform:translateX(-100%);box-shadow:var(--sh-lg)}.sidebar.open{transform:none}.burger{display:grid;place-items:center}.search{display:none}.kpis{grid-template-columns:repeat(2,1fr)}.hgrid{grid-template-columns:1fr}}
+@media(max-width:680px){.grid2,.fac-grid{grid-template-columns:1fr}.sgr{grid-template-columns:1fr}.content{padding:18px 16px 48px}.topbar{padding:12px 16px}thead th.hide,tbody td.hide{display:none}}
+@media(max-width:520px){.kpis{grid-template-columns:1fr 1fr}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}.dot{animation:none}}
+</style></head>
 <body>
+<div class="app">
+<aside class="sidebar" id="sidebar">
+  <div class="sb-brand"><div class="lockup">
+    <span class="mk"><svg viewBox="0 0 32 32" fill="none"><rect x="2" y="2" width="28" height="28" rx="8" fill="url(#g)"/><path d="M9 20l4-8 3 5 3-6 4 9" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/><defs><linearGradient id="g" x1="0" y1="0" x2="32" y2="32"><stop offset="0" stop-color="#E8453B"/><stop offset="1" stop-color="#a82820"/></linearGradient></defs></svg></span>
+    <span class="lk-txt">READY-2-XECUTE<small>R2X LOGISTICS</small></span></div>
+    <div class="sb-x"><span class="by"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M3 17V7l5 3 4-5 4 6 5-2v8"/></svg></span> powered by <b style="color:#dbe2f0;font-weight:600">Instive&nbsp;AI</b></div></div>
+  <nav class="nav">
+    <div class="nav-h">Operations</div>
+    <button class="nav-i active" data-v="carriers"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg> Carrier Scorecard <span class="tag">1</span></button>
+    <button class="nav-i" data-v="lanes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19h16M4 5h16M9 5v14M15 5v14"/></svg> Lane Performance</button>
+    <button class="nav-i" data-v="network"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><circle cx="5" cy="6" r="2"/><circle cx="19" cy="6" r="2"/><circle cx="5" cy="18" r="2"/><circle cx="19" cy="18" r="2"/><path d="M7 7l3 3M17 7l-3 3M7 17l3-3M17 17l-3-3"/></svg> Carriers &amp; Network</button>
+    <div class="nav-h" style="margin-top:10px">Account</div>
+    <button class="nav-i" onclick="toast('info','i','Settings','Connector mapping lives here in the live build.')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-2.82 1.17V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 7 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 2.6 14H2a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 7l.06-.06A2 2 0 1 1 7.46 4l.06.06A1.65 1.65 0 0 0 9.34 4.6 1.65 1.65 0 0 0 11 3V2a2 2 0 1 1 4 0v.09A1.65 1.65 0 0 0 17 4.6l.06-.06A2 2 0 1 1 20 7.46l-.06.06A1.65 1.65 0 0 0 19.4 9V11a2 2 0 1 1 0 4z"/></svg> Connectors &amp; settings</button>
+  </nav>
+  <div class="sb-foot"><div class="who"><span class="av">JC</span><div><div class="nm">Joel Cox</div><div class="rl">READY-2-XECUTE</div></div></div><div class="demo-pill">DEMO · sample data only</div></div>
+</aside>
 
-<header class="topbar">
-  <div class="wrap">
-    <div class="cobrand">
-      <!-- ▼ Replace with R2X's real logo: <img src="r2x-logo.svg" height="38" alt="R2X"> ▼ -->
-      <div class="logo-r2x">R2X<small>READY-2-XECUTE</small></div>
-      <span class="xmul">✕</span>
-      <div class="logo-instive">
-        <span class="mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17V7l5 3 4-5 4 6 5-2v8"/><circle cx="12" cy="19" r="1.4" fill="#fff" stroke="none"/></svg></span>
-        <span class="nm">Instive&nbsp;AI</span>
-      </div>
-      <span class="vrule"></span>
-      <div class="product"><div class="eyebrow">Demo for Ready-2-Xecute</div><div class="pname">Carrier Intelligence</div></div>
-    </div>
-    <div class="topright">
-      <span class="chip"><span class="dot"></span> Live · synced 4 min ago</span>
-      <span class="chip demo">Sample data</span>
-    </div>
-  </div>
-</header>
+<div class="main">
+  <header class="topbar">
+    <button class="burger" onclick="document.getElementById('sidebar').classList.toggle('open')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg></button>
+    <div><div class="tb-title" id="tbTitle">Carrier Scorecard</div><div class="tb-crumb" id="tbCrumb">R2X · including new Dedicated Carriers + Tampa lanes · week of Jun 16</div></div>
+    <div class="tb-right"><span class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg> Search carriers, lanes…</span><span class="live"><span class="dot"></span> Live · scoring carriers</span></div>
+  </header>
+  <div class="content">
 
-<main class="wrap">
+  <!-- CARRIER SCORECARD -->
+  <section class="view active" id="view-carriers">
+    <section class="kpis">
+      <button class="kpi"><div class="kl">Carriers tracked <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1" y="3" width="15" height="13"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2"/><circle cx="18.5" cy="18.5" r="2"/></svg></span></div><div class="kv">68</div><div class="ks neutral">incl. Dedicated + Tampa</div></button>
+      <button class="kpi"><div class="kl">Avg on-time <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span></div><div class="kv">93.8%</div><div class="ks up">▲ 0.6 pts</div></button>
+      <button class="kpi"><div class="kl">Flagged early <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg></span></div><div class="kv flag">3</div><div class="ks down">before they hit clients</div></button>
+      <button class="kpi"><div class="kl">At-risk lanes <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19h16M4 5h16M9 5v14"/></svg></span></div><div class="kv warn">2</div><div class="ks neutral">watch list</div></button>
+    </section>
 
-  <section class="kpis">
-    <button class="kpi fade" onclick="toast('info','i','Drill-down','On-time across 14 lanes — 94.2%, up 1.1 pts.')"><div class="k-label">On-time delivery <span class="go">›</span></div><div class="k-val">94.2%</div><div class="k-sub up">▲ 1.1 pts vs. May</div></button>
-    <button class="kpi fade" onclick="document.getElementById('scorecard').scrollIntoView({behavior:'smooth'})"><div class="k-label">Active carriers <span class="go">›</span></div><div class="k-val">38</div><div class="k-sub neutral">across 14 lanes</div></button>
-    <button class="kpi fade" onclick="openInvoice('all')"><div class="k-label">Overbilling flagged · June <span class="go">›</span></div><div class="k-val warn">$11,480</div><div class="k-sub down">7 invoices · recoverable</div></button>
-    <button class="kpi fade" onclick="filterTo('flag')"><div class="k-label">Lanes at margin risk <span class="go">›</span></div><div class="k-val">2<span style="font-size:16px;color:var(--steel-2)"> / 14</span></div><div class="k-sub neutral">flagged for review</div></button>
-  </section>
-
-  <p class="sec-label"><span class="ix">▍</span> Early-warning</p>
-  <section class="card warn-card">
-    <span class="badge-flag">● Client-complaint risk</span>
-    <div class="warn-grid">
-      <div>
-        <div class="warn-h"><b>Rincon Transport</b> is trending toward a customer escalation.</div>
-        <div class="warn-p">On-time fell from 96% to 88% over three weeks and claims doubled — the same pattern that preceded the last two complaints on this account. Caught now, ~3 weeks before it usually reaches the customer.</div>
-        <div class="warn-rec"><b>Recommended:</b> shift Laredo → Monterrey volume to Midwest Hauling Co. (97% on-time, +6% margin) until Rincon recovers.</div>
-        <div class="warn-actions">
-          <button class="btn btn-primary" onclick="toast('ok','✓','Recommendation applied','Laredo → Monterrey volume routed to Midwest Hauling Co.')">Apply recommendation</button>
-          <button class="btn btn-ghost" onclick="openCarrier('rincon')">View Rincon profile</button>
-          <button class="btn btn-ghost btn-sm" onclick="toast('info','i','Snoozed','We\'ll re-check Rincon in 7 days.')">Snooze 1 week</button>
+    <p class="sec-label"><span class="ix">◆</span> A slip caught 3 to 4 weeks before it becomes a client complaint</p>
+    <section class="card hero">
+      <span class="badge">● Early warning · Sunbelt Freight · Tampa lanes</span>
+      <div class="hgrid">
+        <div>
+          <div class="hh">Sunbelt Freight is <b>sliding</b>, and clients have not felt it yet.</div>
+          <div class="hp">On-time is still reading acceptable, but the trend across the last three weeks is bending the wrong way on the new Tampa lanes: tender rejections up, dwell creeping, two late deliveries that have not yet reached a client review. The score catches the pattern now, while there is still time to rebalance volume, instead of after the complaint lands.</div>
+          <div class="rec"><b>Recommended:</b> shift a share of Tampa volume to a stronger carrier for two weeks and put Sunbelt on a watch cadence before it touches a client SLA.</div>
+          <div class="acts">
+            <button class="btn btn-primary" onclick="openCarrier('Sunbelt Freight')">Open Sunbelt</button>
+            <button class="btn btn-ghost" onclick="document.querySelector('[data-f=flag]').click();document.getElementById('carrAnchor').scrollIntoView({behavior:'smooth'})">See all 3 flagged</button>
+          </div>
         </div>
+        <div><div class="chartbox"><div class="cap"><span>SUNBELT · COMPOSITE SCORE</span><span>12 WEEKS</span></div>
+          <svg viewBox="0 0 320 120" width="100%" height="120"><line x1="0" y1="100" x2="320" y2="100" stroke="#DCE1EA"/><polyline points="14,30 44,28 74,32 104,30 134,36 164,40 194,48 224,58 254,70 284,82 308,90" fill="none" stroke="#D8352C" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><line x1="0" y1="66" x2="320" y2="66" stroke="#D9941F" stroke-dasharray="5 4" opacity=".6"/><text x="318" y="62" text-anchor="end" font-family="IBM Plex Mono" font-size="8.5" fill="#B26B12">complaint threshold</text><circle cx="308" cy="90" r="3.6" fill="#D8352C" stroke="#fff" stroke-width="1.6"/></svg>
+          <div class="cnote">Score bending down 3 weeks before it crosses the line</div></div></div>
       </div>
-      <div>
-        <div class="spark-wrap">
-          <div class="spark-cap"><span>RINCON · ON-TIME %</span><span>6-WEEK TREND</span></div>
-          <svg viewBox="0 0 320 120" width="100%" height="120" role="img" aria-label="Rincon on-time declining from 96 to 88 percent">
-            <line x1="0" y1="100" x2="320" y2="100" stroke="#E1E6EC" stroke-width="1"/>
-            <line x1="0" y1="56" x2="320" y2="56" stroke="#D64A45" stroke-width="1.3" stroke-dasharray="5 4" opacity=".7"/>
-            <text x="318" y="50" text-anchor="end" font-family="IBM Plex Mono" font-size="9" fill="#D64A45">complaint-risk threshold (90%)</text>
-            <rect x="232" y="8" width="88" height="92" fill="#FBE9E8" opacity=".55"/>
-            <polyline points="14,28 74,34 134,40 194,52 254,66 312,78" fill="none" stroke="#D64A45" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
-            <circle cx="14" cy="28" r="3" fill="#fff" stroke="#D64A45" stroke-width="2"/><circle cx="74" cy="34" r="3" fill="#fff" stroke="#D64A45" stroke-width="2"/><circle cx="134" cy="40" r="3" fill="#fff" stroke="#D64A45" stroke-width="2"/><circle cx="194" cy="52" r="3.4" fill="#D64A45" stroke="#fff" stroke-width="1.6"/><circle cx="254" cy="66" r="3" fill="#fff" stroke="#D64A45" stroke-width="2"/><circle cx="312" cy="78" r="3" fill="#fff" stroke="#D64A45" stroke-width="2"/>
-            <line x1="194" y1="52" x2="194" y2="14" stroke="#0E1A2B" stroke-width="1" stroke-dasharray="3 3" opacity=".4"/>
-            <text x="194" y="11" text-anchor="middle" font-family="IBM Plex Mono" font-size="9" fill="#0E1A2B">flagged here</text>
-          </svg>
-          <div class="lead-note">~3 weeks of lead time before a typical client complaint</div>
-        </div>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <p class="sec-label" id="scorecard"><span class="ix">▍</span> Carrier scorecard</p>
-  <div class="tabs" id="tabs">
-    <button class="tab active" data-filter="all">All <span class="cnt">6</span></button>
-    <button class="tab" data-filter="good">On track <span class="cnt">4</span></button>
-    <button class="tab" data-filter="watch">Watch <span class="cnt">1</span></button>
-    <button class="tab" data-filter="flag">Flagged <span class="cnt">1</span></button>
-  </div>
-  <section class="card tbl-card">
-    <table>
-      <thead><tr><th class="l">Carrier</th><th class="hide">Loads (30d)</th><th>On-time</th><th class="hide">Claims</th><th>Cost / mi</th><th>Score</th><th>Trend</th><th>Status</th><th></th></tr></thead>
+    <p class="sec-label" id="carrAnchor"><span class="ix">◆</span> Carrier scorecard <span class="more" onclick="toast('info','i','Export','Scorecard exported in the live build.')">Export</span></p>
+    <div class="tabs" id="tabs">
+      <button class="tab active" data-f="all">All <span class="c">7</span></button>
+      <button class="tab" data-f="flag">Flagged <span class="c">2</span></button>
+      <button class="tab" data-f="watch">Watch <span class="c">2</span></button>
+      <button class="tab" data-f="good">Strong <span class="c">3</span></button>
+    </div>
+    <section class="card tcard"><table>
+      <thead><tr><th class="l">Carrier · primary lanes</th><th>On-time</th><th class="hide">Tender accept</th><th class="hide">Claims</th><th>Score</th><th>3-wk trend</th><th>Status</th><th></th></tr></thead>
       <tbody id="rows"></tbody>
-    </table>
-    <div class="hint">↳ Click any carrier to open its full profile, trend history and recent loads.</div>
+    </table><div class="hint">↳ Click any carrier for the trend detail, the early-warning reasoning and the recommended action.</div></section>
+
+    <div class="grid2">
+      <section class="card panel"><h3>Where risk is building</h3><p class="ps">Composite score movers · last 3 weeks</p>
+        <div class="mb"><div class="row"><span>Sunbelt Freight (Tampa)</span><span class="num" style="color:var(--flag)">▼ 14 pts</span></div><div class="bar"><span style="width:86%;background:var(--flag)"></span></div></div>
+        <div class="mb"><div class="row"><span>Gulf Line Carriers</span><span class="num" style="color:var(--watch)">▼ 6 pts</span></div><div class="bar"><span style="width:54%;background:var(--watch)"></span></div></div>
+        <div class="mb"><div class="row"><span>Dedicated Carriers (new)</span><span class="num" style="color:var(--good)">▲ 4 pts</span></div><div class="bar"><span style="width:40%;background:var(--good)"></span></div></div>
+        <div class="rec" style="margin-top:12px">The new Dedicated Carriers relationship is ramping well; Sunbelt is the one to act on.</div></section>
+      <section class="card panel"><h3>What feeds the score</h3><p class="ps">Weighted signals, read continuously</p>
+        <div class="drow"><span>On-time pickup &amp; delivery</span><span class="metric">40%</span></div>
+        <div class="drow"><span>Tender acceptance</span><span class="metric">25%</span></div>
+        <div class="drow"><span>Dwell &amp; detention</span><span class="metric">20%</span></div>
+        <div class="drow"><span>Claims &amp; OS&amp;D</span><span class="metric">15%</span></div>
+        <div class="rec" style="margin-top:14px">A single bad week does not flag a carrier; a bending trend across weeks does, which is what buys the lead time.</div></section>
+    </div>
+
+    <section class="card stack"><div class="sh"><div class="sht"><span class="ab"></span>Plugs into the stack R2X already runs</div><div class="shn">read-only · works with your TMS &amp; ELD feeds · ~4–6 week build</div></div>
+      <div class="sgr">
+        <div class="sg"><div class="gl">TMS</div><span class="tool"><span class="lg" style="background:#1f6feb">TM</span>your TMS</span></div>
+        <div class="sg"><div class="gl">Telematics / ELD</div><span class="tool"><span class="lg" style="background:#D8352C">EL</span>ELD feed</span></div>
+        <div class="sg"><div class="gl">Visibility</div><span class="tool"><span class="lg" style="background:#3B5BA8">p44</span>project44</span></div>
+        <div class="sg"><div class="gl">EDI / tender</div><span class="tool"><span class="lg" style="background:#15397a">ED</span>EDI</span></div>
+      </div>
+      <div class="sf">→ <b>Tell us your exact systems and we map the connectors to them.</b> The new Dedicated Carriers and Tampa lanes drop straight into the same scorecard. Nothing migrates.</div>
+    </section>
+    <div class="foot"><div class="roi">Flags underperforming carriers <b>3 to 4 weeks</b> before they become client complaints.</div><div class="made">Mockup by <b>Instive AI</b> for READY-2-XECUTE · sample data</div></div>
   </section>
 
-  <div class="grid-2">
-    <section class="card panel">
-      <h3>Lane profitability</h3><p class="ph-sub">Margin by lane · trailing 30 days · click to inspect</p>
-      <div class="lane" onclick="toast('info','i','Indianapolis → Dallas','+22% margin · 312 loads · best-performing lane.')"><div class="lane-top"><span class="lane-name">Indianapolis, IN → Dallas, TX</span><span class="lane-margin" style="color:var(--good)">+22%</span></div><div class="bar"><span style="width:88%;background:var(--good)"></span></div><div class="lane-foot">$214K revenue · 312 loads</div></div>
-      <div class="lane" onclick="toast('info','i','Tampa → Charlotte','+19% margin · 88 loads · new lane from the Tampa office.')"><div class="lane-top"><span class="lane-name">Tampa, FL → Charlotte, NC <span class="tag">new</span></span><span class="lane-margin" style="color:var(--good)">+19%</span></div><div class="bar"><span style="width:76%;background:var(--good)"></span></div><div class="lane-foot">$88K revenue · 88 loads</div></div>
-      <div class="lane" onclick="toast('info','i','Chicago → Atlanta','+15% margin · 204 loads.')"><div class="lane-top"><span class="lane-name">Chicago, IL → Atlanta, GA</span><span class="lane-margin" style="color:var(--good)">+15%</span></div><div class="bar"><span style="width:60%;background:var(--good)"></span></div><div class="lane-foot">$176K revenue · 204 loads</div></div>
-      <div class="lane" onclick="toast('info','i','Detroit → Toronto','+7% margin · 74 loads · flagged for review.')"><div class="lane-top"><span class="lane-name">Detroit, MI → Toronto, ON</span><span class="lane-margin" style="color:var(--watch)">+7%</span></div><div class="bar"><span style="width:28%;background:var(--watch)"></span></div><div class="lane-foot">$61K revenue · 74 loads · review</div></div>
-      <div class="lane" onclick="toast('info','i','Laredo → Monterrey','+3% margin · 96 loads · dragged down by Rincon. See recommendation above.')"><div class="lane-top"><span class="lane-name">Laredo, TX → Monterrey, MX</span><span class="lane-margin" style="color:var(--flag)">+3%</span></div><div class="bar"><span style="width:12%;background:var(--flag)"></span></div><div class="lane-foot">$52K revenue · 96 loads · Rincon-driven</div></div>
+  <!-- LANE PERFORMANCE -->
+  <section class="view" id="view-lanes">
+    <section class="kpis">
+      <button class="kpi"><div class="kl">Active lanes</div><div class="kv">34</div><div class="ks neutral">incl. Tampa expansion</div></button>
+      <button class="kpi"><div class="kl">On-time · network</div><div class="kv">93.8%</div><div class="ks up">▲ vs. last month</div></button>
+      <button class="kpi"><div class="kl">At-risk lanes</div><div class="kv warn">2</div><div class="ks neutral">Tampa + Gulf</div></button>
+      <button class="kpi"><div class="kl">New-lane ramp</div><div class="kv" style="color:var(--good)">on track</div><div class="ks up">Dedicated Carriers</div></button>
     </section>
-
-    <section class="card panel">
-      <h3>Overbilling alerts</h3><p class="ph-sub">Billed rate vs. quoted rate · this week</p>
-      <div class="inv"><div class="inv-l"><div class="inv-id">INV #88142</div><div class="inv-car">Apex Freight Lines</div><div class="inv-why">Fuel surcharge applied above contracted rate</div></div><div class="inv-r"><div class="delta">+$240</div><button class="btn btn-ghost btn-sm" onclick="openInvoice('88142')">View dispute</button></div></div>
-      <div class="inv"><div class="inv-l"><div class="inv-id">INV #88097</div><div class="inv-car">Rincon Transport</div><div class="inv-why">Detention billed — no authorization on file</div></div><div class="inv-r"><div class="delta">+$195</div><button class="btn btn-ghost btn-sm" onclick="openInvoice('88097')">View dispute</button></div></div>
-      <div class="inv"><div class="inv-l"><div class="inv-id">INV #88203</div><div class="inv-car">Coastline Drayage</div><div class="inv-why">Accessorial not on the original quote</div></div><div class="inv-r"><div class="delta">+$240</div><button class="btn btn-ghost btn-sm" onclick="openInvoice('88203')">View dispute</button></div></div>
-      <div class="recover"><span class="rl">Auto-drafted dispute summaries ready</span><span class="rv">$675</span></div>
-    </section>
-  </div>
-
-  <section class="card stack-band">
-    <div class="stack-head">
-      <div class="sh-title"><span class="accent-bar"></span>Plugs into the stack R2X already runs</div>
-      <div class="sh-note">read-only · no rip-and-replace · ~6–8 week build</div>
+    <p class="sec-label"><span class="ix">◆</span> Lanes · on-time and risk</p>
+    <section class="card tcard"><table>
+      <thead><tr><th class="l">Lane</th><th class="hide">Primary carrier</th><th>Loads · wk</th><th>On-time</th><th>Trend</th><th>Status</th></tr></thead>
+      <tbody id="lrows"></tbody>
+    </table><div class="hint">↳ The new Tampa lanes carry their own scorecard from day one, so a weak start surfaces before it sets a pattern.</div></section>
+    <div class="grid2">
+      <section class="card panel"><h3>Tampa expansion · first weeks</h3><p class="ps">New lanes, watched closely</p>
+        <div class="mb"><div class="row"><span>Tampa → Orlando</span><span class="num" style="color:var(--good)">96%</span></div><div class="bar"><span style="width:96%;background:var(--good)"></span></div></div>
+        <div class="mb"><div class="row"><span>Tampa → Atlanta</span><span class="num" style="color:var(--watch)">90%</span></div><div class="bar"><span style="width:90%;background:var(--watch)"></span></div></div>
+        <div class="row"><span>Tampa → Miami (Sunbelt)</span><span class="num" style="color:var(--flag)">87%</span></div><div class="bar"><span style="width:87%;background:var(--flag)"></span></div></section>
+      <section class="card panel"><h3>Rebalance options</h3><p class="ps">If Sunbelt keeps sliding</p>
+        <div class="drow"><span>Shift Tampa→Miami volume</span><span class="metric" style="color:var(--good)">Dedicated Carriers</span></div>
+        <div class="drow"><span>Backup capacity</span><span class="metric">Gulf Line (watch)</span></div>
+        <div class="rec" style="margin-top:14px">The scorecard names a stronger carrier on the same lane, so a rebalance is a decision, not a scramble.</div></section>
     </div>
-    <div class="stack-groups">
-      <div class="stack-group"><div class="grp-label">Transportation mgmt (TMS)</div><div class="tools"><span class="tool"><span class="lg" style="background:#1f6feb">Mc</span>McLeod</span><span class="tool"><span class="lg" style="background:#0aa1a1">Ta</span>Tai</span><span class="tool"><span class="lg" style="background:#5b48d6">Sh</span>Shipwell</span></div></div>
-      <div class="stack-group"><div class="grp-label">Real-time visibility</div><div class="tools"><span class="tool"><span class="lg" style="background:#16a34a">4K</span>FourKites</span><span class="tool"><span class="lg" style="background:#e2640b">p44</span>project44</span></div></div>
-      <div class="stack-group"><div class="grp-label">Accounting / ERP</div><div class="tools"><span class="tool"><span class="lg" style="background:#15397a">NS</span>NetSuite</span><span class="tool"><span class="lg" style="background:#2ca01c">QB</span>QuickBooks</span></div></div>
-    </div>
-    <div class="stack-foot">→ <b>Tell us your exact systems and we map the connectors to them</b> — the dashboard reads from what you have, nothing migrates.</div>
+    <div class="foot"><div class="roi">New lanes scored from day one, so a weak carrier shows before clients feel it.</div><div class="made">Lane view · Instive AI for R2X · sample data</div></div>
   </section>
-</main>
 
-<footer class="wrap">
-  <div class="roi-foot">Flags slipping carriers <b>~3–4 weeks</b> before they become client complaints.</div>
-  <div class="madeby">Mockup by <b>Instive AI</b> for Ready-2-Xecute · sample data</div>
-</footer>
+  <!-- CARRIERS & NETWORK -->
+  <section class="view" id="view-network">
+    <p class="sec-label"><span class="ix">◆</span> The network · carriers by relationship</p>
+    <div class="fac-grid">
+      <section class="card fac"><div class="fn">Core carriers</div><div class="fl">long-standing</div>
+        <div class="drow"><span>Tracked</span><span class="metric">41</span></div>
+        <div class="drow"><span>Avg score</span><span class="metric" style="color:var(--good)">A-</span></div>
+        <div class="drow"><span>Flagged</span><span class="metric">1</span></div></section>
+      <section class="card fac"><div class="fn">Dedicated Carriers <span class="lanetag">NEW</span></div><div class="fl">recent relationship</div>
+        <div class="drow"><span>Tracked</span><span class="metric">12</span></div>
+        <div class="drow"><span>Ramp</span><span class="metric" style="color:var(--good)">on track</span></div>
+        <div class="rec" style="margin-top:10px">Scored on the same scale as core carriers from the first load, no blind ramp-up period.</div></section>
+      <section class="card fac"><div class="fn">Spot / backup</div><div class="fl">flex capacity</div>
+        <div class="drow"><span>Tracked</span><span class="metric">15</span></div>
+        <div class="drow"><span>Use this week</span><span class="metric">low</span></div>
+        <div class="drow"><span>Flagged</span><span class="metric" style="color:var(--watch)">1</span></div></section>
+    </div>
+    <section class="card stack"><div class="sh"><div class="sht"><span class="ab"></span>One scorecard, every carrier</div><div class="shn">carrier + lane intelligence from the same feeds</div></div>
+      <div class="sf" style="margin-top:0;color:#d6def0;font-size:13px">Core, dedicated and spot carriers all score on the <b>same</b> signals from your TMS and ELD feeds. A slip on a new Tampa lane reads the same way as one on a lane you have run for years, caught early, while there is still room to act.</div></section>
+    <div class="foot"><div class="roi">One AI layer · <b>carrier intelligence</b> across every relationship.</div><div class="made">Mockup by <b>Instive AI</b> for READY-2-XECUTE · sample data</div></div>
+  </section>
 
-<!-- DRAWER -->
-<div class="scrim" id="scrim" onclick="closeDrawer()"></div>
-<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="Carrier detail"></aside>
-
-<!-- MODAL -->
-<div class="modal-scrim" id="modalScrim" onclick="if(event.target===this)closeModal()">
-  <div class="modal" role="dialog" aria-modal="true" aria-label="Dispute summary">
-    <div class="md-head"><div><h3 id="mdTitle">Dispute summary</h3><div class="sub" id="mdSub"></div></div><button class="dr-close" onclick="closeModal()" aria-label="Close">×</button></div>
-    <div class="md-body"><div class="md-doc" id="mdDoc"></div></div>
-    <div class="md-foot"><button class="btn btn-ghost" onclick="toast('ok','✓','Copied','Dispute summary copied to clipboard.')">Copy</button><button class="btn btn-primary" onclick="closeModal();toast('ok','✓','Dispute sent','Summary emailed to the carrier\'s billing contact.')">Send to carrier</button></div>
   </div>
 </div>
-
-<div class="toasts" id="toasts"></div>
-
+</div>
+<div class="scrim" id="scrim" onclick="closeD()"></div><aside class="drawer" id="drawer"></aside><div class="toasts" id="toasts"></div>
 <script>
-const CARRIERS={
-  midwest:{name:"Midwest Hauling Co.",mc:"MC-448201 · dry van",status:"good",sl:"On track",onTime:97.4,claims:0.3,cost:2.18,loads:312,score:"A+",series:[96.5,97,97.2,97.1,97.6,97.4],
-    lanes:[["Indianapolis → Dallas","+24%","good"],["Chicago → Atlanta","+17%","good"],["Columbus → Nashville","+15%","good"]],
-    recent:[["#L-90412","Indy → Dallas","ok"],["#L-90388","Chicago → Atlanta","ok"],["#L-90355","Indy → Dallas","ok"],["#L-90310","Columbus → Nashville","ok"]]},
-  bluegrass:{name:"Bluegrass Carriers",mc:"MC-512887 · temp-controlled",status:"good",sl:"On track",onTime:96.1,claims:0.6,cost:2.41,loads:204,score:"A",series:[95,95.4,95.8,96,96.2,96.1],
-    lanes:[["Louisville → Memphis","+18%","good"],["Cincinnati → St. Louis","+12%","good"]],
-    recent:[["#L-90401","Louisville → Memphis","ok"],["#L-90377","Cincinnati → St. Louis","ok"],["#L-90340","Louisville → Memphis","late"]]},
-  apex:{name:"Apex Freight Lines",mc:"MC-390114 · dry van",status:"watch",sl:"Watch",onTime:91.8,claims:1.4,cost:2.36,loads:178,score:"B",series:[95,94.2,93.5,92.8,92.1,91.8],
-    lanes:[["Dallas → Phoenix","+9%","watch"],["Houston → Denver","+11%","good"]],
-    recent:[["#L-90395","Dallas → Phoenix","late"],["#L-90362","Houston → Denver","ok"],["#L-90329","Dallas → Phoenix","ok"],["#L-90301","Houston → Denver","late"]]},
-  rincon:{name:"Rincon Transport",mc:"MC-471330 · cross-border MX",status:"flag",sl:"Flag",onTime:88.0,claims:2.1,cost:2.59,loads:96,score:"C",series:[96,95,94,92,90,88],
-    lanes:[["Laredo → Monterrey","+3%","flag"],["San Antonio → Laredo","+6%","watch"]],
-    recent:[["#L-90390","Laredo → Monterrey","late"],["#L-90371","Laredo → Monterrey","late"],["#L-90344","San Antonio → Laredo","ok"],["#L-90318","Laredo → Monterrey","late"]],
-    note:"Pattern matches the two prior complaints on this account. Recommended: shift Laredo → Monterrey volume to Midwest Hauling Co."},
-  greatplains:{name:"Great Plains Logistics",mc:"MC-528470 · power only",status:"good",sl:"On track",onTime:95.0,claims:0.7,cost:2.27,loads:141,score:"A",series:[94.6,94.8,95.1,94.9,95,95],
-    lanes:[["KC → Omaha","+14%","good"],["Wichita → Tulsa","+13%","good"]],
-    recent:[["#L-90405","KC → Omaha","ok"],["#L-90369","Wichita → Tulsa","ok"],["#L-90333","KC → Omaha","ok"]]},
-  coastline:{name:"Coastline Drayage",mc:"MC-336902 · drayage / Tampa",status:"good",sl:"On track",onTime:93.2,claims:0.9,cost:2.44,loads:88,score:"A–",series:[91,91.8,92.4,92.8,93,93.2],
-    lanes:[["Tampa → Charlotte","+19%","good"],["Tampa Port → Orlando","+10%","good"]],
-    recent:[["#L-90400","Tampa → Charlotte","ok"],["#L-90364","Tampa Port → Orlando","ok"],["#L-90327","Tampa → Charlotte","ok"]]}
-};
-const INVOICES={
- "88142":{car:"Apex Freight Lines",delta:"$240",q:"$2,450",b:"$2,690",doc:"DISPUTE — INV #88142  ·  Apex Freight Lines (MC-390114)\n\nLane: Dallas, TX → Phoenix, AZ\nQuoted (rate con #RC-22841): $2,450.00\nBilled: $2,690.00\nVariance: +$240.00\n\nFinding: Fuel surcharge of $240 applied at 18% vs. the 12% contracted FSC on file. Rate confirmation does not authorize the higher percentage.\n\nRequested adjustment: reduce FSC to contracted 12% → revised total $2,450.00.\nSupporting docs: RC-22841, signed BOL, contracted FSC schedule."},
- "88097":{car:"Rincon Transport",delta:"$195",q:"$1,820",b:"$2,015",doc:"DISPUTE — INV #88097  ·  Rincon Transport (MC-471330)\n\nLane: Laredo, TX → Monterrey, MX\nQuoted (rate con #RC-22790): $1,820.00\nBilled: $2,015.00\nVariance: +$195.00\n\nFinding: Detention charge of $195 (2.6 hrs) billed with no detention authorization or check-in/out timestamps on file.\n\nRequested adjustment: remove unauthorized detention → revised total $1,820.00.\nSupporting docs: RC-22790, gate logs (none on file), driver check-in record requested."},
- "88203":{car:"Coastline Drayage",delta:"$240",q:"$3,100",b:"$3,340",doc:"DISPUTE — INV #88203  ·  Coastline Drayage (MC-336902)\n\nLane: Tampa Port → Charlotte, NC\nQuoted (rate con #RC-22905): $3,100.00\nBilled: $3,340.00\nVariance: +$240.00\n\nFinding: Chassis split + pre-pull accessorial ($240) not present on the original quote and not pre-approved.\n\nRequested adjustment: remove un-quoted accessorial → revised total $3,100.00.\nSupporting docs: RC-22905, terminal receipt, accessorial approval (none on file)."},
- "all":{car:"7 flagged invoices",delta:"$11,480",q:"",b:"",doc:"OVERBILLING SUMMARY — June 2026\n\n7 invoices flagged where billed rate exceeded the quoted/contracted rate.\nTotal recoverable: $11,480\n\nTop items:\n• #88142 Apex Freight Lines  +$240  (FSC over contract)\n• #88203 Coastline Drayage  +$240  (un-quoted accessorial)\n• #88097 Rincon Transport  +$195  (unauthorized detention)\n• 4 more invoices  +$10,805\n\nAuto-drafted dispute summaries are ready to send for each."}
-};
+const TITLES={carriers:["Carrier Scorecard","R2X · including new Dedicated Carriers + Tampa lanes · week of Jun 16"],lanes:["Lane Performance","R2X · on-time and risk by lane"],network:["Carriers &amp; Network","R2X · carriers by relationship"]};
+document.querySelectorAll('.nav-i[data-v]').forEach(b=>b.addEventListener('click',()=>{const v=b.dataset.v;document.querySelectorAll('.nav-i[data-v]').forEach(x=>x.classList.toggle('active',x===b));document.querySelectorAll('.view').forEach(s=>s.classList.toggle('active',s.id==='view-'+v));document.getElementById('tbTitle').innerHTML=TITLES[v][0];document.getElementById('tbCrumb').innerHTML=TITLES[v][1];document.getElementById('sidebar').classList.remove('open');window.scrollTo({top:0,behavior:'smooth'});}));
 
-/* line chart from a % series */
-function lineChart(series,color){
-  const w=360,h=96,pl=8,pr=8,pt=10,pb=14,min=85,max=100;
-  const n=series.length, iw=w-pl-pr, ih=h-pt-pb;
-  const pts=series.map((v,i)=>{const x=pl+(iw*i/(n-1));const y=pt+ih-((v-min)/(max-min))*ih;return [x,y];});
-  const poly=pts.map(p=>p[0].toFixed(1)+","+p[1].toFixed(1)).join(" ");
-  const area=`${pl},${pt+ih} `+poly+` ${pl+iw},${pt+ih}`;
-  const dots=pts.map(p=>`<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="2.6" fill="#fff" stroke="${color}" stroke-width="2"/>`).join("");
-  const thr=pt+ih-((90-min)/(max-min))*ih;
-  return `<svg viewBox="0 0 ${w} ${h}" width="100%" height="${h}">
-    <line x1="0" y1="${thr.toFixed(1)}" x2="${w}" y2="${thr.toFixed(1)}" stroke="#D64A45" stroke-width="1" stroke-dasharray="4 4" opacity=".55"/>
-    <polygon points="${area}" fill="${color}" opacity=".08"/>
-    <polyline points="${poly}" fill="none" stroke="${color}" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>${dots}
-    <text x="${w-4}" y="${(thr-4).toFixed(1)}" text-anchor="end" font-family="IBM Plex Mono" font-size="8.5" fill="#D64A45">90% threshold</text>
-  </svg>`;
-}
-
-function rowHtml(id,c){
-  const col=c.status==='good'?'var(--good)':c.status==='watch'?'var(--watch)':'var(--flag)';
-  const dir=c.series[c.series.length-1]>=c.series[0]?'up':'down';
-  const arrow=dir==='up'?'▲':(c.status==='good'?'–':'▼');
-  const tcol=dir==='up'?'#1F9D6B':(c.status==='good'?'#8A98AC':col);
-  const sp=c.series.map((v,i)=>`${2+i*9.5},${16-((v-85)/15)*13}`).join(" ");
-  return `<tr data-status="${c.status}" tabindex="0" role="button" onclick="openCarrier('${id}')" onkeydown="if(event.key==='Enter')openCarrier('${id}')">
-    <td class="l"><div class="carrier" style="${c.status==='flag'?'':''}">${c.name}<div class="sub">${c.mc}</div></div></td>
-    <td class="num hide">${c.loads}</td>
-    <td class="num" style="${c.status==='flag'?'color:var(--flag);font-weight:700':''}">${c.onTime.toFixed(1)}%</td>
-    <td class="num hide">${c.claims}%</td>
-    <td class="num">$${c.cost.toFixed(2)}</td>
-    <td class="score" style="color:${col}">${c.score}</td>
-    <td><span class="trend" style="color:${tcol}">${arrow} <svg width="42" height="16"><polyline points="${sp}" fill="none" stroke="${tcol}" stroke-width="1.8"/></svg></span></td>
-    <td><span class="status s-${c.status}">● ${c.sl}</span></td>
-    <td><span class="chev">›</span></td>
-  </tr>`;
-}
-const rowsEl=document.getElementById('rows');
-rowsEl.innerHTML=Object.entries(CARRIERS).map(([id,c])=>rowHtml(id,c)).join("");
-
-/* filters */
-document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>filterTo(t.dataset.filter)));
-function filterTo(f){
-  document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t.dataset.filter===f));
-  document.querySelectorAll('#rows tr').forEach(r=>{r.style.display=(f==='all'||r.dataset.status===f)?'':'none';});
-  document.getElementById('scorecard').scrollIntoView({behavior:'smooth'});
-}
-
-/* drawer */
+const CARR={
+ "Sunbelt Freight":{lanes:"Tampa → Miami",ot:"87%",ta:"81%",cl:"2",score:"C+",st:"flag",trend:"▼ 14",tc:"tr-down",why:"On-time still reads acceptable, but tender rejections, dwell and two un-escalated late deliveries are all bending the wrong way over three weeks on the new Tampa lanes. The score flags the pattern before it crosses the complaint threshold.",act:"Shift part of Tampa→Miami to Dedicated Carriers for two weeks; hold Sunbelt on a watch cadence."},
+ "Gulf Line Carriers":{lanes:"Gulf Coast regional",ot:"90%",ta:"88%",cl:"1",score:"B-",st:"watch",trend:"▼ 6",tc:"tr-down",why:"Slight downward drift in on-time and a rise in dwell. Not yet at flag level, but trending toward it.",act:"Keep on watch; no volume change needed yet."},
+ "Pelican Transport":{lanes:"FL intrastate",ot:"92%",ta:"90%",cl:"1",score:"B",st:"watch",trend:"▼ 3",tc:"tr-down",why:"Minor slip, within normal variance. Monitoring.",act:"No action; routine monitoring."},
+ "Dedicated Carriers":{lanes:"Tampa + SE (new)",ot:"96%",ta:"95%",cl:"0",score:"A",st:"good",trend:"▲ 4",tc:"tr-up",why:"New relationship ramping well, scored on the same scale from the first load. Strong on-time and tender acceptance.",act:"Good candidate to absorb rebalanced Tampa volume."},
+ "Apex Carriers":{lanes:"SE long-haul",ot:"97%",ta:"96%",cl:"0",score:"A",st:"good",trend:"▲ 1",tc:"tr-up",why:"Consistently strong across all signals.",act:"None; preferred carrier."},
+ "Coastal Hauling":{lanes:"FL → GA",ot:"95%",ta:"93%",cl:"0",score:"A-",st:"good",trend:"= 0",tc:"tr-flat",why:"Stable and reliable.",act:"None."},
+ "Magnolia Freight":{lanes:"Regional dry van",ot:"94%",ta:"92%",cl:"1",score:"B+",st:"good",trend:"▲ 2",tc:"tr-up",why:"Improving steadily.",act:"None."}};
+function carrRow(n,c){const sc=c.st==='good'?'sc-good':c.st==='watch'?'sc-watch':'sc-flag';return `<tr data-status="${c.st}" tabindex="0" onclick="openCarrier('${n.replace(/'/g,"\\'")}')" onkeydown="if(event.key==='Enter')openCarrier('${n.replace(/'/g,"\\'")}')"><td class="l"><div class="nm2">${n}<div class="sub">${c.lanes}</div></div></td><td class="num">${c.ot}</td><td class="num hide">${c.ta}</td><td class="num hide">${c.cl}</td><td class="score ${sc}">${c.score}</td><td class="trend ${c.tc}">${c.trend}</td><td><span class="status s-${c.st}">● ${c.st==='good'?'Strong':c.st==='watch'?'Watch':'Flagged'}</span></td><td><span class="chev">›</span></td></tr>`;}
+document.getElementById('rows').innerHTML=Object.entries(CARR).map(([n,c])=>carrRow(n,c)).join("");
+document.querySelectorAll('#tabs .tab').forEach(t=>t.addEventListener('click',()=>{document.querySelectorAll('#tabs .tab').forEach(x=>x.classList.toggle('active',x===t));document.querySelectorAll('#rows tr').forEach(r=>r.style.display=(t.dataset.f==='all'||r.dataset.status===t.dataset.f)?'':'none');document.getElementById('carrAnchor').scrollIntoView({behavior:'smooth'});}));
 const drawer=document.getElementById('drawer'),scrim=document.getElementById('scrim');
-function openCarrier(id){
-  const c=CARRIERS[id];const col=c.status==='good'?'var(--good)':c.status==='watch'?'var(--watch)':'var(--flag)';
-  drawer.innerHTML=`
-    <div class="dr-head">
-      <div><div class="dr-name">${c.name}</div><div class="dr-mc">${c.mc}</div></div>
-      <button class="dr-close" onclick="closeDrawer()" aria-label="Close">×</button>
-    </div>
-    <div class="dr-body">
-      <div class="dr-statusrow"><span class="status s-${c.status}">● ${c.sl}</span><span class="score" style="color:${col};font-size:18px">${c.score}</span></div>
-      <div class="dr-mini">
-        <div class="dr-stat"><div class="l">On-time (30d)</div><div class="v" style="color:${c.status==='flag'?'var(--flag)':'var(--ink)'}">${c.onTime.toFixed(1)}%</div></div>
-        <div class="dr-stat"><div class="l">Claims rate</div><div class="v">${c.claims}%</div></div>
-        <div class="dr-stat"><div class="l">Cost / mile</div><div class="v">$${c.cost.toFixed(2)}</div></div>
-        <div class="dr-stat"><div class="l">Loads (30d)</div><div class="v">${c.loads}</div></div>
-      </div>
-      <p class="dr-sec-t">On-time · 6-week trend</p>
-      <div class="dr-chart">${lineChart(c.series,col.startsWith('var')? (c.status==='good'?'#1F9D6B':c.status==='watch'?'#D9941F':'#D64A45'):col)}</div>
-      ${c.note?`<div class="warn-rec" style="margin-bottom:20px"><b>⚑ Alert:</b> ${c.note}</div>`:''}
-      <p class="dr-sec-t">Lane mix</p>
-      <div style="margin-bottom:20px">${c.lanes.map(l=>`<div class="dr-lane"><span class="ln">${l[0]}</span><span class="mg" style="color:var(--${l[2]})">${l[1]}</span></div>`).join("")}</div>
-      <p class="dr-sec-t">Recent loads</p>
-      <div>${c.recent.map(r=>`<div class="dr-load"><span class="ld">${r[0]} · ${r[1]}</span><span class="pill-ld ld-${r[2]==='ok'?'ok':'late'}">${r[2]==='ok'?'On-time':'Late'}</span></div>`).join("")}</div>
-    </div>
-    <div class="dr-foot">
-      ${c.status!=='good'?`<button class="btn btn-primary" onclick="closeDrawer();toast('ok','✓','Volume rebalanced','Routed away from ${c.name} to a top performer.')">Rebalance volume</button>`:''}
-      <button class="btn btn-ghost" onclick="toast('info','i','Flagged for review','${c.name} added to this week\\'s review list.')">Flag for review</button>
-      <button class="btn btn-ghost" onclick="toast('info','i','Opening in TMS','Jumping to ${c.name} in your TMS…')">Open in TMS</button>
-    </div>`;
-  drawer.classList.add('open');scrim.classList.add('open');document.body.style.overflow='hidden';
-}
-function closeDrawer(){drawer.classList.remove('open');scrim.classList.remove('open');document.body.style.overflow='';}
-
-/* modal */
-const modalScrim=document.getElementById('modalScrim');
-function openInvoice(id){
-  const v=INVOICES[id];
-  document.getElementById('mdTitle').textContent= id==='all'?'Overbilling summary · June':'Dispute summary';
-  document.getElementById('mdSub').textContent= id==='all'?('Recoverable '+v.delta):(v.car+'  ·  '+v.q+' → '+v.b+'  ·  +'+v.delta);
-  document.getElementById('mdDoc').textContent=v.doc;
-  modalScrim.classList.add('open');document.body.style.overflow='hidden';
-}
-function closeModal(){modalScrim.classList.remove('open');if(!drawer.classList.contains('open'))document.body.style.overflow='';}
-
-/* toast */
-let tid=0;
-function toast(type,icon,title,msg){
-  const el=document.createElement('div');el.className='toast '+type;
-  el.innerHTML=`<span class="ti">${icon}</span><span><b>${title}</b><br><span style="opacity:.8;font-size:12px">${msg||''}</span></span>`;
-  document.getElementById('toasts').appendChild(el);
-  requestAnimationFrame(()=>el.classList.add('show'));
-  setTimeout(()=>{el.classList.remove('show');setTimeout(()=>el.remove(),350);},3600);
-}
-document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeDrawer();closeModal();}});
+function openCarrier(n){const c=CARR[n];const sc=c.st==='good'?'sc-good':c.st==='watch'?'sc-watch':'sc-flag';const col=c.st==='good'?'var(--good)':c.st==='watch'?'var(--watch)':'var(--flag)';
+  drawer.innerHTML=`<div class="dh"><div><div class="dn">${n}</div><div class="dm">${c.lanes}</div></div><button class="dc" onclick="closeD()">×</button></div>
+  <div class="db"><div style="margin-bottom:18px"><span class="status s-${c.st}">● ${c.st==='good'?'Strong':c.st==='watch'?'Watch':'Flagged'}</span></div>
+  <div class="dmini"><div class="dstat"><div class="l">Composite score</div><div class="v ${sc}">${c.score}</div></div><div class="dstat"><div class="l">3-week trend</div><div class="v ${c.tc}">${c.trend}</div></div><div class="dstat"><div class="l">On-time</div><div class="v">${c.ot}</div></div><div class="dstat"><div class="l">Tender accept</div><div class="v">${c.ta}</div></div></div>
+  <p class="dt">Score trend (12 wks)</p><div class="dchart"><svg viewBox="0 0 360 90" width="100%" height="90"><line x1="0" y1="74" x2="360" y2="74" stroke="#DCE1EA"/><polyline points="${c.st==='flag'?'8,20 50,22 95,26 140,32 185,42 230,54 275,64 352,80':c.st==='watch'?'8,30 60,32 120,36 180,42 240,46 300,52 352,56':'8,60 60,56 120,52 180,48 240,44 300,40 352,36'}" fill="none" stroke="${col}" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+  <p class="dt">Why this status</p><div class="rec" style="margin-bottom:18px">${c.why}</div>
+  <p class="dt">Recommended action</p><div class="rec">${c.act}</div></div>
+  <div class="df"><button class="btn btn-primary" onclick="closeD();toast('ok','✓','Action queued','${n} added to the rebalance review.')">Queue action</button><button class="btn btn-ghost" onclick="closeD()">Close</button></div>`;
+  drawer.classList.add('open');scrim.classList.add('open');document.body.style.overflow='hidden';}
+function closeD(){drawer.classList.remove('open');scrim.classList.remove('open');document.body.style.overflow='';}
+const LANE={"Tampa → Miami":["Sunbelt Freight","210","87%","▼","flag"],"Tampa → Atlanta":["Gulf Line","180","90%","▼","watch"],"Tampa → Orlando":["Dedicated Carriers","240","96%","▲","good"],"SE long-haul":["Apex Carriers","320","97%","▲","good"],"FL → GA":["Coastal Hauling","160","95%","=","good"],"Regional dry van":["Magnolia Freight","140","94%","▲","good"]};
+document.getElementById('lrows').innerHTML=Object.entries(LANE).map(([n,l])=>{const col=l[4]==='good'?'var(--good)':l[4]==='watch'?'var(--watch)':'var(--flag)';return `<tr><td class="l"><div class="nm2">${n}</div></td><td class="num hide">${l[0]}</td><td class="num">${l[1]}</td><td class="num" style="color:${col};font-weight:700">${l[2]}</td><td class="trend ${l[3]==='▲'?'tr-up':l[3]==='▼'?'tr-down':'tr-flat'}">${l[3]}</td><td><span class="status s-${l[4]}">● ${l[4]==='good'?'Strong':l[4]==='watch'?'Watch':'Flagged'}</span></td></tr>`;}).join("");
+function toast(type,icon,title,msg){const e=document.createElement('div');e.className='toast '+type;e.innerHTML=`<span class="ti">${icon}</span><span><b>${title}</b><br><span style="opacity:.82;font-size:12px">${msg||''}</span></span>`;document.getElementById('toasts').appendChild(e);requestAnimationFrame(()=>e.classList.add('show'));setTimeout(()=>{e.classList.remove('show');setTimeout(()=>e.remove(),350);},3600);}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeD();});
 </script>
-</body>
-</html>
+</body></html>

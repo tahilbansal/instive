@@ -7,111 +7,261 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-:root{--ink:#1A1410;--ink-soft:#2E241D;--canvas:#F2EEEA;--surface:#fff;--line:#E6DED6;--steel:#75665A;--steel-2:#A4958A;--accent:#B5611F;--brand:#C4561F;--good:#1F9D6B;--good-bg:#E8F5EF;--watch:#D9941F;--watch-bg:#FBF1DE;--flag:#D64A45;--flag-bg:#FBE9E8;--rtv:#6B57B0;--rtv-bg:#EEEAF6;--mono:"IBM Plex Mono",monospace;--sans:"Inter",system-ui,sans-serif;--r:14px;--sh:0 1px 2px rgba(26,20,16,.05),0 6px 18px rgba(26,20,16,.07)}
-*{box-sizing:border-box;margin:0;padding:0}body{font-family:var(--sans);background:var(--canvas);color:var(--ink);line-height:1.45;-webkit-font-smoothing:antialiased;padding-bottom:40px}
-.wrap{max-width:1080px;margin:0 auto;padding:0 20px}button{font-family:inherit;cursor:pointer}
-.topbar{background:var(--ink);color:#fff}.topbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:16px 20px;flex-wrap:wrap}
-.cobrand{display:flex;align-items:center;gap:14px}.logo-co{font-weight:800;font-size:14px;color:#fff;background:var(--brand);padding:8px 12px;border-radius:9px;line-height:1.1;box-shadow:inset 0 0 0 1px rgba(255,255,255,.12)}.logo-co small{display:block;font-family:var(--mono);font-weight:500;font-size:7.5px;letter-spacing:.1em;margin-top:3px;opacity:.85}
-.xmul{font-family:var(--mono);font-size:15px;color:var(--steel-2)}.logo-in{display:flex;align-items:center;gap:9px}.mark{width:34px;height:34px;border-radius:8px;background:linear-gradient(145deg,#B5611F,#C4561F);display:grid;place-items:center;box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}.mark svg{width:19px;height:19px}.logo-in .nm{font-size:15px;font-weight:600}
-.vrule{width:1px;height:30px;background:rgba(255,255,255,.16)}.product .eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#D8B79C}.product .pname{font-size:14.5px;font-weight:600;margin-top:1px}
-.topright{display:flex;align-items:center;gap:9px;flex-wrap:wrap}.chip{font-family:var(--mono);font-size:11px;padding:6px 11px;border-radius:999px;display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.08);color:#E4D8CD;border:1px solid rgba(255,255,255,.1)}
-.dot{width:7px;height:7px;border-radius:50%;background:var(--good);animation:pulse 2.4s infinite}@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(31,157,107,.55)}70%{box-shadow:0 0 0 6px rgba(31,157,107,0)}100%{box-shadow:0 0 0 0 rgba(31,157,107,0)}}.chip.demo{background:rgba(217,148,31,.16);color:#F0C97E;border-color:rgba(217,148,31,.3)}
-main{margin-top:40px}.sec-label{font-family:var(--mono);font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--steel);margin:0 0 11px 2px;display:flex;gap:8px}.sec-label .ix{color:var(--brand)}
+:root{
+--ink:#2A1A0E;--ink-2:#352213;--ink-soft:#473020;--canvas:#F2EDE6;--surface:#fff;--line:#E3D8CC;--line-2:#EEE6DC;
+--steel:#7C6B59;--steel-2:#A89685;--brand:#D9701F;--brand-2:#2B7A5B;--accent:#E08A3E;
+--good:#2B7A5B;--good-bg:#E6F2EC;--watch:#C8893E;--watch-bg:#FAF0E0;--flag:#C44A3A;--flag-bg:#F8E8E4;
+--confirm:#B8631A;--confirm-bg:#FBEEDD;
+--mono:"IBM Plex Mono",monospace;--sans:"Inter",system-ui,sans-serif;--r:14px;
+--sh:0 1px 2px rgba(42,26,14,.04),0 6px 18px rgba(42,26,14,.07);--sh-lg:0 12px 34px rgba(42,26,14,.14)}
+*{box-sizing:border-box;margin:0;padding:0}html,body{height:100%}
+body{font-family:var(--sans);background:var(--canvas);color:var(--ink);line-height:1.45;-webkit-font-smoothing:antialiased}
+button{font-family:inherit;cursor:pointer}
+.app{display:flex;min-height:100vh}
+.sidebar{width:252px;flex-shrink:0;background:linear-gradient(180deg,#2A1A0E,#352213 70%,#412a17);color:#fff;position:sticky;top:0;height:100vh;display:flex;flex-direction:column;z-index:60;transition:transform .25s}
+.sb-brand{padding:20px 20px 18px;border-bottom:1px solid rgba(255,255,255,.08)}
+.lockup{display:flex;align-items:center;gap:11px}.mk{width:32px;height:32px;flex-shrink:0}.mk svg{width:32px;height:32px}
+.lk-txt{font-weight:800;font-size:14px;letter-spacing:-.01em;line-height:1}.lk-txt small{display:block;font-family:var(--mono);font-weight:500;font-size:7.5px;letter-spacing:.08em;color:#B6A491;margin-top:4px}
+.sb-x{display:flex;align-items:center;gap:8px;margin-top:14px;font-size:11px;color:#B6A491}.sb-x .by{width:22px;height:22px;border-radius:6px;background:linear-gradient(145deg,var(--brand),#a8530f);display:grid;place-items:center}.sb-x .by svg{width:13px;height:13px}
+.nav{padding:16px 12px;flex:1;overflow-y:auto}.nav-h{font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:#6F5C49;padding:8px 12px}
+.nav-i{display:flex;align-items:center;gap:11px;width:100%;background:transparent;border:none;color:#CCBCAB;font-size:13.5px;font-weight:500;padding:10px 12px;border-radius:9px;text-align:left;position:relative;transition:.14s}
+.nav-i svg{width:17px;height:17px;flex-shrink:0;opacity:.85}.nav-i:hover{background:rgba(255,255,255,.06);color:#fff}
+.nav-i.active{background:rgba(217,112,31,.34);color:#fff}.nav-i.active::before{content:"";position:absolute;left:-12px;top:8px;bottom:8px;width:3px;border-radius:0 3px 3px 0;background:var(--brand)}
+.nav-i .tag{margin-left:auto;font-family:var(--mono);font-size:9.5px;background:rgba(217,112,31,.95);color:#fff;padding:2px 6px;border-radius:5px;font-weight:700}
+.sb-foot{padding:14px 16px;border-top:1px solid rgba(255,255,255,.08)}.who{display:flex;align-items:center;gap:10px}.who .av{width:32px;height:32px;border-radius:9px;background:linear-gradient(145deg,#D9701F,#2B7A5B);display:grid;place-items:center;font-weight:700;font-size:12px}
+.who .nm{font-size:12.5px;font-weight:600;line-height:1.2}.who .rl{font-size:10.5px;color:#B6A491}
+.demo-pill{margin-top:12px;font-family:var(--mono);font-size:10px;text-align:center;background:rgba(217,112,31,.16);color:#ECA869;border:1px solid rgba(217,112,31,.34);padding:6px;border-radius:7px}
+.main{flex:1;min-width:0;display:flex;flex-direction:column}
+.topbar{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.86);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:16px;padding:14px 28px}
+.burger{display:none;background:none;border:1px solid var(--line);border-radius:8px;width:36px;height:36px;color:var(--ink)}
+.tb-title{font-size:17px;font-weight:700;letter-spacing:-.01em}.tb-crumb{font-family:var(--mono);font-size:11px;color:var(--steel);margin-top:1px}
+.tb-right{margin-left:auto;display:flex;align-items:center;gap:12px}.search{display:flex;align-items:center;gap:8px;background:var(--canvas);border:1px solid var(--line);border-radius:9px;padding:8px 12px;color:var(--steel);font-size:12.5px;min-width:200px}.search svg{width:14px;height:14px}
+.live{font-family:var(--mono);font-size:11px;padding:7px 11px;border-radius:999px;display:inline-flex;align-items:center;gap:7px;background:#fff;border:1px solid var(--line);color:var(--ink-soft)}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--good);animation:pulse 2.4s infinite}@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(43,122,91,.55)}70%{box-shadow:0 0 0 6px rgba(43,122,91,0)}100%{box-shadow:0 0 0 0 rgba(43,122,91,0)}}
+.content{padding:26px 28px 56px;max-width:1320px;width:100%}.view{display:none}.view.active{display:block;animation:rise .4s ease}@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.sec-label{font-family:var(--mono);font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--steel);margin:0 0 12px 2px;display:flex;gap:8px;align-items:center}.sec-label .ix{color:var(--brand)}.sec-label .more{margin-left:auto;font-family:var(--sans);text-transform:none;letter-spacing:0;font-size:12px;color:var(--brand-2);font-weight:600;cursor:pointer}
 .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--sh)}
-.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:26px}.kpi{padding:16px 18px;text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:var(--r);box-shadow:var(--sh);transition:.15s;width:100%}.kpi:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(26,20,16,.12)}.kpi .kl{font-size:12px;color:var(--steel);font-weight:500;display:flex;justify-content:space-between}.kpi .kl .go{color:var(--steel-2)}.kpi .kv{font-family:var(--mono);font-size:26px;font-weight:600;letter-spacing:-.02em;margin-top:8px}.kpi .ks{font-family:var(--mono);font-size:11.5px;margin-top:6px}
-.up{color:var(--good)}.down{color:var(--flag)}.neutral{color:var(--steel)}.kv.brand{color:var(--brand)}
-.hero{padding:20px 22px;margin-bottom:26px;border-left:4px solid var(--watch);background:linear-gradient(90deg,#fff,#fffefb)}.badge{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;background:var(--watch-bg);color:var(--watch);padding:4px 9px;border-radius:6px;font-weight:600}
-.hgrid{display:grid;grid-template-columns:1.15fr .85fr;gap:26px;align-items:center;margin-top:14px}.hh{font-size:18px;font-weight:600}.hh b{color:var(--brand)}.hp{font-size:13.5px;color:var(--ink-soft);margin-top:8px;max-width:48ch}.rec{margin-top:14px;font-size:13px;background:#FAF6F2;border:1px solid var(--line);border-radius:9px;padding:11px 13px;color:var(--ink-soft)}.rec b{color:var(--ink)}.acts{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
-.btn{font-size:13px;font-weight:600;border-radius:9px;padding:9px 15px;border:1px solid transparent;transition:.15s}.btn-primary{background:var(--ink);color:#fff}.btn-primary:hover{filter:brightness(1.4)}.btn-ghost{background:#fff;color:var(--ink-soft);border-color:var(--line)}.btn-ghost:hover{background:#FAF6F2}.btn-sm{font-size:12px;padding:7px 12px}
-.donut-wrap{display:flex;align-items:center;gap:16px;background:#FAF7F4;border:1px solid var(--line);border-radius:11px;padding:16px}.leg{font-size:12px}.leg div{display:flex;align-items:center;gap:7px;margin-bottom:7px}.sw{width:10px;height:10px;border-radius:3px}
-.tabs{display:flex;gap:6px;margin-bottom:11px;flex-wrap:wrap}.tab{font-family:var(--mono);font-size:11.5px;padding:7px 13px;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--steel)}.tab.active{background:var(--ink);color:#fff;border-color:var(--ink)}.tab .c{opacity:.6;margin-left:5px}
-.tcard{padding:6px;margin-bottom:26px;overflow:hidden}table{width:100%;border-collapse:collapse}thead th{font-family:var(--mono);font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--steel);font-weight:500;text-align:right;padding:14px 14px 12px;border-bottom:1px solid var(--line);white-space:nowrap}thead th.l{text-align:left}tbody td{padding:13px 14px;border-bottom:1px solid #F0E9E2;font-size:13.5px;text-align:right;vertical-align:middle}tbody tr{cursor:pointer;transition:.12s}tbody tr:last-child td{border-bottom:none}tbody tr:hover{background:#FAF7F4}td.l{text-align:left}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px}.kpi{padding:16px 18px;text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:var(--r);box-shadow:var(--sh);transition:.15s;width:100%}.kpi:hover{transform:translateY(-2px);box-shadow:var(--sh-lg)}.kpi .kl{font-size:12px;color:var(--steel);font-weight:500;display:flex;justify-content:space-between;align-items:center}.kpi .ic{width:26px;height:26px;border-radius:7px;display:grid;place-items:center;background:var(--canvas)}.kpi .ic svg{width:14px;height:14px;color:var(--brand)}.kpi .kv{font-family:var(--mono);font-size:27px;font-weight:600;letter-spacing:-.02em;margin-top:10px}.kpi .ks{font-family:var(--mono);font-size:11.5px;margin-top:6px}
+.up{color:var(--good)}.down{color:var(--flag)}.neutral{color:var(--steel)}.kv.warn{color:var(--watch)}.kv.brand{color:var(--brand)}.kv.good{color:var(--good)}.kv.confirm{color:var(--confirm)}
+.hero{padding:22px 24px;margin-bottom:24px;border-left:4px solid var(--brand);background:linear-gradient(100deg,#fff,#fffaf4)}
+.badge{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;background:var(--confirm-bg);color:var(--confirm);padding:5px 10px;border-radius:6px;font-weight:600;display:inline-block}
+.hgrid{display:grid;grid-template-columns:1.1fr .9fr;gap:30px;align-items:center;margin-top:16px}
+.hh{font-size:20px;font-weight:700;letter-spacing:-.01em}.hh b{color:var(--brand)}.hp{font-size:13.5px;color:var(--ink-soft);margin-top:10px;max-width:52ch}
+.rec{margin-top:16px;font-size:13px;background:#F6F1EA;border:1px solid var(--line);border-radius:10px;padding:12px 14px;color:var(--ink-soft)}.rec b{color:var(--ink)}
+.acts{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+.btn{font-size:13px;font-weight:600;border-radius:9px;padding:10px 16px;border:1px solid transparent;transition:.15s}.btn-primary{background:var(--brand);color:#fff}.btn-primary:hover{filter:brightness(1.08)}.btn-good{background:var(--brand-2);color:#fff}.btn-good:hover{filter:brightness(1.08)}.btn-ghost{background:#fff;color:var(--ink-soft);border-color:var(--line)}.btn-ghost:hover{background:#F6F1EA}
+.dispbox{background:#FBF7F1;border:1px solid var(--line);border-radius:12px;padding:16px}.dc2{font-family:var(--mono);font-size:10.5px;color:var(--steel);margin-bottom:12px;display:flex;justify-content:space-between}
+.unit{display:flex;justify-content:space-between;align-items:center;font-size:12.5px;padding:9px 0;border-bottom:1px dashed var(--line)}.unit:last-child{border-bottom:none}.disp{font-family:var(--mono);font-size:10px;font-weight:700;padding:2px 8px;border-radius:5px;text-transform:uppercase}.d-sellable{background:var(--good-bg);color:var(--good)}.d-refurb{background:var(--watch-bg);color:var(--watch)}.d-scrap{background:var(--flag-bg);color:var(--flag)}
+.confnote{margin-top:12px;background:var(--confirm-bg);border-radius:8px;padding:10px 12px;font-size:12px;color:var(--confirm);font-weight:600;display:flex;align-items:center;gap:8px}
+.tabs{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}.tab{font-family:var(--mono);font-size:11.5px;padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--steel)}.tab.active{background:var(--ink);color:#fff;border-color:var(--ink)}.tab .c{opacity:.6;margin-left:5px}
+.tcard{padding:6px;margin-bottom:24px;overflow:hidden}table{width:100%;border-collapse:collapse}thead th{font-family:var(--mono);font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--steel);font-weight:500;text-align:right;padding:14px 16px 12px;border-bottom:1px solid var(--line);white-space:nowrap}thead th.l{text-align:left}
+tbody td{padding:14px 16px;border-bottom:1px solid var(--line-2);font-size:13.5px;text-align:right;vertical-align:middle}tbody tr{cursor:pointer;transition:.12s}tbody tr:last-child td{border-bottom:none}tbody tr:hover{background:#F8F3EC}td.l{text-align:left}
 .nm2{font-weight:600;font-size:14px}.sub{font-weight:400;color:var(--steel);font-size:11.5px;font-family:var(--mono);margin-top:2px}.num{font-family:var(--mono);font-weight:500}
-.disp{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:11px;font-weight:600;text-transform:uppercase;padding:5px 10px;border-radius:7px}.d-restock{background:var(--good-bg);color:var(--good)}.d-refurb{background:var(--watch-bg);color:var(--watch)}.d-rtv{background:var(--rtv-bg);color:var(--rtv)}.d-scrap{background:var(--flag-bg);color:var(--flag)}
-.cond{font-family:var(--mono);font-size:11px;color:var(--ink-soft)}
-.chev{color:var(--steel-2);font-size:16px;transition:.15s}tbody tr:hover .chev{color:var(--accent);transform:translateX(3px)}.hint{font-family:var(--mono);font-size:10.5px;color:var(--steel-2);padding:8px 14px 2px}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-bottom:26px}.panel{padding:18px 20px 20px}.panel h3{font-size:14.5px;font-weight:600;margin-bottom:2px}.panel .ps{font-size:12px;color:var(--steel);margin-bottom:16px}
-.row{display:flex;justify-content:space-between;align-items:baseline;font-size:13px}.mb{margin-bottom:14px}.bar{height:8px;border-radius:5px;background:#EDE6DF;overflow:hidden;margin-top:6px}.bar span{display:block;height:100%;border-radius:5px}.rowf{font-family:var(--mono);font-size:10.5px;color:var(--steel);margin-top:4px}.drow{display:flex;justify-content:space-between;align-items:center;font-size:13px;padding:10px 0;border-bottom:1px solid #F0E9E2}.drow:last-child{border-bottom:none}
-.stack{padding:22px 24px;margin-bottom:22px;position:relative;overflow:hidden;background:linear-gradient(135deg,#1A1410,#2c211a 60%,#3a2a1f);border:none;color:#fff;border-radius:var(--r)}.stack::after{content:"";position:absolute;right:-40px;top:-40px;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(196,86,31,.4),transparent 70%)}.sh{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:18px;position:relative;z-index:1}.sht{font-size:16px;font-weight:600}.sht .ab{display:inline-block;width:18px;height:3px;background:var(--good);border-radius:2px;vertical-align:middle;margin-right:9px}.shn{font-family:var(--mono);font-size:11px;color:#D8B79C}.sgr{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;position:relative;z-index:1}.sg{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:11px;padding:13px 14px 15px}.gl{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#D8B79C;margin-bottom:11px}.tools{display:flex;flex-wrap:wrap;gap:8px}.tool{display:inline-flex;align-items:center;gap:7px;background:#fff;color:var(--ink);border-radius:8px;padding:6px 11px 6px 7px;font-size:12.5px;font-weight:600;box-shadow:0 2px 6px rgba(0,0,0,.18)}.tool .lg{width:18px;height:18px;border-radius:5px;display:grid;place-items:center;font-family:var(--mono);font-weight:600;font-size:9px;color:#fff}.sf{margin-top:15px;font-size:11.5px;color:#D8B79C;position:relative;z-index:1}.sf b{color:#F0DDCF;font-weight:500}
-footer .wrap{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;padding-top:4px}.roi{font-family:var(--mono);font-size:11.5px;color:var(--ink-soft)}.roi b{color:var(--brand)}.made{font-size:11.5px;color:var(--steel)}.made b{color:var(--ink)}
-.scrim{position:fixed;inset:0;background:rgba(20,14,10,.5);backdrop-filter:blur(2px);opacity:0;pointer-events:none;transition:.25s;z-index:40}.scrim.open{opacity:1;pointer-events:auto}.drawer{position:fixed;top:0;right:0;height:100%;width:430px;max-width:92vw;background:var(--surface);box-shadow:-12px 0 40px rgba(20,14,10,.25);transform:translateX(100%);transition:transform .28s cubic-bezier(.22,.61,.36,1);z-index:50;display:flex;flex-direction:column}.drawer.open{transform:none}
-.dh{padding:20px 22px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:flex-start;gap:12px}.dn{font-size:17px;font-weight:700}.dm{font-family:var(--mono);font-size:11.5px;color:var(--steel);margin-top:3px}.dc{width:32px;height:32px;border-radius:8px;border:1px solid var(--line);background:#fff;color:var(--steel);font-size:18px}.dc:hover{background:#FAF6F2}.db{padding:18px 22px;overflow-y:auto;flex:1}.dmini{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:20px}.dstat{background:#FAF7F4;border:1px solid var(--line);border-radius:10px;padding:11px 13px}.dstat .l{font-size:11px;color:var(--steel)}.dstat .v{font-family:var(--mono);font-size:17px;font-weight:600;margin-top:4px}.dt{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--steel);margin:0 0 10px}.df{padding:16px 22px;border-top:1px solid var(--line);display:flex;gap:9px;flex-wrap:wrap;background:#FCFAF8}
-.toasts{position:fixed;bottom:22px;right:22px;display:flex;flex-direction:column;gap:10px;z-index:80}.toast{background:var(--ink);color:#fff;padding:13px 16px;border-radius:11px;font-size:13px;box-shadow:0 10px 30px rgba(20,14,10,.3);display:flex;align-items:center;gap:11px;min-width:240px;max-width:340px;transform:translateX(120%);transition:.3s cubic-bezier(.22,.61,.36,1)}.toast.show{transform:none}.toast .ti{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:700}.toast.ok .ti{background:var(--good)}.toast.info .ti{background:var(--accent)}
-@media(max-width:860px){.kpis{grid-template-columns:repeat(2,1fr)}.hgrid{grid-template-columns:1fr}.grid2{grid-template-columns:1fr}.sgr{grid-template-columns:1fr}thead th.hide,tbody td.hide{display:none}}
-@media(max-width:480px){.kpis{grid-template-columns:1fr 1fr}.vrule,.product{display:none}}
-.fade{opacity:0;transform:translateY(8px);animation:rise .5s ease forwards}@media(prefers-reduced-motion:reduce){.fade{animation:none;opacity:1;transform:none}.dot{animation:none}*{transition:none!important}}@keyframes rise{to{opacity:1;transform:none}}
+.status{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:11px;font-weight:600;text-transform:uppercase;padding:5px 10px;border-radius:7px}.s-confirm{background:var(--confirm-bg);color:var(--confirm)}.s-good{background:var(--good-bg);color:var(--good)}.s-watch{background:var(--watch-bg);color:var(--watch)}
+.chev{color:var(--steel-2);font-size:16px;transition:.15s}tbody tr:hover .chev{color:var(--brand);transform:translateX(3px)}.hint{font-family:var(--mono);font-size:10.5px;color:var(--steel-2);padding:9px 16px 3px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:24px}.panel{padding:18px 20px 20px}.panel h3{font-size:14.5px;font-weight:600;margin-bottom:2px}.panel .ps{font-size:12px;color:var(--steel);margin-bottom:16px}
+.row{display:flex;justify-content:space-between;align-items:baseline;font-size:13px}.mb{margin-bottom:14px}.bar{height:8px;border-radius:5px;background:#EBE2D7;overflow:hidden;margin-top:6px}.bar span{display:block;height:100%;border-radius:5px}
+.drow{display:flex;justify-content:space-between;align-items:center;font-size:13px;padding:11px 0;border-bottom:1px solid var(--line-2)}.drow:last-child{border-bottom:none}.metric{font-family:var(--mono);font-weight:600}
+.stack{padding:24px 26px;margin-bottom:24px;position:relative;overflow:hidden;background:linear-gradient(135deg,#2A1A0E,#412a17 55%,#D9701F 250%);border:none;color:#fff;border-radius:var(--r)}.stack::after{content:"";position:absolute;right:-30px;top:-50px;width:240px;height:240px;border-radius:50%;background:radial-gradient(circle,rgba(217,112,31,.4),transparent 70%)}
+.sh{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:18px;position:relative;z-index:1}.sht{font-size:16px;font-weight:600}.sht .ab{display:inline-block;width:18px;height:3px;background:var(--brand);border-radius:2px;vertical-align:middle;margin-right:9px}.shn{font-family:var(--mono);font-size:11px;color:#B6A491}
+.sgr{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;position:relative;z-index:1}.sg{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:11px;padding:14px 14px 16px}.gl{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#B6A491;margin-bottom:11px}
+.tool{display:inline-flex;align-items:center;gap:7px;background:#fff;color:var(--ink);border-radius:8px;padding:6px 10px 6px 7px;font-size:12px;font-weight:600;box-shadow:0 2px 6px rgba(0,0,0,.18);margin:0 6px 6px 0}.tool .lg{width:17px;height:17px;border-radius:5px;display:grid;place-items:center;font-family:var(--mono);font-weight:600;font-size:8.5px;color:#fff}
+.sf{margin-top:14px;font-size:11.5px;color:#B6A491;position:relative;z-index:1}.sf b{color:#E6D6C6;font-weight:500}
+.fac-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:24px}.fac{padding:18px 20px}.fac .fn{font-size:15px;font-weight:700}.fac .fl{font-family:var(--mono);font-size:11px;color:var(--steel);margin-bottom:12px}
+.foot{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;padding:6px 2px 0}.roi{font-family:var(--mono);font-size:11.5px;color:var(--ink-soft)}.roi b{color:var(--brand)}.made{font-size:11.5px;color:var(--steel)}.made b{color:var(--ink)}
+.scrim{position:fixed;inset:0;background:rgba(20,12,6,.5);backdrop-filter:blur(2px);opacity:0;pointer-events:none;transition:.25s;z-index:90}.scrim.open{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;right:0;height:100%;width:480px;max-width:94vw;background:var(--surface);box-shadow:-12px 0 40px rgba(20,12,6,.28);transform:translateX(100%);transition:transform .28s cubic-bezier(.22,.61,.36,1);z-index:100;display:flex;flex-direction:column}.drawer.open{transform:none}
+.dh{padding:22px 24px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:flex-start;gap:12px}.dn{font-size:18px;font-weight:700}.dm{font-family:var(--mono);font-size:11.5px;color:var(--steel);margin-top:3px}.dc{width:34px;height:34px;border-radius:9px;border:1px solid var(--line);background:#fff;color:var(--steel);font-size:18px}.dc:hover{background:#F6F1EA}
+.db{padding:20px 24px;overflow-y:auto;flex:1}.dmini{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:22px}.dstat{background:#F8F3EC;border:1px solid var(--line);border-radius:10px;padding:12px 14px}.dstat .l{font-size:11px;color:var(--steel)}.dstat .v{font-family:var(--mono);font-size:18px;font-weight:600;margin-top:4px}.dt{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--steel);margin:0 0 11px}.df{padding:18px 24px;border-top:1px solid var(--line);display:flex;gap:10px;flex-wrap:wrap;background:#FBF7F1}
+.toasts{position:fixed;bottom:24px;right:24px;display:flex;flex-direction:column;gap:10px;z-index:120}.toast{background:var(--ink);color:#fff;padding:14px 17px;border-radius:11px;font-size:13px;box-shadow:var(--sh-lg);display:flex;align-items:center;gap:12px;min-width:250px;max-width:360px;transform:translateX(130%);transition:.3s cubic-bezier(.22,.61,.36,1)}.toast.show{transform:none}.toast .ti{width:23px;height:23px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:700;flex-shrink:0}.toast.ok .ti{background:var(--good)}.toast.info .ti{background:var(--brand)}
+@media(max-width:1140px){.fac-grid{grid-template-columns:1fr}.sgr{grid-template-columns:1fr 1fr}}
+@media(max-width:980px){.sidebar{position:fixed;transform:translateX(-100%);box-shadow:var(--sh-lg)}.sidebar.open{transform:none}.burger{display:grid;place-items:center}.search{display:none}.kpis{grid-template-columns:repeat(2,1fr)}.hgrid{grid-template-columns:1fr}}
+@media(max-width:680px){.grid2,.fac-grid{grid-template-columns:1fr}.sgr{grid-template-columns:1fr}.content{padding:18px 16px 48px}.topbar{padding:12px 16px}thead th.hide,tbody td.hide{display:none}}
+@media(max-width:520px){.kpis{grid-template-columns:1fr 1fr}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}.dot{animation:none}}
 </style></head>
 <body>
-<header class="topbar"><div class="wrap"><div class="cobrand">
-<div class="logo-co">SAFEWAY<small>LOGISTICS · REVERSE & FINAL MILE</small></div><span class="xmul">✕</span>
-<div class="logo-in"><span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M3 17V7l5 3 4-5 4 6 5-2v8"/><circle cx="12" cy="19" r="1.4" fill="#fff" stroke="none"/></svg></span><span class="nm">Instive&nbsp;AI</span></div>
-<span class="vrule"></span><div class="product"><div class="eyebrow">Demo for Safeway Logistics</div><div class="pname">Returns Intelligence</div></div></div>
-<div class="topright"><span class="chip"><span class="dot"></span> Live · queue updating</span><span class="chip demo">Sample data</span></div></div></header>
-<main class="wrap">
-<section class="kpis">
-<button class="kpi fade"><div class="kl">Returns processed · June <span class="go">›</span></div><div class="kv">3,640</div><div class="ks neutral">across all client programs</div></button>
-<button class="kpi fade"><div class="kl">Avg processing time <span class="go">›</span></div><div class="kv brand">1.4 days</div><div class="ks up">▼ from 2.9 days</div></button>
-<button class="kpi fade"><div class="kl">Auto-routed <span class="go">›</span></div><div class="kv">82%</div><div class="ks up">disposition suggested on intake</div></button>
-<button class="kpi fade"><div class="kl">Restock value recovered <span class="go">›</span></div><div class="kv">$214K</div><div class="ks neutral">back to sellable · 30d</div></button>
-</section>
-<p class="sec-label"><span class="ix">▍</span> Needs a fast call</p>
-<section class="card hero">
-<span class="badge">● High-value · time-sensitive</span>
-<div class="hgrid"><div>
-<div class="hh">Healthcare client batch: <b>14 sealed devices</b> can go straight back to sellable.</div>
-<div class="hp">A returned lot from MedTech arrived sealed and within date. The engine reads the condition codes and recommends restock for 14, refurb for 3, and return-to-vendor for 1, so your team confirms judgment calls instead of triaging every unit by hand. The high-value items are the ones where speed and a human eye both matter.</div>
-<div class="rec"><b>Recommended:</b> approve the 14 restocks now to clear the dock; route the 3 refurb + 1 RTV to the review bench.</div>
-<div class="acts"><button class="btn btn-primary" onclick="toast('ok','✓','14 restocks approved','Returned to sellable; client notified.')">Approve 14 restocks</button><button class="btn btn-ghost" onclick="openRma('R-90412')">Open batch</button></div>
-</div><div><div class="donut-wrap"><svg viewBox="0 0 120 120" width="116" height="116"><circle cx="60" cy="60" r="46" fill="none" stroke="#EDE6DF" stroke-width="16"/><circle cx="60" cy="60" r="46" fill="none" stroke="#1F9D6B" stroke-width="16" stroke-dasharray="166 289" stroke-dashoffset="0" transform="rotate(-90 60 60)"/><circle cx="60" cy="60" r="46" fill="none" stroke="#D9941F" stroke-width="16" stroke-dasharray="58 289" stroke-dashoffset="-166" transform="rotate(-90 60 60)"/><circle cx="60" cy="60" r="46" fill="none" stroke="#6B57B0" stroke-width="16" stroke-dasharray="26 289" stroke-dashoffset="-224" transform="rotate(-90 60 60)"/><circle cx="60" cy="60" r="46" fill="none" stroke="#D64A45" stroke-width="16" stroke-dasharray="14 289" stroke-dashoffset="-250" transform="rotate(-90 60 60)"/><text x="60" y="58" text-anchor="middle" font-family="IBM Plex Mono" font-size="17" font-weight="600" fill="#1A1410">82%</text><text x="60" y="72" text-anchor="middle" font-family="IBM Plex Mono" font-size="8" fill="#75665A">auto-routed</text></svg>
-<div class="leg"><div><span class="sw" style="background:#1F9D6B"></span> Restock 57%</div><div><span class="sw" style="background:#D9941F"></span> Refurbish 20%</div><div><span class="sw" style="background:#6B57B0"></span> Return to vendor 14%</div><div><span class="sw" style="background:#D64A45"></span> Scrap 9%</div></div></div></div></div>
-</section>
-<p class="sec-label" id="q"><span class="ix">▍</span> Returns queue</p>
-<div class="tabs" id="tabs"><button class="tab active" data-f="all">All <span class="c">6</span></button><button class="tab" data-f="restock">Restock <span class="c">2</span></button><button class="tab" data-f="refurb">Refurbish <span class="c">2</span></button><button class="tab" data-f="rtv">Return to vendor <span class="c">1</span></button><button class="tab" data-f="scrap">Scrap <span class="c">1</span></button></div>
-<section class="card tcard"><table><thead><tr><th class="l">RMA · item</th><th class="hide">Client</th><th class="hide">Condition</th><th>Value</th><th>Recommended disposition</th><th></th></tr></thead><tbody id="rows"></tbody></table><div class="hint">↳ Click an RMA for condition detail and the reasoning behind the disposition.</div></section>
-<div class="grid2">
-<section class="card panel"><h3>Processing time</h3><p class="ps">Avg days from dock to disposition</p>
-<div class="mb"><div class="row"><span>Before</span><span class="num">2.9 days</span></div><div class="bar"><span style="width:90%;background:var(--flag)"></span></div></div>
-<div class="mb"><div class="row"><span>With auto-routing</span><span class="num" style="color:var(--good)">1.4 days</span></div><div class="bar"><span style="width:43%;background:var(--good)"></span></div></div>
-<div class="rowf">Faster dispositions mean less restock lag and quicker money back to your clients.</div>
-<div class="rec" style="margin-top:14px"><b>Note:</b> the engine suggests; your team approves. The human touch stays exactly where it adds value.</div></section>
-<section class="card panel"><h3>Aging returns</h3><p class="ps">Sitting on the dock too long</p>
-<div class="drow"><span>0–1 days</span><span class="num" style="color:var(--good)">388 units</span></div>
-<div class="drow"><span>2–3 days</span><span class="num" style="color:var(--watch)">96 units</span></div>
-<div class="drow"><span>4+ days (escalate)</span><span class="num" style="color:var(--flag)">21 units</span></div>
-<div class="rec" style="margin-top:14px"><b>21 units</b> are aging past 4 days; the engine has already proposed a disposition for 18 of them.</div></section>
+<div class="app">
+<aside class="sidebar" id="sidebar">
+  <div class="sb-brand"><div class="lockup">
+    <span class="mk"><svg viewBox="0 0 32 32" fill="none"><rect x="2" y="2" width="28" height="28" rx="8" fill="url(#g)"/><path d="M20 9H10l-1 4h12z" stroke="#fff" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M9 13l-1 8h16l-1-8" stroke="#fff" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M13 19l2 2 4-4" stroke="#2B7A5B" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/><defs><linearGradient id="g" x1="0" y1="0" x2="32" y2="32"><stop offset="0" stop-color="#E08A3E"/><stop offset="1" stop-color="#a8530f"/></linearGradient></defs></svg></span>
+    <span class="lk-txt">SAFEWAY<small>LOGISTICS · RETURNS</small></span></div>
+    <div class="sb-x"><span class="by"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M3 17V7l5 3 4-5 4 6 5-2v8"/></svg></span> powered by <b style="color:#e6d6c6;font-weight:600">Instive&nbsp;AI</b></div></div>
+  <nav class="nav">
+    <div class="nav-h">Operations</div>
+    <button class="nav-i active" data-v="returns"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg> Returns Intelligence <span class="tag">1</span></button>
+    <button class="nav-i" data-v="recovery"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg> Recovery &amp; Disposition</button>
+    <button class="nav-i" data-v="network"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-3"/></svg> Centers &amp; Network</button>
+    <div class="nav-h" style="margin-top:10px">Account</div>
+    <button class="nav-i" onclick="toast('info','i','Settings','Connector mapping lives here in the live build.')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-2.82 1.17V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 7 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 2.6 14H2a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 7l.06-.06A2 2 0 1 1 7.46 4l.06.06A1.65 1.65 0 0 0 9.34 4.6 1.65 1.65 0 0 0 11 3V2a2 2 0 1 1 4 0v.09A1.65 1.65 0 0 0 17 4.6l.06-.06A2 2 0 1 1 20 7.46l-.06.06A1.65 1.65 0 0 0 19.4 9V11a2 2 0 1 1 0 4z"/></svg> Connectors &amp; settings</button>
+  </nav>
+  <div class="sb-foot"><div class="who"><span class="av">AS</span><div><div class="nm">Ashley Stuart</div><div class="rl">Safeway Logistics</div></div></div><div class="demo-pill">DEMO · sample data only</div></div>
+</aside>
+
+<div class="main">
+  <header class="topbar">
+    <button class="burger" onclick="document.getElementById('sidebar').classList.toggle('open')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg></button>
+    <div><div class="tb-title" id="tbTitle">Returns Intelligence</div><div class="tb-crumb" id="tbCrumb">Safeway · suggested dispositions, your team confirms · today</div></div>
+    <div class="tb-right"><span class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg> Search RMAs, SKUs…</span><span class="live"><span class="dot"></span> Live · suggesting dispositions</span></div>
+  </header>
+  <div class="content">
+
+  <!-- RETURNS INTELLIGENCE -->
+  <section class="view active" id="view-returns">
+    <section class="kpis">
+      <button class="kpi"><div class="kl">Returns in queue <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/></svg></span></div><div class="kv">186</div><div class="ks neutral">awaiting disposition</div></button>
+      <button class="kpi"><div class="kl">Auto-suggested <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 18V5l12-2v13M9 9l12-2"/><circle cx="6" cy="18" r="3"/></svg></span></div><div class="kv brand">171</div><div class="ks neutral">team confirms each</div></button>
+      <button class="kpi"><div class="kl">Back to sellable <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6 9 17l-5-5"/></svg></span></div><div class="kv good">62%</div><div class="ks up">▲ value recovered</div></button>
+      <button class="kpi"><div class="kl">Processing time <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span></div><div class="kv good">−50%</div><div class="ks up">▼ vs. manual triage</div></button>
+    </section>
+
+    <p class="sec-label"><span class="ix">◆</span> A high-value healthcare batch, sorted in seconds, confirmed by your team</p>
+    <section class="card hero">
+      <span class="badge">● Suggested · awaiting your confirm · healthcare batch</span>
+      <div class="hgrid">
+        <div>
+          <div class="hh">Most of this healthcare batch can go <b>straight back to sellable</b>.</div>
+          <div class="hp">RMA-5521 came in as a single high-value healthcare batch of 48 units. The engine read the return reasons, lot codes and condition notes and suggests 39 units straight back to sellable, 6 to refurb, 3 to scrap. Nothing moves on its own: the suggestion is staged and your team confirms it. The slow part, the triage, is done; the judgment stays with people.</div>
+          <div class="rec"><b>Suggested:</b> confirm 39 units to sellable, 6 to refurb, 3 to scrap on RMA-5521, recovering an estimated $14.2K of a $17.6K batch.</div>
+          <div class="acts">
+            <button class="btn btn-primary" onclick="openRma('RMA-5521')">Review the batch</button>
+            <button class="btn btn-ghost" onclick="document.querySelector('[data-f=confirm]').click();document.getElementById('rmaAnchor').scrollIntoView({behavior:'smooth'})">See all awaiting confirm</button>
+          </div>
+        </div>
+        <div><div class="dispbox"><div class="dc2"><span>RMA-5521 · 48 UNITS</span><span>HEALTHCARE</span></div>
+          <div class="unit"><span>39 units · sealed, in date</span><span class="disp d-sellable">sellable</span></div>
+          <div class="unit"><span>6 units · packaging only</span><span class="disp d-refurb">refurb</span></div>
+          <div class="unit"><span>3 units · expired lot</span><span class="disp d-scrap">scrap</span></div>
+          <div class="confnote"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 11l3 3L22 4"/></svg> Suggested — your team confirms before anything moves</div>
+          </div></div>
+      </div>
+    </section>
+
+    <p class="sec-label" id="rmaAnchor"><span class="ix">◆</span> Returns queue <span class="more" onclick="toast('info','i','Export','Queue exported in the live build.')">Export</span></p>
+    <div class="tabs" id="tabs">
+      <button class="tab active" data-f="all">All <span class="c">6</span></button>
+      <button class="tab" data-f="confirm">Awaiting confirm <span class="c">3</span></button>
+      <button class="tab" data-f="watch">Needs a look <span class="c">2</span></button>
+      <button class="tab" data-f="good">Confirmed <span class="c">1</span></button>
+    </div>
+    <section class="card tcard"><table>
+      <thead><tr><th class="l">RMA · category</th><th class="hide">Reason</th><th>Units</th><th>Suggested split</th><th>Est. value</th><th>Status</th><th></th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table><div class="hint">↳ Click any RMA to read the per-unit reasoning, adjust the split, and confirm.</div></section>
+
+    <div class="grid2">
+      <section class="card panel"><h3>Where the time went</h3><p class="ps">Per return · manual vs. suggested</p>
+        <div class="mb"><div class="row"><span>Manual triage</span><span class="num" style="color:var(--flag)">~8 min</span></div><div class="bar"><span style="width:88%;background:var(--flag)"></span></div></div>
+        <div class="mb"><div class="row"><span>Suggested + confirm</span><span class="num" style="color:var(--good)">~4 min</span></div><div class="bar"><span style="width:44%;background:var(--good)"></span></div></div>
+        <div class="rec" style="margin-top:12px">The engine does the reading and sorting; the person does the confirming. That is where the 50% comes from.</div></section>
+      <section class="card panel"><h3>Value recovered</h3><p class="ps">By disposition · this week</p>
+        <div class="drow"><span>Back to sellable</span><span class="metric" style="color:var(--good)">$92.4K</span></div>
+        <div class="drow"><span>Refurb / liquidation</span><span class="metric" style="color:var(--watch)">$18.1K</span></div>
+        <div class="drow"><span>Scrap</span><span class="metric">$3.2K</span></div>
+        <div class="rec" style="margin-top:14px">High-value healthcare returns recover most when sellable units are caught fast, before restock lag sets in.</div></section>
+    </div>
+
+    <section class="card stack"><div class="sh"><div class="sht"><span class="ab"></span>Plugs into the stack Safeway already runs</div><div class="shn">read-only suggestions · works with your WMS &amp; RMA system · ~4–6 week build</div></div>
+      <div class="sgr">
+        <div class="sg"><div class="gl">WMS</div><span class="tool"><span class="lg" style="background:#D9701F">WM</span>your WMS</span></div>
+        <div class="sg"><div class="gl">RMA / returns</div><span class="tool"><span class="lg" style="background:#2B7A5B">RM</span>RMA system</span></div>
+        <div class="sg"><div class="gl">Lot / expiry</div><span class="tool"><span class="lg" style="background:#B8631A">LX</span>lot data</span></div>
+        <div class="sg"><div class="gl">Client portals</div><span class="tool"><span class="lg" style="background:#412a17">CP</span>seller feeds</span></div>
+      </div>
+      <div class="sf">→ <b>Tell us your exact systems and we map the connectors to them.</b> It suggests the disposition; your team confirms before anything moves. Nothing migrates.</div>
+    </section>
+    <div class="foot"><div class="roi">Cuts returns processing time around <b>50%</b> and reduces restock lag.</div><div class="made">Mockup by <b>Instive AI</b> for Safeway Logistics · sample data</div></div>
+  </section>
+
+  <!-- RECOVERY & DISPOSITION -->
+  <section class="view" id="view-recovery">
+    <section class="kpis">
+      <button class="kpi"><div class="kl">Recovered · this week</div><div class="kv good">$113.7K</div><div class="ks up">▲ vs. last week</div></button>
+      <button class="kpi"><div class="kl">Sellable rate</div><div class="kv">62%</div><div class="ks up">▲ 9 pts</div></button>
+      <button class="kpi"><div class="kl">Avg restock lag</div><div class="kv">1.6 d</div><div class="ks up">▼ from 3.4 d</div></button>
+      <button class="kpi"><div class="kl">Confirm rate</div><div class="kv">94%</div><div class="ks neutral">team agrees w/ suggestion</div></button>
+    </section>
+    <p class="sec-label"><span class="ix">◆</span> Disposition mix · suggested, then confirmed</p>
+    <section class="card panel" style="margin-bottom:24px"><h3>Where returns land</h3><p class="ps">After your team confirms</p>
+      <div class="mb"><div class="row"><span>Back to sellable</span><span class="num" style="color:var(--good)">62%</span></div><div class="bar"><span style="width:62%;background:var(--good)"></span></div></div>
+      <div class="mb"><div class="row"><span>Refurb / liquidation</span><span class="num" style="color:var(--watch)">26%</span></div><div class="bar"><span style="width:26%;background:var(--watch)"></span></div></div>
+      <div class="mb"><div class="row"><span>Scrap / dispose</span><span class="num">12%</span></div><div class="bar"><span style="width:12%;background:var(--flag)"></span></div></div>
+      <div class="rec" style="margin-top:14px"><b>→</b> The 94% confirm rate means the suggestions are usually right; the 6% your team overrides is exactly where human judgment earns its place.</div></section>
+    <div class="grid2">
+      <section class="card panel"><h3>Why suggest-then-confirm</h3><p class="ps">Speed without losing control</p>
+        <div class="rec">Full automation on returns is risky: a wrong disposition on a high-value or regulated item is costly. Suggesting the disposition and letting your team confirm keeps the speed while the accountability stays with a person.</div></section>
+      <section class="card panel"><h3>Top recovery categories</h3><p class="ps">Sellable value · this week</p>
+        <div class="drow"><span>Healthcare / medical</span><span class="metric" style="color:var(--good)">$48.2K</span></div>
+        <div class="drow"><span>Consumer electronics</span><span class="metric">$31.5K</span></div>
+        <div class="drow"><span>Apparel</span><span class="metric">$12.7K</span></div></section>
+    </div>
+    <div class="foot"><div class="roi">Faster sorting, more value back to sellable, judgment kept with people.</div><div class="made">Recovery view · Instive AI for Safeway · sample data</div></div>
+  </section>
+
+  <!-- CENTERS & NETWORK -->
+  <section class="view" id="view-network">
+    <p class="sec-label"><span class="ix">◆</span> Returns centers · one standard</p>
+    <div class="fac-grid">
+      <section class="card fac"><div class="fn">Primary RC</div><div class="fl">healthcare + electronics</div>
+        <div class="drow"><span>In queue</span><span class="metric">186</span></div>
+        <div class="drow"><span>Sellable rate</span><span class="metric" style="color:var(--good)">64%</span></div>
+        <div class="drow"><span>Confirm rate</span><span class="metric">94%</span></div></section>
+      <section class="card fac"><div class="fn">Regional RC</div><div class="fl">general merchandise</div>
+        <div class="drow"><span>In queue</span><span class="metric">142</span></div>
+        <div class="drow"><span>Sellable rate</span><span class="metric" style="color:var(--good)">58%</span></div>
+        <div class="drow"><span>Confirm rate</span><span class="metric">92%</span></div></section>
+      <section class="card fac"><div class="fn">Overflow RC</div><div class="fl">seasonal peaks</div>
+        <div class="drow"><span>In queue</span><span class="metric">61</span></div>
+        <div class="drow"><span>Sellable rate</span><span class="metric">55%</span></div>
+        <div class="drow"><span>Confirm rate</span><span class="metric">90%</span></div></section>
+    </div>
+    <section class="card stack"><div class="sh"><div class="sht"><span class="ab"></span>One engine, every center</div><div class="shn">same suggest-then-confirm flow</div></div>
+      <div class="sf" style="margin-top:0;color:#e6d6c6;font-size:13px">Every returns center reads from the <b>same</b> WMS and RMA feeds and runs the same suggest-then-confirm flow. A healthcare batch at the primary RC and a general-merch batch at the regional RC are triaged the same way, and a person confirms either before anything moves.</div></section>
+    <div class="foot"><div class="roi">One AI layer · <b>returns intelligence</b> across every center.</div><div class="made">Mockup by <b>Instive AI</b> for Safeway Logistics · sample data</div></div>
+  </section>
+
+  </div>
 </div>
-<section class="card stack"><div class="sh"><div class="sht"><span class="ab"></span>Plugs into the stack Safeway already runs</div><div class="shn">read-only · no rip-and-replace · ~6–8 week build</div></div>
-<div class="sgr">
-<div class="sg"><div class="gl">WMS</div><div class="tools"><span class="tool"><span class="lg" style="background:#1f6feb">3P</span>3PL WMS</span><span class="tool"><span class="lg" style="background:#0aa1a1">Da</span>Datex</span></div></div>
-<div class="sg"><div class="gl">Client ERP / portals</div><div class="tools"><span class="tool"><span class="lg" style="background:#15397a">ER</span>client ERP</span><span class="tool"><span class="lg" style="background:#5b48d6">RM</span>RMA portal</span></div></div>
-<div class="sg"><div class="gl">Disposition rules</div><div class="tools"><span class="tool"><span class="lg" style="background:#C4561F">Rl</span>your SOPs</span></div></div></div>
-<div class="sf">→ <b>Tell us your exact systems and we map the connectors to them.</b> The engine reads condition codes and your disposition rules, then proposes the call for a person to confirm.</div></section>
-</main>
-<footer class="wrap"><div class="roi">Cuts returns processing time <b>~50%</b> and reduces restock lag.</div><div class="made">Mockup by <b>Instive AI</b> for Safeway Logistics · sample data</div></footer>
-<div class="scrim" id="scrim" onclick="closeD()"></div><aside class="drawer" id="drawer"></aside>
-<div class="toasts" id="toasts"></div>
+</div>
+<div class="scrim" id="scrim" onclick="closeD()"></div><aside class="drawer" id="drawer"></aside><div class="toasts" id="toasts"></div>
 <script>
+const TITLES={returns:["Returns Intelligence","Safeway · suggested dispositions, your team confirms · today"],recovery:["Recovery &amp; Disposition","Safeway · disposition mix, suggested then confirmed"],network:["Centers &amp; Network","Safeway · returns centers, one standard"]};
+document.querySelectorAll('.nav-i[data-v]').forEach(b=>b.addEventListener('click',()=>{const v=b.dataset.v;document.querySelectorAll('.nav-i[data-v]').forEach(x=>x.classList.toggle('active',x===b));document.querySelectorAll('.view').forEach(s=>s.classList.toggle('active',s.id==='view-'+v));document.getElementById('tbTitle').innerHTML=TITLES[v][0];document.getElementById('tbCrumb').innerHTML=TITLES[v][1];document.getElementById('sidebar').classList.remove('open');window.scrollTo({top:0,behavior:'smooth'});}));
+
 const RMA={
-"R-90412":{item:"MedTech sealed devices (batch)",sku:"18 units · mixed",client:"MedTech Health",cond:"Sealed, in-date",val:"$22,400",disp:"restock",dl:"Restock 14",why:"14 of 18 arrived factory-sealed and within date, condition code A. Recommend restock to sellable. 3 show opened packaging (refurb), 1 is past firmware support (RTV).",actions:["Approve restock","Route refurb/RTV"]},
-"R-90388":{item:"Laptop, business series",sku:"SKU LT-14PRO",client:"NorthByte IT",cond:"Open box, no damage",val:"$1,180",disp:"restock",dl:"Restock",why:"Open-box, all accessories present, passes function check. Condition B. Restock as open-box sellable.",actions:["Approve restock","Send to refurb"]},
-"R-90377":{item:"Tablet, rugged",sku:"SKU TB-RG8",client:"NorthByte IT",cond:"Scuffed, functional",val:"$640",disp:"refurb",dl:"Refurbish",why:"Cosmetic scuffing, fully functional. Recommend refurb (clean + re-box) before resale to recover ~80% of value.",actions:["Send to refurb","Override"]},
-"R-90341":{item:"Infusion pump accessory",sku:"SKU MD-IP2",client:"MedTech Health",cond:"Opened, single-use class",val:"$310",disp:"scrap",dl:"Scrap",why:"Single-use medical class, packaging opened. Cannot be restocked or refurbished per client SOP and compliance. Recommend documented scrap.",actions:["Confirm scrap","Flag for review"]},
-"R-90299":{item:"Network switch",sku:"SKU NS-48G",client:"NorthByte IT",cond:"DOA, under warranty",val:"$920",disp:"rtv",dl:"Return to vendor",why:"Dead on arrival, within vendor warranty window. Recommend return-to-vendor for credit rather than refurb.",actions:["Create RTV","Override"]},
-"R-90250":{item:"Monitor, 27 in",sku:"SKU MN-27Q",client:"NorthByte IT",cond:"Minor cosmetic",val:"$240",disp:"refurb",dl:"Refurbish",why:"Light scratch on bezel, panel perfect. Refurb to open-box grade.",actions:["Send to refurb","Override"]}};
-function rowHtml(id,r){const dc='d-'+r.disp;
-return `<tr data-disp="${r.disp}" tabindex="0" onclick="openRma('${id}')" onkeydown="if(event.key==='Enter')openRma('${id}')"><td class="l"><div class="nm2">${r.item}<div class="sub">${id} · ${r.sku}</div></div></td><td class="num hide">${r.client}</td><td class="hide"><span class="cond">${r.cond}</span></td><td class="num">${r.val}</td><td><span class="disp ${dc}">● ${r.dl}</span></td><td><span class="chev">›</span></td></tr>`;}
-const rows=document.getElementById('rows');rows.innerHTML=Object.entries(RMA).map(([id,r])=>rowHtml(id,r)).join("");
-document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x===t));document.querySelectorAll('#rows tr').forEach(r=>r.style.display=(t.dataset.f==='all'||r.dataset.disp===t.dataset.f)?'':'none');document.getElementById('q').scrollIntoView({behavior:'smooth'});}));
+ "RMA-5521":{cat:"Healthcare batch",reason:"Overstock return",units:"48",split:"39 / 6 / 3",val:"$14.2K",st:"confirm",
+  units2:[["39 units · sealed, in date","sellable"],["6 units · packaging damage only","refurb"],["3 units · expired lot","scrap"]],
+  why:"Lot codes are in date and seals intact on 39 units, so they read as sellable. 6 have cosmetic packaging damage only (refurb). 3 are past their lot expiry (scrap). High-value batch, so it is staged for your confirm."},
+ "RMA-5530":{cat:"Electronics",reason:"Buyer remorse",units:"22",split:"18 / 3 / 1",val:"$6.8K",st:"confirm",
+  units2:[["18 units · unopened","sellable"],["3 units · opened, tested OK","refurb"],["1 unit · missing parts","scrap"]],
+  why:"18 unopened units read as sellable; 3 opened but functional go to refurb; 1 missing components goes to scrap. Awaiting confirm."},
+ "RMA-5544":{cat:"Apparel",reason:"Wrong size",units:"60",split:"54 / 6 / 0",val:"$3.1K",st:"confirm",
+  units2:[["54 units · tags on","sellable"],["6 units · tags removed","refurb"]],
+  why:"Most units have tags intact and read as sellable; 6 with tags removed go to refurb/repack. Awaiting confirm."},
+ "RMA-5512":{cat:"Healthcare",reason:"Damaged in transit",units:"14",split:"needs a look",val:"$4.9K",st:"watch",
+  units2:[["Mixed condition","review"]],
+  why:"Condition notes are inconsistent with the photos for a high-value regulated item. The engine declines to suggest and routes it to a person."},
+ "RMA-5508":{cat:"Electronics",reason:"DOA claim",units:"8",split:"needs a look",val:"$2.2K",st:"watch",
+  units2:[["Failure unconfirmed","review"]],
+  why:"DOA claim cannot be confirmed from the intake data. Routed for hands-on testing before disposition."},
+ "RMA-5499":{cat:"General merch",reason:"Overstock",units:"30",split:"27 / 3 / 0",val:"$2.0K",st:"good",
+  units2:[["27 units · sellable","sellable"],["3 units · refurb","refurb"]],
+  why:"Confirmed by your team this morning; 27 units back to sellable."}};
+function rmaRow(id,r){return `<tr data-status="${r.st}" tabindex="0" onclick="openRma('${id}')" onkeydown="if(event.key==='Enter')openRma('${id}')"><td class="l"><div class="nm2">${id}<div class="sub">${r.cat}</div></div></td><td class="num hide">${r.reason}</td><td class="num">${r.units}</td><td class="num">${r.split}</td><td class="num" style="color:var(--good);font-weight:700">${r.val}</td><td><span class="status s-${r.st}">● ${r.st==='good'?'Confirmed':r.st==='watch'?'Needs a look':'Awaiting confirm'}</span></td><td><span class="chev">›</span></td></tr>`;}
+document.getElementById('rows').innerHTML=Object.entries(RMA).map(([id,r])=>rmaRow(id,r)).join("");
+document.querySelectorAll('#tabs .tab').forEach(t=>t.addEventListener('click',()=>{document.querySelectorAll('#tabs .tab').forEach(x=>x.classList.toggle('active',x===t));document.querySelectorAll('#rows tr').forEach(r=>r.style.display=(t.dataset.f==='all'||r.dataset.status===t.dataset.f)?'':'none');document.getElementById('rmaAnchor').scrollIntoView({behavior:'smooth'});}));
 const drawer=document.getElementById('drawer'),scrim=document.getElementById('scrim');
-function openRma(id){const r=RMA[id];const dc='d-'+r.disp;
-drawer.innerHTML=`<div class="dh"><div><div class="dn">${r.item}</div><div class="dm">${id} · ${r.sku}</div></div><button class="dc" onclick="closeD()">×</button></div>
-<div class="db"><div style="margin-bottom:18px"><span class="disp ${dc}">● ${r.dl}</span></div>
-<div class="dmini"><div class="dstat"><div class="l">Client</div><div class="v" style="font-size:14px">${r.client}</div></div><div class="dstat"><div class="l">Value</div><div class="v">${r.val}</div></div><div class="dstat" style="grid-column:1/3"><div class="l">Condition on intake</div><div class="v" style="font-size:14px">${r.cond}</div></div></div>
-<p class="dt">Why this disposition</p><div class="rec" style="margin-bottom:20px">${r.why}</div>
-<p class="dt">Photos</p><div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px"><div style="aspect-ratio:1;background:#F0E9E2;border:1px solid var(--line);border-radius:8px;display:grid;place-items:center;color:var(--steel-2);font-size:20px">▣</div><div style="aspect-ratio:1;background:#F0E9E2;border:1px solid var(--line);border-radius:8px;display:grid;place-items:center;color:var(--steel-2);font-size:20px">▣</div><div style="aspect-ratio:1;background:#F0E9E2;border:1px solid var(--line);border-radius:8px;display:grid;place-items:center;color:var(--steel-2);font-size:20px">▣</div></div></div>
-<div class="df"><button class="btn btn-primary" onclick="closeD();toast('ok','✓','Disposition confirmed','${r.dl} confirmed for ${id}.')">${r.actions[0]}</button><button class="btn btn-ghost" onclick="toast('info','i','Sent to review','${id} flagged for a human review.')">${r.actions[1]}</button></div>`;
-drawer.classList.add('open');scrim.classList.add('open');document.body.style.overflow='hidden';}
+function dispClass(d){return d==='sellable'?'d-sellable':d==='refurb'?'d-refurb':d==='scrap'?'d-scrap':'d-refurb';}
+function openRma(id){const r=RMA[id];
+  drawer.innerHTML=`<div class="dh"><div><div class="dn">${id}</div><div class="dm">${r.cat} · ${r.reason}</div></div><button class="dc" onclick="closeD()">×</button></div>
+  <div class="db"><div style="margin-bottom:18px"><span class="status s-${r.st}">● ${r.st==='good'?'Confirmed':r.st==='watch'?'Needs a look':'Awaiting confirm'}</span></div>
+  <div class="dmini"><div class="dstat"><div class="l">Units</div><div class="v">${r.units}</div></div><div class="dstat"><div class="l">Est. value</div><div class="v" style="color:var(--good)">${r.val}</div></div></div>
+  <p class="dt">Suggested per-unit disposition</p><div class="dispbox" style="margin-bottom:18px">${r.units2.map(u=>`<div class="unit"><span>${u[0]}</span><span class="disp ${dispClass(u[1])}">${u[1]}</span></div>`).join("")}${r.st==='confirm'?'<div class="confnote"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 11l3 3L22 4"/></svg> Nothing moves until you confirm</div>':''}</div>
+  <p class="dt">The reasoning</p><div class="rec">${r.why}</div></div>
+  <div class="df">${r.st==='confirm'?`<button class="btn btn-good" onclick="closeD();toast('ok','✓','Confirmed','${id} disposition confirmed and released.')">Confirm disposition</button><button class="btn btn-ghost" onclick="closeD();toast('info','i','Adjust','Open ${id} to adjust the split.')">Adjust split</button>`:r.st==='watch'?`<button class="btn btn-primary" onclick="closeD();toast('info','i','Routed','${id} routed for hands-on review.')">Assign for review</button><button class="btn btn-ghost" onclick="closeD()">Close</button>`:`<button class="btn btn-ghost" onclick="closeD()">Close</button>`}</div>`;
+  drawer.classList.add('open');scrim.classList.add('open');document.body.style.overflow='hidden';}
 function closeD(){drawer.classList.remove('open');scrim.classList.remove('open');document.body.style.overflow='';}
-function toast(type,icon,title,msg){const e=document.createElement('div');e.className='toast '+type;e.innerHTML=`<span class="ti">${icon}</span><span><b>${title}</b><br><span style="opacity:.8;font-size:12px">${msg||''}</span></span>`;document.getElementById('toasts').appendChild(e);requestAnimationFrame(()=>e.classList.add('show'));setTimeout(()=>{e.classList.remove('show');setTimeout(()=>e.remove(),350);},3600);}
+function toast(type,icon,title,msg){const e=document.createElement('div');e.className='toast '+type;e.innerHTML=`<span class="ti">${icon}</span><span><b>${title}</b><br><span style="opacity:.82;font-size:12px">${msg||''}</span></span>`;document.getElementById('toasts').appendChild(e);requestAnimationFrame(()=>e.classList.add('show'));setTimeout(()=>{e.classList.remove('show');setTimeout(()=>e.remove(),350);},3600);}
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeD();});
-</script></body></html>
+</script>
+</body></html>
