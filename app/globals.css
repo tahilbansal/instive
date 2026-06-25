@@ -1,27 +1,325 @@
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
+  --font-display: "Space Grotesk", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --font-body: "Inter", system-ui, sans-serif;
+
+  /* Dark theme (default) */
+  --bg-primary: #0e1a24;
+  --bg-secondary: #16252f;
+  --bg-tertiary: #1f313c;
+  --text-primary: #f5f2ea;
+  --text-secondary: #d8d3c7;
+  --text-muted: #8a9aa5;
+  --signal: #ffb23e;
+  --signal-deep: #e8941a;
+  --cleared: #5bd6a6;
+  --hold: #ff6b5e;
+  --line: rgba(245, 242, 234, 0.14);
+  --line-strong: rgba(245, 242, 234, 0.28);
+
   color-scheme: dark;
 }
 
-html,
-body {
-  background-color: #0a0a0f;
-  color: #e7e7ee;
-  -webkit-font-smoothing: antialiased;
+html.light {
+  --bg-primary: #f5f2ea;
+  --bg-secondary: #fffbf5;
+  --bg-tertiary: #ede8dc;
+  --text-primary: #0e1a24;
+  --text-secondary: #16252f;
+  --text-muted: #8a9aa5;
+  --line: rgba(14, 26, 36, 0.08);
+  --line-strong: rgba(14, 26, 36, 0.16);
+  color-scheme: light;
 }
 
-/* Subtle scrollbar so the dark page stays calm */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: 100%;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* Freight grid backdrop */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(circle at 50% 0%, #000 0%, transparent 75%);
+  opacity: 0.5;
+  transition: background-color 0.3s;
+}
+
+::selection {
+  background-color: var(--signal);
+  color: var(--bg-primary);
+}
+
+/* Scrollbar */
 ::-webkit-scrollbar {
   width: 10px;
   height: 10px;
 }
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 178, 62, 0.3);
   border-radius: 999px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.18);
+  background: rgba(255, 178, 62, 0.5);
+}
+
+html.light ::-webkit-scrollbar-thumb {
+  background: rgba(14, 26, 36, 0.2);
+}
+
+html.light ::-webkit-scrollbar-thumb:hover {
+  background: rgba(14, 26, 36, 0.3);
+}
+
+/* Signal CTA button — lift + dim on hover, pure CSS so it works in Server Components */
+.btn-signal {
+  background-color: var(--signal);
+  color: var(--bg-primary);
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.btn-signal:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+}
+
+/* Utility classes */
+.relative {
+  position: relative;
+}
+
+.z-0 {
+  z-index: 0;
+}
+
+.z-10 {
+  z-index: 10;
+}
+
+.z-50 {
+  z-index: 50;
+}
+
+/* ─── Glassmorphic Card Surface ─── */
+.glass-card {
+  background: rgba(22, 37, 47, 0.55);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(245, 242, 234, 0.08);
+  border-radius: 12px;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+              border-color 0.35s ease;
+}
+
+html.light .glass-card {
+  background: rgba(255, 251, 245, 0.65);
+  border-color: rgba(14, 26, 36, 0.06);
+}
+
+.glass-card:hover {
+  transform: translateY(-6px) scale(1.015);
+}
+
+/* ─── Category Glow (set --glow-color via inline style) ─── */
+.glow-border:hover {
+  border-color: var(--glow-color, rgba(255, 178, 62, 0.4));
+  box-shadow:
+    0 0 0 1px var(--glow-color, rgba(255, 178, 62, 0.15)),
+    0 8px 40px -8px var(--glow-color, rgba(255, 178, 62, 0.2)),
+    0 2px 16px -4px rgba(0, 0, 0, 0.3);
+}
+
+/* ─── Preview Area ─── */
+.preview-zone {
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px 12px 0 0;
+  min-height: 200px;
+}
+
+.preview-zone::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(245, 242, 234, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(245, 242, 234, 0.06) 1px, transparent 1px);
+  background-size: 32px 32px;
+  opacity: 0.8;
+  z-index: 1;
+}
+
+html.light .preview-zone::before {
+  background-image:
+    linear-gradient(rgba(14, 26, 36, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(14, 26, 36, 0.04) 1px, transparent 1px);
+}
+
+.preview-zone::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60%;
+  background: linear-gradient(to top, rgba(22, 37, 47, 0.95), transparent);
+  z-index: 2;
+}
+
+html.light .preview-zone::after {
+  background: linear-gradient(to top, rgba(255, 251, 245, 0.95), transparent);
+}
+
+/* ─── Staggered Card Entrance ─── */
+@keyframes cardSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(32px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.card-enter {
+  animation: cardSlideIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* ─── Modal Animations ─── */
+@keyframes modalBackdropIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes modalScaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.92) translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.modal-backdrop-enter {
+  animation: modalBackdropIn 0.3s ease-out both;
+}
+
+.modal-panel-enter {
+  animation: modalScaleIn 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: 0.05s;
+}
+
+/* ─── Filter Pill with Category Color ─── */
+.filter-pill {
+  position: relative;
+  padding: 10px 18px;
+  font-size: 12px;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  border-radius: 8px;
+  border: 1px solid var(--line-strong);
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.filter-pill:hover {
+  border-color: var(--text-secondary);
+  color: var(--text-primary);
+}
+
+.filter-pill[data-active="true"] {
+  color: var(--bg-primary);
+  border-color: transparent;
+}
+
+/* ─── Frosted Modal Glass ─── */
+.modal-glass {
+  background: rgba(14, 26, 36, 0.7);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+}
+
+html.light .modal-glass {
+  background: rgba(245, 242, 234, 0.85);
+}
+
+/* ─── Category Accent Dot ─── */
+.accent-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  box-shadow: 0 0 0 3px currentColor;
+  opacity: 0.3;
+}
+
+/* ─── Floating company label in preview ─── */
+.preview-company {
+  position: relative;
+  z-index: 3;
+  padding: 24px 24px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  height: 100%;
+}
+
+/* ─── Card content section ─── */
+.card-content {
+  padding: 20px 24px 24px;
+}
+
+/* ─── Smooth filter transitions ─── */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+  animation: fadeIn 0.4s ease-out both;
 }

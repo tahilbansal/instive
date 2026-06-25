@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Instive AI — Design System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* ── Core palette ── */
+  --ink:#0E1A24;        /* slate ground — loaded freight at night */
+  --ink-2:#16252F;      /* raised surface */
+  --ink-3:#1F313C;      /* card / divider edge */
+  --paper:#F5F2EA;      /* warehouse paper */
+  --paper-dim:#D8D3C7;  /* muted paper */
+  --signal:#FFB23E;     /* hi-vis amber — the one accent */
+  --signal-deep:#E8941A;
+  --cleared:#5BD6A6;    /* status: cleared / in-motion good */
+  --hold:#FF6B5E;       /* status: hold / exception */
+  --line:rgba(245,242,234,.14);
+  --line-strong:rgba(245,242,234,.28);
+  --muted:#8A9AA5;
+
+  --font-display:'Space Grotesk',system-ui,sans-serif;
+  --font-mono:'JetBrains Mono',ui-monospace,monospace;
+  --font-body:'Inter',system-ui,sans-serif;
+
+  --r:4px;
+  --maxw:1120px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--ink);
+  color:var(--paper);
+  font-family:var(--font-body);
+  font-size:16px;line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+::selection{background:var(--signal);color:var(--ink)}
+
+/* ── Freight grid backdrop ── */
+body::before{
+  content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:
+    linear-gradient(var(--line) 1px,transparent 1px),
+    linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:64px 64px;
+  mask-image:radial-gradient(circle at 50% 0%,#000 0%,transparent 75%);
+  opacity:.5;
+}
+.wrap{position:relative;z-index:1;max-width:var(--maxw);margin:0 auto;padding:0 28px}
+
+/* ── Top manifest bar ── */
+.manifest{
+  position:sticky;top:0;z-index:50;
+  background:rgba(14,26,36,.82);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--line);
+}
+.manifest .row{
+  max-width:var(--maxw);margin:0 auto;padding:12px 28px;
+  display:flex;align-items:center;gap:18px;
+  font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--muted);
+}
+.manifest .mark{display:flex;align-items:center;gap:9px;color:var(--paper)}
+.manifest .mark b{font-family:var(--font-display);font-weight:700;letter-spacing:-.01em;text-transform:none;font-size:15px}
+.manifest .seg{display:none}
+.manifest .dot{width:7px;height:7px;border-radius:50%;background:var(--cleared);box-shadow:0 0 0 3px rgba(91,214,166,.18);animation:pulse 2.4s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.45}}
+.manifest .spacer{flex:1}
+.manifest nav{display:none;gap:20px}
+.manifest nav a{color:var(--muted);text-decoration:none;transition:color .2s}
+.manifest nav a:hover{color:var(--signal)}
+@media(min-width:860px){.manifest nav{display:flex}.manifest .seg{display:inline}}
+
+/* ── Logo mark (SVG inline) ── */
+.logo-i{
+  width:26px;height:26px;border-radius:5px;
+  background:var(--signal);color:var(--ink);
+  display:grid;place-items:center;flex-shrink:0;
+  font-family:var(--font-mono);font-weight:700;font-size:15px;
+}
+
+/* ── Hero ── */
+.hero{padding:96px 0 72px;border-bottom:1px solid var(--line)}
+.eyebrow{
+  font-family:var(--font-mono);font-size:12px;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--signal);
+  display:flex;align-items:center;gap:12px;margin-bottom:28px;
+}
+.eyebrow::before{content:"";width:42px;height:1px;background:var(--signal)}
+.hero h1{
+  font-family:var(--font-display);font-weight:700;
+  font-size:clamp(40px,8vw,84px);line-height:.98;letter-spacing:-.03em;
+  margin-bottom:24px;
+}
+.hero h1 em{font-style:normal;color:var(--signal)}
+.hero p{max-width:560px;color:var(--paper-dim);font-size:18px}
+.hero .meta{
+  display:flex;flex-wrap:wrap;gap:28px;margin-top:44px;
+  font-family:var(--font-mono);font-size:12px;color:var(--muted);
+  text-transform:uppercase;letter-spacing:.08em;
+}
+.hero .meta div span{display:block;color:var(--paper);font-size:14px;margin-top:4px;letter-spacing:0;text-transform:none;font-family:var(--font-body)}
+
+/* ── Section scaffold ── */
+section.block{padding:80px 0;border-bottom:1px solid var(--line)}
+.shead{display:flex;align-items:baseline;gap:18px;margin-bottom:44px;flex-wrap:wrap}
+.shead .num{font-family:var(--font-mono);font-size:13px;color:var(--signal);letter-spacing:.05em}
+.shead h2{font-family:var(--font-display);font-weight:600;font-size:clamp(26px,4vw,38px);letter-spacing:-.02em}
+.shead p{color:var(--muted);font-size:15px;max-width:440px;margin-left:auto}
+
+/* ── Color tokens ── */
+.swatches{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:14px}
+.sw{
+  border:1px solid var(--line);border-radius:var(--r);overflow:hidden;
+  cursor:pointer;transition:transform .18s,border-color .18s;background:var(--ink-2);
+}
+.sw:hover{transform:translateY(-3px);border-color:var(--line-strong)}
+.sw .chip{height:96px;display:flex;align-items:flex-end;padding:10px;position:relative}
+.sw .copy-tag{
+  position:absolute;top:8px;right:8px;font-family:var(--font-mono);font-size:9px;
+  background:rgba(14,26,36,.5);color:#fff;padding:3px 6px;border-radius:3px;
+  opacity:0;transition:opacity .18s;letter-spacing:.05em;
+}
+.sw:hover .copy-tag{opacity:1}
+.sw .info{padding:12px 13px}
+.sw .info b{font-family:var(--font-display);font-size:14px;font-weight:600;display:block}
+.sw .info code{font-family:var(--font-mono);font-size:12px;color:var(--muted)}
+.sw .info small{font-size:11px;color:var(--muted);display:block;margin-top:5px;line-height:1.4}
+
+/* ── Type specimens ── */
+.type-grid{display:grid;gap:2px;background:var(--line);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.type-row{background:var(--ink);padding:22px 24px;display:grid;grid-template-columns:1fr;gap:6px}
+@media(min-width:760px){.type-row{grid-template-columns:140px 1fr}}
+.type-row .tag{font-family:var(--font-mono);font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;padding-top:8px}
+.spec-display{font-family:var(--font-display);font-weight:700;font-size:clamp(28px,5vw,46px);letter-spacing:-.02em;line-height:1}
+.spec-h{font-family:var(--font-display);font-weight:600;font-size:24px;letter-spacing:-.01em}
+.spec-body{font-family:var(--font-body);font-size:16px;color:var(--paper-dim);max-width:520px}
+.spec-mono{font-family:var(--font-mono);font-size:15px;color:var(--cleared);letter-spacing:.02em}
+.scale-note{font-family:var(--font-mono);font-size:11px;color:var(--muted);margin-top:4px}
+
+/* ── Logo lockups ── */
+.logo-board{display:grid;grid-template-columns:1fr;gap:16px}
+@media(min-width:760px){.logo-board{grid-template-columns:1.4fr 1fr}}
+.logo-cell{border:1px solid var(--line);border-radius:var(--r);padding:38px;display:flex;align-items:center;justify-content:center;min-height:170px;position:relative}
+.logo-cell .label{position:absolute;top:12px;left:14px;font-family:var(--font-mono);font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em}
+.logo-cell.dark{background:var(--ink-2)}
+.logo-cell.light{background:var(--paper)}
+.lockup{display:flex;align-items:center;gap:14px}
+.lockup .glyph{width:48px;height:48px;border-radius:9px;background:var(--signal);display:grid;place-items:center;flex-shrink:0}
+.lockup .glyph svg{width:30px;height:30px}
+.lockup .wordmark{font-family:var(--font-display);font-weight:700;font-size:30px;letter-spacing:-.02em;line-height:1}
+.lockup .wordmark .ai{color:var(--signal)}
+.logo-cell.light .wordmark{color:var(--ink)}
+.logo-cell.light .wordmark .ai{color:var(--signal-deep)}
+.glyph-only{width:64px;height:64px;border-radius:13px;background:var(--signal);display:grid;place-items:center}
+.glyph-only svg{width:40px;height:40px}
+.logo-rules{margin-top:18px;font-family:var(--font-mono);font-size:12px;color:var(--muted);line-height:1.9}
+.logo-rules b{color:var(--paper)}
+
+/* ── Components ── */
+.comp-grid{display:grid;grid-template-columns:1fr;gap:18px}
+@media(min-width:760px){.comp-grid{grid-template-columns:1fr 1fr}}
+.demo{border:1px solid var(--line);border-radius:var(--r);padding:26px;background:var(--ink-2)}
+.demo .dh{font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:18px}
+
+.btn{font-family:var(--font-display);font-weight:600;font-size:15px;border:none;border-radius:var(--r);padding:12px 22px;cursor:pointer;transition:all .18s;display:inline-flex;align-items:center;gap:9px}
+.btn-primary{background:var(--signal);color:var(--ink)}
+.btn-primary:hover{background:var(--paper);transform:translateY(-2px)}
+.btn-ghost{background:transparent;color:var(--paper);border:1px solid var(--line-strong)}
+.btn-ghost:hover{border-color:var(--signal);color:var(--signal)}
+.btn-row{display:flex;gap:12px;flex-wrap:wrap}
+
+.status{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-mono);font-size:12px;letter-spacing:.04em;padding:6px 12px;border-radius:100px;text-transform:uppercase}
+.status::before{content:"";width:7px;height:7px;border-radius:50%}
+.s-cleared{background:rgba(91,214,166,.12);color:var(--cleared)}
+.s-cleared::before{background:var(--cleared)}
+.s-transit{background:rgba(255,178,62,.12);color:var(--signal)}
+.s-transit::before{background:var(--signal)}
+.s-hold{background:rgba(255,107,94,.12);color:var(--hold)}
+.s-hold::before{background:var(--hold)}
+.status-row{display:flex;gap:10px;flex-wrap:wrap}
+
+.tcard{border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:var(--ink)}
+.tcard .tcard-top{padding:16px 18px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
+.tcard .code{font-family:var(--font-mono);font-size:13px;color:var(--signal);letter-spacing:.06em}
+.tcard .tcard-body{padding:16px 18px}
+.tcard .tcard-body b{font-family:var(--font-display);font-size:17px;display:block;margin-bottom:4px}
+.tcard .tcard-body span{font-size:13px;color:var(--muted)}
+.field{display:block;width:100%;background:var(--ink);border:1px solid var(--line-strong);border-radius:var(--r);padding:12px 14px;color:var(--paper);font-family:var(--font-body);font-size:15px;transition:border-color .18s}
+.field:focus{outline:none;border-color:var(--signal)}
+.field::placeholder{color:var(--muted)}
+.field-label{font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);display:block;margin-bottom:8px}
+
+/* ── Social templates ── */
+.social-grid{display:grid;grid-template-columns:1fr;gap:18px}
+@media(min-width:680px){.social-grid{grid-template-columns:1fr 1fr}}
+.post{aspect-ratio:1/1;border-radius:var(--r);overflow:hidden;position:relative;border:1px solid var(--line);display:flex;flex-direction:column;justify-content:space-between;padding:26px}
+.post .pgrid{position:absolute;inset:0;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:40px 40px;opacity:.6}
+.post>*{position:relative;z-index:1}
+.post-quote{background:var(--ink-2)}
+.post-quote .ptag{font-family:var(--font-mono);font-size:11px;color:var(--signal);letter-spacing:.1em;text-transform:uppercase}
+.post-quote h3{font-family:var(--font-display);font-weight:700;font-size:clamp(22px,4vw,30px);line-height:1.08;letter-spacing:-.02em}
+.post-quote .pfoot{display:flex;align-items:center;gap:10px;font-family:var(--font-mono);font-size:11px;color:var(--muted)}
+.post-stat{background:var(--signal);color:var(--ink)}
+.post-stat .pgrid{background-image:linear-gradient(rgba(14,26,36,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(14,26,36,.08) 1px,transparent 1px)}
+.post-stat .ptag{font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;font-weight:500}
+.post-stat .big{font-family:var(--font-display);font-weight:700;font-size:clamp(48px,10vw,76px);line-height:.9;letter-spacing:-.04em}
+.post-stat .desc{font-family:var(--font-display);font-weight:600;font-size:17px;max-width:80%}
+.post-stat .pfoot{font-family:var(--font-mono);font-size:11px;font-weight:500}
+
+/* ── Voice ── */
+.voice-grid{display:grid;grid-template-columns:1fr;gap:2px;background:var(--line);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+@media(min-width:680px){.voice-grid{grid-template-columns:1fr 1fr}}
+.voice-cell{background:var(--ink);padding:24px}
+.voice-cell .vh{font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.1em;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.voice-cell.yes .vh{color:var(--cleared)}
+.voice-cell.no .vh{color:var(--hold)}
+.voice-cell ul{list-style:none}
+.voice-cell li{padding:8px 0;border-bottom:1px solid var(--line);font-size:14px;color:var(--paper-dim)}
+.voice-cell li:last-child{border:0}
+.voice-cell.no li{color:var(--muted);text-decoration:line-through;text-decoration-color:rgba(255,107,94,.4)}
+
+/* ── Spacing scale ── */
+.space-demo{display:flex;flex-direction:column;gap:10px}
+.space-bar{display:flex;align-items:center;gap:14px}
+.space-bar .vis{height:14px;background:var(--signal);border-radius:2px}
+.space-bar code{font-family:var(--font-mono);font-size:12px;color:var(--muted);min-width:120px}
+
+/* ── Footer ── */
+footer{padding:60px 0 80px}
+footer .fmark{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+footer p{font-family:var(--font-mono);font-size:12px;color:var(--muted);letter-spacing:.04em;line-height:2}
+.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--paper);color:var(--ink);font-family:var(--font-mono);font-size:13px;padding:11px 20px;border-radius:var(--r);opacity:0;transition:all .25s;z-index:99;pointer-events:none;font-weight:500}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<!-- ── Manifest bar ── -->
+<div class="manifest">
+  <div class="row">
+    <div class="mark"><span class="logo-i">i</span><b>Instive&nbsp;AI</b></div>
+    <span class="seg">Design&nbsp;System</span>
+    <span class="seg">v1.0</span>
+    <span class="dot"></span><span class="seg">Live</span>
+    <div class="spacer"></div>
+    <nav>
+      <a href="#color">Color</a>
+      <a href="#type">Type</a>
+      <a href="#logo">Logo</a>
+      <a href="#components">UI</a>
+      <a href="#social">Social</a>
+      <a href="#voice">Voice</a>
+    </nav>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <!-- ── Hero ── -->
+  <header class="hero">
+    <div class="eyebrow">Manifest &middot; Brand Operating System</div>
+    <h1>The system that<br>keeps every asset<br><em>moving in sync.</em></h1>
+    <p>One source of truth for Instive AI — the agency wiring autonomous agents into supply chain, procurement, logistics and warehousing. Every color, letterform and pixel below ships from here.</p>
+    <div class="meta">
+      <div>Niche<span>Supply chain &amp; logistics AI</span></div>
+      <div>Built for<span>Web · Logo · Social</span></div>
+      <div>Status<span>Production ready</span></div>
+    </div>
+  </header>
+
+  <!-- ── 01 Foundations / Color ── -->
+  <section class="block" id="color">
+    <div class="shead">
+      <span class="num">01</span>
+      <h2>Color tokens</h2>
+      <p>Slate ground is the loaded-freight night. One hi-vis amber does all the signalling — spend it sparingly. Click any swatch to copy.</p>
+    </div>
+    <div class="swatches" id="swatches"></div>
+  </section>
+
+  <!-- ── 02 Type ── -->
+  <section class="block" id="type">
+    <div class="shead">
+      <span class="num">02</span>
+      <h2>Typography</h2>
+      <p>Space Grotesk leads with engineered confidence. JetBrains Mono carries the freight vernacular — codes, IDs, statuses. Inter handles long reading.</p>
+    </div>
+    <div class="type-grid">
+      <div class="type-row">
+        <div class="tag">Display</div>
+        <div>
+          <div class="spec-display">Move it before they ask.</div>
+          <div class="scale-note">Space Grotesk · 700 · -3% tracking · clamp(40–84px)</div>
+        </div>
+      </div>
+      <div class="type-row">
+        <div class="tag">Heading</div>
+        <div>
+          <div class="spec-h">Autonomous procurement, end to end</div>
+          <div class="scale-note">Space Grotesk · 600 · -2% tracking · 24–38px</div>
+        </div>
+      </div>
+      <div class="type-row">
+        <div class="tag">Body</div>
+        <div>
+          <div class="spec-body">Instive agents read the inbound RFQ, price it against live supplier data, and return a quote before the buyer refreshes their inbox.</div>
+          <div class="scale-note">Inter · 400/500 · 16px · 1.6 line-height</div>
+        </div>
+      </div>
+      <div class="type-row">
+        <div class="tag">Mono / Data</div>
+        <div>
+          <div class="spec-mono">SKU-44820 · LANE-EU/NL-DE · ETA 14:02 · CLEARED</div>
+          <div class="scale-note">JetBrains Mono · 400/500 · +2% tracking · codes &amp; status</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 03 Logo ── -->
+  <section class="block" id="logo">
+    <div class="shead">
+      <span class="num">03</span>
+      <h2>Logo &amp; mark</h2>
+      <p>The glyph is a routing node — a square waypoint with a forward path cut through it. Reads as "i", reads as a lane junction.</p>
+    </div>
+    <div class="logo-board">
+      <div class="logo-cell dark">
+        <span class="label">Primary lockup / dark</span>
+        <div class="lockup">
+          <span class="glyph">
+            <svg viewBox="0 0 32 32" fill="none">
+              <path d="M6 22 L14 10 L18 16 L26 6" stroke="#0E1A24" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="6" cy="22" r="3" fill="#0E1A24"/>
+              <circle cx="26" cy="6" r="3" fill="#0E1A24"/>
+            </svg>
+          </span>
+          <span class="wordmark">Instive<span class="ai">.ai</span></span>
+        </div>
+      </div>
+      <div class="logo-cell light">
+        <span class="label">On paper</span>
+        <div class="lockup">
+          <span class="glyph">
+            <svg viewBox="0 0 32 32" fill="none">
+              <path d="M6 22 L14 10 L18 16 L26 6" stroke="#0E1A24" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="6" cy="22" r="3" fill="#0E1A24"/>
+              <circle cx="26" cy="6" r="3" fill="#0E1A24"/>
+            </svg>
+          </span>
+          <span class="wordmark">Instive<span class="ai">.ai</span></span>
+        </div>
+      </div>
+      <div class="logo-cell dark">
+        <span class="label">Glyph / app icon</span>
+        <span class="glyph-only">
+          <svg viewBox="0 0 32 32" fill="none">
+            <path d="M6 22 L14 10 L18 16 L26 6" stroke="#0E1A24" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="6" cy="22" r="3" fill="#0E1A24"/>
+            <circle cx="26" cy="6" r="3" fill="#0E1A24"/>
+          </svg>
+        </span>
+      </div>
+      <div class="logo-cell dark" style="flex-direction:column;align-items:flex-start;justify-content:flex-start">
+        <span class="label">Clear-space &amp; rules</span>
+        <div class="logo-rules">
+          <div>· <b>Clear space</b> = height of the glyph on all sides</div>
+          <div>· <b>Min size</b> 24px glyph / 90px lockup</div>
+          <div>· Amber glyph only on slate or paper</div>
+          <div>· Never recolor the path or stretch</div>
+          <div>· Mono ".ai" stays amber, lowercase</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 04 Components ── -->
+  <section class="block" id="components">
+    <div class="shead">
+      <span class="num">04</span>
+      <h2>Interface kit</h2>
+      <p>Status is the heartbeat of logistics — so the UI speaks in cleared / in-transit / hold. Try the controls; they're live.</p>
+    </div>
+    <div class="comp-grid">
+      <div class="demo">
+        <div class="dh">Buttons</div>
+        <div class="btn-row">
+          <button class="btn btn-primary">Book a route
+            <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M3 8h9M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <button class="btn btn-ghost">See the agents</button>
+        </div>
+      </div>
+      <div class="demo">
+        <div class="dh">Status pills</div>
+        <div class="status-row">
+          <span class="status s-cleared">Cleared</span>
+          <span class="status s-transit">In transit</span>
+          <span class="status s-hold">On hold</span>
+        </div>
+      </div>
+      <div class="demo">
+        <div class="dh">Tracking card</div>
+        <div class="tcard">
+          <div class="tcard-top">
+            <span class="code">RFQ-44820</span>
+            <span class="status s-cleared">Quoted</span>
+          </div>
+          <div class="tcard-body">
+            <b>Mild steel coil · 12t</b>
+            <span>Auto-quoted in 38s · 3 suppliers priced</span>
+          </div>
+        </div>
+      </div>
+      <div class="demo">
+        <div class="dh">Input field</div>
+        <label class="field-label" for="d">Shipment reference</label>
+        <input class="field" id="d" placeholder="e.g. LANE-EU/NL-DE-0042" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 05 Social ── -->
+  <section class="block" id="social">
+    <div class="shead">
+      <span class="num">05</span>
+      <h2>Social templates</h2>
+      <p>Two repeatable 1:1 frames: the stat drop (amber field) and the insight quote (slate field). Same freight grid runs underneath both.</p>
+    </div>
+    <div class="social-grid">
+      <div class="post post-stat">
+        <div class="pgrid"></div>
+        <div class="ptag">Instive AI · throughput</div>
+        <div>
+          <div class="big">38s</div>
+          <div class="desc">from inbound RFQ to a priced, sendable quote.</div>
+        </div>
+        <div class="pfoot">instive.ai · supply chain agents</div>
+      </div>
+      <div class="post post-quote">
+        <div class="pgrid"></div>
+        <div class="ptag">⟶ Field note</div>
+        <h3>Your warehouse already knows what's late. It just can't tell you in time.</h3>
+        <div class="pfoot"><span class="logo-i" style="width:20px;height:20px;font-size:12px">i</span> Instive AI</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 06 Voice ── -->
+  <section class="block" id="voice">
+    <div class="shead">
+      <span class="num">06</span>
+      <h2>Voice &amp; tone</h2>
+      <p>Talk like an operator on the floor, not a vendor in a boardroom. Concrete, fast, never breathless.</p>
+    </div>
+    <div class="voice-grid">
+      <div class="voice-cell yes">
+        <div class="vh">◆ We sound like</div>
+        <ul>
+          <li>"Quote it before they ask twice."</li>
+          <li>Specific numbers, real lanes, real SKUs</li>
+          <li>Plain verbs: route, price, track, clear</li>
+          <li>Confident about outcomes, honest about limits</li>
+          <li>Short. Operators are busy.</li>
+        </ul>
+      </div>
+      <div class="voice-cell no">
+        <div class="vh">✕ We never sound like</div>
+        <ul>
+          <li>"Revolutionary AI-powered synergy"</li>
+          <li>Vague "solutions" with no number</li>
+          <li>Hype, exclamation stacks, jargon soup</li>
+          <li>Overpromising autonomy we can't ship</li>
+          <li>Long paragraphs nobody reads</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 07 Spacing ── -->
+  <section class="block">
+    <div class="shead">
+      <span class="num">07</span>
+      <h2>Spacing &amp; radius</h2>
+      <p>An 8px base keeps everything on the freight grid. Radius stays tight — 4px — because logistics is engineered, not soft.</p>
+    </div>
+    <div class="space-demo" id="space"></div>
+  </section>
+
+  <!-- ── Footer ── -->
+  <footer>
+    <div class="fmark"><span class="logo-i">i</span><span class="wordmark" style="font-family:var(--font-display);font-weight:700;font-size:22px">Instive<span style="color:var(--signal)">.ai</span></span></div>
+    <p>
+      INSTIVE AI · BRAND OPERATING SYSTEM · v1.0<br>
+      Self-contained — open this file anywhere, anytime.<br>
+      Fonts: Space Grotesk · JetBrains Mono · Inter (Google Fonts).<br>
+      Tokens, type, logo, UI, social &amp; voice ship from this single source.
+    </p>
+  </footer>
+
+</div>
+
+<div class="toast" id="toast">Copied</div>
+
+<script>
+const COLORS=[
+  ['Freight Slate','#0E1A24','Primary ground. Backgrounds, dark surfaces.'],
+  ['Raised Slate','#16252F','Cards & elevated panels.'],
+  ['Edge Slate','#1F313C','Dividers, borders, inset edges.'],
+  ['Warehouse Paper','#F5F2EA','Primary text on dark / light bg.'],
+  ['Dim Paper','#D8D3C7','Secondary text, muted copy.'],
+  ['Hi-Vis Amber','#FFB23E','THE accent. CTAs, glyph, signal. Use sparingly.'],
+  ['Deep Amber','#E8941A','Amber on light, hover, ".ai" on paper.'],
+  ['Cleared Green','#5BD6A6','Status: good / in-motion / done.'],
+  ['Hold Red','#FF6B5E','Status: exception / error / hold.'],
+  ['Muted Steel','#8A9AA5','Captions, mono labels, metadata.']
+];
+const sw=document.getElementById('swatches');
+COLORS.forEach(([name,hex,use])=>{
+  const el=document.createElement('div');el.className='sw';
+  const dark=['#F5F2EA','#D8D3C7','#FFB23E','#5BD6A6','#FF6B5E'].includes(hex);
+  el.innerHTML=`<div class="chip" style="background:${hex}">
+      <span class="copy-tag">click → copy</span></div>
+    <div class="info"><b>${name}</b><code>${hex}</code><small>${use}</small></div>`;
+  el.onclick=()=>copy(hex);
+  sw.appendChild(el);
+});
+
+const SPACE=[['space-1 / 8px',8],['space-2 / 16px',16],['space-3 / 24px',24],['space-4 / 32px',40],['space-5 / 48px',64],['space-6 / 64px',88],['space-7 / 96px',120]];
+const sp=document.getElementById('space');
+SPACE.forEach(([label,w])=>{
+  const r=document.createElement('div');r.className='space-bar';
+  r.innerHTML=`<code>${label}</code><div class="vis" style="width:${w*2}px"></div>`;
+  sp.appendChild(r);
+});
+
+const toast=document.getElementById('toast');
+function copy(t){
+  navigator.clipboard?.writeText(t).then(()=>flash(t)).catch(()=>flash(t));
+}
+function flash(t){toast.textContent='Copied '+t;toast.classList.add('show');clearTimeout(window._tt);window._tt=setTimeout(()=>toast.classList.remove('show'),1400);}
+</script>
+</body>
+</html>

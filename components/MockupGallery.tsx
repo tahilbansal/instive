@@ -10,6 +10,8 @@ export default function MockupGallery({ mockups }: { mockups: Mockup[] }) {
   const [active, setActive] = useState<FilterValue>("All");
   const [query, setQuery] = useState("");
   const [selected, setSelected] = useState<Mockup | null>(null);
+  /** Key to force re-mount cards on filter change for entrance animation */
+  const [filterKey, setFilterKey] = useState(0);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -29,11 +31,16 @@ export default function MockupGallery({ mockups }: { mockups: Mockup[] }) {
     });
   }, [mockups, active, query]);
 
+  const handleFilterChange = (value: FilterValue) => {
+    setActive(value);
+    setFilterKey((k) => k + 1); // re-trigger entrance animation
+  };
+
   return (
-    <div>
+    <div className="space-y-12">
       <FilterBar
         active={active}
-        onSelect={setActive}
+        onSelect={handleFilterChange}
         query={query}
         onQuery={setQuery}
         shown={filtered.length}
@@ -41,19 +48,45 @@ export default function MockupGallery({ mockups }: { mockups: Mockup[] }) {
       />
 
       {filtered.length > 0 ? (
-        <div className="mt-8 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
-          {filtered.map((mockup) => (
+        <div
+          key={filterKey}
+          className="grid grid-cols-1 lg:grid-cols-2 gap-8"
+        >
+          {filtered.map((mockup, i) => (
             <MockupCard
               key={mockup.id}
               mockup={mockup}
               onPreview={setSelected}
+              index={i}
             />
           ))}
         </div>
       ) : (
-        <div className="mt-16 rounded-xl border border-hairline bg-ink-surface py-16 text-center text-sm text-white/50">
-          No mockups match that filter yet. Try clearing the search or another
-          category.
+        <div
+          className="glass-card py-20 px-8 text-center"
+          style={{ borderColor: "var(--line)" }}
+        >
+          <div
+            style={{
+              fontSize: 48,
+              marginBottom: 16,
+              opacity: 0.4,
+            }}
+          >
+            ⟶
+          </div>
+          <p
+            className="text-base font-display"
+            style={{ color: "var(--text-muted)" }}
+          >
+            No mockups match that filter.
+          </p>
+          <p
+            className="text-sm mt-2"
+            style={{ color: "var(--text-muted)", opacity: 0.6 }}
+          >
+            Try clearing the search or selecting &ldquo;All&rdquo;.
+          </p>
         </div>
       )}
 

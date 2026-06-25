@@ -1,8 +1,7 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useCallback } from "react";
 import { Mockup, SIDECAR_META } from "@/data/mockups";
-import { hexToRgba } from "@/lib/colors";
 
 export default function MockupModal({
   mockup,
@@ -11,11 +10,12 @@ export default function MockupModal({
   mockup: Mockup | null;
   onClose: () => void;
 }) {
-  // Close on Escape + lock background scroll while open.
+  const stableOnClose = useCallback(onClose, [onClose]);
+
   useEffect(() => {
     if (!mockup) return;
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
+      if (e.key === "Escape") stableOnClose();
     };
     document.addEventListener("keydown", onKey);
     const prevOverflow = document.body.style.overflow;
@@ -24,70 +24,198 @@ export default function MockupModal({
       document.removeEventListener("keydown", onKey);
       document.body.style.overflow = prevOverflow;
     };
-  }, [mockup, onClose]);
+  }, [mockup, stableOnClose]);
 
   if (!mockup) return null;
 
-  const accent = SIDECAR_META[mockup.sidecar].accent;
+  const meta = SIDECAR_META[mockup.sidecar];
+  const accent = meta.accent;
 
   return (
     <div
-      className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black/90 p-4 sm:p-8"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-8 modal-backdrop-enter"
+      style={{
+        backgroundColor: "rgba(0, 0, 0, 0.6)",
+        backdropFilter: "blur(12px)",
+        WebkitBackdropFilter: "blur(12px)",
+      }}
       onMouseDown={(e) => {
-        // Click on the backdrop (not the frame) closes.
         if (e.target === e.currentTarget) onClose();
       }}
       role="dialog"
       aria-modal="true"
       aria-label={`${mockup.companyName} — ${mockup.sidecar} demo`}
     >
-      <div className="flex h-[85vh] w-full max-w-[85vw] flex-col overflow-hidden rounded-xl border border-hairline bg-ink-surface">
-        {/* Title bar */}
-        <div className="flex items-center justify-between gap-3 border-b border-hairline px-4 py-3">
-          <div className="flex min-w-0 items-center gap-3">
+      <div
+        className="relative w-full max-w-6xl h-[92vh] overflow-hidden flex flex-col modal-panel-enter"
+        style={{
+          backgroundColor: "rgba(22, 37, 47, 0.85)",
+          backdropFilter: "blur(24px)",
+          WebkitBackdropFilter: "blur(24px)",
+          borderRadius: 16,
+          border: `1px solid ${accent}30`,
+          boxShadow: `0 0 0 1px ${accent}15, 0 24px 80px -16px rgba(0,0,0,0.6), 0 0 60px -20px ${accent}30`,
+        }}
+      >
+        {/* Accent gradient line at top */}
+        <div
+          style={{
+            height: 3,
+            background: `linear-gradient(90deg, ${accent}, ${accent}60, transparent)`,
+            borderRadius: "16px 16px 0 0",
+          }}
+        />
+
+        {/* Header */}
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            gap: 16,
+            padding: "16px 24px",
+            borderBottom: "1px solid var(--line)",
+          }}
+        >
+          <div style={{ display: "flex", alignItems: "center", gap: 12, minWidth: 0 }}>
+            {/* Category badge */}
             <span
-              className="inline-flex flex-shrink-0 items-center rounded-full px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wide"
               style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 6,
+                padding: "4px 10px",
+                fontSize: 11,
+                fontFamily: "var(--font-mono)",
+                fontWeight: 600,
+                textTransform: "uppercase",
+                letterSpacing: "0.08em",
+                borderRadius: 6,
                 color: accent,
-                backgroundColor: hexToRgba(accent, 0.12),
-                border: `1px solid ${hexToRgba(accent, 0.3)}`,
+                backgroundColor: `${accent}18`,
+                border: `1px solid ${accent}30`,
+                flexShrink: 0,
               }}
             >
+              <span
+                style={{
+                  width: 6,
+                  height: 6,
+                  borderRadius: "50%",
+                  backgroundColor: accent,
+                  boxShadow: `0 0 6px ${accent}80`,
+                }}
+              />
               {mockup.sidecar}
             </span>
-            <span className="truncate text-sm font-semibold text-white">
-              {mockup.companyName}
-            </span>
-            <span className="hidden truncate text-xs text-white/40 sm:inline">
-              {mockup.industry}
-            </span>
+
+            {/* Company info */}
+            <div style={{ minWidth: 0, flex: 1 }}>
+              <p
+                style={{
+                  fontSize: 14,
+                  fontWeight: 600,
+                  fontFamily: "var(--font-display)",
+                  color: "var(--text-primary)",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                {mockup.companyName}
+              </p>
+              <p
+                style={{
+                  fontSize: 11,
+                  fontFamily: "var(--font-mono)",
+                  color: "var(--text-muted)",
+                  textTransform: "uppercase",
+                  letterSpacing: "0.06em",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                {mockup.industry}
+              </p>
+            </div>
           </div>
-          <div className="flex flex-shrink-0 items-center gap-2">
+
+          {/* Actions */}
+          <div style={{ display: "flex", alignItems: "center", gap: 8, flexShrink: 0 }}>
             <a
               href={mockup.mockupUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="hidden rounded-lg border border-hairline px-3 py-1.5 text-xs font-semibold text-white/80 transition-colors hover:bg-white/10 sm:inline"
+              className="hidden sm:inline-flex"
+              style={{
+                padding: "6px 14px",
+                fontSize: 12,
+                fontWeight: 600,
+                fontFamily: "var(--font-display)",
+                borderRadius: 6,
+                border: "1px solid var(--line-strong)",
+                color: "var(--text-primary)",
+                textDecoration: "none",
+                transition: "all 0.2s",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 4,
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.borderColor = accent;
+                e.currentTarget.style.color = accent;
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.borderColor = "var(--line-strong)";
+                e.currentTarget.style.color = "var(--text-primary)";
+              }}
             >
-              Open in new tab ↗
+              Open in tab
+              <svg width="10" height="10" viewBox="0 0 16 16" fill="none">
+                <path d="M5 3h8v8M13 3L3 13" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
             </a>
             <button
-              type="button"
               onClick={onClose}
-              aria-label="Close preview"
-              className="flex h-8 w-8 items-center justify-center rounded-lg border border-hairline text-lg leading-none text-white/70 transition-colors hover:bg-white/10 hover:text-white"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                width: 32,
+                height: 32,
+                borderRadius: 8,
+                border: "1px solid var(--line-strong)",
+                backgroundColor: "transparent",
+                color: "var(--text-primary)",
+                cursor: "pointer",
+                fontSize: 18,
+                transition: "all 0.2s",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.borderColor = accent;
+                e.currentTarget.style.color = accent;
+                e.currentTarget.style.backgroundColor = `${accent}15`;
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.borderColor = "var(--line-strong)";
+                e.currentTarget.style.color = "var(--text-primary)";
+                e.currentTarget.style.backgroundColor = "transparent";
+              }}
             >
               ×
             </button>
           </div>
         </div>
 
-        {/* Live mockup */}
-        <iframe
-          src={mockup.mockupUrl}
-          title={`${mockup.companyName} ${mockup.sidecar} mockup`}
-          className="h-full w-full flex-1 bg-white"
-        />
+        {/* Iframe container */}
+        <div style={{ flex: 1, overflow: "hidden", backgroundColor: "#fff" }}>
+          <iframe
+            src={mockup.mockupUrl}
+            title={`${mockup.companyName} ${mockup.sidecar} mockup`}
+            style={{ width: "100%", height: "100%", border: "none" }}
+          />
+        </div>
       </div>
     </div>
   );

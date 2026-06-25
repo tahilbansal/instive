@@ -1,7 +1,15 @@
-import { Sidecar, SIDECAR_META, SIDECARS } from "@/data/mockups";
-import { hexToRgba } from "@/lib/colors";
+"use client";
+
+import { Sidecar, SIDECARS, SIDECAR_META } from "@/data/mockups";
+import { useState } from "react";
 
 export type FilterValue = "All" | Sidecar;
+
+/** Returns the accent color for a given filter pill */
+function getPillAccent(pill: FilterValue): string {
+  if (pill === "All") return "#FFB23E"; // signal amber
+  return SIDECAR_META[pill].accent;
+}
 
 export default function FilterBar({
   active,
@@ -18,51 +26,62 @@ export default function FilterBar({
   shown: number;
   total: number;
 }) {
+  const [searchFocused, setSearchFocused] = useState(false);
   const pills: FilterValue[] = ["All", ...SIDECARS];
 
   return (
-    <div className="flex flex-col gap-4">
-      <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
-        {/* Sidecar pills */}
-        <div className="flex flex-wrap gap-2">
-          {pills.map((pill) => {
-            const isActive = pill === active;
-            const accent = pill === "All" ? "#e7e7ee" : SIDECAR_META[pill].accent;
-            return (
-              <button
-                key={pill}
-                type="button"
-                onClick={() => onSelect(pill)}
-                className="rounded-full border px-3.5 py-1.5 text-[13px] font-semibold transition-colors"
-                style={
-                  isActive
-                    ? {
-                        color: pill === "All" ? "#0a0a0f" : accent,
-                        backgroundColor:
-                          pill === "All" ? accent : hexToRgba(accent, 0.15),
-                        borderColor:
-                          pill === "All" ? accent : hexToRgba(accent, 0.5),
-                      }
-                    : {
-                        color: "rgba(231,231,238,0.7)",
-                        backgroundColor: "transparent",
-                        borderColor: "rgba(255,255,255,0.12)",
-                      }
-                }
-              >
-                {pill}
-              </button>
-            );
-          })}
-        </div>
+    <div className="space-y-8">
+      {/* Pills — horizontally scrollable on mobile */}
+      <div className="flex gap-2.5 overflow-x-auto pb-3 lg:pb-0 lg:flex-wrap scrollbar-none">
+        {pills.map((pill) => {
+          const isActive = pill === active;
+          const accent = getPillAccent(pill);
 
-        {/* Search */}
-        <div className="relative w-full lg:w-72">
+          return (
+            <button
+              key={pill}
+              onClick={() => onSelect(pill)}
+              className="filter-pill"
+              data-active={isActive}
+              style={{
+                backgroundColor: isActive ? accent : undefined,
+                borderColor: isActive ? "transparent" : undefined,
+                color: isActive ? "#0E1A24" : undefined,
+                boxShadow: isActive
+                  ? `0 4px 20px -4px ${accent}55, 0 0 0 1px ${accent}33`
+                  : undefined,
+              }}
+            >
+              {/* Accent dot for inactive pills */}
+              {!isActive && (
+                <span
+                  style={{
+                    display: "inline-block",
+                    width: 6,
+                    height: 6,
+                    borderRadius: "50%",
+                    backgroundColor: accent,
+                    marginRight: 8,
+                    opacity: 0.6,
+                    verticalAlign: "middle",
+                  }}
+                />
+              )}
+              {pill}
+            </button>
+          );
+        })}
+      </div>
+
+      {/* Search row */}
+      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+        {/* Search input */}
+        <div className="flex-1 w-full relative">
           <svg
             viewBox="0 0 20 20"
             fill="none"
-            className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-white/35"
-            aria-hidden="true"
+            className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4"
+            style={{ color: "var(--text-muted)" }}
           >
             <circle cx="9" cy="9" r="6" stroke="currentColor" strokeWidth="2" />
             <path
@@ -76,16 +95,35 @@ export default function FilterBar({
             type="text"
             value={query}
             onChange={(e) => onQuery(e.target.value)}
+            onFocus={() => setSearchFocused(true)}
+            onBlur={() => setSearchFocused(false)}
             placeholder="Search company, industry, tag…"
-            aria-label="Search mockups"
-            className="w-full rounded-lg border border-hairline bg-ink-surface py-2.5 pl-9 pr-3 text-sm text-white placeholder:text-white/35 focus:border-white/25 focus:outline-none"
+            className="w-full pl-11 pr-4 py-3 text-sm rounded-lg transition-all duration-200"
+            style={{
+              backgroundColor: "rgba(22, 37, 47, 0.4)",
+              backdropFilter: "blur(8px)",
+              color: "var(--text-primary)",
+              border: `1px solid ${searchFocused ? "var(--signal)" : "var(--line)"}`,
+            }}
           />
         </div>
-      </div>
 
-      <p className="text-xs font-medium uppercase tracking-wide text-white/40">
-        Showing {shown} of {total} mockups
-      </p>
+        {/* Result count */}
+        <p
+          className="text-xs font-mono uppercase tracking-wider flex-shrink-0"
+          style={{ color: "var(--text-muted)" }}
+        >
+          {shown === total ? (
+            <>All {total} mockups</>
+          ) : (
+            <>
+              Showing{" "}
+              <span style={{ color: "var(--signal)", fontWeight: 600 }}>{shown}</span>{" "}
+              of {total}
+            </>
+          )}
+        </p>
+      </div>
     </div>
   );
 }
