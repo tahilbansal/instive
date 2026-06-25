@@ -1,17 +1,32 @@
 {
-  "name": "instive-ai-backend",
+  "name": "instive-ai",
   "version": "1.0.0",
-  "description": "Lead + Blueprint Session capture for the Instive AI site.",
-  "main": "server.js",
+  "description": "Instive AI website (Next.js) + lead/blueprint capture API.",
+  "private": true,
   "type": "commonjs",
   "scripts": {
-    "start": "node api/index.js",
-    "dev": "node --watch api/index.js"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "api:dev": "node --watch server.js"
   },
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.19.2",
     "mongoose": "^8.4.0",
-    "nodemailer": "^6.9.13"
+    "next": "14.2.5",
+    "nodemailer": "^6.9.13",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.9",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "autoprefixer": "^10.4.19",
+    "postcss": "^8.4.39",
+    "tailwindcss": "^3.4.6",
+    "typescript": "^5.5.3"
   }
 }
