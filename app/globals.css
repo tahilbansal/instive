@@ -655,6 +655,34 @@ html.light .media-body::after {
   mix-blend-mode: screen;
 }
 
+/* ─── Borderless blended media (image melts into the page) ─────────────────── */
+.blend-media {
+  position: relative;
+}
+.blend-media img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 16px;
+  -webkit-mask-image: radial-gradient(135% 125% at 50% 42%, #000 60%, transparent 100%);
+  mask-image: radial-gradient(135% 125% at 50% 42%, #000 60%, transparent 100%);
+}
+
+/* Hero left: faint grid of boxes that gradually fade in */
+.hero-grid {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 54px 54px;
+  -webkit-mask-image: radial-gradient(75% 80% at 18% 42%, #000 0%, transparent 72%);
+  mask-image: radial-gradient(75% 80% at 18% 42%, #000 0%, transparent 72%);
+  opacity: 0.8;
+}
+
 /* ─── Tech-stack flow ──────────────────────────────────────────────────────── */
 @keyframes flowDot {
   0% { transform: translateX(0); opacity: 0; }

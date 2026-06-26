@@ -157,9 +157,8 @@ export function BookDemoModal() {
         {status === "done" ? (
           <div className="p-7 pt-5">
             <p className="text-[15px] leading-relaxed" style={{ color: "var(--text-secondary)" }}>
-              Thanks{form.name ? `, ${form.name.split(" ")[0]}` : ""}. We have your details and will reach out
-              to <span style={{ color: "var(--signal)" }}>{form.email}</span> to lock a time. You can also email
-              us directly at{" "}
+              Thanks{form.name ? `, ${form.name.split(" ")[0]}` : ""}. Your request is in. A member of the
+              team will reach out within one business day to set up your demo. Prefer email? Write to us at{" "}
               <a href={`mailto:${CONTACT_EMAIL}`} style={{ color: "var(--signal)" }}>{CONTACT_EMAIL}</a>.
             </p>
             <button onClick={() => setOpen(false)} className="btn-signal mt-6 w-full inline-flex items-center justify-center px-5 py-3 text-sm font-semibold rounded-tight" style={{ fontFamily: "var(--font-display)" }}>

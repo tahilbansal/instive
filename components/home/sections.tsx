@@ -2,11 +2,9 @@ import Image from "next/image";
 import Link from "next/link";
 import Reveal from "@/components/site/Reveal";
 import Icon from "@/components/site/Icon";
-import MediaFrame from "@/components/site/MediaFrame";
 import TechStack from "@/components/site/TechStack";
 import Solutions from "@/components/home/Solutions";
 import Results from "@/components/home/Results";
-import Faq from "@/components/home/Faq";
 import { BookDemoButton } from "@/components/site/BookDemo";
 import { mockups } from "@/data/mockups";
 import {
@@ -17,7 +15,6 @@ import {
   INDUSTRIES,
   PROCESS,
   CASE_STUDIES,
-  TESTIMONIALS,
 } from "@/lib/site";
 
 // ── shared scaffold ──────────────────────────────────────────────────────────
@@ -170,17 +167,16 @@ export function Features() {
               </Reveal>
 
               <Reveal delay={120} className={`relative ${flip ? "lg:order-1" : ""}`}>
-                <span className="glow-blob" style={{ width: 300, height: 300, background: f.accent, top: "8%", right: flip ? "auto" : "-6%", left: flip ? "-6%" : "auto", opacity: 0.3 }} />
-                <MediaFrame
-                  src={f.image}
-                  alt={f.alt}
-                  label={f.label}
-                  variant={f.variant}
-                  accent={f.accent}
-                  width={1536}
-                  height={f.image.endsWith(".jpg") ? 858 : 1024}
-                  sizes="(max-width: 1024px) 100vw, 50vw"
-                />
+                <span className="glow-blob" style={{ width: 320, height: 320, background: f.accent, top: "6%", right: flip ? "auto" : "-8%", left: flip ? "-8%" : "auto", opacity: 0.28 }} />
+                <div className="blend-media">
+                  <Image
+                    src={f.image}
+                    alt={f.alt}
+                    width={1536}
+                    height={f.image.endsWith(".jpg") ? 858 : 1024}
+                    sizes="(max-width: 1024px) 100vw, 50vw"
+                  />
+                </div>
               </Reveal>
             </div>
           );
@@ -275,9 +271,14 @@ export function Vision() {
 
         <div className="mt-12 grid gap-5 md:grid-cols-3">
           {VISION.phases.map((p, i) => (
-            <Reveal key={p.title} delay={i * 90} className="glass p-7 rounded-tight" style={{ borderRadius: 12 }}>
+            <Reveal
+              key={p.title}
+              delay={i * 90}
+              className="p-7 rounded-tight"
+              style={{ borderRadius: 12, background: "rgba(16,26,34,0.62)", border: "1px solid rgba(245,242,234,0.14)", backdropFilter: "blur(14px)", WebkitBackdropFilter: "blur(14px)" }}
+            >
               <div className="flex items-center gap-2 mb-4">
-                <span className="text-[11px] uppercase px-2.5 py-1 rounded-full" style={{ fontFamily: "var(--font-mono)", letterSpacing: "0.08em", color: i === 0 ? "#5BD6A6" : "var(--signal)", backgroundColor: i === 0 ? "rgba(91,214,166,.14)" : "rgba(255,178,62,.14)" }}>
+                <span className="text-[11px] uppercase px-2.5 py-1 rounded-full" style={{ fontFamily: "var(--font-mono)", letterSpacing: "0.08em", color: i === 0 ? "#5BD6A6" : "var(--signal)", backgroundColor: i === 0 ? "rgba(91,214,166,.16)" : "rgba(255,178,62,.16)" }}>
                   {p.tag}
                 </span>
               </div>
@@ -299,13 +300,13 @@ export function Vision() {
 export function ResultsSection() {
   return (
     <Section id="results">
-      <SectionHead num="06" title="The only metric that matters is yours." sub="Representative outcomes from Instive intelligence running in live operations." />
+      <SectionHead num="06" title="What the industry leaves on the table." sub="Independent estimates for supply chain operations. This is the gap intelligent systems close." />
       <Reveal>
         <Results />
       </Reveal>
       <Reveal className="mt-12 flex flex-wrap items-center justify-between gap-4 pt-8 border-t" style={{ borderColor: "var(--line)" }}>
         <p className="text-[13px]" style={{ color: "var(--text-muted)", fontFamily: "var(--font-mono)" }}>
-          Ranges reflect live deployments. Your baseline sets the target.
+          Industry estimates. Your own baseline sets the target.
         </p>
         <BookDemoButton source="results" className="btn-signal inline-flex items-center gap-2 px-5 py-3 text-sm font-semibold rounded-tight" style={{ fontFamily: "var(--font-display)" }}>
           See the number for your operation
@@ -341,7 +342,7 @@ export function Process() {
 export function CaseStudies() {
   return (
     <Section id="case-studies">
-      <SectionHead num="08" title="Real operations. Real recovery." sub="Every case below is a live mockup, built on the client's own data. Open one and see it run." />
+      <SectionHead num="08" title="What recovery looks like." sub="Illustrative scenarios that mirror real supply chain operations. Open one to explore the intelligence live." />
       <div className="grid gap-6 lg:grid-cols-3">
         {CASE_STUDIES.map((c, i) => (
           <Reveal as="article" key={c.company} delay={i * 80} className="surface-card flex flex-col overflow-hidden" style={{ ["--accent" as any]: c.accent }}>
@@ -389,37 +390,6 @@ export function CaseStudies() {
           <Icon name="arrow" size={14} />
         </Link>
       </Reveal>
-    </Section>
-  );
-}
-
-// ── 09 · Testimonials ────────────────────────────────────────────────────────
-export function Testimonials() {
-  return (
-    <Section id="testimonials" bg="var(--bg-secondary)">
-      <SectionHead num="09" title="In the operators' words." sub="Illustrative, drawn from the deployments above." />
-      <div className="grid gap-6 md:grid-cols-3">
-        {TESTIMONIALS.map((t, i) => (
-          <Reveal as="article" key={t.role} delay={i * 80} className="surface-card p-7 flex flex-col" style={{ backgroundColor: "var(--bg-primary)" }}>
-            <span style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: 40, lineHeight: 0.5, color: "var(--signal)" }}>&ldquo;</span>
-            <p className="mt-4 text-[16px] leading-relaxed flex-1" style={{ color: "var(--text-primary)" }}>{t.quote}</p>
-            <div className="mt-6 pt-5 border-t" style={{ borderColor: "var(--line)" }}>
-              <div style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: 14, color: "var(--text-primary)" }}>{t.name}</div>
-              <div className="text-[12px] mt-0.5" style={{ fontFamily: "var(--font-mono)", color: "var(--text-muted)" }}>{t.role}</div>
-            </div>
-          </Reveal>
-        ))}
-      </div>
-    </Section>
-  );
-}
-
-// ── 10 · FAQ ─────────────────────────────────────────────────────────────────
-export function FaqSection() {
-  return (
-    <Section id="faq">
-      <SectionHead num="10" title="The questions operators actually ask." sub="Straight answers. The rest we cover on the call." />
-      <Faq />
     </Section>
   );
 }

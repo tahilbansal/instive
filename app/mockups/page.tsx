@@ -1,4 +1,4 @@
-import { mockups } from "@/data/mockups";
+import { mockups, SIDECARS, SIDECAR_META } from "@/data/mockups";
 import MockupGallery from "@/components/MockupGallery";
 import SectionCTA from "@/components/SectionCTA";
 import Nav from "@/components/site/Nav";
@@ -22,7 +22,8 @@ export default function MockupsPage() {
         className="relative px-6"
         style={{ backgroundColor: "var(--bg-primary)" }}
       >
-        <div className="max-w-7xl mx-auto pt-24 pb-20 space-y-12">
+        <div className="max-w-7xl mx-auto pt-20 pb-16 grid gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
+         <div className="space-y-10">
           {/* Eyebrow */}
           <div className="flex items-center gap-3">
             <span
@@ -61,10 +62,9 @@ export default function MockupsPage() {
               className="text-lg leading-relaxed max-w-3xl"
               style={{ color: "var(--text-secondary)" }}
             >
-              Every mockup below was built for a real logistics company,
-              showing exactly what their operations would look like with an AI
-              layer on top. No generic demos. Built for them, deployable in
-              weeks.
+              Each mockup is built around a real logistics operation's data
+              shape, showing exactly what an AI layer looks like on top. No
+              generic demos, and deployable in weeks.
             </p>
           </div>
 
@@ -144,6 +144,40 @@ export default function MockupsPage() {
                 <path d="M3 8h9M9 4l4 4-4 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </BookDemoButton>
+          </div>
+         </div>
+
+          {/* Right: live catalogue panel */}
+          <div className="relative">
+            <span className="glow-blob" style={{ width: 360, height: 320, background: "var(--signal)", top: "0%", right: "-6%", opacity: 0.2 }} />
+            <div className="glass rounded-tight p-6" style={{ borderRadius: 16 }}>
+              <div className="flex items-center justify-between pb-4 mb-4 border-b" style={{ borderColor: "var(--line)" }}>
+                <span className="flex items-center gap-2 text-[11px] uppercase" style={{ fontFamily: "var(--font-mono)", letterSpacing: "0.1em", color: "var(--text-secondary)" }}>
+                  <span className="live-dot status-pulse" />
+                  Catalogue · live
+                </span>
+                <span className="text-[11px]" style={{ fontFamily: "var(--font-mono)", color: "var(--text-muted)" }}>
+                  {mockups.length} builds
+                </span>
+              </div>
+              <ul className="space-y-1">
+                {SIDECARS.map((s) => {
+                  const count = mockups.filter((m) => m.sidecar === s).length;
+                  const accent = SIDECAR_META[s].accent;
+                  return (
+                    <li key={s} className="flex items-center gap-3 py-2.5 px-2 rounded-tight" style={{ borderRadius: 8 }}>
+                      <span style={{ width: 9, height: 9, borderRadius: "50%", backgroundColor: accent, boxShadow: `0 0 0 3px ${accent}22`, flexShrink: 0 }} />
+                      <span className="flex-1 text-[14px]" style={{ color: "var(--text-primary)", fontFamily: "var(--font-display)", fontWeight: 600 }}>
+                        {s}
+                      </span>
+                      <span className="text-[12px] px-2 py-0.5 rounded-full" style={{ fontFamily: "var(--font-mono)", color: count ? accent : "var(--text-muted)", backgroundColor: count ? `${accent}1a` : "transparent" }}>
+                        {count || "soon"}
+                      </span>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
           </div>
         </div>
 

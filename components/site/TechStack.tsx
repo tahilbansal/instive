@@ -23,7 +23,7 @@ export default function TechStack() {
         {stages.map((s, i) => {
           const core = s.highlight;
           const on = active === i || core;
-          const accent = "var(--signal)";
+          const teal = "#5BD6A6";
           return (
             <Fragment key={s.key}>
               <div
@@ -33,15 +33,15 @@ export default function TechStack() {
                 onMouseLeave={() => setHovered(null)}
                 style={{
                   borderRadius: 12,
-                  border: `1px solid ${core ? accent : "var(--line)"}`,
-                  background: core ? "var(--bg-tertiary)" : "var(--bg-secondary)",
-                  boxShadow: core ? "0 0 0 1px rgba(255,178,62,.3), 0 20px 50px -20px rgba(255,178,62,.35)" : undefined,
+                  border: `1px solid ${core ? teal : "var(--line)"}`,
+                  background: core ? "rgba(91,214,166,0.06)" : "var(--bg-secondary)",
+                  boxShadow: core ? "0 0 0 1px rgba(91,214,166,.35), 0 20px 50px -20px rgba(91,214,166,.4)" : undefined,
                 }}
               >
                 {core && (
                   <span
                     className="absolute -top-2.5 left-4 px-2 py-0.5 rounded-full text-[9px] uppercase"
-                    style={{ fontFamily: "var(--font-mono)", letterSpacing: "0.1em", color: "#0E1A24", backgroundColor: "var(--signal)", fontWeight: 700 }}
+                    style={{ fontFamily: "var(--font-mono)", letterSpacing: "0.1em", color: "#0E1A24", backgroundColor: teal, fontWeight: 700 }}
                   >
                     Core layer
                   </span>
@@ -54,7 +54,7 @@ export default function TechStack() {
                       borderRadius: 10,
                       display: "grid",
                       placeItems: "center",
-                      backgroundColor: core ? "var(--signal)" : "rgba(255,178,62,.14)",
+                      backgroundColor: core ? teal : "rgba(255,178,62,.14)",
                       color: core ? "#0E1A24" : "var(--signal)",
                       flexShrink: 0,
                     }}

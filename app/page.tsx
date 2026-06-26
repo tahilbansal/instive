@@ -13,8 +13,6 @@ import {
   ResultsSection,
   Process,
   CaseStudies,
-  Testimonials,
-  FaqSection,
   FinalCta,
 } from "@/components/home/sections";
 
@@ -46,8 +44,6 @@ export default function HomePage() {
         <ResultsSection />
         <Process />
         <CaseStudies />
-        <Testimonials />
-        <FaqSection />
         <FinalCta />
       </main>
       <Footer />

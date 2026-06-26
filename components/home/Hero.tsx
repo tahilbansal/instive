@@ -1,34 +1,14 @@
-"use client";
-
+import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import MediaFrame from "@/components/site/MediaFrame";
 import { BookDemoButton } from "@/components/site/BookDemo";
-import { HERO_STATS } from "@/lib/site";
 
-const TICKER = [
-  { tone: "#FF6B5E", text: "AWB-0934 LAX flagged: chargeable weight overstated, $4,210 recoverable" },
-  { tone: "#FFB23E", text: "Lane TPA-04: carrier sliding, flagged three weeks early" },
-  { tone: "#FFB23E", text: "SKU-44820 crosses reorder point in 6 days, ahead of cycle" },
-  { tone: "#5BD6A6", text: "Savannah 06:00 wave +16% inbound, crew staffed ahead" },
-  { tone: "#5BD6A6", text: "Return RET-1183 back to sellable, $1,940 recovered" },
-];
+const kw = { color: "var(--signal)", fontWeight: 600 };
 
 export default function Hero() {
-  const [i, setI] = useState(0);
-
-  useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const t = setInterval(() => setI((v) => (v + 1) % TICKER.length), 3200);
-    return () => clearInterval(t);
-  }, []);
-
-  const tick = TICKER[i];
-  const kw = { color: "var(--signal)", fontWeight: 600 };
-
   return (
-    <section className="radiant relative z-10 px-6 border-b" style={{ borderColor: "var(--line)" }}>
-      <div className="max-w-7xl mx-auto pt-16 pb-20 grid gap-12 lg:grid-cols-[1.02fr_0.98fr] lg:items-center">
+    <section className="radiant relative z-10 px-6 border-b overflow-hidden" style={{ borderColor: "var(--line)" }}>
+      <span className="hero-grid" aria-hidden="true" />
+      <div className="relative max-w-7xl mx-auto pt-16 pb-20 grid gap-10 lg:grid-cols-[1fr_1.05fr] lg:items-center" style={{ zIndex: 1 }}>
         {/* Left — message */}
         <div>
           <div className="flex items-center gap-3 mb-7">
@@ -62,42 +42,20 @@ export default function Hero() {
               Explore solutions
             </Link>
           </div>
-
-          {/* stats */}
-          <div className="mt-12 grid grid-cols-2 sm:grid-cols-4 gap-x-6 gap-y-6">
-            {HERO_STATS.map((s) => (
-              <div key={s.label}>
-                <div style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "clamp(22px, 3vw, 28px)", letterSpacing: "-0.02em", color: "var(--signal)", lineHeight: 1 }}>
-                  {s.value}
-                </div>
-                <div className="mt-2 text-[12px] leading-snug" style={{ fontFamily: "var(--font-mono)", color: "var(--text-muted)", letterSpacing: "0.02em" }}>
-                  {s.label}
-                </div>
-              </div>
-            ))}
-          </div>
         </div>
 
-        {/* Right — command center (rendered clean) */}
+        {/* Right — command center, borderless and blended */}
         <div className="relative">
-          <span className="glow-blob" style={{ width: 360, height: 360, background: "var(--signal)", top: "-8%", right: "-4%", opacity: 0.28 }} />
-          <MediaFrame
-            src="/images/hero_image_sc.png"
-            alt="Instive AI supply chain command center: on-time delivery, total shipments, exceptions, and AI insight with a live world map"
-            label="instive.ai / command center"
-            variant="ui"
-            accent="#FFB23E"
-            width={1536}
-            height={1024}
-            priority
-            sizes="(max-width: 1024px) 100vw, 50vw"
-          />
-          {/* live ticker */}
-          <div className="glass mt-3 flex items-center gap-3 px-4 py-3 rounded-tight overflow-hidden" style={{ borderRadius: 10 }}>
-            <span style={{ width: 8, height: 8, borderRadius: "50%", backgroundColor: tick.tone, flexShrink: 0 }} />
-            <span key={i} className="console-row text-[13px] truncate" style={{ fontFamily: "var(--font-mono)", color: "var(--text-secondary)" }}>
-              {tick.text}
-            </span>
+          <span className="glow-blob" style={{ width: 420, height: 360, background: "var(--signal)", top: "-2%", right: "-6%", opacity: 0.22 }} />
+          <div className="blend-media">
+            <Image
+              src="/images/hero_image_sc.png"
+              alt="Instive AI supply chain command center: on-time delivery, total shipments, exceptions, and AI insight with a live world map"
+              width={1536}
+              height={1024}
+              priority
+              sizes="(max-width: 1024px) 100vw, 52vw"
+            />
           </div>
         </div>
       </div>

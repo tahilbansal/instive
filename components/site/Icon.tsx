@@ -167,6 +167,18 @@ const PATHS: Record<string, JSX.Element> = {
       <path d="M3 13l9 5 9-5" />
     </>
   ),
+  brain: (
+    <>
+      <path d="M12 5v14" />
+      <path d="M9 4a2.5 2.5 0 0 0-2.5 2.5A2.5 2.5 0 0 0 5 9a2.5 2.5 0 0 0 1 4 2.5 2.5 0 0 0 3 4" />
+      <path d="M9 4a2 2 0 0 1 3 1.5" />
+      <path d="M15 6.5h2.5M16 10h2.5M15 13.5h2" />
+      <circle cx="18" cy="6.5" r="1.2" />
+      <circle cx="19" cy="10" r="1.2" />
+      <circle cx="17.5" cy="13.5" r="1.2" />
+      <path d="M15 17a2.5 2.5 0 0 1-3-2" />
+    </>
+  ),
   shield: (
     <>
       <path d="M12 3l8 3v5c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6z" />

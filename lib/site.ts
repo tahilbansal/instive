@@ -9,9 +9,9 @@ import { SIDECAR_META } from "@/data/mockups";
 
 /** The one primary action across the whole site. */
 export const BOOK_CALL =
-  "mailto:tahil@instiveai.com?subject=Book%20a%20demo%20with%20Instive%20AI&body=A%20bit%20about%20our%20operation%3A%0A%0ACompany%3A%0AIndustry%3A%0AThe%20workflow%20that%20costs%20us%20most%3A%0ASystems%20we%20run%20(ERP%2FTMS%2FWMS)%3A";
+  "mailto:contact@instiveai.com?subject=Book%20a%20demo%20with%20Instive%20AI&body=A%20bit%20about%20our%20operation%3A%0A%0ACompany%3A%0AIndustry%3A%0AThe%20workflow%20that%20costs%20us%20most%3A%0ASystems%20we%20run%20(ERP%2FTMS%2FWMS)%3A";
 
-export const CONTACT_EMAIL = "tahil@instiveai.com";
+export const CONTACT_EMAIL = "contact@instiveai.com";
 
 // ─── Brand definition ────────────────────────────────────────────────────────
 export const BRAND = {
@@ -315,8 +315,9 @@ export const INDUSTRY_LINKS = INDUSTRIES.map((i) => ({
 }));
 
 export const RESOURCE_LINKS = [
-  { label: "Case studies", sub: "Real operations, real recovery", href: "/case-studies", icon: "chart", accent: "#FFB23E" },
-  { label: "Mockups showcase", sub: "See it built on a real company's data", href: "/mockups", icon: "boxes", accent: "#5BD6A6" },
+  { label: "Case studies", sub: "Illustrative scenarios and recovery", href: "/case-studies", icon: "chart", accent: "#FFB23E" },
+  { label: "Mockups showcase", sub: "See it built on a real operation's data shape", href: "/mockups", icon: "boxes", accent: "#5BD6A6" },
+  { label: "FAQ and perspectives", sub: "Common questions and views from the floor", href: "/faq", icon: "report", accent: "#3b82f6" },
 ];
 
 export type NavItem =
@@ -350,14 +351,6 @@ export const FOOTER_NAV: { title: string; links: { label: string; href: string }
   },
 ];
 
-// ─── Hero stats ──────────────────────────────────────────────────────────────
-export const HERO_STATS: { value: string; label: string }[] = [
-  { value: "15 to 35%", label: "operating cost reduced" },
-  { value: "99.2%", label: "forecast & on-time accuracy" },
-  { value: "2,000+", label: "exceptions caught monthly" },
-  { value: "25+", label: "systems integrated" },
-];
-
 // ─── Functions grid ("AI solutions for ...") ─────────────────────────────────
 export const FUNCTIONS: { name: string; line: string; icon: string; href: string }[] = [
   { name: "Procurement", line: "Faster sourcing, continuous supplier scoring, and spend visibility without the manual chase.", icon: "plug", href: "/solutions/invoice-audits" },
@@ -378,7 +371,7 @@ export type Feature = {
   image: string;
   alt: string;
   label: string;
-  variant: "ui" | "photo";
+  variant: "ui" | "photo" | "bare";
   accent: string;
   href: string;
 };
@@ -394,10 +387,10 @@ export const FEATURES: Feature[] = [
       "AI insight recommends the next action, with one tap to act",
       "One live view across every shipment and lane",
     ],
-    image: "/images/route_exception_mangement.png",
-    alt: "Exception management dashboard showing a high-risk shipment delayed by port congestion on the Mumbai to Rotterdam lane",
-    label: "instive.ai / exceptions",
-    variant: "ui",
+    image: "/images/Route_optimization_Instive.png",
+    alt: "Exception management view: active exceptions, an at-risk shipment on a long-haul lane, and an AI insight flagging delay risk",
+    label: "",
+    variant: "bare",
     accent: "#FF6B5E",
     href: "/solutions/carrier-slips",
   },
@@ -411,10 +404,10 @@ export const FEATURES: Feature[] = [
       "Cost, distance and fuel saved on every lane",
       "Lower emissions without lower service",
     ],
-    image: "/images/logistic_optimization.png",
+    image: "/images/Logistics_optimization_instive.png",
     alt: "Logistics optimization view showing an optimized route network with cost, distance, fuel and CO2 savings",
-    label: "instive.ai / routing",
-    variant: "ui",
+    label: "",
+    variant: "bare",
     accent: "#5BD6A6",
     href: "/solutions/carrier-slips",
   },
@@ -430,8 +423,8 @@ export const FEATURES: Feature[] = [
     ],
     image: "/images/warehouse_demand_planning.jpg",
     alt: "Warehouse operator reviewing a holographic demand forecast display on the floor",
-    label: "On the floor",
-    variant: "photo",
+    label: "",
+    variant: "bare",
     accent: "#FFB23E",
     href: "/solutions/stockouts",
   },
@@ -474,7 +467,7 @@ export const PLATFORM = {
     {
       key: "ai",
       title: "AI and ML",
-      icon: "chart",
+      icon: "brain",
       items: [{ t: "Forecasting" }, { t: "Optimization" }, { t: "Anomaly detection" }, { t: "NLP and GenAI" }],
       highlight: false,
     },
@@ -499,20 +492,21 @@ export const VISION = {
     { tag: "Next", title: "Connect", body: "Every agent feeding one control tower, so the whole operation sees and acts as one." },
     { tag: "Ahead", title: "Platform", body: "Self-serve intelligence any team can turn on, priced to the value it returns." },
   ],
-  image: "/images/instive_ai_hero_image.png",
-  alt: "Instive AI operating across a global supply chain network at night, from port to warehouse to road",
+  image: "/images/logistics.jpg",
+  alt: "Container port at night with trucks tracing amber light trails through the yard",
 };
 
 // ─── Industries (legacy short list kept for home grid) ───────────────────────
 // (Home grid + nav both read from INDUSTRIES above.)
 
 // ─── Results band ────────────────────────────────────────────────────────────
+// Industry-wide figures (not Instive's own) that frame the opportunity.
 export type Stat = { value: number; prefix?: string; suffix?: string; label: string };
 export const RESULTS: Stat[] = [
-  { value: 99.2, suffix: "%", label: "forecast and on-time accuracy" },
-  { value: 31, suffix: "%", label: "lower logistics cost" },
-  { value: 2000, suffix: "+", label: "exceptions caught monthly" },
-  { value: 1.2, prefix: "$", suffix: "M", label: "recovered every year" },
+  { value: 30, suffix: "%", label: "of freight invoices carry billing errors" },
+  { value: 1.8, prefix: "$", suffix: "T", label: "tied up globally in excess and out of stock inventory" },
+  { value: 40, suffix: "%", label: "logistics cost reduction achievable with AI optimization" },
+  { value: 8, suffix: "%", label: "of revenue lost on average to supply chain inefficiency" },
 ];
 
 // ─── Process ─────────────────────────────────────────────────────────────────
@@ -576,22 +570,22 @@ export const CASE_STUDIES: CaseStudy[] = [
   },
 ];
 
-// ─── Testimonials (illustrative, tied to the case-study clients) ─────────────
+// ─── Perspectives (generic industry sentiment, not attributed to clients) ────
 export const TESTIMONIALS: { quote: string; name: string; role: string }[] = [
   {
-    quote: "We were auditing maybe one invoice in ten. Now it is all of them, on the same standard in every branch. The first month paid for the year.",
+    quote: "Most teams audit a fraction of their freight bills. The overcharges in the rest quietly age out every month. Reading all of them is exactly the work software should be doing.",
+    name: "VP, Supply Chain",
+    role: "Distribution",
+  },
+  {
+    quote: "The expensive carrier problems are the ones you find out about from the customer. Catching the slide a few weeks earlier changes the whole conversation.",
     name: "Director of Operations",
-    role: "Air-Sea Forwarders",
+    role: "3PL and managed transport",
   },
   {
-    quote: "It told us a carrier was sliding on the Tampa lanes weeks before the client noticed. We rebalanced volume and the complaint never came.",
-    name: "VP, Managed Transportation",
-    role: "READY-2-XECUTE",
-  },
-  {
-    quote: "We stopped guessing the reorder. Cooler space freed up and the stockouts that used to cost us weekends mostly stopped.",
-    name: "Supply Chain Manager",
-    role: "Paris Brothers",
+    quote: "Forecasting on a fixed cycle means you are always a little early on the slow movers and a little late on the climbers. Closing that gap frees real working capital.",
+    name: "Head of Planning",
+    role: "Manufacturing",
   },
 ];
 
