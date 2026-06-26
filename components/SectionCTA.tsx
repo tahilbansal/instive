@@ -1,4 +1,4 @@
-const MAILTO = "mailto:tahil@instiveai.com?subject=Mockup Request";
+import { BookDemoButton } from "@/components/site/BookDemo";
 
 export default function SectionCTA() {
   return (
@@ -21,17 +21,17 @@ export default function SectionCTA() {
           style={{ color: "var(--text-secondary)" }}
         >
           We build these in 48 hours from a short brief. If your company moves
-          freight, manages warehouses, or runs field crews — there's a version
+          freight, manages warehouses, or runs field crews, there's a version
           of this built for your world.
         </p>
       </div>
 
-      <a
-        href={MAILTO}
+      <BookDemoButton
+        source="mockups-cta"
         className="btn-signal inline-flex px-6 py-3 text-sm font-semibold rounded-tight"
       >
         Get your mockup built →
-      </a>
+      </BookDemoButton>
     </section>
   );
 }

@@ -44,7 +44,7 @@ export default function MockupModal({
       }}
       role="dialog"
       aria-modal="true"
-      aria-label={`${mockup.companyName} — ${mockup.sidecar} demo`}
+      aria-label={`${mockup.companyName} · ${mockup.sidecar} demo`}
     >
       <div
         className="relative w-full max-w-6xl h-[92vh] overflow-hidden flex flex-col modal-panel-enter"

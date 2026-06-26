@@ -75,7 +75,7 @@ app.post("/api/leads", async (req, res) => {
     if (process.env.SMTP_USER && process.env.SMTP_PASS) {
       await transporter.sendMail({
         from: `"Instive AI Alerts" <${process.env.SMTP_USER}>`,
-        to: "tahilbansal@instiveai.com",
+        to: "tahil@instiveai.com",
         subject: `New Lead: ${email}`,
         text: `A new lead has subscribed.\nEmail: ${email}\nSource: ${source}`
       }).catch(err => console.error("Mail Error:", err.message));
@@ -96,7 +96,7 @@ app.post("/api/blueprint-sessions", async (req, res) => {
     if (process.env.SMTP_USER && process.env.SMTP_PASS) {
       await transporter.sendMail({
         from: `"Instive AI Alerts" <${process.env.SMTP_USER}>`,
-        to: "tahilbansal@instiveai.com",
+        to: "tahil@instiveai.com",
         subject: `New Blueprint Session: ${company}`,
         text: `Name: ${name}\nEmail: ${email}\nCompany: ${company}\nDomain: ${domain}\nNotes: ${notes}\nSource: ${source}`
       }).catch(err => console.error("Mail Error:", err.message));

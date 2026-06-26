@@ -4,8 +4,9 @@
 // self-contained client mockups (all now served from /public). Keeping these
 // here (instead of vercel.json) is the recommended approach for Next.js apps.
 const legacyRewrites = [
-  { source: "/", destination: "/index.html" },
-  { source: "/about", destination: "/about.html" },
+  // "/" and "/about" are now React routes (app/page.tsx, app/about/page.tsx).
+  // The old static index.html / about.html remain in /public for reference but
+  // are no longer wired to those paths.
   { source: "/carter-distribution", destination: "/clients_mockups/carter_client_reporting.html" },
   { source: "/exe-logistics", destination: "/clients_mockups/exe_labor_planning.html" },
   { source: "/safeway-logistics", destination: "/clients_mockups/safeway_returns_intelligence.html" },

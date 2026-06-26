@@ -100,10 +100,9 @@ export default function FilterBar({
             placeholder="Search company, industry, tag…"
             className="w-full pl-11 pr-4 py-3 text-sm rounded-lg transition-all duration-200"
             style={{
-              backgroundColor: "rgba(22, 37, 47, 0.4)",
-              backdropFilter: "blur(8px)",
+              backgroundColor: "var(--bg-secondary)",
               color: "var(--text-primary)",
-              border: `1px solid ${searchFocused ? "var(--signal)" : "var(--line)"}`,
+              border: `1px solid ${searchFocused ? "var(--signal)" : "var(--line-strong)"}`,
             }}
           />
         </div>

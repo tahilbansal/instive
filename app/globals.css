@@ -323,3 +323,392 @@ html.light .modal-glass {
 .fade-in {
   animation: fadeIn 0.4s ease-out both;
 }
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Homepage primitives
+   ───────────────────────────────────────────────────────────────────────── */
+
+/* Scroll reveal — content is always in the DOM (SEO-safe); JS toggles .is-visible */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Solid surface card — engineered, lifts on hover with an accent edge */
+.surface-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+              border-color 0.3s ease,
+              box-shadow 0.3s ease;
+}
+.surface-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent, var(--signal));
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--accent, var(--signal)) 30%, transparent),
+    0 16px 48px -16px color-mix(in srgb, var(--accent, var(--signal)) 35%, transparent),
+    0 4px 16px -6px rgba(0, 0, 0, 0.35);
+}
+
+/* Gradient hairline divider (amber → line → transparent) */
+.hairline {
+  height: 1px;
+  background: linear-gradient(90deg, var(--signal), var(--line), transparent);
+}
+
+/* Trust-strip marquee */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 38s linear infinite;
+}
+.marquee-mask {
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+}
+
+/* Hero console swap */
+@keyframes consoleIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.console-row {
+  animation: consoleIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Status dot pulse (matches the design-system manifest bar) */
+@keyframes statusPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+.status-pulse {
+  animation: statusPulse 2.4s infinite;
+}
+
+/* Accordion open animation */
+@keyframes accordionDown {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.accordion-body {
+  animation: accordionDown 0.3s ease-out both;
+}
+
+/* ─── Radiant background glows ─────────────────────────────────────────────── */
+.radiant {
+  position: relative;
+  isolation: isolate;
+}
+.radiant::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(58% 52% at 82% 6%, rgba(255, 178, 62, 0.20), transparent 66%),
+    radial-gradient(46% 44% at 10% 94%, rgba(255, 178, 62, 0.07), transparent 70%),
+    radial-gradient(38% 38% at 52% 64%, rgba(91, 214, 166, 0.035), transparent 72%);
+}
+html.light .radiant::before {
+  background:
+    radial-gradient(58% 52% at 82% 6%, rgba(232, 148, 26, 0.16), transparent 66%),
+    radial-gradient(46% 44% at 10% 94%, rgba(232, 148, 26, 0.06), transparent 70%),
+    radial-gradient(38% 38% at 52% 64%, rgba(91, 214, 166, 0.04), transparent 72%);
+}
+
+/* A free-floating glow blob you can drop anywhere */
+.glow-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(70px);
+  opacity: 0.45;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ─── Glass / transparent surfaces ─────────────────────────────────────────── */
+.glass {
+  background: rgba(22, 37, 47, 0.5);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  border: 1px solid rgba(245, 242, 234, 0.12);
+}
+html.light .glass {
+  background: rgba(255, 251, 245, 0.6);
+  border-color: rgba(14, 26, 36, 0.08);
+}
+.glass-chip {
+  background: rgba(14, 26, 36, 0.55);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(245, 242, 234, 0.16);
+}
+
+/* ─── Gradient text ────────────────────────────────────────────────────────── */
+.text-gradient {
+  background: linear-gradient(100deg, var(--signal-deep) 0%, var(--signal) 45%, #ffd9a3 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ─── Framed product imagery ───────────────────────────────────────────────── */
+.frame {
+  position: relative;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid var(--line-strong);
+  box-shadow: 0 30px 80px -30px rgba(0, 0, 0, 0.6);
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s ease;
+}
+.frame:hover {
+  transform: translateY(-4px);
+}
+.frame img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+/* sheen sweep across a frame on view */
+.frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, transparent 30%, rgba(255, 178, 62, 0.12) 48%, transparent 60%);
+  transform: translateX(-120%);
+  transition: transform 0.9s ease;
+  pointer-events: none;
+}
+.frame:hover::after {
+  transform: translateX(120%);
+}
+
+/* ─── Floating + scanning motion ───────────────────────────────────────────── */
+@keyframes floaty {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-9px); }
+}
+.float { animation: floaty 5.5s ease-in-out infinite; }
+.float-slow { animation: floaty 7.5s ease-in-out infinite; }
+
+@keyframes scanline {
+  0% { top: -10%; opacity: 0; }
+  20% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { top: 110%; opacity: 0; }
+}
+.scan::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--signal), transparent);
+  animation: scanline 4.5s ease-in-out infinite;
+  z-index: 3;
+  pointer-events: none;
+}
+
+/* live badge dot reuse */
+.live-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--cleared);
+  box-shadow: 0 0 0 3px rgba(91, 214, 166, 0.18);
+}
+
+/* ─── Nav dropdown ─────────────────────────────────────────────────────────── */
+@keyframes dropdownIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.dropdown-panel {
+  border-radius: 14px;
+  padding: 10px;
+  box-shadow: 0 24px 60px -20px rgba(0, 0, 0, 0.6);
+  animation: dropdownIn 0.18s ease-out both;
+  /* more opaque than the default glass so background text does not bleed through */
+  background: rgba(16, 26, 34, 0.94);
+  backdrop-filter: blur(22px) saturate(140%);
+  -webkit-backdrop-filter: blur(22px) saturate(140%);
+  border: 1px solid var(--line-strong);
+}
+html.light .dropdown-panel {
+  background: rgba(255, 251, 245, 0.97);
+  border-color: rgba(14, 26, 36, 0.1);
+}
+
+/* ─── Site nav (theme-aware translucent bar) ───────────────────────────────── */
+.site-nav {
+  background: rgba(14, 26, 36, 0.55);
+  transition: background-color 0.3s;
+}
+.site-nav[data-scrolled="true"] {
+  background: rgba(14, 26, 36, 0.82);
+}
+html.light .site-nav {
+  background: rgba(245, 242, 234, 0.62);
+}
+html.light .site-nav[data-scrolled="true"] {
+  background: rgba(245, 242, 234, 0.88);
+}
+.dropdown-item {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 12px 12px;
+  border-radius: 10px;
+  transition: background-color 0.18s;
+}
+.dropdown-item:hover {
+  background: rgba(245, 242, 234, 0.06);
+}
+html.light .dropdown-item:hover {
+  background: rgba(14, 26, 36, 0.05);
+}
+
+/* ─── Blended media frame (product UI + photo) ─────────────────────────────── */
+.media-frame {
+  position: relative;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: var(--bg-secondary);
+  box-shadow: 0 30px 80px -30px rgba(0, 0, 0, 0.6);
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s ease;
+}
+.media-frame:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 40px 90px -30px rgba(0, 0, 0, 0.7);
+}
+.media-chrome {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--line);
+  background: var(--bg-tertiary);
+}
+.media-body {
+  position: relative;
+  overflow: hidden;
+}
+.media-body img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+/* fade + vignette the shot into the surface so it does not look pasted */
+.media-body::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(14, 26, 36, 0.18) 0%, transparent 14%, transparent 64%, rgba(14, 26, 36, 0.55) 100%),
+    radial-gradient(125% 105% at 50% 45%, transparent 58%, rgba(14, 26, 36, 0.4) 100%);
+}
+html.light .media-body::after {
+  background:
+    linear-gradient(180deg, rgba(245, 242, 234, 0.16) 0%, transparent 16%, transparent 68%, rgba(245, 242, 234, 0.55) 100%),
+    radial-gradient(125% 105% at 50% 45%, transparent 60%, rgba(245, 242, 234, 0.42) 100%);
+}
+/* travelling sheen */
+.media-frame::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  background: linear-gradient(120deg, transparent 35%, rgba(255, 178, 62, 0.1) 50%, transparent 62%);
+  transform: translateX(-120%);
+  transition: transform 1s ease;
+}
+.media-frame:hover::before {
+  transform: translateX(120%);
+}
+/* photo variant: colour-grade into the palette */
+.media-photo .media-grade {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background:
+    radial-gradient(70% 60% at 25% 15%, rgba(255, 178, 62, 0.22), transparent 60%),
+    linear-gradient(180deg, rgba(14, 26, 36, 0.1), rgba(14, 26, 36, 0.5));
+  mix-blend-mode: screen;
+}
+
+/* ─── Tech-stack flow ──────────────────────────────────────────────────────── */
+@keyframes flowDot {
+  0% { transform: translateX(0); opacity: 0; }
+  15% { opacity: 1; }
+  85% { opacity: 1; }
+  100% { transform: translateX(var(--flow-dist, 40px)); opacity: 0; }
+}
+.flow-connector {
+  position: relative;
+  flex: 1;
+  height: 2px;
+  background: linear-gradient(90deg, var(--line-strong), var(--line));
+  min-width: 24px;
+}
+.flow-connector .flow-dot {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 6px;
+  height: 6px;
+  margin-top: -3px;
+  border-radius: 50%;
+  background: var(--signal);
+  box-shadow: 0 0 8px 1px rgba(255, 178, 62, 0.7);
+  animation: flowDot 1.8s linear infinite;
+}
+.stack-stage {
+  transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+  cursor: default;
+}
+.stack-stage[data-active="true"] {
+  transform: translateY(-4px);
+  border-color: var(--signal) !important;
+  box-shadow: 0 0 0 1px rgba(255, 178, 62, 0.25), 0 18px 50px -18px rgba(255, 178, 62, 0.3);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .marquee-track,
+  .float,
+  .float-slow,
+  .scan::before,
+  .flow-connector .flow-dot {
+    animation: none !important;
+  }
+}

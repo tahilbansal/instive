@@ -1,5 +1,5 @@
 // ─────────────────────────────────────────────────────────────────────────────
-// Instive AI — mockup catalogue
+// Instive AI, mockup catalogue
 //
 // This is the ONLY file you edit to add a mockup to the /mockups showcase.
 // See MOCKUPS.md at the project root for the step-by-step.
@@ -21,7 +21,7 @@ export type Mockup = {
   sidecar: Sidecar;
   /** One sentence: the exact problem this mockup flags. Rendered in italics. */
   heroScenario: string;
-  /** 3–4 specific, metric-backed benefits. */
+  /** 3-4 specific, metric-backed benefits. */
   benefits: string[];
   tags: string[];
   /** Same-origin path to the live HTML mockup (Vercel rewrite → /clients_mockups/…). */
@@ -88,10 +88,10 @@ export const mockups: Mockup[] = [
     industry: "Freight Forwarding · Air & Ocean",
     sidecar: "Invoice Auditor",
     heroScenario:
-      "Catches a chargeable-weight overstatement on a LAX air export — audited the same way as ocean demurrage past free-time.",
+      "Catches a chargeable-weight overstatement on a LAX air export, audited the same way as ocean demurrage past free-time.",
     benefits: [
-      "Audits every air AWB and ocean BL against the quote — 2,910 invoices MTD across all 10 branches, not a sample",
-      "Flags quoted-vs-billed gaps with the dim calc attached — 31 caught this month",
+      "Audits every air AWB and ocean BL against the quote, 2,910 invoices MTD across all 10 branches, not a sample",
+      "Flags quoted-vs-billed gaps with the dim calc attached, 31 caught this month",
       "$96.2K recoverable month-to-date, dispute-ready",
       "One audit standard for air and ocean, every branch reporting 10 / 10",
     ],
@@ -105,10 +105,10 @@ export const mockups: Mockup[] = [
     industry: "Freight Brokerage · Truckload",
     sidecar: "Invoice Auditor",
     heroScenario:
-      "Flags a reefer fuel surcharge billed above contract on a frozen lane — and drafts the dispute letter for you.",
+      "Flags a reefer fuel surcharge billed above contract on a frozen lane, and drafts the dispute letter for you.",
     benefits: [
-      "Reads every freight bill against contract — 1,284 audited MTD, 23 overcharges flagged",
-      "Auto-drafts the dispute letter so recovery is a one-click send — 88% win rate",
+      "Reads every freight bill against contract, 1,284 audited MTD, 23 overcharges flagged",
+      "Auto-drafts the dispute letter so recovery is a one-click send, 88% win rate",
       "Cut average days-to-recover from 42 to 19",
       "$312K recovered year-to-date",
     ],
@@ -124,10 +124,10 @@ export const mockups: Mockup[] = [
     heroScenario:
       "Spots a duty rate on the pedimento that doesn't match the HS code on a Laredo → Monterrey entry.",
     benefits: [
-      "Reconciles the freight invoice and pedimento together — 940 files MTD, no manual matching",
-      "Flags duty / HS-code / freight mismatches — 17 caught this month",
+      "Reconciles the freight invoice and pedimento together, 940 files MTD, no manual matching",
+      "Flags duty / HS-code / freight mismatches, 17 caught this month",
       "$58.3K recoverable MTD, $284K recovered year-to-date",
-      "62 files matched automatically per day — month-end surprises retired",
+      "62 files matched automatically per day, month-end surprises retired",
     ],
     tags: ["customs", "duty reconciliation", "HS codes", "cross-border"],
     mockupUrl: "/hessen-logistics",
@@ -139,10 +139,10 @@ export const mockups: Mockup[] = [
     industry: "3PL · Managed Transportation",
     sidecar: "Carrier Intelligence",
     heroScenario:
-      "Flags Sunbelt Freight sliding on the new Tampa lanes 3–4 weeks before it becomes a client complaint.",
+      "Flags Sunbelt Freight sliding on the new Tampa lanes 3-4 weeks before it becomes a client complaint.",
     benefits: [
-      "Scores 68 carriers continuously — network on-time 93.8%",
-      "Catches a sliding carrier 3–4 weeks before it touches a client SLA — 3 flagged early",
+      "Scores 68 carriers continuously, network on-time 93.8%",
+      "Catches a sliding carrier 3-4 weeks before it touches a client SLA, 3 flagged early",
       "New lanes carry their own scorecard from day one (Tampa expansion watched closely)",
       "Recommends volume rebalancing before the complaint lands",
     ],
@@ -158,9 +158,9 @@ export const mockups: Mockup[] = [
     heroScenario:
       "Catches an ETA slip on a medical-devices load while the receiver's detention clock is already running.",
     benefits: [
-      "Watches 47 in-motion loads off the GPS feed — surfaces exceptions before the customer calls",
+      "Watches 47 in-motion loads off the GPS feed, surfaces exceptions before the customer calls",
       "Flags ETA slips on time-sensitive freight (medical devices, Memphis → Dallas)",
-      "Captures detention accessorials before they age out — $41.8K captured MTD",
+      "Captures detention accessorials before they age out, $41.8K captured MTD",
       "Proactive customer notification, one tap to capture the charge",
     ],
     tags: ["live exceptions", "detention", "accessorials", "ETA tracking"],
@@ -173,11 +173,11 @@ export const mockups: Mockup[] = [
     industry: "Distribution · Multi-Brand 3PL",
     sidecar: "Client Reporting",
     heroScenario:
-      "Builds every client report automatically from the same live data the operation runs on — no manual pull.",
+      "Builds every client report automatically from the same live data the operation runs on, no manual pull.",
     benefits: [
-      "Generates every client report automatically — no spreadsheet exports",
+      "Generates every client report automatically, no spreadsheet exports",
       "Live inventory health by client across 8,420 SKUs, all brands",
-      "Network fill rate 98.4% — the same number the client sees",
+      "Network fill rate 98.4%, the same number the client sees",
       "Returns rolled into every report (312 this week)",
     ],
     tags: ["automated reporting", "client portal", "fill rate", "inventory"],
@@ -190,9 +190,9 @@ export const mockups: Mockup[] = [
     industry: "Fulfillment · DTC 3PL",
     sidecar: "Labor Planning",
     heroScenario:
-      "Staffs the afternoon surge from the very feed that fills client metrics — so cut-offs get met, not missed.",
+      "Staffs the afternoon surge from the very feed that fills client metrics, so cut-offs get met, not missed.",
     benefits: [
-      "Sizes tomorrow's crew from the throughput forecast that fills today's client metrics — one source",
+      "Sizes tomorrow's crew from the throughput forecast that fills today's client metrics, one source",
       "14,280 orders shipped today across 9 clients, all on the cut-off",
       "99.1% on-time ship rate; 9 / 9 client cut-offs met",
       "Afternoon surge staffed ahead, not after the miss",
@@ -209,8 +209,8 @@ export const mockups: Mockup[] = [
     heroScenario:
       "Sees tomorrow's inbound boxes spike 16% on the 6 AM Savannah rail wave and staffs the crew ahead of it.",
     benefits: [
-      "Forecasts inbound box volume by facility 7 days out — 93.1% accuracy",
-      "Flags surges before they hit — 5 staffed ahead this week (Savannah rail wave, 6 AM peak)",
+      "Forecasts inbound box volume by facility 7 days out, 93.1% accuracy",
+      "Flags surges before they hit, 5 staffed ahead this week (Savannah rail wave, 6 AM peak)",
       "Drives the crew plan straight from inbound volume",
       "Tomorrow's +16% morning spike covered before the shift starts",
     ],
@@ -224,12 +224,12 @@ export const mockups: Mockup[] = [
     industry: "Reverse Logistics · Returns",
     sidecar: "Returns Intelligence",
     heroScenario:
-      "Sorts a high-value healthcare return batch in seconds — your team confirms each disposition before anything moves.",
+      "Sorts a high-value healthcare return batch in seconds, your team confirms each disposition before anything moves.",
     benefits: [
-      "Auto-suggests disposition for every return — 171 of 186 staged, your team confirms each",
+      "Auto-suggests disposition for every return, 171 of 186 staged, your team confirms each",
       "62% back to sellable (▲9 pts); $113.7K recovered this week",
       "Processing time cut 50% vs. manual triage; restock lag down from 3.4 to 1.6 days",
-      "Reads reasons, lot codes and condition — judgment stays with people (94% confirm rate)",
+      "Reads reasons, lot codes and condition, judgment stays with people (94% confirm rate)",
     ],
     tags: ["returns disposition", "restock", "value recovery", "human-in-loop"],
     mockupUrl: "/safeway-logistics",
@@ -241,10 +241,10 @@ export const mockups: Mockup[] = [
     industry: "Food & Beverage · Temp-Controlled Distribution",
     sidecar: "Demand Forecasting",
     heroScenario:
-      "Flags organic green coffee climbing toward its reorder point — it crosses in 6 days, ahead of the usual cycle.",
+      "Flags organic green coffee climbing toward its reorder point, it crosses in 6 days, ahead of the usual cycle.",
     benefits: [
-      "Forecasts demand across 3,420 SKUs and every temp zone — 91.6% accuracy (▲3.1 pts)",
-      "Flags climbers before they cross the reorder point — 7 this week",
+      "Forecasts demand across 3,420 SKUs and every temp zone, 91.6% accuracy (▲3.1 pts)",
+      "Flags climbers before they cross the reorder point, 7 this week",
       "Frees cooler space held by slow-movers (12% tied up today)",
       "Targets ~35% fewer stockouts and ~20% less overstock in 90 days",
     ],

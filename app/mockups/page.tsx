@@ -1,65 +1,21 @@
-import Link from "next/link";
 import { mockups } from "@/data/mockups";
 import MockupGallery from "@/components/MockupGallery";
 import SectionCTA from "@/components/SectionCTA";
-import ThemeToggle from "@/components/ThemeToggle";
-
-const MAILTO = "mailto:tahil@instiveai.com?subject=Mockup Request";
+import Nav from "@/components/site/Nav";
+import Footer from "@/components/site/Footer";
+import { BookDemoButton } from "@/components/site/BookDemo";
 
 export const metadata = {
-  title: "See Instive AI in your world — Mockups",
+  title: "See Instive AI in your world",
   description:
     "Every mockup was built for a real logistics company, showing exactly what their operations look like with an AI layer on top. No generic demos.",
 };
 
 export default function MockupsPage() {
   return (
-    <main className="relative min-h-screen" style={{ backgroundColor: "var(--bg-primary)" }}>
-      {/* Navigation bar */}
-      <header
-        className="sticky top-0 z-40 border-b"
-        style={{
-          backgroundColor: "rgba(14, 26, 36, 0.75)",
-          backdropFilter: "blur(16px)",
-          WebkitBackdropFilter: "blur(16px)",
-          borderColor: "var(--line)",
-        }}
-      >
-        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          <Link
-            href="/"
-            className="flex items-center gap-2.5"
-            style={{ color: "var(--text-primary)", textDecoration: "none" }}
-          >
-            <span
-              style={{
-                display: "grid",
-                placeItems: "center",
-                width: 28,
-                height: 28,
-                borderRadius: 6,
-                backgroundColor: "var(--signal)",
-                color: "#0E1A24",
-                fontFamily: "var(--font-mono)",
-                fontWeight: 700,
-                fontSize: 14,
-              }}
-            >
-              i
-            </span>
-            <span
-              style={{
-                fontFamily: "var(--font-display)",
-                fontWeight: 700,
-                fontSize: 16,
-              }}
-            >
-              Instive<span style={{ color: "var(--signal)" }}>.ai</span>
-            </span>
-          </Link>
-          <ThemeToggle />
-        </div>
-      </header>
+    <>
+      <Nav />
+      <main className="relative min-h-screen" style={{ backgroundColor: "var(--bg-primary)" }}>
 
       {/* Hero section */}
       <section
@@ -105,7 +61,7 @@ export default function MockupsPage() {
               className="text-lg leading-relaxed max-w-3xl"
               style={{ color: "var(--text-secondary)" }}
             >
-              Every mockup below was built for a real logistics company —
+              Every mockup below was built for a real logistics company,
               showing exactly what their operations would look like with an AI
               layer on top. No generic demos. Built for them, deployable in
               weeks.
@@ -178,8 +134,8 @@ export default function MockupsPage() {
 
           {/* CTA button */}
           <div>
-            <a
-              href={MAILTO}
+            <BookDemoButton
+              source="mockups-hero"
               className="btn-signal inline-flex items-center gap-2 px-7 py-3.5 text-sm font-semibold"
               style={{ borderRadius: 8 }}
             >
@@ -187,7 +143,7 @@ export default function MockupsPage() {
               <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
                 <path d="M3 8h9M9 4l4 4-4 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
-            </a>
+            </BookDemoButton>
           </div>
         </div>
 
@@ -217,62 +173,8 @@ export default function MockupsPage() {
           <SectionCTA />
         </div>
       </section>
-
-      {/* Footer */}
-      <footer
-        className="border-t"
-        style={{
-          backgroundColor: "var(--bg-secondary)",
-          borderColor: "var(--line)",
-        }}
-      >
-        <div className="max-w-7xl mx-auto px-6 py-14 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
-          <div>
-            <div className="flex items-center gap-2.5 mb-3">
-              <span
-                style={{
-                  display: "grid",
-                  placeItems: "center",
-                  width: 22,
-                  height: 22,
-                  borderRadius: 5,
-                  backgroundColor: "var(--signal)",
-                  color: "#0E1A24",
-                  fontFamily: "var(--font-mono)",
-                  fontWeight: 700,
-                  fontSize: 12,
-                }}
-              >
-                i
-              </span>
-              <span
-                style={{
-                  fontFamily: "var(--font-display)",
-                  fontWeight: 700,
-                  fontSize: 15,
-                  color: "var(--text-primary)",
-                }}
-              >
-                Instive<span style={{ color: "var(--signal)" }}>.ai</span>
-              </span>
-            </div>
-            <p
-              className="text-sm leading-relaxed max-w-md"
-              style={{ color: "var(--text-secondary)" }}
-            >
-              Intelligence in motion. Autonomous agents for supply chain,
-              logistics, and warehousing.
-            </p>
-          </div>
-
-          <p
-            className="text-xs font-mono uppercase tracking-widest"
-            style={{ color: "var(--text-muted)" }}
-          >
-            © {new Date().getFullYear()} Instive AI
-          </p>
-        </div>
-      </footer>
-    </main>
+      </main>
+      <Footer />
+    </>
   );
 }
