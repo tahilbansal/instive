@@ -24,7 +24,8 @@ const nextConfig = {
       // Funnel every /api/* request to the existing Express serverless function
       // (api/index.js), preserving the original path for its internal router.
       beforeFiles: [{ source: "/api/:path*", destination: "/api" }],
-      // Run after Next.js routes + /public lookups so the new /mockups page wins.
+      // The /mockups route is a Next.js page and doesn't need a rewrite.
+      // Run after Next.js routes + /public lookups so legacy HTML files are served.
       afterFiles: legacyRewrites,
     };
   },
