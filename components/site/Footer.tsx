@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Logo from "@/components/site/Logo";
 import { FOOTER_NAV, BOOK_CALL, CONTACT_EMAIL } from "@/lib/site";
 import { BookDemoButton } from "@/components/site/BookDemo";
 
@@ -12,33 +13,8 @@ export default function Footer() {
         <div className="grid gap-12 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
           {/* Brand */}
           <div className="max-w-xs">
-            <div className="flex items-center gap-2.5 mb-4">
-              <span
-                style={{
-                  display: "grid",
-                  placeItems: "center",
-                  width: 26,
-                  height: 26,
-                  borderRadius: 6,
-                  backgroundColor: "var(--signal)",
-                  color: "#0E1A24",
-                  fontFamily: "var(--font-mono)",
-                  fontWeight: 700,
-                  fontSize: 13,
-                }}
-              >
-                i
-              </span>
-              <span
-                style={{
-                  fontFamily: "var(--font-display)",
-                  fontWeight: 700,
-                  fontSize: 17,
-                  color: "var(--text-primary)",
-                }}
-              >
-                Instive<span style={{ color: "var(--signal)" }}>.ai</span>
-              </span>
+            <div className="mb-4">
+              <Logo height={24} />
             </div>
             <p className="text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>
               Operational AI for supply chain. We read what your systems already know, sense what is

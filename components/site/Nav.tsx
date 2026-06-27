@@ -4,23 +4,9 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import ThemeToggle from "@/components/ThemeToggle";
 import Icon from "@/components/site/Icon";
+import Logo from "@/components/site/Logo";
 import { BookDemoButton } from "@/components/site/BookDemo";
 import { NAV_MENU, type NavItem } from "@/lib/site";
-
-function Logo({ size = 28 }: { size?: number }) {
-  return (
-    <Link href="/" className="flex items-center gap-2.5" style={{ color: "var(--text-primary)", textDecoration: "none" }}>
-      <span
-        style={{ display: "grid", placeItems: "center", width: size, height: size, borderRadius: 6, backgroundColor: "var(--signal)", color: "#0E1A24", fontFamily: "var(--font-mono)", fontWeight: 700, fontSize: size * 0.5 }}
-      >
-        i
-      </span>
-      <span style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: 16 }}>
-        Instive<span style={{ color: "var(--signal)" }}>.ai</span>
-      </span>
-    </Link>
-  );
-}
 
 function hasMenu(i: NavItem): i is Extract<NavItem, { menu: any }> {
   return "menu" in i;
@@ -78,14 +64,6 @@ export default function Nav() {
     >
       <div className="max-w-7xl mx-auto px-6 h-[60px] flex items-center gap-5">
         <Logo />
-
-        <span
-          className="hidden lg:flex items-center gap-2 text-[11px] uppercase"
-          style={{ fontFamily: "var(--font-mono)", letterSpacing: "0.08em", color: "var(--text-muted)" }}
-        >
-          <span className="live-dot status-pulse" />
-          Systems operational
-        </span>
 
         <div className="flex-1" />
 
