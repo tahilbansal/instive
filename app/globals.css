@@ -719,6 +719,235 @@ html.light .media-body::after {
   box-shadow: 0 0 0 1px rgba(255, 178, 62, 0.25), 0 18px 50px -18px rgba(255, 178, 62, 0.3);
 }
 
+/* ─── Use-case flow scroller (segment pages) ───────────────────────────────── */
+@keyframes flowStageIn {
+  from { opacity: 0; transform: translateY(10px) scale(0.985); }
+  to { opacity: 1; transform: none; }
+}
+.flow-node {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: var(--bg-primary);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.flow-node-animate {
+  animation: flowStageIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.flow-node-icon {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  color: var(--accent, var(--signal));
+  background: color-mix(in srgb, var(--accent, var(--signal)) 14%, transparent);
+}
+.flow-node-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 1;
+}
+.flow-node-label {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--text-primary);
+  line-height: 1.25;
+}
+.flow-node-sub {
+  font-size: 12.5px;
+  color: var(--text-muted);
+  line-height: 1.35;
+  margin-top: 2px;
+}
+.flow-node-step {
+  flex-shrink: 0;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  opacity: 0.7;
+}
+/* The final node reads as the resolved outcome. */
+.flow-node[data-final="true"] {
+  border-color: color-mix(in srgb, var(--accent, var(--signal)) 45%, transparent);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent, var(--signal)) 22%, transparent),
+    0 14px 40px -18px color-mix(in srgb, var(--accent, var(--signal)) 40%, transparent);
+}
+.flow-node[data-final="true"] .flow-node-icon {
+  color: var(--bg-primary);
+  background: var(--accent, var(--signal));
+}
+/* A stage flagged as a warning (an alert / exception step). */
+.flow-node[data-tone="warning"] .flow-node-icon {
+  color: var(--hold);
+  background: color-mix(in srgb, var(--hold) 15%, transparent);
+}
+/* Vertical connector with a dot travelling down it. */
+.flow-pipe {
+  position: relative;
+  width: 2px;
+  height: 26px;
+  margin-left: 32px;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--accent, var(--signal)) 55%, transparent), var(--line));
+}
+.flow-pipe .pip {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 6px;
+  height: 6px;
+  margin-left: -3px;
+  border-radius: 50%;
+  background: var(--accent, var(--signal));
+  box-shadow: 0 0 8px 1px color-mix(in srgb, var(--accent, var(--signal)) 70%, transparent);
+  animation: flowPip 1.6s linear infinite;
+}
+@keyframes flowPip {
+  0% { transform: translateY(-4px); opacity: 0; }
+  20% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { transform: translateY(26px); opacity: 0; }
+}
+/* ─── Branching fork (validate → passed / missing info) ────────────────────── */
+.flow-fork {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  padding-top: 30px;
+}
+/* vertical stub dropping out of the decision node */
+.flow-fork::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: calc(50% - 1px);
+  width: 2px;
+  height: 15px;
+  background: color-mix(in srgb, var(--accent, var(--signal)) 55%, transparent);
+}
+/* horizontal bar joining the two branch heads */
+.flow-fork::before {
+  content: "";
+  position: absolute;
+  top: 15px;
+  left: 25%;
+  right: 25%;
+  height: 2px;
+  background: color-mix(in srgb, var(--accent, var(--signal)) 45%, var(--line-strong));
+}
+.flow-branch {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  min-width: 0;
+}
+/* short drop from the bar into each branch head */
+.flow-branch-drop {
+  position: relative;
+  width: 2px;
+  height: 13px;
+  margin: 0 auto 10px;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--accent, var(--signal)) 45%, var(--line));
+}
+.flow-branch-drop .pip {
+  animation-name: flowPipShort;
+}
+@keyframes flowPipShort {
+  0% { transform: translateY(-4px); opacity: 0; }
+  25% { opacity: 1; }
+  75% { opacity: 1; }
+  100% { transform: translateY(13px); opacity: 0; }
+}
+.flow-branch-chip {
+  align-self: center;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 12px;
+  padding: 5px 11px;
+  border-radius: 999px;
+  border: 1px solid;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+.flow-branch[data-tone="positive"] .flow-branch-chip {
+  color: var(--cleared);
+  border-color: color-mix(in srgb, var(--cleared) 45%, transparent);
+  background: color-mix(in srgb, var(--cleared) 12%, transparent);
+}
+.flow-branch[data-tone="warning"] .flow-branch-chip {
+  color: var(--hold);
+  border-color: color-mix(in srgb, var(--hold) 45%, transparent);
+  background: color-mix(in srgb, var(--hold) 12%, transparent);
+}
+@media (max-width: 460px) {
+  .flow-fork {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .flow-fork::before,
+  .flow-fork::after {
+    display: none;
+  }
+  .flow-branch-drop {
+    display: none;
+  }
+  .flow-branch-chip {
+    align-self: flex-start;
+  }
+}
+
+/* Progress rail dots */
+.flow-rail-dot {
+  width: 34px;
+  height: 5px;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  background: var(--line-strong);
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+.flow-rail-dot:hover {
+  background: color-mix(in srgb, var(--accent, var(--signal)) 50%, transparent);
+}
+.flow-rail-dot[data-active="true"] {
+  background: var(--accent, var(--signal));
+  transform: scaleY(1.4);
+}
+/* Each scrolling block reserves height so the sticky diagram has room to morph */
+.flow-block {
+  min-height: 62vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 3.5vh 0;
+}
+@media (max-width: 1023px) {
+  .flow-block {
+    min-height: 0;
+    justify-content: flex-start;
+    padding: 28px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .flow-block:last-child {
+    border-bottom: none;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -736,7 +965,9 @@ html.light .media-body::after {
   .float,
   .float-slow,
   .scan::before,
-  .flow-connector .flow-dot {
+  .flow-connector .flow-dot,
+  .flow-pipe .pip,
+  .flow-node-animate {
     animation: none !important;
   }
 }

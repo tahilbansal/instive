@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import ThemeToggle from "@/components/ThemeToggle";
 import Icon from "@/components/site/Icon";
 import Logo from "@/components/site/Logo";
@@ -10,6 +10,21 @@ import { NAV_MENU, type NavItem } from "@/lib/site";
 
 function hasMenu(i: NavItem): i is Extract<NavItem, { menu: any }> {
   return "menu" in i;
+}
+
+function hasGroups(i: NavItem): i is Extract<NavItem, { groups: any }> {
+  return "groups" in i;
+}
+
+function GroupLabel({ children }: { children: ReactNode }) {
+  return (
+    <div
+      className="px-3 pt-2 pb-2 text-[11px] uppercase"
+      style={{ fontFamily: "var(--font-mono)", letterSpacing: "0.14em", color: "var(--text-muted)" }}
+    >
+      {children}
+    </div>
+  );
 }
 
 function DropdownItem({ item, onClick }: { item: { label: string; sub: string; href: string; icon: string; accent: string }; onClick?: () => void }) {
@@ -70,7 +85,7 @@ export default function Nav() {
         {/* desktop nav */}
         <nav className="hidden md:flex items-center gap-1">
           {NAV_MENU.map((item) =>
-            hasMenu(item) ? (
+            hasMenu(item) || hasGroups(item) ? (
               <div
                 key={item.label}
                 className="relative"
@@ -89,14 +104,30 @@ export default function Nav() {
 
                 {openMenu === item.label && (
                   <div style={{ position: "absolute", top: "100%", right: item.label === "Resources" ? 0 : "auto", left: item.label === "Resources" ? "auto" : 0, paddingTop: 8, zIndex: 60 }}>
-                    <div
-                      className="glass dropdown-panel"
-                      style={{ width: (item.cols ?? 1) === 2 ? 540 : 320, display: "grid", gridTemplateColumns: `repeat(${item.cols ?? 1}, 1fr)`, gap: 2 }}
-                    >
-                      {item.menu.map((m) => (
-                        <DropdownItem key={m.href + m.label} item={m} />
-                      ))}
-                    </div>
+                    {hasGroups(item) ? (
+                      <div
+                        className="glass dropdown-panel"
+                        style={{ width: 640, display: "grid", gridTemplateColumns: `repeat(${item.groups.length}, 1fr)`, gap: 2 }}
+                      >
+                        {item.groups.map((g) => (
+                          <div key={g.title} style={{ display: "flex", flexDirection: "column" }}>
+                            <GroupLabel>{g.title}</GroupLabel>
+                            {g.links.map((m) => (
+                              <DropdownItem key={m.href + m.label} item={m} />
+                            ))}
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <div
+                        className="glass dropdown-panel"
+                        style={{ width: (item.cols ?? 1) === 2 ? 540 : 320, display: "grid", gridTemplateColumns: `repeat(${item.cols ?? 1}, 1fr)`, gap: 2 }}
+                      >
+                        {item.menu.map((m) => (
+                          <DropdownItem key={m.href + m.label} item={m} />
+                        ))}
+                      </div>
+                    )}
                   </div>
                 )}
               </div>
@@ -140,7 +171,7 @@ export default function Nav() {
         <div className="md:hidden border-t overflow-y-auto" style={{ backgroundColor: "var(--bg-primary)", borderColor: "var(--line)", height: "calc(100vh - 61px)" }}>
           <nav className="px-6 py-5 flex flex-col">
             {NAV_MENU.map((item) =>
-              hasMenu(item) ? (
+              hasMenu(item) || hasGroups(item) ? (
                 <div key={item.label} className="border-b" style={{ borderColor: "var(--line)" }}>
                   <button
                     onClick={() => setAcc(acc === item.label ? null : item.label)}
@@ -152,9 +183,18 @@ export default function Nav() {
                   </button>
                   {acc === item.label && (
                     <div className="pb-3 flex flex-col gap-1">
-                      {item.menu.map((m) => (
-                        <DropdownItem key={m.href + m.label} item={m} onClick={() => setOpen(false)} />
-                      ))}
+                      {hasGroups(item)
+                        ? item.groups.map((g) => (
+                            <div key={g.title}>
+                              <GroupLabel>{g.title}</GroupLabel>
+                              {g.links.map((m) => (
+                                <DropdownItem key={m.href + m.label} item={m} onClick={() => setOpen(false)} />
+                              ))}
+                            </div>
+                          ))
+                        : item.menu.map((m) => (
+                            <DropdownItem key={m.href + m.label} item={m} onClick={() => setOpen(false)} />
+                          ))}
                     </div>
                   )}
                 </div>

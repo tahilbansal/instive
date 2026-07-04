@@ -10,7 +10,7 @@ export default function Footer() {
       style={{ backgroundColor: "var(--bg-secondary)", borderColor: "var(--line)" }}
     >
       <div className="max-w-7xl mx-auto px-6 py-16">
-        <div className="grid gap-12 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
+        <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr_1fr]">
           {/* Brand */}
           <div className="max-w-xs">
             <div className="mb-4">

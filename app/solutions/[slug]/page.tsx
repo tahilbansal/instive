@@ -93,14 +93,18 @@ export default function SolutionPage({ params }: { params: { slug: string } }) {
                   </div>
                   <div className="flex flex-col gap-4">
                     {agents.map((a) => (
-                      <Link key={a!.name} href="/services" className="surface-card p-6 flex items-center gap-4" style={{ ["--accent" as any]: a!.accent, textDecoration: "none" }}>
+                      <Link key={a!.name} href={a!.href ?? "/services"} className="surface-card p-6 flex items-center gap-4" style={{ ["--accent" as any]: a!.accent, textDecoration: "none" }}>
                         <span style={{ width: 48, height: 48, borderRadius: 12, display: "grid", placeItems: "center", backgroundColor: `${a!.accent}1a`, color: a!.accent, flexShrink: 0 }}>
                           <Icon name={a!.icon} size={24} />
                         </span>
-                        <div>
+                        <div className="flex-1">
                           <div style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: 20, color: "var(--text-primary)" }}>{a!.name}</div>
                           <div className="text-[14px]" style={{ color: "var(--text-secondary)" }}>{a!.job}</div>
                         </div>
+                        <span className="inline-flex items-center gap-1.5 text-[12px] font-semibold whitespace-nowrap" style={{ color: a!.accent, fontFamily: "var(--font-mono)", textTransform: "uppercase", letterSpacing: "0.05em" }}>
+                          {a!.href ? "See it live" : "Meet the agent"}
+                          <Icon name="arrow" size={13} />
+                        </span>
                       </Link>
                     ))}
                   </div>

@@ -297,6 +297,633 @@ export const INDUSTRIES: Industry[] = [
 
 export const industryBySlug = (slug: string) => INDUSTRIES.find((i) => i.slug === slug);
 
+// ─── Customer segments (by who you are in the chain) ─────────────────────────
+// A third way in, alongside Solutions (by problem) and Industries. Each segment
+// carries the "automation in action" flows that power the scroll diagram.
+export type FlowStage = { label: string; sub: string; icon: string; tone?: "warning" | "positive" };
+/** A conditional path that forks off the end of the linear spine. */
+export type FlowBranch = { condition: string; tone: "warning" | "positive"; stages: FlowStage[] };
+export type UseCase = {
+  id: string;
+  title: string;
+  tagline: string;
+  /** The linear spine, input to extract to validate. */
+  flow: FlowStage[];
+  /** Optional fork after the spine (e.g. passed vs missing info). Expects 2 branches. */
+  branches?: FlowBranch[];
+  metric: { value: string; label: string };
+  /** Cross-link to an existing /solutions/[id] where one fits. */
+  solutionId?: string;
+};
+export type Segment = {
+  slug: string;
+  name: string;
+  line: string;
+  headline: string;
+  intro: string;
+  pains: string[];
+  useCases: UseCase[];
+  solutionIds: string[];
+  stat: { big: string; label: string };
+  accent: string;
+  icon: string;
+  image: string;
+  alt: string;
+};
+
+export const SEGMENTS: Segment[] = [
+  {
+    slug: "freight-forwarders",
+    name: "Freight forwarders",
+    line: "Documents read and filed, carriers scored, client reports built from one live feed.",
+    headline: "From quote to shipment, without the data entry.",
+    intro:
+      "Forwarding still runs on emails, PDFs and rekeying. Instive reads the documents, watches every carrier and lane, and builds the client report, so your team orchestrates the shipment instead of retyping it.",
+    pains: [
+      "Bookings, arrival notices and invoices are rekeyed by hand",
+      "A slipping carrier surfaces as a client complaint, weeks late",
+      "Every client report is a manual export that is stale on arrival",
+      "Volume grows, so headcount has to grow with it",
+    ],
+    useCases: [
+      {
+        id: "quote-automation",
+        title: "Quote automation",
+        tagline:
+          "An RFQ lands as an email or a spreadsheet. An agent reads the lanes and cargo, rates them against your tariffs, and drafts the quote ready to send.",
+        flow: [
+          { label: "RFQ arrives", sub: "Email, PDF or spreadsheet", icon: "doc" },
+          { label: "Extract lanes and cargo", sub: "Origin, destination, weight, mode", icon: "brain" },
+          { label: "Rate against tariffs", sub: "Your contracts and buy rates", icon: "chart" },
+          { label: "Quote drafted", sub: "Ready to review and send", icon: "draft" },
+        ],
+        metric: { value: "Minutes", label: "from RFQ to a drafted quote" },
+      },
+      {
+        id: "shipment-creation",
+        title: "Shipment creation",
+        tagline:
+          "A booking confirmation is read into a shipment, validated against the booking, and created in your TMS with no rekeying.",
+        flow: [
+          { label: "Booking confirmation", sub: "From shipper or origin agent", icon: "doc" },
+          { label: "Extract parties and cargo", sub: "Consignee, HS, weights, refs", icon: "brain" },
+          { label: "Validate against booking", sub: "Mismatch and missing data caught", icon: "check" },
+          { label: "Shipment created in TMS", sub: "Clean and structured", icon: "plug" },
+        ],
+        metric: { value: "100%", label: "of shipments created touchless" },
+      },
+      {
+        id: "isf-compliance",
+        title: "ISF filing and compliance workflows",
+        tagline:
+          "Documents are read, the data is extracted and validated, then the flow forks: a clean filing goes straight to ABI, and a gap routes to a person before anything files.",
+        flow: [
+          { label: "Documents arrive", sub: "ISF, commercial invoice, packing list", icon: "doc" },
+          { label: "Extract the data", sub: "Parties, tariff, bond details", icon: "brain" },
+          { label: "Validate the data", sub: "Against ISF and compliance rules", icon: "shield" },
+        ],
+        branches: [
+          {
+            condition: "Passed",
+            tone: "positive",
+            stages: [
+              { label: "Submit into ABI", sub: "Filed with customs", icon: "plug" },
+              { label: "Filed on time", sub: "Inside the window", icon: "check" },
+            ],
+          },
+          {
+            condition: "Missing info",
+            tone: "warning",
+            stages: [
+              { label: "Alert raised", sub: "The exact gap, flagged", icon: "bolt", tone: "warning" },
+              { label: "Human exception handling", sub: "A person resolves it", icon: "human" },
+            ],
+          },
+        ],
+        metric: { value: "On time", label: "ISF filings, gaps caught first" },
+      },
+      {
+        id: "consolidations",
+        title: "Consolidations and shipment management",
+        tagline:
+          "House shipments are grouped by port and sailing, built into a consolidation, and the master bill is drafted automatically.",
+        flow: [
+          { label: "House shipments in", sub: "Across shippers and lanes", icon: "layers" },
+          { label: "Group by port and ETD", sub: "Same sailing, same box", icon: "boxes" },
+          { label: "Build the consolidation", sub: "Weights and volumes rolled up", icon: "check" },
+          { label: "Master bill drafted", sub: "Ready to review", icon: "draft" },
+        ],
+        metric: { value: "Auto", label: "consolidation build and MBL draft" },
+      },
+      {
+        id: "document-processing",
+        title: "Document processing",
+        tagline:
+          "Every inbound email and PDF is read, extracted, validated and posted to your TMS, so only the true edge cases reach a person.",
+        flow: [
+          { label: "Email and PDF arrive", sub: "Arrival notices, invoices, docs", icon: "doc" },
+          { label: "AI extracts the fields", sub: "Parties, charges, references", icon: "brain" },
+          { label: "Validate and post to TMS", sub: "Clean, structured, no rekeying", icon: "check" },
+          { label: "Exception flagged", sub: "Only edge cases reach a person", icon: "bolt" },
+        ],
+        metric: { value: "2,000 hrs", label: "of data entry removed a month" },
+      },
+      {
+        id: "operational-follow-ups",
+        title: "Operational follow-ups",
+        tagline:
+          "Milestones are tracked across every shipment, a missing document or update is detected, and the follow-up is drafted and sent for you.",
+        flow: [
+          { label: "Milestones tracked", sub: "Across every shipment and lane", icon: "trail" },
+          { label: "Missing doc or update", sub: "Detected the moment it is due", icon: "bolt" },
+          { label: "Follow-up drafted", sub: "To the right party", icon: "draft" },
+          { label: "Sent and logged", sub: "Nothing falls through", icon: "check" },
+        ],
+        metric: { value: "0", label: "follow-ups forgotten" },
+        solutionId: "carrier-slips",
+      },
+    ],
+    solutionIds: ["carrier-slips", "reporting", "invoice-audits"],
+    stat: { big: "2,000+", label: "hours of document work removed a month" },
+    accent: "#3b82f6",
+    icon: "layers",
+    image: "/images/logistics.jpg",
+    alt: "Freight forwarding operation seen across a container port at night with light trails",
+  },
+  {
+    slug: "customs-brokers",
+    name: "Customs brokers",
+    line: "Entry data extracted, classifications checked, freight and duty bills audited.",
+    headline: "Keep trade moving, off the manual keyboard.",
+    intro:
+      "Brokerage keeps global trade moving, but too much of it still runs on rekeying commercial invoices and packing lists. Instive extracts the entry data, checks the classification, and audits the bill, with your broker confirming every filing.",
+    pains: [
+      "Commercial invoices and packing lists are keyed line by line",
+      "Classification and compliance checks depend on who is on shift",
+      "PSC risk is found after the entry is filed, not before",
+      "Freight and duty overcharges age out uncaught",
+    ],
+    useCases: [
+      {
+        id: "customs-entry-creation",
+        title: "Customs entry creation",
+        tagline:
+          "Commercial invoices and packing lists are read into line items with HS codes, validated against the tariff, and drafted into the entry for your broker to confirm.",
+        flow: [
+          { label: "Invoice and packing list", sub: "PDF, scan or email", icon: "doc" },
+          { label: "Extract line items and HTS", sub: "Values, quantities, origins", icon: "brain" },
+          { label: "Validate the classification", sub: "Against the tariff and rules", icon: "shield" },
+          { label: "Draft the entry (7501)", sub: "Ready for review", icon: "draft" },
+          { label: "Broker confirms", sub: "Nothing files without a person", icon: "human" },
+        ],
+        metric: { value: "70%", label: "less time to a filed entry" },
+      },
+      {
+        id: "isf-filings",
+        title: "ISF filings",
+        tagline:
+          "ISF data is assembled and validated, then the flow forks: a clean filing goes straight to ABI, and a gap routes to a person before anything files.",
+        flow: [
+          { label: "ISF data assembled", sub: "Across the shipment documents", icon: "layers" },
+          { label: "Validate the data", sub: "Against ISF and compliance rules", icon: "shield" },
+        ],
+        branches: [
+          {
+            condition: "Passed",
+            tone: "positive",
+            stages: [
+              { label: "Submit into ABI", sub: "Filed with customs", icon: "plug" },
+              { label: "Filed on time", sub: "Inside the window", icon: "check" },
+            ],
+          },
+          {
+            condition: "Missing info",
+            tone: "warning",
+            stages: [
+              { label: "Alert raised", sub: "The exact gap, flagged", icon: "bolt", tone: "warning" },
+              { label: "Human exception handling", sub: "A person resolves it", icon: "human" },
+            ],
+          },
+        ],
+        metric: { value: "On time", label: "ISF filings, gaps caught first" },
+      },
+      {
+        id: "customs-entry-audits",
+        title: "Customs entry audits",
+        tagline:
+          "Filed entries are re-checked against the invoice and tariff, and any duty or classification error is flagged and drafted into a correction.",
+        flow: [
+          { label: "Filed entries", sub: "Every entry, not a sample", icon: "audit" },
+          { label: "Recheck duty and HTS", sub: "Against invoice and tariff", icon: "check" },
+          { label: "Flag the discrepancy", sub: "Over or under declared", icon: "bolt" },
+          { label: "Correction drafted", sub: "Ready to review", icon: "draft" },
+        ],
+        metric: { value: "100%", label: "of entries re-audited" },
+        solutionId: "invoice-audits",
+      },
+      {
+        id: "post-summary-corrections",
+        title: "Post Summary Corrections (PSC)",
+        tagline:
+          "An error found after filing is surfaced with its reason, the PSC is drafted with the corrected data, and it files back to customs.",
+        flow: [
+          { label: "Entry data reviewed", sub: "After the summary is filed", icon: "layers" },
+          { label: "Detect the error", sub: "Duty, value, classification", icon: "bolt" },
+          { label: "Draft the PSC", sub: "With the corrected data", icon: "draft" },
+          { label: "File the correction", sub: "Back to customs", icon: "plug" },
+        ],
+        metric: { value: "Early", label: "PSC risk caught, not missed" },
+      },
+      {
+        id: "duty-drawback",
+        title: "Duty drawback claims",
+        tagline:
+          "Import and export records are matched for drawback eligibility, the claim is assembled, and the recoverable duty is surfaced.",
+        flow: [
+          { label: "Import and export records", sub: "Matched in one view", icon: "database" },
+          { label: "Match for eligibility", sub: "Substitution and direct ID", icon: "check" },
+          { label: "Assemble the claim", sub: "With supporting docs", icon: "draft" },
+          { label: "Recover the duty", sub: "Money back on exports", icon: "arrow" },
+        ],
+        metric: { value: "Recovered", label: "duty that would age out" },
+      },
+    ],
+    solutionIds: ["invoice-audits", "reporting", "carrier-slips"],
+    stat: { big: "100%", label: "of entries rule-checked before filing" },
+    accent: "#8b5cf6",
+    icon: "shield",
+    image: "/images/logistics.jpg",
+    alt: "Customs and compliance documentation flowing through a global trade gateway at night",
+  },
+  {
+    slug: "shippers-importers",
+    name: "Shippers and importers",
+    line: "POs consolidated, invoices validated and three-way matched, customs docs filed clean.",
+    headline: "Every PO, invoice and filing, matched and clean.",
+    intro:
+      "Shippers and importers run on POs, invoices and customs paperwork that still move by hand. Instive consolidates the POs, validates and three-way matches every invoice, and files the customs documents, so exceptions are the only thing that reaches your team.",
+    pains: [
+      "POs are consolidated into shipments by hand",
+      "Invoices are matched to POs and receipts line by line",
+      "A billing error slips through because nobody reads them all",
+      "Customs paperwork is rekeyed against a filing deadline",
+    ],
+    useCases: [
+      {
+        id: "po-consolidation",
+        title: "PO consolidation",
+        tagline:
+          "Purchase orders are read, grouped by vendor and port, and consolidated into shipments with the booking drafted for you.",
+        flow: [
+          { label: "Purchase orders arrive", sub: "From your ERP or email", icon: "doc" },
+          { label: "Group by vendor and port", sub: "Same origin, same window", icon: "layers" },
+          { label: "Consolidate into a shipment", sub: "Quantities and cube rolled up", icon: "boxes" },
+          { label: "Booking drafted", sub: "Ready to place", icon: "draft" },
+        ],
+        metric: { value: "Minutes", label: "to a consolidated booking" },
+      },
+      {
+        id: "invoice-validation",
+        title: "Invoice validation",
+        tagline:
+          "Every commercial and freight invoice is validated against the PO and contract, and any discrepancy is flagged and drafted for approval or dispute.",
+        flow: [
+          { label: "Commercial or freight invoice", sub: "Every line, every file", icon: "audit" },
+          { label: "Validate vs PO and contract", sub: "Price, quantity, terms", icon: "check" },
+          { label: "Flag the discrepancy", sub: "Over-bills and errors", icon: "bolt" },
+          { label: "Approve or dispute", sub: "Drafted either way", icon: "draft" },
+        ],
+        metric: { value: "88%", label: "invoice dispute win rate" },
+        solutionId: "invoice-audits",
+      },
+      {
+        id: "three-way-matching",
+        title: "Three-way matching",
+        tagline:
+          "The PO, the receipt and the invoice are matched together, then the flow forks: a clean match clears for payment, a mismatch holds and routes to a person.",
+        flow: [
+          { label: "PO, receipt and invoice", sub: "Pulled into one view", icon: "layers" },
+          { label: "Match all three", sub: "Price, quantity, receipt", icon: "check" },
+        ],
+        branches: [
+          {
+            condition: "Matched",
+            tone: "positive",
+            stages: [{ label: "Cleared for payment", sub: "Straight through, no touch", icon: "arrow" }],
+          },
+          {
+            condition: "Mismatch",
+            tone: "warning",
+            stages: [
+              { label: "Held and flagged", sub: "With the exact variance", icon: "bolt", tone: "warning" },
+              { label: "Human review", sub: "A person decides", icon: "human" },
+            ],
+          },
+        ],
+        metric: { value: "Touchless", label: "matching on clean invoices" },
+      },
+      {
+        id: "shipment-container-reconciliation",
+        title: "Shipment and container reconciliation",
+        tagline:
+          "Container and shipment documents are reconciled against the booking, and any short or over shipment is flagged and the records updated.",
+        flow: [
+          { label: "Container and shipment docs", sub: "Packing lists, manifests", icon: "boxes" },
+          { label: "Reconcile against booking", sub: "Quantities and containers", icon: "check" },
+          { label: "Flag short or over", sub: "Before it hits the books", icon: "bolt" },
+          { label: "Records updated", sub: "Systems back in sync", icon: "database" },
+        ],
+        metric: { value: "On arrival", label: "reconciliation, not at month end" },
+      },
+      {
+        id: "customs-documentation",
+        title: "Customs documentation automation",
+        tagline:
+          "Trade documents are read, extracted and checked for compliance, then packaged filing-ready for your broker.",
+        flow: [
+          { label: "Trade documents arrive", sub: "Invoices, COs, certificates", icon: "doc" },
+          { label: "Extract and classify", sub: "Line items and HS codes", icon: "brain" },
+          { label: "Validate compliance", sub: "Against the rule sets", icon: "shield" },
+          { label: "Packaged for the broker", sub: "Filing-ready", icon: "draft" },
+        ],
+        metric: { value: "Filing-ready", label: "in minutes, not hours" },
+      },
+      {
+        id: "isf-compliance",
+        title: "ISF filing and compliance workflows",
+        tagline:
+          "ISF documents are read, extracted and validated against the rules, then submitted, with any gap surfaced before it files.",
+        flow: [
+          { label: "Documents arrive", sub: "ISF and supporting docs", icon: "doc" },
+          { label: "Extract the data", sub: "Parties, tariff, bond", icon: "brain" },
+          { label: "Validate and submit", sub: "Gaps flagged first", icon: "plug" },
+        ],
+        metric: { value: "On time", label: "ISF filings" },
+      },
+    ],
+    solutionIds: ["invoice-audits", "reporting", "stockouts"],
+    stat: { big: "88%", label: "invoice dispute win rate" },
+    accent: "#FFB23E",
+    icon: "boxes",
+    image: "/images/logistics.jpg",
+    alt: "Importer reviewing purchase orders and invoices against a live shipment board",
+  },
+  {
+    slug: "carriers",
+    name: "Carriers",
+    line: "Work orders, PODs and paperwork read and matched, from dispatch to delivery.",
+    headline: "From dispatch to proof of delivery, hands off the keyboard.",
+    intro:
+      "Trucking, ocean, air or rail, carrier operations still run on rekeying work orders, chasing PODs and reconciling paperwork across systems. Instive reads every document, matches it to the load, and chases what is missing, so your team works exceptions instead of data entry.",
+    pains: [
+      "Work orders are rekeyed from email into the TMS",
+      "PODs are chased by hand and matched one by one",
+      "Rate cons, BOLs and invoices live in separate systems",
+      "Missing paperwork surfaces at billing, not at delivery",
+    ],
+    useCases: [
+      {
+        id: "work-orders",
+        title: "Work orders",
+        tagline:
+          "An inbound work order is read into loads and stops, validated against dispatch, and created in your TMS with no rekeying.",
+        flow: [
+          { label: "Work order arrives", sub: "Email, PDF or portal", icon: "doc" },
+          { label: "Extract loads and stops", sub: "References, weights, times", icon: "brain" },
+          { label: "Validate against dispatch", sub: "Equipment and availability", icon: "check" },
+          { label: "Created in the TMS", sub: "Clean and structured", icon: "plug" },
+        ],
+        metric: { value: "Minutes", label: "to a created work order" },
+      },
+      {
+        id: "pod-processing",
+        title: "Proof of delivery (POD) processing",
+        tagline:
+          "PODs are read as they come in, the signature and any exception are captured, matched to the load, and the shipment is closed.",
+        flow: [
+          { label: "POD scanned or emailed", sub: "From the driver or dock", icon: "doc" },
+          { label: "Capture signature and notes", sub: "Damage and exceptions read", icon: "brain" },
+          { label: "Match to the load", sub: "No manual lookup", icon: "check" },
+          { label: "Attached and closed", sub: "Ready to bill", icon: "check" },
+        ],
+        metric: { value: "Touchless", label: "POD capture and matching" },
+      },
+      {
+        id: "carrier-paperwork",
+        title: "Carrier paperwork processing",
+        tagline:
+          "Rate confirmations, BOLs and invoices are read, cross-checked against the load, and filed across your TMS, dispatch and fleet systems.",
+        flow: [
+          { label: "Rate con, BOL, invoice", sub: "Across every source", icon: "audit" },
+          { label: "Extract and cross-check", sub: "One consistent record", icon: "brain" },
+          { label: "Validate against the load", sub: "Rate, weight, references", icon: "shield" },
+          { label: "Filed across systems", sub: "TMS, dispatch, fleet", icon: "plug" },
+        ],
+        metric: { value: "One pass", label: "across every document" },
+      },
+      {
+        id: "operational-follow-ups",
+        title: "Operational follow-ups",
+        tagline:
+          "Milestones are tracked across every shipment, a missing POD or update is detected, and the follow-up is drafted and sent for you.",
+        flow: [
+          { label: "Milestones tracked", sub: "Across every shipment", icon: "trail" },
+          { label: "Missing POD or update", sub: "Detected the moment it is due", icon: "bolt" },
+          { label: "Follow-up drafted", sub: "To the driver or customer", icon: "draft" },
+          { label: "Sent and logged", sub: "Nothing falls through", icon: "check" },
+        ],
+        metric: { value: "0", label: "PODs left uncollected" },
+        solutionId: "carrier-slips",
+      },
+      {
+        id: "exception-handling",
+        title: "Exception handling",
+        tagline:
+          "Every document and shipment is validated, then the flow forks: a clean one is processed automatically, a discrepancy is flagged for a person.",
+        flow: [
+          { label: "Documents and shipment data", sub: "Pulled into one view", icon: "layers" },
+          { label: "Validate the record", sub: "Missing PODs, incomplete paperwork", icon: "shield" },
+        ],
+        branches: [
+          {
+            condition: "Clean",
+            tone: "positive",
+            stages: [{ label: "Auto-processed", sub: "Straight through", icon: "check" }],
+          },
+          {
+            condition: "Discrepancy",
+            tone: "warning",
+            stages: [
+              { label: "Exception flagged", sub: "With the reason", icon: "bolt", tone: "warning" },
+              { label: "Human review", sub: "A person resolves it", icon: "human" },
+            ],
+          },
+        ],
+        metric: { value: "At delivery", label: "exceptions caught, not at billing" },
+      },
+    ],
+    solutionIds: ["carrier-slips", "labor", "reporting"],
+    stat: { big: "Touchless", label: "work orders, PODs and paperwork" },
+    accent: "#5BD6A6",
+    icon: "truck",
+    image: "/images/logistics.jpg",
+    alt: "Carrier fleet staged in a terminal yard at night with trucks tracing light trails",
+  },
+  {
+    slug: "freight-brokers",
+    name: "Freight brokers",
+    line: "Carrier performance scored continuously, load and rate documents audited for margin.",
+    headline: "Protect the margin on every load.",
+    intro:
+      "A broker lives on carrier reliability and on margin. Instive scores every carrier as tracking and tender data flows in, and audits every rate confirmation and invoice, so an underperformer or a margin leak is caught before it costs a customer.",
+    pains: [
+      "Carrier performance is a gut call until a load falls over",
+      "Rate cons and invoices are reconciled by hand",
+      "Margin leaks hide in accessorials nobody reads",
+      "The bad carrier is found on the load that fails",
+    ],
+    useCases: [
+      {
+        id: "carrier-performance",
+        title: "Carrier performance",
+        tagline:
+          "Tracking and tender data is scored into a live carrier ranking, so an underperformer is flagged early with a rebalancing plan before it touches a customer load.",
+        flow: [
+          { label: "Tracking and tender data", sub: "Acceptance, on-time, tracking", icon: "trail" },
+          { label: "Score every carrier", sub: "One live ranking", icon: "chart" },
+          { label: "Flag underperformers", sub: "Before the load falls over", icon: "bolt" },
+          { label: "Rebalance the book", sub: "Move volume to the strong", icon: "carrier" },
+        ],
+        metric: { value: "3 to 4 wks", label: "earlier warning" },
+        solutionId: "carrier-slips",
+      },
+      {
+        id: "load-rate-auditing",
+        title: "Load and rate auditing",
+        tagline:
+          "Rate confirmations and carrier invoices are matched against the agreed rate, and any margin leak is flagged and drafted into a dispute.",
+        flow: [
+          { label: "Rate cons and invoices", sub: "Every load, every file", icon: "audit" },
+          { label: "Match to the agreed rate", sub: "Line haul and accessorials", icon: "check" },
+          { label: "Flag the margin leak", sub: "Overbills and duplicates", icon: "bolt" },
+          { label: "Draft the dispute", sub: "Recover before it ages out", icon: "draft" },
+        ],
+        metric: { value: "88%", label: "dispute win rate" },
+        solutionId: "invoice-audits",
+      },
+      {
+        id: "carrier-onboarding",
+        title: "Carrier onboarding and compliance",
+        tagline:
+          "A carrier packet is read and its authority and insurance verified, then the flow forks: a valid carrier is onboarded, an expired one is flagged for review.",
+        flow: [
+          { label: "Carrier packet arrives", sub: "Authority, insurance, W-9", icon: "doc" },
+          { label: "Verify authority and insurance", sub: "Against FMCSA and the docs", icon: "shield" },
+        ],
+        branches: [
+          {
+            condition: "Valid",
+            tone: "positive",
+            stages: [{ label: "Onboarded to the book", sub: "Ready to tender", icon: "check" }],
+          },
+          {
+            condition: "Expired or missing",
+            tone: "warning",
+            stages: [
+              { label: "Flagged, docs requested", sub: "The exact gap, chased", icon: "bolt", tone: "warning" },
+              { label: "Human review", sub: "A person clears it", icon: "human" },
+            ],
+          },
+        ],
+        metric: { value: "Compliant", label: "carriers only in the book" },
+      },
+    ],
+    solutionIds: ["carrier-slips", "invoice-audits", "reporting"],
+    stat: { big: "3 to 4 wks", label: "earlier warning on a sliding carrier" },
+    accent: "#06b6d4",
+    icon: "carrier",
+    image: "/images/logistics.jpg",
+    alt: "Freight brokerage operation over a lit highway interchange with truck light trails",
+  },
+  {
+    slug: "3pls",
+    name: "Third-party logistics (3PLs)",
+    line: "Inventory unified across every client, labor sized to volume, reporting built live.",
+    headline: "One live view across every client.",
+    intro:
+      "A 3PL runs many clients on one floor, and each wants their own view. Instive unifies inventory across every WMS feed, sizes labor to tomorrow's volume, and builds each client's report from one source, so nobody waits on a manual export.",
+    pains: [
+      "Inventory health is buried across clients and WMS feeds",
+      "Crews are sized off last week's gut feel",
+      "Each client wants a report that is pulled by hand",
+      "A throughput dip goes unnoticed until it costs a client",
+    ],
+    useCases: [
+      {
+        id: "receiving-automation",
+        title: "Receiving and putaway",
+        tagline:
+          "An ASN or receipt is read, matched to the PO, its quantities validated, and the putaway task is created, so receiving does not stall on paperwork.",
+        flow: [
+          { label: "ASN or receipt arrives", sub: "Per client, any format", icon: "doc" },
+          { label: "Extract and match to PO", sub: "SKUs, quantities, lots", icon: "brain" },
+          { label: "Validate the quantities", sub: "Short and over flagged", icon: "check" },
+          { label: "Putaway task created", sub: "Straight to the floor", icon: "plug" },
+        ],
+        metric: { value: "Touchless", label: "receiving on clean ASNs" },
+      },
+      {
+        id: "inventory-visibility",
+        title: "Inventory visibility",
+        tagline:
+          "Every client's WMS feed is unified into one live inventory picture, with fill rate and stock health surfaced per client and across the floor.",
+        flow: [
+          { label: "WMS feeds, every client", sub: "One floor, many systems", icon: "warehouse" },
+          { label: "Unify the inventory", sub: "Normalized, per client", icon: "boxes" },
+          { label: "Fill rate and health", sub: "Live, not month end", icon: "chart" },
+          { label: "One live view", sub: "For the floor and the client", icon: "report" },
+        ],
+        metric: { value: "98.4%", label: "fill rate, reported live" },
+      },
+      {
+        id: "labor-planning",
+        title: "Labor planning",
+        tagline:
+          "Tomorrow's crew is sized from the throughput forecast, so the afternoon surge is staffed ahead and client cut-offs get met.",
+        flow: [
+          { label: "Throughput forecast", sub: "By client and shift", icon: "forecast" },
+          { label: "Size tomorrow's crew", sub: "To the work ahead", icon: "labor" },
+          { label: "Staff the surge", sub: "Before the cut-off, not after", icon: "check" },
+          { label: "On-time ship", sub: "Every client, every cut-off", icon: "truck" },
+        ],
+        metric: { value: "99.1%", label: "on-time ship rate" },
+        solutionId: "labor",
+      },
+      {
+        id: "reporting",
+        title: "Client reporting",
+        tagline:
+          "Each client's report is built from the same live data the floor runs on, so there are no exports and no arguments over whose number is right.",
+        flow: [
+          { label: "Live operations data", sub: "One governed source", icon: "database" },
+          { label: "Per-client reports", sub: "On each client's format", icon: "report" },
+          { label: "Zero manual exports", sub: "One number, floor to client", icon: "check" },
+        ],
+        metric: { value: "0", label: "manual exports" },
+        solutionId: "reporting",
+      },
+    ],
+    solutionIds: ["labor", "reporting", "stockouts"],
+    stat: { big: "98.4%", label: "fill rate reported live across clients" },
+    accent: "#10b981",
+    icon: "warehouse",
+    image: "/images/logistics.jpg",
+    alt: "Third-party logistics warehouse floor serving multiple clients at night",
+  },
+];
+
+export const segmentBySlug = (slug: string) => SEGMENTS.find((s) => s.slug === slug);
+
 // ─── Navigation ──────────────────────────────────────────────────────────────
 export const SOLUTION_LINKS = SOLUTIONS.map((s) => ({
   label: s.title,
@@ -314,18 +941,35 @@ export const INDUSTRY_LINKS = INDUSTRIES.map((i) => ({
   accent: i.accent,
 }));
 
+export const SEGMENT_LINKS = SEGMENTS.map((s) => ({
+  label: s.name,
+  sub: s.line,
+  href: `/segments/${s.slug}`,
+  icon: s.icon,
+  accent: s.accent,
+}));
+
 export const RESOURCE_LINKS = [
   { label: "Case studies", sub: "Illustrative scenarios and recovery", href: "/case-studies", icon: "chart", accent: "#FFB23E" },
   { label: "Mockups showcase", sub: "See it built on a real operation's data shape", href: "/mockups", icon: "boxes", accent: "#5BD6A6" },
   { label: "FAQ and perspectives", sub: "Common questions and views from the floor", href: "/faq", icon: "report", accent: "#3b82f6" },
 ];
 
+export type DropdownLink = { label: string; sub: string; href: string; icon: string; accent: string };
+export type NavGroup = { title: string; links: DropdownLink[] };
 export type NavItem =
   | { label: string; href: string }
-  | { label: string; menu: { label: string; sub: string; href: string; icon: string; accent: string }[]; cols?: number };
+  | { label: string; menu: DropdownLink[]; cols?: number }
+  | { label: string; groups: NavGroup[] };
 
 export const NAV_MENU: NavItem[] = [
-  { label: "Solutions", menu: SOLUTION_LINKS, cols: 2 },
+  {
+    label: "Solutions",
+    groups: [
+      { title: "By outcome", links: SOLUTION_LINKS },
+      { title: "By customer", links: SEGMENT_LINKS },
+    ],
+  },
   { label: "Industries", menu: INDUSTRY_LINKS, cols: 2 },
   { label: "Resources", menu: RESOURCE_LINKS, cols: 1 },
   { label: "About", href: "/about" },
@@ -335,6 +979,10 @@ export const FOOTER_NAV: { title: string; links: { label: string; href: string }
   {
     title: "Solutions",
     links: SOLUTIONS.map((s) => ({ label: s.title, href: `/solutions/${s.id}` })),
+  },
+  {
+    title: "By customer",
+    links: SEGMENTS.map((s) => ({ label: s.name, href: `/segments/${s.slug}` })),
   },
   {
     title: "Industries",
