@@ -669,6 +669,45 @@ html.light .media-body::after {
   mask-image: radial-gradient(135% 125% at 50% 42%, #000 60%, transparent 100%);
 }
 
+/* ─── Hero video controls ───────────────────────────────────────────────────── */
+.hero-video-controls {
+  position: absolute;
+  bottom: 20px;
+  right: 24px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 10;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+.blend-media:hover .hero-video-controls {
+  opacity: 1;
+}
+.hero-video-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(10, 10, 16, 0.55);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+}
+.hero-video-btn:hover {
+  background: color-mix(in srgb, var(--signal) 70%, transparent);
+  border-color: var(--signal);
+  transform: scale(1.1);
+}
+.hero-video-btn:active {
+  transform: scale(0.95);
+}
+
 /* Hero left: faint grid of boxes that gradually fade in */
 .hero-grid {
   position: absolute;
