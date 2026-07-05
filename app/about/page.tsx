@@ -12,23 +12,23 @@ export const metadata: Metadata = {
     "Instive AI is an engineering-led studio building production AI for supply chain, logistics and warehousing. Instinct paired with the initiative to act.",
 };
 
-const BRAND_PILLARS = [
-  { icon: "brain", word: "Intuitive instinct", body: "We read what your systems already know and sense what is about to go wrong, the way a seasoned operator would, at the scale of every shipment and SKU." },
-  { icon: "bolt", word: "Active innovation", body: "Production AI engineered to your operation, not a demo that cannot run on Monday. New capability lands where your team already works." },
-  { icon: "arrow", word: "Instant initiative", body: "The initiative to act before it costs you: drafted disputes, staffed surges, flagged exceptions, with a person in the loop where it matters." },
+const TRIAD = [
+  { n: "01", word: "Instinct", line: "We sense what is about to go wrong." },
+  { n: "02", word: "Innovation", line: "Production AI, built to how you run." },
+  { n: "03", word: "Initiative", line: "We move first, before it costs you." },
 ];
 
 const VALUES = [
-  { icon: "bolt", title: "Production or nothing", body: "A demo that cannot run on Monday morning is not a deliverable. We build for the live environment from day one." },
-  { icon: "chart", title: "Measure the friction", body: "Throughput, travel distance, accuracy, idle time. If we cannot move a number you already track, we have not earned the deployment." },
-  { icon: "arrow", title: "Velocity, both ways", body: "Work moves while you sleep and momentum compounds overnight, so progress never waits for a single timezone." },
+  { icon: "bolt", title: "Production or nothing", body: "If it cannot run on Monday morning, it is not a deliverable." },
+  { icon: "chart", title: "Measure the friction", body: "If we cannot move a number you already track, we have not earned it." },
+  { icon: "arrow", title: "Velocity, both ways", body: "Work moves while you sleep. Momentum compounds overnight." },
 ];
 
 const STEPS = [
-  { idx: "01", title: "Map the friction", body: "A working session against your real stack, ERP, TMS and WMS, to name where disorder costs you the most." },
-  { idx: "02", title: "Prototype the win", body: "We scope the first capability and prove it against your data before a line of production code ships." },
-  { idx: "03", title: "Deploy to the core", body: "Secure pipelines and optimization services go live inside your operation, integrated with the systems you already run." },
-  { idx: "04", title: "Compound", body: "Models retrain, agents widen their mandate, and the system gets sharper every cycle, overnight, every night." },
+  { idx: "01", title: "Map the friction", body: "A working session on your real stack, to find where disorder costs most." },
+  { idx: "02", title: "Prototype the win", body: "We prove the first capability on your data before production code ships." },
+  { idx: "03", title: "Deploy to the core", body: "Secure services go live inside your operation, wired to the systems you run." },
+  { idx: "04", title: "Compound", body: "Models retrain and agents widen their mandate, sharper every cycle." },
 ];
 
 export default function AboutPage() {
@@ -43,34 +43,30 @@ export default function AboutPage() {
               We turn supply chain entropy into <span className="text-gradient">autonomous order.</span>
             </>
           }
-          sub="An engineering-led studio building production AI for supply chain, logistics and warehousing. Not prototypes, systems that run every day, measured against the metrics your operation already lives by."
+          sub="An engineering-led studio building production AI for supply chain. Not prototypes, systems that run every day."
           crumbs={[{ label: "Home", href: "/" }, { label: "About" }]}
           secondary={{ label: "See our work", href: "/case-studies" }}
         />
 
-        {/* Brand definition */}
-        <section className="relative z-10 px-6 py-24 border-b" style={{ borderColor: "var(--line)" }}>
-          <div className="max-w-7xl mx-auto">
-            <Reveal className="mb-12">
-              <span className="text-[12px] uppercase" style={{ fontFamily: "var(--font-mono)", letterSpacing: "0.16em", color: "var(--signal)" }}>What Instive means</span>
-              <h2 className="mt-4" style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: "clamp(26px, 4vw, 42px)", letterSpacing: "-0.02em", color: "var(--text-primary)", maxWidth: 900, lineHeight: 1.12 }}>
-                Driven by <span className="text-gradient">intuitive instinct</span>, powered by <span className="text-gradient">active innovation</span>, and executed with <span className="text-gradient">instant initiative</span>.
+        {/* The name */}
+        <section className="relative z-10 px-6 py-28 border-b" style={{ borderColor: "var(--line)" }}>
+          <div className="max-w-3xl mx-auto text-center">
+            <Reveal>
+              <span className="text-[12px] uppercase" style={{ fontFamily: "var(--font-mono)", letterSpacing: "0.18em", color: "var(--signal)" }}>The name</span>
+              <h2 className="mt-6" style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: "clamp(30px, 5vw, 52px)", letterSpacing: "-0.03em", color: "var(--text-primary)", lineHeight: 1.08 }}>
+                Instinct, paired with the <span className="text-gradient">initiative to act</span>.
               </h2>
-              <p className="mt-6 text-[17px] leading-relaxed" style={{ color: "var(--text-secondary)", maxWidth: 720 }}>
-                The name is the product. Instive senses what is about to go wrong, engineers the intelligence to see it, and takes the initiative to act before it costs you.
-              </p>
             </Reveal>
-            <div className="grid gap-6 md:grid-cols-3">
-              {BRAND_PILLARS.map((p, i) => (
-                <Reveal key={p.word} delay={i * 80} className="surface-card p-7">
-                  <span style={{ width: 46, height: 46, borderRadius: 10, display: "grid", placeItems: "center", backgroundColor: "rgba(255,178,62,.14)", color: "var(--signal)" }}>
-                    <Icon name={p.icon} size={22} />
-                  </span>
-                  <h3 className="mt-5 mb-2" style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: 19, color: "var(--text-primary)" }}>{p.word}</h3>
-                  <p className="text-[15px] leading-relaxed" style={{ color: "var(--text-secondary)" }}>{p.body}</p>
-                </Reveal>
-              ))}
-            </div>
+          </div>
+
+          <div className="max-w-4xl mx-auto mt-20 grid gap-14 sm:grid-cols-3">
+            {TRIAD.map((t, i) => (
+              <Reveal key={t.word} delay={i * 90} className="text-center">
+                <div className="text-[12px]" style={{ fontFamily: "var(--font-mono)", letterSpacing: "0.14em", color: "var(--signal)" }}>{t.n}</div>
+                <div className="mt-4" style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: "clamp(26px, 3vw, 32px)", letterSpacing: "-0.02em", color: "var(--text-primary)" }}>{t.word}</div>
+                <p className="mt-3 text-[15px] leading-relaxed" style={{ color: "var(--text-muted)" }}>{t.line}</p>
+              </Reveal>
+            ))}
           </div>
         </section>
 
