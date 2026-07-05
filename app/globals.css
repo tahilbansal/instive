@@ -659,7 +659,8 @@ html.light .media-body::after {
 .blend-media {
   position: relative;
 }
-.blend-media img {
+.blend-media img,
+.blend-media video {
   display: block;
   width: 100%;
   height: auto;

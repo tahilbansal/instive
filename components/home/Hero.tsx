@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import { BookDemoButton } from "@/components/site/BookDemo";
 
@@ -48,14 +47,15 @@ export default function Hero() {
         <div className="relative">
           <span className="glow-blob" style={{ width: 420, height: 360, background: "var(--signal)", top: "-2%", right: "-6%", opacity: 0.22 }} />
           <div className="blend-media">
-            <Image
-              src="/images/hero_image_sc.png"
-              alt="Instive AI supply chain command center: on-time delivery, total shipments, exceptions, and AI insight with a live world map"
-              width={1536}
-              height={1024}
-              priority
-              sizes="(max-width: 1024px) 100vw, 52vw"
-            />
+            <video
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="auto"
+            >
+              <source src="/videos/hero.mp4" type="video/mp4" />
+            </video>
           </div>
         </div>
       </div>
