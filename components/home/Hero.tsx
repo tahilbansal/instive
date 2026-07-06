@@ -45,17 +45,26 @@ export default function Hero() {
             </span>
           </div>
 
-          <h1 style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "clamp(36px, 5.8vw, 72px)", lineHeight: 0.98, letterSpacing: "-0.03em", color: "var(--text-primary)" }}>
-            Intelligence that
-            <br />
-            optimizes <span className="text-gradient">every move.</span>
+          <h1
+            className="max-w-fit whitespace-nowrap"
+            style={{
+              fontFamily: "var(--font-display)",
+              fontWeight: 700,
+              fontSize: "clamp(30px, 4.2vw, 52px)",
+              lineHeight: 0.96,
+              letterSpacing: "-0.03em",
+              color: "var(--text-primary)",
+            }}
+          >
+            <span className="block">AI-powered process</span>
+            <span className="block">automation for</span>
+            <span className="block text-gradient">modern supply chains.</span>
           </h1>
 
           <p className="mt-5 text-base leading-relaxed" style={{ color: "var(--text-secondary)" }}>
-            Instive AI builds intelligent systems that transform how supply chain, procurement,
-            logistics, warehousing and distribution run. We read what your operation already knows,
-            move on <span style={kw}>instinct</span>, and take the <span style={kw}>initiative</span>{" "}
-            before a small signal becomes a costly miss.
+            Automate freight operations, procurement, and back-office workflows. Your team
+            monitors, approves, and acts on <span style={kw}>instinct</span>, through one intelligent
+            operations workspace, without replacing the systems you already run.
           </p>
 
           <div className="mt-9 flex flex-wrap gap-3">
@@ -65,8 +74,8 @@ export default function Hero() {
                 <path d="M3 8h9M9 4l4 4-4 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </BookDemoButton>
-            <Link href="/solutions" className="inline-flex items-center gap-2 px-6 py-3.5 text-sm font-semibold rounded-tight border transition-colors" style={{ fontFamily: "var(--font-display)", color: "var(--text-primary)", borderColor: "var(--line-strong)" }}>
-              Explore solutions
+            <Link href="#product" className="inline-flex items-center gap-2 px-6 py-3.5 text-sm font-semibold rounded-tight border transition-colors" style={{ fontFamily: "var(--font-display)", color: "var(--text-primary)", borderColor: "var(--line-strong)" }}>
+              See how it works
             </Link>
           </div>
         </div>

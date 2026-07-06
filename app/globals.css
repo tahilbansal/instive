@@ -365,6 +365,19 @@ html.light .modal-glass {
   background: linear-gradient(90deg, var(--signal), var(--line), transparent);
 }
 
+/* Integration logo-wall badge */
+.integration-badge {
+  transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+}
+.integration-badge:hover {
+  transform: translateY(-3px);
+  border-color: var(--signal) !important;
+  box-shadow: 0 0 0 1px rgba(255, 178, 62, 0.2), 0 14px 40px -18px rgba(255, 178, 62, 0.3);
+}
+.integration-badge:hover span {
+  color: var(--text-primary) !important;
+}
+
 /* Trust-strip marquee */
 @keyframes marquee {
   from { transform: translateX(0); }

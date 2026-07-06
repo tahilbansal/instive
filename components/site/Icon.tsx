@@ -149,6 +149,12 @@ const PATHS: Record<string, JSX.Element> = {
     </>
   ),
   // ── Utility ──
+  linkedin: (
+    <>
+      <rect x="3" y="3" width="18" height="18" rx="2" />
+      <path d="M8 10v7M8 7v.01M12 17v-4a2 2 0 0 1 4 0v4" />
+    </>
+  ),
   arrow: <path d="M4 12h14M12 5l7 7-7 7" />,
   check: <path d="M5 12l4 4 10-11" />,
   plus: <path d="M12 5v14M5 12h14" />,

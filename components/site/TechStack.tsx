@@ -43,7 +43,7 @@ export default function TechStack() {
                     className="absolute -top-2.5 left-4 px-2 py-0.5 rounded-full text-[9px] uppercase"
                     style={{ fontFamily: "var(--font-mono)", letterSpacing: "0.1em", color: "#0E1A24", backgroundColor: teal, fontWeight: 700 }}
                   >
-                    Core layer
+                    AI core
                   </span>
                 )}
                 <div className="flex items-center gap-2.5 mb-3">
@@ -63,7 +63,7 @@ export default function TechStack() {
                   </span>
                   <div>
                     <div className="text-[10px] uppercase" style={{ fontFamily: "var(--font-mono)", letterSpacing: "0.08em", color: "var(--text-muted)" }}>
-                      Layer {i + 1}
+                      Step {i + 1}
                     </div>
                     <h3 style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: 15, color: "var(--text-primary)", lineHeight: 1.1 }}>
                       {s.title}

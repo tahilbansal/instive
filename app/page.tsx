@@ -4,26 +4,24 @@ import Footer from "@/components/site/Footer";
 import Hero from "@/components/home/Hero";
 import {
   TrustStrip,
-  Functions,
-  Features,
+  ProductShowcaseSection,
+  ProofBar,
+  Pillars,
   Platform,
   SolutionsSection,
+  IntegrationsSection,
   Industries,
-  Vision,
-  ResultsSection,
-  Process,
-  CaseStudies,
   FinalCta,
 } from "@/components/home/sections";
 
 export const metadata: Metadata = {
-  title: "Intelligence that optimizes every move",
+  title: "AI-powered process automation. Built for supply chain.",
   description:
-    "Instive AI builds intelligent systems for supply chain, procurement, logistics, warehousing and distribution. We read what your operation already knows, sense what is about to go wrong, and act before it costs you.",
+    "AI-powered automation for supply chain operations. Automate document processing, invoice matching, order intake, and shipment tracking, without replacing the systems you already use.",
   openGraph: {
-    title: "Instive AI · Intelligence that optimizes every move",
+    title: "Instive AI · AI-powered process automation for supply chain",
     description:
-      "AI for modern supply chains. Optimize routes, catch exceptions early, forecast demand, and recover cost. Working prototype on your data in days.",
+      "Automate freight operations, procurement, and back-office workflows. Your team monitors, approves, and acts through one intelligent operations workspace.",
     type: "website",
   },
 };
@@ -35,15 +33,13 @@ export default function HomePage() {
       <main className="relative" style={{ backgroundColor: "var(--bg-primary)" }}>
         <Hero />
         <TrustStrip />
-        <Functions />
-        <Features />
+        <ProductShowcaseSection />
+        <ProofBar />
+        <Pillars />
         <Platform />
         <SolutionsSection />
+        <IntegrationsSection />
         <Industries />
-        <Vision />
-        <ResultsSection />
-        <Process />
-        <CaseStudies />
         <FinalCta />
       </main>
       <Footer />

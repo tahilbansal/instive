@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Logo from "@/components/site/Logo";
-import { FOOTER_NAV, BOOK_CALL, CONTACT_EMAIL } from "@/lib/site";
+import Icon from "@/components/site/Icon";
+import { FOOTER_NAV, BOOK_CALL, CONTACT_EMAIL, SOCIAL_LINKS } from "@/lib/site";
 import { BookDemoButton } from "@/components/site/BookDemo";
 
 export default function Footer() {
@@ -27,6 +28,27 @@ export default function Footer() {
             >
               {CONTACT_EMAIL}
             </a>
+            <div className="mt-5 flex items-center gap-3">
+              {SOCIAL_LINKS.map((s) => (
+                <a
+                  key={s.label}
+                  href={s.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={s.label}
+                  className="flex items-center justify-center w-9 h-9 rounded-tight border transition-colors"
+                  style={{ borderColor: "var(--line-strong)", color: "var(--text-secondary)", borderRadius: 8 }}
+                >
+                  <Icon name={s.icon} size={18} />
+                </a>
+              ))}
+              <span
+                className="text-[11px] uppercase px-3 py-1.5 rounded-full border"
+                style={{ fontFamily: "var(--font-mono)", letterSpacing: "0.08em", color: "var(--text-muted)", borderColor: "var(--line-strong)" }}
+              >
+                SOC 2 in progress
+              </span>
+            </div>
           </div>
 
           {/* Link columns */}

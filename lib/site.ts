@@ -971,6 +971,7 @@ export const NAV_MENU: NavItem[] = [
     ],
   },
   { label: "Industries", menu: INDUSTRY_LINKS, cols: 2 },
+  { label: "Integrations", href: "/integrations" },
   { label: "Resources", menu: RESOURCE_LINKS, cols: 1 },
   { label: "About", href: "/about" },
 ];
@@ -992,6 +993,7 @@ export const FOOTER_NAV: { title: string; links: { label: string; href: string }
     title: "Company",
     links: [
       { label: "About", href: "/about" },
+      { label: "Integrations", href: "/integrations" },
       { label: "Case studies", href: "/case-studies" },
       { label: "Mockups", href: "/mockups" },
       { label: "Book a demo", href: BOOK_CALL },
@@ -1007,6 +1009,134 @@ export const FUNCTIONS: { name: string; line: string; icon: string; href: string
   { name: "Distribution", line: "Live inventory health and client reporting built from one source, every brand.", icon: "boxes", href: "/solutions/reporting" },
   { name: "Manufacturing", line: "Inbound parts, supplier performance, and line demand watched before a line goes idle.", icon: "factory", href: "/industries/manufacturing" },
   { name: "Supply chain intelligence", line: "One control tower across every link, with an agent watching all of it at once.", icon: "chart", href: "/industries/supply-chain-teams" },
+];
+
+// ─── Product screenshots (the showcase carousel) ─────────────────────────────
+// Polished mockups of the operations workspace. Labeled as illustrative until the
+// live product is screenshot-ready.
+export type ProductShot = {
+  id: string;
+  eyebrow: string;
+  title: string;
+  body: string;
+  image: string;
+  alt: string;
+};
+
+export const PRODUCT_SHOTS: ProductShot[] = [
+  {
+    id: "instive-ops",
+    eyebrow: "Unified workspace",
+    title: "One workspace for your operations team.",
+    body: "A single operations hub where documents, approvals, and insights live together so your team moves with the same signal.",
+    image: "/images/instive_mockup.png",
+    alt: "Instive operations workspace showing a dashboard with unified shipment, document and approval views.",
+  },
+  {
+    id: "instive-document",
+    eyebrow: "Document workflow",
+    title: "Review and resolve freight docs in one place.",
+    body: "The original document and extracted fields are shown side by side, with confidence scores and action prompts that keep the workflow moving.",
+    image: "/images/instive_document_mockup.png",
+    alt: "Instive document workflow mockup showing extracted freight data and approval actions.",
+  },
+  {
+    id: "document-extract",
+    eyebrow: "Invoice extraction",
+    title: "Every invoice field captured with confidence.",
+    body: "AI extracts line-item details and flags mismatches against the contract, so your team can approve faster and with fewer errors.",
+    image: "/images/document_extract_mockup.png",
+    alt: "Invoice extraction mockup showing AI-captured line items, validation checks, and confidence indicators.",
+  },
+];
+
+// ─── Workflow pillars (what the product does) ────────────────────────────────
+export const PILLARS: { icon: string; title: string; body: string }[] = [
+  {
+    icon: "doc",
+    title: "Process documents",
+    body: "AI reads invoices, POs, BOLs and arrival notices, extracts the data, validates it, and updates your systems, with no rekeying.",
+  },
+  {
+    icon: "human",
+    title: "Monitor and approve",
+    body: "Your team handles the exceptions in one portal. One-tap approvals, SLA tracking and delegation, with a full audit trail.",
+  },
+  {
+    icon: "chart",
+    title: "See what matters",
+    body: "Dashboards, KPIs and AI insights from every connected system, live, so a problem surfaces before it reaches a customer.",
+  },
+  {
+    icon: "plug",
+    title: "Connect your systems",
+    body: "Works with the ERP, TMS and tools you already run. No rip and replace, and nothing to migrate.",
+  },
+];
+
+// ─── Proof bar (aggregate traction, illustrative) ────────────────────────────
+export const PROOF_STATS: { value: string; label: string }[] = [
+  { value: "50,000+", label: "Documents processed" },
+  { value: "2,000+", label: "Hours saved" },
+  { value: "30+", label: "Workflows automated" },
+  { value: "18s", label: "Avg. processing time" },
+  { value: "72%", label: "Touchless rate" },
+];
+
+// ─── Integrations (the logo wall) ────────────────────────────────────────────
+export type Integration = { name: string; wordmark: string; category: string };
+export const INTEGRATION_GROUPS: { title: string; items: Integration[] }[] = [
+  {
+    title: "ERP",
+    items: [
+      { name: "SAP", wordmark: "SAP", category: "ERP" },
+      { name: "NetSuite", wordmark: "NetSuite", category: "ERP" },
+      { name: "Microsoft Dynamics", wordmark: "Dynamics 365", category: "ERP" },
+      { name: "Odoo", wordmark: "Odoo", category: "ERP" },
+    ],
+  },
+  {
+    title: "TMS and freight",
+    items: [
+      { name: "CargoWise", wordmark: "CargoWise", category: "TMS" },
+      { name: "Magaya", wordmark: "Magaya", category: "TMS" },
+      { name: "project44", wordmark: "project44", category: "TMS" },
+      { name: "Descartes", wordmark: "Descartes", category: "TMS" },
+    ],
+  },
+  {
+    title: "Accounting",
+    items: [
+      { name: "QuickBooks", wordmark: "QuickBooks", category: "Accounting" },
+      { name: "Xero", wordmark: "Xero", category: "Accounting" },
+      { name: "Sage", wordmark: "Sage", category: "Accounting" },
+    ],
+  },
+  {
+    title: "Email and files",
+    items: [
+      { name: "Outlook", wordmark: "Outlook", category: "Email" },
+      { name: "Gmail", wordmark: "Gmail", category: "Email" },
+      { name: "Excel", wordmark: "Excel", category: "Files" },
+      { name: "SFTP", wordmark: "SFTP", category: "Files" },
+    ],
+  },
+  {
+    title: "Automation and data",
+    items: [
+      { name: "Zapier", wordmark: "Zapier", category: "Automation" },
+      { name: "REST API", wordmark: "REST API", category: "Data" },
+      { name: "Webhooks", wordmark: "Webhooks", category: "Data" },
+    ],
+  },
+];
+
+/** Flat list for the homepage strip. */
+export const INTEGRATIONS: Integration[] = INTEGRATION_GROUPS.flatMap((g) => g.items);
+
+// ─── Social links ────────────────────────────────────────────────────────────
+export const SOCIAL_LINKS = [
+  { label: "LinkedIn", href: "https://www.linkedin.com/company/instive-ai", icon: "linkedin" },
 ];
 
 // ─── Image feature rows ──────────────────────────────────────────────────────
@@ -1078,56 +1208,53 @@ export const FEATURES: Feature[] = [
   },
 ];
 
-// ─── Platform (modern AI stack) — recreated as an interactive component ───────
+// ─── Platform (modern AI stack) — the pipeline every workflow runs ───────────
 export const PLATFORM = {
-  eyebrow: "The platform",
+  eyebrow: "Under the workspace",
   title: "Built on a modern AI stack.",
-  body: "Your data flows from the systems you already run, through ingestion and a governed data platform, into models that forecast, optimize and detect. The output lands where your team works: dashboards, alerts, automation, and your existing tools.",
+  body: "Every workflow runs the same path. Your systems feed in, AI reads and structures the work, it is validated against your own rules, your team decides the exceptions, and the result is written back where you already work. One governed pipeline, not a black box.",
   stages: [
     {
-      key: "sources",
-      title: "Data sources",
+      key: "connect",
+      title: "Connect",
       icon: "plug",
       items: [
-        { t: "ERP", icon: "boxes" },
-        { t: "WMS", icon: "warehouse" },
-        { t: "TMS", icon: "truck" },
-        { t: "IoT devices", icon: "bolt" },
-        { t: "External APIs", icon: "plug" },
-        { t: "Spreadsheets", icon: "report" },
+        { t: "ERP, TMS and WMS", icon: "boxes" },
+        { t: "Email and PDFs", icon: "doc" },
+        { t: "APIs and flat files", icon: "plug" },
       ],
       highlight: false,
     },
     {
-      key: "ingestion",
-      title: "Ingestion",
-      icon: "bolt",
-      items: [{ t: "Real-time stream" }, { t: "Batch loads" }, { t: "Schema mapping" }],
-      highlight: false,
-    },
-    {
-      key: "platform",
-      title: "Data platform",
-      icon: "database",
-      items: [{ t: "Governed data lake" }, { t: "Unified model" }, { t: "Lineage" }],
+      key: "read",
+      title: "Read and extract",
+      icon: "brain",
+      items: [{ t: "Document understanding" }, { t: "Field-level extraction" }, { t: "Confidence scoring" }],
       highlight: true,
     },
     {
-      key: "ai",
-      title: "AI and ML",
-      icon: "brain",
-      items: [{ t: "Forecasting" }, { t: "Optimization" }, { t: "Anomaly detection" }, { t: "NLP and GenAI" }],
+      key: "validate",
+      title: "Validate",
+      icon: "shield",
+      items: [{ t: "Against contracts and POs" }, { t: "Business and compliance rules" }, { t: "Exceptions flagged with a reason" }],
       highlight: false,
     },
     {
-      key: "apps",
-      title: "Applications",
-      icon: "report",
-      items: [{ t: "Dashboards" }, { t: "Alerts" }, { t: "Automation" }, { t: "Integrations" }],
+      key: "decide",
+      title: "Human in the loop",
+      icon: "human",
+      items: [{ t: "Straight-through when clean" }, { t: "Routed to a person when not" }, { t: "One-tap approve, edit or reject" }],
+      highlight: false,
+    },
+    {
+      key: "act",
+      title: "Act and sync",
+      icon: "arrow",
+      items: [{ t: "Written back to your systems" }, { t: "Follow-ups drafted and sent" }, { t: "Full audit trail" }],
       highlight: false,
     },
   ] as { key: string; title: string; icon: string; items: { t: string; icon?: string }[]; highlight: boolean }[],
-  governance: ["Role-based access", "Encryption in transit and at rest", "Full audit logs", "SOC 2, ISO 27001, GDPR"],
+  governance: ["Role-based access", "Encryption in transit and at rest", "Full audit logs", "SOC 2 in progress"],
 };
 
 // ─── Vision (agency today, platform tomorrow) ────────────────────────────────
@@ -1158,11 +1285,11 @@ export const RESULTS: Stat[] = [
 ];
 
 // ─── Process ─────────────────────────────────────────────────────────────────
-export const PROCESS: { step: string; tag: string; title: string; body: string }[] = [
-  { step: "01", tag: "30 MIN", title: "Discovery", body: "A short call. You show us the one workflow that costs you most. We listen for the signal you keep missing." },
-  { step: "02", tag: "DAYS", title: "Working prototype", body: "We build on your actual data, so you see your operation with intelligence on top, not a generic demo." },
-  { step: "03", tag: "WEEKS", title: "Pilot", body: "Live on one workflow, measured against your current baseline. The value shows up in the first cycle." },
-  { step: "04", tag: "SCALE", title: "Roll out", body: "One standard across every site and lane, while your team keeps running the operation." },
+export const PROCESS: { step: string; title: string; body: string }[] = [
+  { step: "01", title: "Discovery", body: "A short call. You show us the one workflow that costs you most. We listen for the signal you keep missing." },
+  { step: "02", title: "Configure", body: "We configure your portal and connect your systems. You see your own operation, with intelligence on top, on day one." },
+  { step: "03", title: "Pilot", body: "Live on one workflow, measured against your baseline. The value shows up in the first cycle." },
+  { step: "04", title: "Scale", body: "Roll out across teams, sites and use cases, on one standard, while your team keeps running the operation." },
 ];
 
 // ─── Case studies ────────────────────────────────────────────────────────────

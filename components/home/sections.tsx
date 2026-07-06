@@ -1,20 +1,17 @@
-import Image from "next/image";
 import Link from "next/link";
 import Reveal from "@/components/site/Reveal";
 import Icon from "@/components/site/Icon";
-import TechStack from "@/components/site/TechStack";
 import Solutions from "@/components/home/Solutions";
-import Results from "@/components/home/Results";
+import ProductShowcase from "@/components/home/ProductShowcase";
+import TechStack from "@/components/site/TechStack";
+import { IntegrationStrip } from "@/components/site/Integrations";
 import { BookDemoButton } from "@/components/site/BookDemo";
 import { mockups } from "@/data/mockups";
 import {
-  FUNCTIONS,
-  FEATURES,
+  PILLARS,
+  PROOF_STATS,
   PLATFORM,
-  VISION,
   INDUSTRIES,
-  PROCESS,
-  CASE_STUDIES,
 } from "@/lib/site";
 
 // ── shared scaffold ──────────────────────────────────────────────────────────
@@ -93,33 +90,70 @@ export function TrustStrip() {
   );
 }
 
-// ── 01 · Functions grid ──────────────────────────────────────────────────────
-export function Functions() {
+// ── Product showcase (screenshot carousel) ───────────────────────────────────
+export function ProductShowcaseSection() {
   return (
-    <Section id="solutions">
+    <Section id="product">
       <SectionHead
         num="01"
-        title="Intelligence for every part of the chain."
-        sub="One operating brain across procurement, logistics, warehousing and distribution."
+        title="One workspace for your operations team."
+        sub="Not slideware. The screens your team monitors, reviews and approves in every shift."
       />
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {FUNCTIONS.map((f, i) => (
-          <Reveal key={f.name} delay={(i % 3) * 70} className="h-full">
-            <Link href={f.href} className="surface-card p-7 flex flex-col h-full" style={{ ["--accent" as any]: "var(--signal)", textDecoration: "none" }}>
+      <Reveal>
+        <ProductShowcase />
+      </Reveal>
+    </Section>
+  );
+}
+
+// ── Proof bar (aggregate metrics) ────────────────────────────────────────────
+export function ProofBar() {
+  return (
+    <section className="relative z-10 px-6 py-16 border-b" style={{ borderColor: "var(--line)", backgroundColor: "var(--bg-secondary)" }}>
+      <div className="max-w-7xl mx-auto">
+        <Reveal className="grid gap-8 grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
+          {PROOF_STATS.map((s) => (
+            <div key={s.label} className="text-center">
+              <div style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "clamp(30px, 4vw, 46px)", letterSpacing: "-0.03em", color: "var(--signal)", lineHeight: 1 }}>
+                {s.value}
+              </div>
+              <div className="mt-2 text-[13px]" style={{ color: "var(--text-muted)", fontFamily: "var(--font-mono)" }}>
+                {s.label}
+              </div>
+            </div>
+          ))}
+        </Reveal>
+        <Reveal className="mt-8 text-center text-[11px] uppercase" style={{ fontFamily: "var(--font-mono)", letterSpacing: "0.12em", color: "var(--text-muted)" }}>
+          Illustrative aggregates across active workflows
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
+// ── Pillars (what the workflow does) ─────────────────────────────────────────
+export function Pillars() {
+  return (
+    <Section id="pillars">
+      <SectionHead
+        num="02"
+        title="Automate your supply chain operations with specialized AI."
+        sub="Four things the workspace does, end to end, across every workflow you run."
+      />
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        {PILLARS.map((p, i) => (
+          <Reveal key={p.title} delay={(i % 4) * 70} className="h-full">
+            <div className="surface-card p-7 flex flex-col h-full" style={{ ["--accent" as any]: "var(--signal)" }}>
               <span style={{ color: "var(--signal)" }}>
-                <Icon name={f.icon} size={26} />
+                <Icon name={p.icon} size={26} />
               </span>
               <h3 className="mt-5 mb-2" style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: 19, color: "var(--text-primary)" }}>
-                {f.name}
+                {p.title}
               </h3>
               <p className="text-[15px] leading-relaxed flex-1" style={{ color: "var(--text-secondary)" }}>
-                {f.line}
+                {p.body}
               </p>
-              <span className="inline-flex items-center gap-1.5 mt-5 text-[12px] font-semibold" style={{ color: "var(--signal)", fontFamily: "var(--font-mono)", textTransform: "uppercase", letterSpacing: "0.05em" }}>
-                Explore
-                <Icon name="arrow" size={13} />
-              </span>
-            </Link>
+            </div>
           </Reveal>
         ))}
       </div>
@@ -127,71 +161,17 @@ export function Functions() {
   );
 }
 
-// ── 02 · Feature rows (with imagery) ─────────────────────────────────────────
-export function Features() {
-  return (
-    <Section id="features">
-      <SectionHead
-        num="02"
-        title="What it looks like in the operation."
-        sub="Not slideware. Working intelligence your team acts on every shift."
-      />
-      <div className="space-y-24">
-        {FEATURES.map((f, i) => {
-          const flip = i % 2 === 1;
-          return (
-            <div key={f.id} className="grid gap-10 lg:gap-14 lg:grid-cols-2 lg:items-center">
-              <Reveal className={flip ? "lg:order-2" : ""}>
-                <span className="text-[12px] uppercase" style={{ fontFamily: "var(--font-mono)", letterSpacing: "0.16em", color: f.accent }}>
-                  {f.eyebrow}
-                </span>
-                <h3
-                  className="mt-4 mb-4"
-                  style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: "clamp(24px, 3.4vw, 34px)", letterSpacing: "-0.02em", color: "var(--text-primary)" }}
-                >
-                  {f.title}
-                </h3>
-                <p className="text-[16px] leading-relaxed mb-6" style={{ color: "var(--text-secondary)" }}>
-                  {f.body}
-                </p>
-                <ul className="space-y-3">
-                  {f.bullets.map((b) => (
-                    <li key={b} className="flex gap-3 text-[15px]" style={{ color: "var(--text-secondary)" }}>
-                      <span style={{ color: f.accent, flexShrink: 0, marginTop: 2 }}>
-                        <Icon name="check" size={16} />
-                      </span>
-                      {b}
-                    </li>
-                  ))}
-                </ul>
-              </Reveal>
-
-              <Reveal delay={120} className={`relative ${flip ? "lg:order-1" : ""}`}>
-                <span className="glow-blob" style={{ width: 320, height: 320, background: f.accent, top: "6%", right: flip ? "auto" : "-8%", left: flip ? "-8%" : "auto", opacity: 0.28 }} />
-                <div className="blend-media">
-                  <Image
-                    src={f.image}
-                    alt={f.alt}
-                    width={1536}
-                    height={f.image.endsWith(".jpg") ? 858 : 1024}
-                    sizes="(max-width: 1024px) 100vw, 50vw"
-                  />
-                </div>
-              </Reveal>
-            </div>
-          );
-        })}
-      </div>
-    </Section>
-  );
-}
-
-// ── 03 · Platform (interactive AI stack) ─────────────────────────────────────
+// ── Platform (the AI stack / pipeline) ───────────────────────────────────────
 export function Platform() {
   return (
     <Section id="platform" bg="var(--bg-secondary)">
-      <SectionHead num="03" title={PLATFORM.title} sub="Secure, scalable, and built to grow into the software your team logs into." />
+      <SectionHead num="03" title={PLATFORM.title} sub="One governed pipeline behind every workflow, secure and built to scale with your operation." />
       <Reveal>
+        <div className="flex items-center gap-3 mb-6">
+          <span className="text-[12px] uppercase" style={{ fontFamily: "var(--font-mono)", letterSpacing: "0.16em", color: "var(--signal)" }}>
+            {PLATFORM.eyebrow}
+          </span>
+        </div>
         <p className="mb-10 text-[16px] leading-relaxed max-w-3xl" style={{ color: "var(--text-secondary)" }}>
           {PLATFORM.body}
         </p>
@@ -203,13 +183,13 @@ export function Platform() {
   );
 }
 
-// ── 04 · Solutions explorer ──────────────────────────────────────────────────
+// ── Solutions explorer (by problem) ──────────────────────────────────────────
 export function SolutionsSection() {
   return (
     <Section id="outcomes">
       <SectionHead
         num="04"
-        title="Start from the problem, not the product."
+        title="Built around the workflow that costs you most."
         sub="Pick the outcome you need. See the current cost, what changes, and the number it moves."
       />
       <Solutions />
@@ -217,15 +197,40 @@ export function SolutionsSection() {
   );
 }
 
-// ── 05 · Industries ──────────────────────────────────────────────────────────
+// ── Integrations (logo wall) ─────────────────────────────────────────────────
+export function IntegrationsSection() {
+  return (
+    <Section id="integrations" bg="var(--bg-secondary)">
+      <SectionHead
+        num="05"
+        title="Integrates with the systems you already use."
+        sub="No rip and replace. We ride alongside your ERP, TMS and back-office tools."
+      />
+      <Reveal>
+        <IntegrationStrip />
+      </Reveal>
+      <Reveal className="mt-10 flex flex-wrap items-center justify-between gap-4">
+        <p className="text-[15px]" style={{ color: "var(--text-secondary)" }}>
+          Don&apos;t see yours? We connect to any system with an API.
+        </p>
+        <Link href="/integrations" className="inline-flex items-center gap-2 text-sm font-semibold" style={{ fontFamily: "var(--font-display)", color: "var(--signal)" }}>
+          See all integrations
+          <Icon name="arrow" size={14} />
+        </Link>
+      </Reveal>
+    </Section>
+  );
+}
+
+// ── 06 · Industries ──────────────────────────────────────────────────────────
 export function Industries() {
   return (
-    <Section id="industries" bg="var(--bg-secondary)">
-      <SectionHead num="05" title="Built for your operation." sub="The vocabulary is yours: lanes, AWBs, SKUs, crews. So is the signal we catch." />
+    <Section id="industries">
+      <SectionHead num="06" title="Built for your operation." sub="The vocabulary is yours: lanes, AWBs, SKUs, crews. So is the signal we catch." />
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {INDUSTRIES.map((ind, i) => (
           <Reveal key={ind.name} delay={(i % 3) * 70} className="h-full">
-            <Link href={`/industries/${ind.slug}`} className="surface-card p-7 flex flex-col h-full" style={{ ["--accent" as any]: ind.accent, backgroundColor: "var(--bg-primary)", textDecoration: "none" }}>
+            <Link href={`/industries/${ind.slug}`} className="surface-card p-7 flex flex-col h-full" style={{ ["--accent" as any]: ind.accent, textDecoration: "none" }}>
               <span style={{ color: ind.accent }}>
                 <Icon name={ind.icon} size={26} />
               </span>
@@ -247,152 +252,8 @@ export function Industries() {
   );
 }
 
-// ── Vision (cinematic, image background) ─────────────────────────────────────
-export function Vision() {
-  return (
-    <section id="vision" className="relative z-10 px-6 py-28 border-b overflow-hidden" style={{ borderColor: "var(--line)" }}>
-      <Image src={VISION.image} alt={VISION.alt} fill sizes="100vw" style={{ objectFit: "cover", zIndex: 0 }} />
-      <div className="absolute inset-0" style={{ zIndex: 1, background: "linear-gradient(180deg, rgba(14,26,36,.78), rgba(14,26,36,.92))" }} />
-      <div className="relative max-w-7xl mx-auto" style={{ zIndex: 2 }}>
-        <Reveal className="max-w-3xl">
-          <span className="text-[12px] uppercase" style={{ fontFamily: "var(--font-mono)", letterSpacing: "0.18em", color: "var(--signal)" }}>
-            {VISION.eyebrow}
-          </span>
-          <h2
-            className="mt-5"
-            style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "clamp(28px, 4.6vw, 48px)", letterSpacing: "-0.02em", lineHeight: 1.05, color: "#F5F2EA" }}
-          >
-            {VISION.title}
-          </h2>
-          <p className="mt-6 text-lg leading-relaxed" style={{ color: "#D8D3C7" }}>
-            {VISION.body}
-          </p>
-        </Reveal>
 
-        <div className="mt-12 grid gap-5 md:grid-cols-3">
-          {VISION.phases.map((p, i) => (
-            <Reveal
-              key={p.title}
-              delay={i * 90}
-              className="p-7 rounded-tight"
-              style={{ borderRadius: 12, background: "rgba(16,26,34,0.62)", border: "1px solid rgba(245,242,234,0.14)", backdropFilter: "blur(14px)", WebkitBackdropFilter: "blur(14px)" }}
-            >
-              <div className="flex items-center gap-2 mb-4">
-                <span className="text-[11px] uppercase px-2.5 py-1 rounded-full" style={{ fontFamily: "var(--font-mono)", letterSpacing: "0.08em", color: i === 0 ? "#5BD6A6" : "var(--signal)", backgroundColor: i === 0 ? "rgba(91,214,166,.16)" : "rgba(255,178,62,.16)" }}>
-                  {p.tag}
-                </span>
-              </div>
-              <h3 style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: 22, color: "#F5F2EA", letterSpacing: "-0.02em" }}>
-                {p.title}
-              </h3>
-              <p className="mt-2.5 text-[14px] leading-relaxed" style={{ color: "#D8D3C7" }}>
-                {p.body}
-              </p>
-            </Reveal>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
 
-// ── 06 · Results ─────────────────────────────────────────────────────────────
-export function ResultsSection() {
-  return (
-    <Section id="results">
-      <SectionHead num="06" title="What the industry leaves on the table." sub="Independent estimates for supply chain operations. This is the gap intelligent systems close." />
-      <Reveal>
-        <Results />
-      </Reveal>
-      <Reveal className="mt-12 flex flex-wrap items-center justify-between gap-4 pt-8 border-t" style={{ borderColor: "var(--line)" }}>
-        <p className="text-[13px]" style={{ color: "var(--text-muted)", fontFamily: "var(--font-mono)" }}>
-          Industry estimates. Your own baseline sets the target.
-        </p>
-        <BookDemoButton source="results" className="btn-signal inline-flex items-center gap-2 px-5 py-3 text-sm font-semibold rounded-tight" style={{ fontFamily: "var(--font-display)" }}>
-          See the number for your operation
-          <Icon name="arrow" size={14} />
-        </BookDemoButton>
-      </Reveal>
-    </Section>
-  );
-}
-
-// ── 07 · Process ─────────────────────────────────────────────────────────────
-export function Process() {
-  return (
-    <Section id="process" bg="var(--bg-secondary)">
-      <SectionHead num="07" title="From discovery to scale in four moves." sub="No big-bang rollout. We earn the next step by proving the last one." />
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-        {PROCESS.map((p, i) => (
-          <Reveal key={p.step} delay={i * 80} className="p-6 rounded-tight border" style={{ borderColor: "var(--line)", backgroundColor: "var(--bg-primary)", borderRadius: 12 }}>
-            <div className="flex items-center justify-between mb-6">
-              <span style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: 30, color: "var(--line-strong)", letterSpacing: "-0.02em" }}>{p.step}</span>
-              <span className="px-2.5 py-1 rounded-full text-[10px] uppercase" style={{ fontFamily: "var(--font-mono)", letterSpacing: "0.08em", color: "var(--signal)", backgroundColor: "rgba(255,178,62,.12)" }}>{p.tag}</span>
-            </div>
-            <h3 className="mb-2" style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: 18, color: "var(--text-primary)" }}>{p.title}</h3>
-            <p className="text-[14px] leading-relaxed" style={{ color: "var(--text-secondary)" }}>{p.body}</p>
-          </Reveal>
-        ))}
-      </div>
-    </Section>
-  );
-}
-
-// ── 08 · Case studies ────────────────────────────────────────────────────────
-export function CaseStudies() {
-  return (
-    <Section id="case-studies">
-      <SectionHead num="08" title="What recovery looks like." sub="Illustrative scenarios that mirror real supply chain operations. Open one to explore the intelligence live." />
-      <div className="grid gap-6 lg:grid-cols-3">
-        {CASE_STUDIES.map((c, i) => (
-          <Reveal as="article" key={c.company} delay={i * 80} className="surface-card flex flex-col overflow-hidden" style={{ ["--accent" as any]: c.accent }}>
-            <div className="p-7 flex-1 flex flex-col">
-              <div className="flex items-center justify-between gap-3 mb-5">
-                <span className="px-3 py-1 rounded-full text-[11px] uppercase whitespace-nowrap" style={{ fontFamily: "var(--font-mono)", letterSpacing: "0.05em", color: c.accent, backgroundColor: `${c.accent}1a` }}>
-                  {c.tag}
-                </span>
-              </div>
-              <h3 style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: 20, color: "var(--text-primary)" }}>{c.company}</h3>
-              <p className="text-[12px] mt-1 mb-5" style={{ fontFamily: "var(--font-mono)", color: "var(--text-muted)" }}>{c.industry}</p>
-
-              <div className="space-y-3 mb-6">
-                <div>
-                  <span className="text-[10px] uppercase" style={{ fontFamily: "var(--font-mono)", letterSpacing: "0.1em", color: "var(--hold)" }}>Before</span>
-                  <p className="text-[14px] leading-relaxed mt-1" style={{ color: "var(--text-muted)" }}>{c.before}</p>
-                </div>
-                <div>
-                  <span className="text-[10px] uppercase" style={{ fontFamily: "var(--font-mono)", letterSpacing: "0.1em", color: "var(--cleared)" }}>After</span>
-                  <p className="text-[14px] leading-relaxed mt-1" style={{ color: "var(--text-secondary)" }}>{c.after}</p>
-                </div>
-              </div>
-
-              <div className="mt-auto pt-5 border-t" style={{ borderColor: "var(--line)" }}>
-                <div style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: 36, letterSpacing: "-0.03em", color: c.accent, lineHeight: 1 }}>{c.metricBig}</div>
-                <div className="text-[13px] mt-1.5" style={{ color: "var(--text-secondary)" }}>{c.metricLabel}</div>
-                <div className="text-[12px] mt-3" style={{ fontFamily: "var(--font-mono)", color: "var(--text-muted)" }}>{c.proof}</div>
-              </div>
-            </div>
-
-            <Link
-              href={c.href}
-              className="flex items-center justify-between px-7 py-4 border-t transition-colors"
-              style={{ borderColor: "var(--line)", color: c.accent, fontFamily: "var(--font-mono)", fontSize: 12, textTransform: "uppercase", letterSpacing: "0.06em" }}
-            >
-              Open the live mockup
-              <Icon name="arrow" size={14} />
-            </Link>
-          </Reveal>
-        ))}
-      </div>
-      <Reveal className="mt-10 text-center">
-        <Link href="/mockups" className="inline-flex items-center gap-2 px-6 py-3 text-sm font-semibold rounded-tight border transition-colors" style={{ fontFamily: "var(--font-display)", color: "var(--text-primary)", borderColor: "var(--line-strong)" }}>
-          See all {mockups.length} mockups
-          <Icon name="arrow" size={14} />
-        </Link>
-      </Reveal>
-    </Section>
-  );
-}
 
 // ── Final CTA ────────────────────────────────────────────────────────────────
 export function FinalCta() {
@@ -411,8 +272,8 @@ export function FinalCta() {
             that costs you most.
           </h2>
           <p className="mt-6 text-lg leading-relaxed max-w-2xl mx-auto" style={{ color: "var(--text-secondary)" }}>
-            Book a 30 minute review. Show us the one workflow that hurts, and we will come back with a
-            working prototype on your data in days. No slideware, no commitment.
+            Book a 30 minute review. Show us the one workflow that hurts, and we will come back with
+            your data in the workspace, not a slide deck. No commitment.
           </p>
           <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
             <BookDemoButton source="home-final" className="btn-signal inline-flex items-center gap-2 px-7 py-4 text-base font-semibold rounded-tight" style={{ fontFamily: "var(--font-display)" }}>
