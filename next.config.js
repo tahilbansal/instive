@@ -14,6 +14,7 @@ const legacyRewrites = [
   { source: "/usmmg", destination: "/clients_mockups/usmmg_labor_planning.html" },
   { source: "/mrb", destination: "/clients_mockups/mrb_invoice_auditor.html" },
   { source: "/ready-2-xecute", destination: "/clients_mockups/r2x_carrier_intelligence.html" },
+  { source: "/cs-rfq-to-odoo", destination: "/clients_mockups/cs_rfq_to_odoo.html" },
   { source: "/air-sea-forwarders", destination: "/clients_mockups/airsea_invoice_auditor.html" },
   { source: "/vss-carriers", destination: "/clients_mockups/vss_carrier_intelligence.html" },
   { source: "/hessen-logistics", destination: "/clients_mockups/hessen_invoice_auditor.html" },

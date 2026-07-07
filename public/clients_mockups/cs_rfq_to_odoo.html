@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cedar Ridge Freight · RFQ → Odoo · Instive AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;450;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F5F2EA;--card:#FFFFFF;--card-2:#FBF9F3;--ink:#0E1A24;--ink-dim:#5A6873;--steel:#8A9AA5;
+  --amber:#FFB23E;--deep-amber:#E8941A;--green:#2FA37C;--red:#E0574B;
+  --line:rgba(14,26,36,.10);--line-strong:rgba(14,26,36,.20);
+  --s1:8px;--s2:16px;--s3:24px;--s4:32px;--radius:6px;--sidebar-w:250px;
+  --font-display:"Space Grotesk",system-ui,sans-serif;--font-body:"Inter",system-ui,sans-serif;--font-mono:"JetBrains Mono",ui-monospace,monospace;
+  --shadow:0 1px 2px rgba(14,26,36,.05),0 10px 30px rgba(14,26,36,.05);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:var(--font-body);background:var(--paper);color:var(--ink);font-size:15px;line-height:1.55;letter-spacing:-.005em;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+::selection{background:var(--amber);color:var(--ink)}
+.shell{display:flex;min-height:100vh}
+.sidebar{width:var(--sidebar-w);flex:0 0 var(--sidebar-w);background:var(--card);border-right:1px solid var(--line);display:flex;flex-direction:column;position:sticky;top:0;height:100vh;overflow:hidden}
+.sidebar::before{content:"";position:absolute;inset:0 0 auto 0;height:260px;background:radial-gradient(130% 70% at 26% 0%,rgba(255,178,62,.20),rgba(255,178,62,.05) 55%,transparent 78%);pointer-events:none;z-index:0}
+.sidebar>*{position:relative;z-index:1}
+.brand{display:flex;align-items:center;gap:10px;padding:var(--s3) var(--s3) var(--s2)}
+.wordmark{font-family:var(--font-display);font-weight:600;font-size:23px;letter-spacing:.16em;color:var(--ink);text-transform:uppercase;line-height:1}
+.wordmark .i{color:var(--deep-amber)}
+.powered{font-family:var(--font-mono);font-size:9.5px;color:var(--steel);text-transform:uppercase;letter-spacing:.14em;padding:0 var(--s3) var(--s3)}
+.nav{padding:var(--s1) var(--s2);display:flex;flex-direction:column;gap:2px;flex:1}
+.nav-item{display:flex;align-items:center;gap:12px;padding:9px 12px;border-radius:var(--radius);color:var(--ink-dim);font-size:14px;font-weight:450;cursor:pointer;border:1px solid transparent;user-select:none;transition:background .12s,color .12s}
+.nav-item:hover{background:rgba(255,178,62,.08);color:var(--ink)}
+.nav-item.active{background:rgba(255,178,62,.14);color:var(--ink);font-weight:500}
+.nav-item.active .dot{background:var(--deep-amber);box-shadow:0 0 0 3px rgba(232,148,26,.16)}
+.nav-item .dot{width:6px;height:6px;border-radius:50%;background:var(--steel);flex:0 0 6px;transition:box-shadow .12s}
+.sidebar-foot{padding:var(--s3);border-top:1px solid var(--line)}
+.demo-pill{font-family:var(--font-mono);font-size:9.5px;text-transform:uppercase;letter-spacing:.1em;color:var(--deep-amber);background:rgba(255,178,62,.1);border:1px solid rgba(232,148,26,.28);border-radius:100px;padding:4px 10px;display:inline-block;margin-bottom:var(--s2)}
+.user{display:flex;align-items:center;gap:12px}
+.avatar{width:32px;height:32px;border-radius:50%;background:var(--paper);border:1px solid var(--line);display:grid;place-items:center;font-family:var(--font-mono);font-size:12px;color:var(--ink)}
+.user .name{font-size:13px;color:var(--ink);font-weight:500}
+.user .co{font-size:11px;color:var(--steel)}
+.main{flex:1;min-width:0;display:flex;flex-direction:column}
+.topbar{position:sticky;top:0;z-index:5;background:rgba(245,242,234,.82);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:var(--s3) var(--s4);display:flex;align-items:center;justify-content:space-between}
+.topbar h1{font-family:var(--font-display);font-weight:600;font-size:23px;color:var(--ink);letter-spacing:-.025em}
+.integration-badge{font-family:var(--font-mono);font-size:12px;color:var(--green);display:flex;align-items:center;gap:8px}
+.integration-badge::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--green)}
+.content{padding:var(--s4);flex:1;background:radial-gradient(80% 50% at 15% 0%,rgba(255,178,62,.05),transparent 60%)}
+.content-inner{max-width:1120px;margin:0 auto}
+.view{display:none}.view.active{display:block}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:var(--s3);box-shadow:var(--shadow)}
+.grid{display:grid;gap:var(--s3)}
+.kpis{grid-template-columns:repeat(auto-fit,minmax(200px,1fr));margin-bottom:var(--s4)}
+.kpi-label{font-family:var(--font-mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.09em;color:var(--steel)}
+.kpi-num{font-family:var(--font-display);font-weight:600;font-size:clamp(30px,4vw,46px);color:var(--ink);line-height:1;margin:14px 0 6px;letter-spacing:-.035em}
+.kpi-delta{font-family:var(--font-mono);font-size:11.5px}.kpi-delta.up{color:var(--green)}.kpi-delta.down{color:var(--red)}
+.panel-title{font-family:var(--font-display);font-weight:600;font-size:17px;color:var(--ink);margin-bottom:var(--s3);letter-spacing:-.02em}
+.rows{display:flex;flex-direction:column;gap:var(--s1)}
+.row{display:grid;grid-template-columns:150px 1fr auto;align-items:center;gap:var(--s2);background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:14px var(--s3);cursor:pointer;transition:border-color .12s,transform .12s,box-shadow .12s}
+.row:hover{border-color:var(--line-strong);transform:translateX(2px);box-shadow:var(--shadow)}
+.row .code{font-family:var(--font-mono);font-size:12.5px;color:var(--deep-amber)}
+.row .title{color:var(--ink);font-weight:500}.row .sub{color:var(--steel);font-size:13px}
+.pill{font-family:var(--font-mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;border-radius:100px;padding:4px 12px;display:inline-flex;align-items:center;gap:6px}
+.pill::before{content:"";width:6px;height:6px;border-radius:50%}
+.pill.cleared{background:rgba(47,163,124,.12);color:var(--green)}.pill.cleared::before{background:var(--green)}
+.pill.in-transit{background:rgba(232,148,26,.14);color:var(--deep-amber)}.pill.in-transit::before{background:var(--deep-amber)}
+.pill.hold{background:rgba(224,87,75,.12);color:var(--red)}.pill.hold::before{background:var(--red)}
+.btn{font-family:var(--font-display);font-weight:600;font-size:14px;letter-spacing:-.01em;border-radius:var(--radius);padding:11px 20px;cursor:pointer;border:1px solid transparent;transition:transform .12s,background .12s,box-shadow .12s;display:inline-flex;align-items:center;gap:8px;justify-content:center}
+.btn-primary{background:var(--amber);color:var(--ink)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 18px rgba(232,148,26,.32)}
+.btn-primary:disabled{opacity:.75;cursor:default;transform:none;box-shadow:none}
+.btn-ghost{background:transparent;color:var(--ink);border-color:var(--line-strong)}
+.btn-ghost:hover{border-color:var(--deep-amber);color:var(--deep-amber)}
+.back-link{display:inline-flex;align-items:center;gap:6px;font-family:var(--font-mono);font-size:12px;color:var(--ink-dim);cursor:pointer;text-transform:uppercase;letter-spacing:.05em;margin-bottom:var(--s3);background:none;border:none}
+.back-link:hover{color:var(--deep-amber)}
+.detail-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:var(--s3);flex-wrap:wrap;gap:var(--s2)}
+.detail-head .code{font-family:var(--font-mono);color:var(--deep-amber);font-size:13px}
+.detail-head .who{font-family:var(--font-display);font-weight:600;font-size:19px;color:var(--ink);letter-spacing:-.02em}
+.steps{display:flex;gap:12px;margin-bottom:var(--s4);flex-wrap:wrap;align-items:center}
+.step{display:flex;align-items:center;gap:8px;font-family:var(--font-mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--steel)}
+.step .n{width:20px;height:20px;border-radius:50%;border:1px solid var(--line-strong);display:grid;place-items:center;font-size:11px}
+.step.done{color:var(--green)}.step.done .n{background:var(--green);color:#fff;border-color:var(--green)}
+.step.active{color:var(--ink)}.step.active .n{background:var(--amber);color:var(--ink);border-color:var(--amber)}
+.arrow{color:var(--line-strong)}
+.detail-grid{display:grid;grid-template-columns:0.85fr 1.15fr;gap:var(--s3);align-items:start}
+.source-panel{background:var(--card-2);border:1px solid var(--line);border-radius:var(--radius);padding:var(--s3)}
+.source-panel .from{font-family:var(--font-mono);font-size:12px;color:var(--steel);margin-bottom:var(--s2);padding-bottom:var(--s2);border-bottom:1px solid var(--line)}
+.source-panel .raw{font-family:var(--font-mono);font-size:12.5px;color:var(--ink);white-space:pre-wrap;line-height:1.75}
+.hl{background:rgba(255,178,62,.4);border-radius:3px;padding:0 3px}
+.map-card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:var(--s3);box-shadow:var(--shadow);min-height:340px}
+.field{margin-bottom:var(--s3)}
+.field-label{font-family:var(--font-mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--steel);margin-bottom:7px;display:flex;align-items:center;gap:8px}
+.select,.text-in{width:100%;background:var(--paper);border:1px solid var(--line-strong);border-radius:var(--radius);padding:10px 12px;font-family:var(--font-body);font-size:14px;color:var(--ink);appearance:none}
+.select{background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'><path d='M2 4l4 4 4-4' stroke='%235A6873' stroke-width='1.5' fill='none'/></svg>");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px;cursor:pointer}
+.select:focus,.text-in:focus{outline:none;border-color:var(--deep-amber)}
+.select.unmapped{border-color:var(--red);background-color:rgba(224,87,75,.05)}
+.hint{font-family:var(--font-mono);font-size:10.5px;color:var(--steel);margin-top:6px;line-height:1.5}
+.hint .src{color:var(--deep-amber)}
+.chip{font-family:var(--font-mono);font-size:9.5px;text-transform:uppercase;letter-spacing:.05em;border-radius:100px;padding:2px 8px;display:inline-flex;align-items:center;gap:4px}
+.chip.high{background:rgba(47,163,124,.12);color:var(--green)}
+.chip.low{background:rgba(232,148,26,.14);color:var(--deep-amber)}
+.chip.need{background:rgba(224,87,75,.12);color:var(--red)}
+.li-table{width:100%;border-collapse:collapse;margin-top:var(--s1)}
+.li-table th{font-family:var(--font-mono);font-size:9.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--steel);text-align:left;padding:8px 10px;border-bottom:1px solid var(--line)}
+.li-table td{padding:10px;border-bottom:1px solid var(--line);vertical-align:top}
+.li-table tr:last-child td{border-bottom:none}
+.li-table .qty{width:64px;text-align:center}
+.li-table .money{font-family:var(--font-mono);color:var(--ink);white-space:nowrap}
+.summary{display:flex;justify-content:space-between;align-items:center;margin-top:var(--s3);padding-top:var(--s3);border-top:1px solid var(--line)}
+.summary .total{font-family:var(--font-display);font-weight:600;font-size:25px;color:var(--ink);letter-spacing:-.03em}
+.summary .total .cur{color:var(--deep-amber)}
+.kv{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--line)}
+.kv:last-child{border-bottom:none}.kv .k{color:var(--steel);font-size:13px}.kv .v{color:var(--ink);font-family:var(--font-mono);font-size:13px}
+.note{margin-top:var(--s2);font-size:13px;color:var(--ink-dim)}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes pulse-dot{0%,100%{opacity:.35}50%{opacity:1}}
+@keyframes fade-up{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.reveal{animation:fade-up .32s ease both}
+.spin{width:14px;height:14px;border-radius:50%;border:2px solid var(--line-strong);border-top-color:var(--deep-amber);animation:spin .7s linear infinite;display:inline-block}
+.btn .spin{border-top-color:var(--ink);border-color:rgba(14,26,36,.3)}
+.ai-run{padding:var(--s3) var(--s2)}
+.ai-head{display:flex;align-items:center;gap:10px;margin-bottom:var(--s4)}
+.ai-badge{width:30px;height:30px;border-radius:8px;background:var(--amber);display:grid;place-items:center;box-shadow:0 4px 12px rgba(232,148,26,.28);font-family:var(--font-display);font-weight:700;font-size:16px;color:var(--ink)}
+.ai-title{font-family:var(--font-display);font-weight:600;font-size:15px;color:var(--ink)}
+.ai-title .dots span{animation:pulse-dot 1s infinite}.ai-title .dots span:nth-child(2){animation-delay:.2s}.ai-title .dots span:nth-child(3){animation-delay:.4s}
+.ai-step{display:flex;align-items:center;gap:12px;padding:9px 0;color:var(--steel);opacity:.55;transition:opacity .2s,color .2s;font-size:14px}
+.ai-step.active{opacity:1;color:var(--ink)}
+.ai-step.done{opacity:1;color:var(--green)}
+.ai-ic{width:20px;height:20px;display:grid;place-items:center;flex:0 0 20px}
+.ai-ic .ring{width:14px;height:14px;border-radius:50%;border:2px solid var(--line-strong)}
+.ai-step.active .ai-ic .ring{border-top-color:var(--deep-amber);animation:spin .7s linear infinite}
+.ai-step.done .ai-ic .ring{display:none}
+.ai-step.done .ai-ic::after{content:"✓";color:var(--green);font-family:var(--font-mono);font-size:14px;font-weight:600}
+.ai-count{margin-left:auto;font-family:var(--font-mono);font-size:11px;color:var(--steel)}
+.ai-progress{height:4px;background:var(--line);border-radius:100px;margin-top:var(--s3);overflow:hidden}
+.ai-progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--deep-amber),var(--amber));border-radius:100px;transition:width .4s ease}
+.insight{border-left:3px solid var(--deep-amber);padding-left:var(--s3);margin-bottom:var(--s3)}
+.insight h4{font-family:var(--font-display);color:var(--ink);font-size:15px;font-weight:600;margin-bottom:4px;letter-spacing:-.01em}
+.rec{display:flex;gap:var(--s2);align-items:flex-start;padding:var(--s2) 0;border-bottom:1px solid var(--line)}
+.rec:last-child{border-bottom:none}
+.rec .tag{font-family:var(--font-mono);font-size:9.5px;text-transform:uppercase;color:var(--deep-amber);border:1px solid var(--line-strong);border-radius:100px;padding:2px 8px;flex:0 0 auto}
+.bars{display:flex;align-items:flex-end;gap:var(--s2);height:120px;margin-top:var(--s3)}
+.bar{flex:1;background:var(--paper);border:1px solid var(--line);border-bottom:none;border-radius:3px 3px 0 0;position:relative;display:flex;justify-content:center}
+.bar.amber{background:var(--amber);border-color:var(--amber)}
+.bar span{position:absolute;bottom:-22px;font-family:var(--font-mono);font-size:10px;color:var(--steel)}
+.feed-item{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--line);font-size:14px}
+.feed-item:last-child{border-bottom:none}.feed-item .t{color:var(--steel);font-family:var(--font-mono);font-size:12px}
+.beforeafter{display:grid;grid-template-columns:1fr 1fr;gap:var(--s3);margin-top:var(--s3)}
+.ba{padding:var(--s3);border-radius:var(--radius)}
+.ba.manual{background:rgba(224,87,75,.06);border:1px solid rgba(224,87,75,.2)}
+.ba.auto{background:rgba(47,163,124,.06);border:1px solid rgba(47,163,124,.2)}
+.ba h5{font-family:var(--font-mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.07em;margin-bottom:var(--s2)}
+.ba.manual h5{color:var(--red)}.ba.auto h5{color:var(--green)}
+.ba .big{font-family:var(--font-display);font-weight:600;font-size:27px;color:var(--ink);letter-spacing:-.02em}
+.toast-wrap{position:fixed;bottom:var(--s4);right:var(--s4);z-index:40;display:flex;flex-direction:column;gap:var(--s2)}
+.toast{background:var(--card);border:1px solid var(--line-strong);border-left:3px solid var(--green);border-radius:var(--radius);padding:12px 18px;color:var(--ink);font-size:14px;box-shadow:0 10px 28px rgba(14,26,36,.16);animation:fade-up .22s ease;max-width:340px}
+.toast.amber{border-left-color:var(--deep-amber)}
+.menu-btn{display:none;background:none;border:1px solid var(--line-strong);color:var(--ink);border-radius:var(--radius);padding:6px 10px;cursor:pointer}
+@media(max-width:900px){.detail-grid{grid-template-columns:1fr}}
+@media(max-width:860px){.sidebar{position:fixed;z-index:30;transform:translateX(-100%);transition:transform .2s ease}.sidebar.open{transform:none}.row{grid-template-columns:1fr}.beforeafter{grid-template-columns:1fr}.menu-btn{display:inline-block}}
+</style>
+</head>
+<body>
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <span class="wordmark">INST<span class="i">I</span>VE</span>
+    </div>
+    <div class="powered">Powered by Instive AI</div>
+    <nav class="nav">
+      <div class="nav-item active" data-view="dashboard"><span class="dot"></span> Dashboard</div>
+      <div class="nav-item" data-view="inbox"><span class="dot"></span> RFQ Inbox</div>
+      <div class="nav-item" data-view="insights"><span class="dot"></span> AI Insights</div>
+      <div class="nav-item" data-view="integrations"><span class="dot"></span> Integrations</div>
+    </nav>
+    <div class="sidebar-foot">
+      <span class="demo-pill">DEMO · sample data only</span>
+      <div class="user"><div class="avatar">DK</div><div><div class="name">Dana Koval</div><div class="co">Cedar Ridge Freight</div></div></div>
+    </div>
+  </aside>
+
+  <div class="main">
+    <div class="topbar">
+      <div style="display:flex;align-items:center;gap:16px">
+        <button class="menu-btn" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button>
+        <h1 id="viewTitle">Dashboard</h1>
+      </div>
+      <div class="integration-badge">Odoo · connected</div>
+    </div>
+    <div class="content">
+      <div class="content-inner">
+
+        <section class="view active" data-view="dashboard">
+          <div class="grid kpis">
+            <div class="card"><div class="kpi-label">Hours saved / wk</div><div class="kpi-num">31.5</div><div class="kpi-delta up">▲ vs 4.0 hrs manual baseline</div></div>
+            <div class="card"><div class="kpi-label">RFQs processed / wk</div><div class="kpi-num">118</div><div class="kpi-delta up">▲ 22 vs last week</div></div>
+            <div class="card"><div class="kpi-label">Exceptions caught</div><div class="kpi-num">9</div><div class="kpi-delta down">flagged for review</div></div>
+            <div class="card"><div class="kpi-label">Extraction accuracy</div><div class="kpi-num">96%</div><div class="kpi-delta up">▲ 1.2%</div></div>
+          </div>
+          <div class="card" style="margin-bottom:var(--s4)">
+            <div class="panel-title">Before vs after — one RFQ</div>
+            <div class="beforeafter">
+              <div class="ba manual"><h5>Manual today</h5><div class="big">~14 min</div><div style="margin-top:8px;font-size:14px">Read email, re-key line items into Odoo by hand, chase missing detail. Typo-prone.</div></div>
+              <div class="ba auto"><h5>With Instive</h5><div class="big">11 sec</div><div style="margin-top:8px;font-size:14px">Parsed and mapped to an Odoo quotation draft. Zero re-keying. Flagged if unsure.</div></div>
+            </div>
+            <div class="bars">
+              <div class="bar" style="height:40%"><span>Mon</span></div><div class="bar" style="height:62%"><span>Tue</span></div>
+              <div class="bar" style="height:55%"><span>Wed</span></div><div class="bar amber" style="height:88%"><span>Thu</span></div>
+              <div class="bar" style="height:70%"><span>Fri</span></div>
+            </div>
+            <div style="margin-top:36px;font-family:var(--font-mono);font-size:11px;color:var(--steel)">RFQS PARSED PER DAY</div>
+          </div>
+          <div class="card">
+            <div class="panel-title">Recent activity</div>
+            <div class="feed-item"><span>RFQ-2287 pushed to Odoo quotation Q-4473 · Twin Pines Grocery</span><span class="t">2:41 PM</span></div>
+            <div class="feed-item"><span>RFQ-2285 held — reefer temperature not specified</span><span class="t">2:18 PM</span></div>
+            <div class="feed-item"><span>RFQ-2284 pushed to Odoo quotation Q-4472 · Delta Mill Supply</span><span class="t">1:54 PM</span></div>
+            <div class="feed-item"><span>RFQ-2289 pushed to Odoo quotation Q-4470 · Cedar Ridge Foods</span><span class="t">1:31 PM</span></div>
+            <div class="feed-item"><span>RFQ-2290 held — lane not currently quoted</span><span class="t">1:58 PM</span></div>
+            <div class="feed-item"><span>RFQ-2288 pushed to Odoo quotation Q-4469 · Midstate Carriers</span><span class="t">12:02 PM</span></div>
+          </div>
+        </section>
+
+        <section class="view" data-view="inbox">
+          <div class="panel-title">RFQ Inbox — parsed from ap@cedarridgefreight.com</div>
+          <div class="note" style="margin-bottom:var(--s3)">Open any RFQ to watch the AI extract and map it to Odoo before it's pushed.</div>
+          <div class="rows" id="rfqRows"></div>
+        </section>
+
+        <section class="view" data-view="detail">
+          <button class="back-link" onclick="showView('inbox')">← Back to inbox</button>
+          <div class="detail-head">
+            <div><span class="code" id="dCode">RFQ-0000</span><div class="who" id="dWho">—</div></div>
+            <span class="pill" id="dPill"></span>
+          </div>
+          <div class="steps" id="dSteps"></div>
+          <div class="detail-grid">
+            <div class="source-panel">
+              <div class="from" id="dFrom">from —</div>
+              <div class="raw" id="dRaw"></div>
+              <div class="hint" style="margin-top:var(--s3)">Highlighted spans are what the parser read fields from.</div>
+            </div>
+            <div class="map-card">
+              <div id="aiRun"></div>
+              <div id="mapForm" style="display:none">
+                <div class="field">
+                  <div class="field-label">Customer <span class="chip high" id="custChip">matched</span></div>
+                  <select class="select" id="custSelect"></select>
+                  <div class="hint" id="custHint"></div>
+                </div>
+                <div class="field-label" style="margin-bottom:0">Line items → Odoo products</div>
+                <table class="li-table">
+                  <thead><tr><th>Extracted from RFQ</th><th>Odoo product</th><th>Qty</th><th>Line</th><th>Match</th></tr></thead>
+                  <tbody id="liBody"></tbody>
+                </table>
+                <div class="summary">
+                  <div class="hint">Draft quotation · nothing posts to Odoo until you approve.</div>
+                  <div class="total"><span class="cur">$</span><span id="dTotal">0.00</span></div>
+                </div>
+                <div id="commitRow" style="display:flex;gap:var(--s2);justify-content:flex-end;align-items:center;margin-top:var(--s3)">
+                  <button class="btn btn-ghost" onclick="showView('inbox')">Save draft</button>
+                  <button class="btn btn-primary" id="approveBtn">Approve &amp; Push to Odoo</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="view" data-view="insights">
+          <div class="card" style="margin-bottom:var(--s3)">
+            <div class="panel-title">What the parser noticed this week</div>
+            <div class="insight"><h4>3 RFQs request Laredo → Memphis, a lane you don't currently quote</h4><div>All three went unanswered. Estimated missed revenue: $5,900. Consider a standing rate.</div></div>
+            <div class="insight"><h4>Reefer requests up 22% vs the prior 4 weeks</h4><div>Mostly frozen protein out of Kansas City. Reefer quotes lag dry-van replies by ~40 min.</div></div>
+            <div class="insight"><h4>Cedar Ridge Foods sends weights in tons every time</h4><div>The parser now auto-normalizes tons → lbs and flags the line for a glance.</div></div>
+          </div>
+          <div class="card">
+            <div class="panel-title">Recommended next actions</div>
+            <div class="rec"><span class="tag">revenue</span><div>Add a Laredo → Memphis dry-van rate so these 3 RFQs/wk convert instead of dropping.</div></div>
+            <div class="rec"><span class="tag">speed</span><div>Auto-route reefer RFQs to your reefer desk — cuts the 40-min lag.</div></div>
+            <div class="rec"><span class="tag">cleanup</span><div>Confirm the tons→lbs rule for Cedar Ridge Foods so those stop needing a manual glance.</div></div>
+          </div>
+        </section>
+
+        <section class="view" data-view="integrations">
+          <div class="card" style="max-width:640px">
+            <div class="panel-title">Integrations</div>
+            <div class="kv"><span class="k">Source mailbox</span><span class="v">ap@cedarridgefreight.com</span></div>
+            <div class="kv"><span class="k">Destination</span><span class="v" style="color:var(--green)">Odoo · connected</span></div>
+            <div class="kv"><span class="k">Product catalog</span><span class="v">8 SKUs synced from Odoo</span></div>
+            <div class="kv"><span class="k">Object created</span><span class="v">sale.order (quotation draft)</span></div>
+            <div class="kv"><span class="k">Auto-post</span><span class="v" style="color:var(--deep-amber)">OFF — approval required</span></div>
+            <p class="note">Product and customer dropdowns are pulled live from your Odoo catalog. Nothing posts to Odoo until you approve it, and every push writes an audit line to the quotation.</p>
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </div>
+</div>
+<div class="toast-wrap" id="toasts"></div>
+
+<script>
+var odooProducts = [
+  {sku:"LTL-STD",     name:"LTL Standard (per shipment)", price:612},
+  {sku:"DRY-VAN-FTL", name:"Dry Van FTL (linehaul)",      price:1180},
+  {sku:"REEFER-FTL",  name:"Reefer FTL (linehaul)",       price:1420},
+  {sku:"FLATBED-FTL", name:"Flatbed FTL (linehaul)",      price:1350},
+  {sku:"INTERMODAL",  name:"Intermodal rail (linehaul)",  price:980},
+  {sku:"EXPEDITED",   name:"Expedited team (linehaul)",   price:2150},
+  {sku:"ACC-LFTG",    name:"Liftgate service",            price:75},
+  {sku:"ACC-TARP",    name:"Tarp service",                price:130},
+  {sku:"ACC-DET",     name:"Detention (per hr)",          price:65},
+  {sku:"FUEL-SUR",    name:"Fuel surcharge",              price:88}
+];
+var odooCustomers = ["Northline Distribution","Gulf States Retail","Cedar Ridge Foods","Midstate Carriers","Prairie Cold Storage","Twin Pines Grocery","Ironclad Metals","Valley Fresh Farms","Delta Mill Supply","Great Lakes Produce","Sunrise Beverage Co","Rocklin Building Products"];
+function prod(sku){ for(var k=0;k<odooProducts.length;k++){ if(odooProducts[k].sku===sku) return odooProducts[k]; } return null; }
+
+var rfqs = [
+  {id:"RFQ-2291", status:"in-transit", cust:"Northline Distribution", custConf:99,
+   lane:"Chicago, IL → Kansas City, MO", from:"buyer@northline-dist.com",
+   raw:"Hi Cedar Ridge — need a rate: <span class='hl'>2 pallets 48x40 dry, ~3,100 lbs</span>, <span class='hl'>Chicago IL to Kansas City MO</span>, pickup Thu deliver Fri. Also can you do a <span class='hl'>liftgate at delivery</span>? Ref PO 88-2201. Thanks, Marcus",
+   lines:[
+     {desc:"2 pallets 48x40 dry, 3,100 lb", src:"2 pallets 48x40 dry", sku:"LTL-STD", qty:1, conf:96, match:"high"},
+     {desc:"liftgate at delivery", src:"liftgate at delivery", sku:"", qty:1, conf:0, match:"need"}
+   ]},
+  {id:"RFQ-2290", status:"hold", cust:"Gulf States Retail", custConf:90,
+   lane:"Laredo, TX → Memphis, TN", from:"logistics@gulfstatesretail.com",
+   raw:"Looking for a quote <span class='hl'>Laredo to Memphis</span>, <span class='hl'>8 pallets mixed ~11,000 lbs</span>, tarped? let me know rate.",
+   lines:[
+     {desc:"8 pallets mixed, 11,000 lb", src:"8 pallets mixed", sku:"DRY-VAN-FTL", qty:1, conf:74, match:"low"},
+     {desc:"tarped? (unclear)", src:"tarped?", sku:"", qty:1, conf:0, match:"need"}
+   ]},
+  {id:"RFQ-2289", status:"cleared", cust:"Cedar Ridge Foods", custConf:97,
+   lane:"Kansas City, MO → Des Moines, IA", from:"ship@cedarridgefoods.com",
+   raw:"Reefer load <span class='hl'>frozen protein, 14 tons</span>, <span class='hl'>KC to Des Moines</span>, -10F, pickup Mon AM.",
+   lines:[
+     {desc:"Reefer, frozen protein, 28,000 lb (14 tons -> normalized)", src:"frozen protein, 14 tons", sku:"REEFER-FTL", qty:1, conf:94, match:"high"}
+   ]},
+  {id:"RFQ-2288", status:"cleared", cust:"Midstate Carriers", custConf:98,
+   lane:"Memphis, TN → Nashville, TN", from:"ops@midstatecarriers.com",
+   raw:"Quick LTL quote <span class='hl'>Memphis to Nashville</span>, <span class='hl'>1 pallet 900 lbs</span>, no rush.",
+   lines:[
+     {desc:"1 pallet, 900 lb, LTL", src:"1 pallet 900 lbs", sku:"LTL-STD", qty:1, conf:96, match:"high"}
+   ]},
+  {id:"RFQ-2287", status:"cleared", cust:"Twin Pines Grocery", custConf:96,
+   lane:"Des Moines, IA → Omaha, NE", from:"purchasing@twinpinesgrocery.com",
+   raw:"Need a dry van rate, <span class='hl'>12 pallets dry grocery ~18,000 lbs</span>, <span class='hl'>Des Moines IA to Omaha NE</span>, pickup Wed. PO TP-7741.",
+   lines:[
+     {desc:"12 pallets dry grocery, 18,000 lb", src:"12 pallets dry grocery", sku:"DRY-VAN-FTL", qty:1, conf:95, match:"high"}
+   ]},
+  {id:"RFQ-2286", status:"in-transit", cust:"Ironclad Metals", custConf:97,
+   lane:"Gary, IN → Cleveland, OH", from:"logistics@ironcladmetals.com",
+   raw:"Rate please: <span class='hl'>1 steel coil ~22,000 lbs</span>, <span class='hl'>Gary IN to Cleveland OH</span>, flatbed, <span class='hl'>tarped</span>. Pickup Fri.",
+   lines:[
+     {desc:"1 steel coil, 22,000 lb, flatbed", src:"steel coil 22,000 lbs", sku:"FLATBED-FTL", qty:1, conf:93, match:"high"},
+     {desc:"tarp for coil", src:"tarped", sku:"ACC-TARP", qty:1, conf:82, match:"low"}
+   ]},
+  {id:"RFQ-2285", status:"hold", cust:"Valley Fresh Farms", custConf:88,
+   lane:"Fresno, CA → Denver, CO", from:"ship@valleyfreshfarms.com",
+   raw:"Quote <span class='hl'>reefer, mixed produce ~30,000 lbs</span>, <span class='hl'>Fresno CA to Denver CO</span>, pickup Mon. <span class='hl'>temp?</span>",
+   lines:[
+     {desc:"Reefer, mixed produce, 30,000 lb", src:"reefer, mixed produce", sku:"REEFER-FTL", qty:1, conf:76, match:"low"},
+     {desc:"set temperature (missing)", src:"temp?", sku:"", qty:1, conf:0, match:"need"}
+   ]},
+  {id:"RFQ-2284", status:"cleared", cust:"Delta Mill Supply", custConf:95,
+   lane:"St. Louis, MO → Chicago, IL", from:"orders@deltamillsupply.com",
+   raw:"LTL quote <span class='hl'>3 pallets millwork ~2,400 lbs</span>, <span class='hl'>St Louis MO to Chicago IL</span>, no rush.",
+   lines:[
+     {desc:"3 pallets millwork, 2,400 lb, LTL", src:"3 pallets millwork", sku:"LTL-STD", qty:1, conf:96, match:"high"}
+   ]},
+  {id:"RFQ-2283", status:"in-transit", cust:"Great Lakes Produce", custConf:96,
+   lane:"Grand Rapids, MI → Detroit, MI", from:"dispatch@greatlakesproduce.com",
+   raw:"Reefer load <span class='hl'>fresh produce ~26,000 lbs</span>, <span class='hl'>Grand Rapids MI to Detroit MI</span>, 34F, pickup Thu AM.",
+   lines:[
+     {desc:"Reefer, fresh produce, 26,000 lb, 34°F", src:"fresh produce 26,000 lbs", sku:"REEFER-FTL", qty:1, conf:94, match:"high"}
+   ]},
+  {id:"RFQ-2282", status:"cleared", cust:"Sunrise Beverage Co", custConf:97,
+   lane:"Kansas City, MO → Wichita, KS", from:"logistics@sunrisebev.com",
+   raw:"Dry van <span class='hl'>16 pallets canned beverage ~24,000 lbs</span>, <span class='hl'>Kansas City MO to Wichita KS</span>, pickup Tue.",
+   lines:[
+     {desc:"16 pallets canned beverage, 24,000 lb", src:"16 pallets canned beverage", sku:"DRY-VAN-FTL", qty:1, conf:95, match:"high"}
+   ]},
+  {id:"RFQ-2281", status:"cleared", cust:"Rocklin Building Products", custConf:94,
+   lane:"Denver, CO → Salt Lake City, UT", from:"buyer@rocklinbp.com",
+   raw:"Flatbed rate <span class='hl'>lumber bundles ~40,000 lbs</span>, <span class='hl'>Denver CO to Salt Lake City UT</span>, pickup Wed.",
+   lines:[
+     {desc:"Lumber bundles, 40,000 lb, flatbed", src:"lumber bundles 40,000 lbs", sku:"FLATBED-FTL", qty:1, conf:92, match:"high"}
+   ]}
+];
+
+var current = null;
+var titles = {dashboard:"Dashboard", inbox:"RFQ Inbox", detail:"RFQ Review", insights:"AI Insights", integrations:"Integrations"};
+
+function showView(v){
+  var views = document.querySelectorAll(".view");
+  for(var k=0;k<views.length;k++){ views[k].classList.remove("active"); }
+  document.querySelector(".view[data-view='" + v + "']").classList.add("active");
+  document.getElementById("viewTitle").textContent = titles[v];
+  var navs = document.querySelectorAll(".nav-item");
+  for(var j=0;j<navs.length;j++){ navs[j].classList.toggle("active", navs[j].dataset.view === v); }
+  document.getElementById("sidebar").classList.remove("open");
+  window.scrollTo(0,0);
+}
+
+function renderRows(){
+  document.getElementById("rfqRows").innerHTML = rfqs.map(function(r,i){
+    return "<div class='row' onclick='openRFQ(" + i + ")'>" +
+      "<span class='code'>" + r.id + "</span>" +
+      "<div><div class='title'>" + r.cust + "</div><div class='sub'>" + r.lane + "</div></div>" +
+      "<span class='pill " + r.status + "'>" + r.status.replace('-',' ') + "</span></div>";
+  }).join("");
+}
+
+function renderSteps(active, complete){
+  var order = ["Received","Extracted","Mapped","Review","Pushed"];
+  var ai = order.indexOf(active);
+  document.getElementById("dSteps").innerHTML = order.map(function(s,idx){
+    var done = complete ? true : (idx < ai);
+    var isA = !complete && idx === ai;
+    var cls = done ? "done" : (isA ? "active" : "");
+    var sep = idx < order.length-1 ? "<span class='arrow'>→</span>" : "";
+    return "<span class='step " + cls + "'><span class='n'>" + (done ? "✓" : idx+1) + "</span>" + s + "</span>" + sep;
+  }).join("");
+}
+
+function runAISequence(host, steps, cb){
+  host.style.display = "block";
+  host.innerHTML =
+    "<div class='ai-run'><div class='ai-head'>" +
+      "<div class='ai-badge'>I</div>" +
+      "<div class='ai-title'>Instive AI working<span class='dots'><span>.</span><span>.</span><span>.</span></span></div></div>" +
+      "<div id='aiSteps'></div><div class='ai-progress'><span id='aiBar'></span></div></div>";
+  var stepsHost = host.querySelector("#aiSteps");
+  stepsHost.innerHTML = steps.map(function(s,i){
+    return "<div class='ai-step'><span class='ai-ic'><span class='ring'></span></span><span>" + s + "</span><span class='ai-count'>" + (i+1) + "/" + steps.length + "</span></div>";
+  }).join("");
+  var els = [].slice.call(stepsHost.children);
+  var bar = host.querySelector("#aiBar");
+  var i = 0;
+  (function tick(){
+    if(i > 0){ els[i-1].classList.remove("active"); els[i-1].classList.add("done"); }
+    if(i >= els.length){ bar.style.width = "100%"; setTimeout(cb, 340); return; }
+    els[i].classList.add("active");
+    bar.style.width = Math.round((i+0.6)/els.length*100) + "%";
+    i++;
+    setTimeout(tick, 520);
+  })();
+}
+
+function openRFQ(i){
+  current = JSON.parse(JSON.stringify(rfqs[i]));
+  document.getElementById("dCode").textContent = current.id;
+  document.getElementById("dWho").textContent = current.cust + " · " + current.lane;
+  document.getElementById("dFrom").textContent = "from " + current.from;
+  document.getElementById("dRaw").innerHTML = current.raw;
+  var pill = document.getElementById("dPill");
+  pill.className = "pill " + current.status;
+  pill.textContent = current.status.replace('-',' ');
+  renderSteps("Review", false);
+
+  showView("detail");
+  var mapForm = document.getElementById("mapForm");
+  var aiRun = document.getElementById("aiRun");
+  mapForm.style.display = "none";
+  runAISequence(aiRun, ["Reading email","Extracting fields","Matching to Odoo catalog","Scoring confidence"], function(){
+    aiRun.style.display = "none";
+    populateForm(i);
+    mapForm.style.display = "block";
+    mapForm.classList.remove("reveal");
+    void mapForm.offsetWidth;
+    mapForm.classList.add("reveal");
+  });
+}
+
+function populateForm(i){
+  var cs = document.getElementById("custSelect");
+  cs.innerHTML = odooCustomers.map(function(c){ return "<option " + (c===current.cust?"selected":"") + ">" + c + "</option>"; }).join("");
+  document.getElementById("custChip").className = "chip " + (current.custConf>=95?"high":"low");
+  document.getElementById("custChip").textContent = (current.custConf>=95?"matched ":"check ") + current.custConf + "%";
+  document.getElementById("custHint").innerHTML = "AI matched from sender domain <span class='src'>" + current.from.split("@")[1] + "</span>";
+  cs.onchange = function(){
+    current.cust = cs.value;
+    document.getElementById("custChip").className = "chip high";
+    document.getElementById("custChip").textContent = "manual";
+    document.getElementById("custHint").innerHTML = "Manually set · remembered for <span class='src'>" + cs.value + "</span>";
+  };
+  // reset commit row (in case a prior push replaced it)
+  document.getElementById("commitRow").innerHTML =
+    "<button class='btn btn-ghost' onclick=\"showView('inbox')\">Save draft</button>" +
+    "<button class='btn btn-primary' id='approveBtn'>" + (current.status==="hold" ? "Send to human review" : "Approve & Push to Odoo") + "</button>";
+  document.getElementById("approveBtn").onclick = function(){ approve(i); };
+  renderLines();
+}
+
+function productOptions(selectedSku){
+  var blank = "<option value='' " + (selectedSku===""?"selected":"") + ">— pick an Odoo product —</option>";
+  return blank + odooProducts.map(function(p){
+    return "<option value='" + p.sku + "' " + (p.sku===selectedSku?"selected":"") + ">" + p.sku + " · " + p.name + "</option>";
+  }).join("");
+}
+function chipFor(line){
+  if(line.match==="need") return "<span class='chip need'>pick required</span>";
+  if(line.manual) return "<span class='chip high'>manual</span>";
+  if(line.match==="low") return "<span class='chip low'>check " + line.conf + "%</span>";
+  return "<span class='chip high'>auto " + line.conf + "%</span>";
+}
+function renderLines(){
+  var body = document.getElementById("liBody");
+  body.innerHTML = current.lines.map(function(ln,idx){
+    var p = prod(ln.sku);
+    var lineTotal = p ? p.price * ln.qty : 0;
+    var hint;
+    if(ln.match==="need") hint = "<div class='hint' style='color:var(--red)'>AI wasn't sure — pick from your Odoo catalog</div>";
+    else if(ln.manual) hint = "<div class='hint'>Manually mapped · remembered for " + current.cust + "</div>";
+    else hint = "<div class='hint'>AI matched <span class='src'>\"" + ln.src + "\"</span> → " + ln.sku + "</div>";
+    return "<tr>" +
+      "<td style='max-width:220px'>" + ln.desc + hint + "</td>" +
+      "<td><select class='select " + (ln.sku===""?"unmapped":"") + "' onchange='mapLine(" + idx + ", this.value)'>" + productOptions(ln.sku) + "</select></td>" +
+      "<td><input class='text-in qty' type='number' min='1' value='" + ln.qty + "' onchange='qtyLine(" + idx + ", this.value)'></td>" +
+      "<td class='money'>" + (p ? "$" + lineTotal.toFixed(2) : "—") + "</td>" +
+      "<td>" + chipFor(ln) + "</td></tr>";
+  }).join("");
+  recompute();
+}
+function mapLine(idx, sku){
+  var ln = current.lines[idx];
+  ln.sku = sku; ln.manual = sku !== "";
+  if(sku !== "") ln.match = "mapped";
+  renderLines();
+  if(sku !== "") toast("Line mapped to " + sku + " — will be remembered for " + current.cust, true);
+}
+function qtyLine(idx, v){ current.lines[idx].qty = Math.max(1, parseInt(v)||1); renderLines(); }
+function recompute(){
+  var total = 0;
+  for(var k=0;k<current.lines.length;k++){ var p = prod(current.lines[k].sku); if(p) total += p.price * current.lines[k].qty; }
+  document.getElementById("dTotal").textContent = total.toFixed(2);
+}
+
+function approve(i){
+  var unmapped = false;
+  for(var k=0;k<current.lines.length;k++){ if(current.lines[k].sku==="") unmapped = true; }
+  if(current.status === "hold"){
+    toast(current.id + " routed to review — nothing posted to Odoo", true);
+    showView("inbox"); return;
+  }
+  if(unmapped){ toast("One line still needs an Odoo product before you can push", true); return; }
+  var btn = document.getElementById("approveBtn");
+  btn.disabled = true;
+  btn.innerHTML = "<span class='spin'></span>Pushing to Odoo…";
+  setTimeout(function(){
+    rfqs[i].status = "cleared";
+    renderSteps("Pushed", true);
+    var q = "Q-" + (4481 + i);
+    document.getElementById("commitRow").innerHTML =
+      "<div class='hint' style='color:var(--green);margin:0'>✓ Pushed · Odoo quotation " + q + " created · audit line written</div>" +
+      "<button class='btn btn-ghost' onclick=\"showView('inbox')\">Back to inbox</button>";
+    toast("Approved by you · Odoo quotation " + q + " created · audit line written");
+    renderRows();
+  }, 900);
+}
+
+function toast(msg, amber){
+  var t = document.createElement("div");
+  t.className = "toast" + (amber ? " amber" : "");
+  t.textContent = msg;
+  document.getElementById("toasts").appendChild(t);
+  setTimeout(function(){ t.remove(); }, 3400);
+}
+
+var navEls = document.querySelectorAll(".nav-item");
+for(var n=0;n<navEls.length;n++){ (function(el){ el.onclick = function(){ showView(el.dataset.view); }; })(navEls[n]); }
+renderRows();
+</script>
+</body>
+</html>
