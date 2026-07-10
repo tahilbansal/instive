@@ -8,6 +8,7 @@ import CtaBand from "@/components/site/CtaBand";
 import Reveal from "@/components/site/Reveal";
 import Icon from "@/components/site/Icon";
 import { SOLUTIONS, solutionBySlug, agentByName, CASE_STUDIES } from "@/lib/site";
+import { pageMeta } from "@/lib/seo";
 
 export function generateStaticParams() {
   return SOLUTIONS.map((s) => ({ slug: s.id }));
@@ -16,7 +17,11 @@ export function generateStaticParams() {
 export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
   const s = solutionBySlug(params.slug);
   if (!s) return { title: "Solution" };
-  return { title: s.title, description: s.short };
+  return pageMeta({
+    title: s.title,
+    description: s.short,
+    path: `/solutions/${s.id}`,
+  });
 }
 
 export default function SolutionPage({ params }: { params: { slug: string } }) {

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import Image from "next/image";
 import Link from "next/link";
 import Nav from "@/components/site/Nav";
@@ -9,11 +10,12 @@ import Reveal from "@/components/site/Reveal";
 import Icon from "@/components/site/Icon";
 import { SEGMENTS } from "@/lib/site";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMeta({
   title: "Solutions by customer segment",
   description:
     "AI built for your role in the chain: freight forwarders, customs brokers, shippers and importers, carriers, freight brokers and 3PLs. See the workflows we automate for each.",
-};
+  path: "/segments",
+});
 
 export default function SegmentsIndex() {
   return (

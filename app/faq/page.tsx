@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import Nav from "@/components/site/Nav";
 import Footer from "@/components/site/Footer";
 import PageHeader from "@/components/site/PageHeader";
@@ -7,11 +8,12 @@ import Reveal from "@/components/site/Reveal";
 import Faq from "@/components/home/Faq";
 import { TESTIMONIALS } from "@/lib/site";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMeta({
   title: "FAQ and perspectives",
   description:
     "Common questions about deploying AI in supply chain operations, plus representative perspectives from the floor on where the value is.",
-};
+  path: "/faq",
+});
 
 export default function FaqPage() {
   return (

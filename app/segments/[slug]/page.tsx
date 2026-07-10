@@ -9,6 +9,7 @@ import Reveal from "@/components/site/Reveal";
 import Icon from "@/components/site/Icon";
 import UseCaseFlow from "@/components/site/UseCaseFlow";
 import { SEGMENTS, segmentBySlug, solutionBySlug } from "@/lib/site";
+import { pageMeta } from "@/lib/seo";
 
 export function generateStaticParams() {
   return SEGMENTS.map((s) => ({ slug: s.slug }));
@@ -17,7 +18,11 @@ export function generateStaticParams() {
 export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
   const seg = segmentBySlug(params.slug);
   if (!seg) return { title: "Segment" };
-  return { title: seg.name, description: seg.intro };
+  return pageMeta({
+    title: seg.name,
+    description: seg.intro,
+    path: `/segments/${seg.slug}`,
+  });
 }
 
 export default function SegmentPage({ params }: { params: { slug: string } }) {

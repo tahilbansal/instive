@@ -9,6 +9,7 @@ import Reveal from "@/components/site/Reveal";
 import Icon from "@/components/site/Icon";
 import MediaFrame from "@/components/site/MediaFrame";
 import { INDUSTRIES, industryBySlug, solutionBySlug } from "@/lib/site";
+import { pageMeta } from "@/lib/seo";
 
 export function generateStaticParams() {
   return INDUSTRIES.map((i) => ({ slug: i.slug }));
@@ -17,7 +18,11 @@ export function generateStaticParams() {
 export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
   const ind = industryBySlug(params.slug);
   if (!ind) return { title: "Industry" };
-  return { title: ind.name, description: ind.intro };
+  return pageMeta({
+    title: ind.name,
+    description: ind.intro,
+    path: `/industries/${ind.slug}`,
+  });
 }
 
 export default function IndustryPage({ params }: { params: { slug: string } }) {

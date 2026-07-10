@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import Link from "next/link";
 import Nav from "@/components/site/Nav";
 import Footer from "@/components/site/Footer";
@@ -9,11 +10,12 @@ import Icon from "@/components/site/Icon";
 import { CASE_STUDIES } from "@/lib/site";
 import { mockups } from "@/data/mockups";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMeta({
   title: "Case studies",
   description:
     "Real operations, real recovery. Freight billing audits, carrier control and demand planning, each built on a client's own data and live to explore.",
-};
+  path: "/case-studies",
+});
 
 export default function CaseStudiesPage() {
   return (

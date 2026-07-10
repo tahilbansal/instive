@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import Nav from "@/components/site/Nav";
 import Footer from "@/components/site/Footer";
 import PageHeader from "@/components/site/PageHeader";
@@ -7,11 +8,12 @@ import Reveal from "@/components/site/Reveal";
 import Icon from "@/components/site/Icon";
 import { IntegrationGrid } from "@/components/site/Integrations";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMeta({
   title: "Integrations",
   description:
     "Instive connects to the systems you already run: SAP, NetSuite, Dynamics, CargoWise, QuickBooks, Outlook, Gmail and more. No rip and replace. We connect to any system with an API.",
-};
+  path: "/integrations",
+});
 
 const CONNECT_POINTS = [
   {

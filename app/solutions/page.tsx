@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import Link from "next/link";
 import Nav from "@/components/site/Nav";
 import Footer from "@/components/site/Footer";
@@ -8,11 +9,12 @@ import Reveal from "@/components/site/Reveal";
 import Icon from "@/components/site/Icon";
 import { SOLUTIONS } from "@/lib/site";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMeta({
   title: "Solutions",
   description:
     "Start from the business problem. Eliminate manual invoice audits, catch carrier slips early, prevent stockouts, staff to tomorrow's volume, recover value from returns, and kill the manual client report.",
-};
+  path: "/solutions",
+});
 
 export default function SolutionsIndex() {
   return (

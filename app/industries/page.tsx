@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import Image from "next/image";
 import Link from "next/link";
 import Nav from "@/components/site/Nav";
@@ -9,11 +10,12 @@ import Reveal from "@/components/site/Reveal";
 import Icon from "@/components/site/Icon";
 import { INDUSTRIES } from "@/lib/site";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMeta({
   title: "Industries",
   description:
     "AI built for how your operation actually runs: manufacturing, distribution, retail, logistics providers, warehousing and supply chain teams.",
-};
+  path: "/industries",
+});
 
 export default function IndustriesIndex() {
   return (

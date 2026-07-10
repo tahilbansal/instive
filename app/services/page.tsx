@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import Link from "next/link";
 import Nav from "@/components/site/Nav";
 import Footer from "@/components/site/Footer";
@@ -7,11 +8,12 @@ import Icon from "@/components/site/Icon";
 import { BookDemoButton } from "@/components/site/BookDemo";
 import { AGENTS } from "@/lib/site";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMeta({
   title: "AI agents for supply chain operations",
   description:
     "Meet the Instive agents: specialist AI that rides alongside your stack to forecast demand, control carriers, audit freight bills, plan labor, source smarter, and recover returns.",
-};
+  path: "/services",
+});
 
 const HOW = [
   { icon: "plug", title: "Connect to your stack", body: "Each agent reads from your ERP, TMS, WMS or a flat file. Read-only to start. No migration." },

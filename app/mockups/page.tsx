@@ -4,12 +4,14 @@ import SectionCTA from "@/components/SectionCTA";
 import Nav from "@/components/site/Nav";
 import Footer from "@/components/site/Footer";
 import { BookDemoButton } from "@/components/site/BookDemo";
+import { pageMeta } from "@/lib/seo";
 
-export const metadata = {
+export const metadata = pageMeta({
   title: "See Instive AI in your world",
   description:
     "Every mockup was built for a real logistics company, showing exactly what their operations look like with an AI layer on top. No generic demos.",
-};
+  path: "/mockups",
+});
 
 export default function MockupsPage() {
   return (

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import Nav from "@/components/site/Nav";
 import Footer from "@/components/site/Footer";
 import PageHeader from "@/components/site/PageHeader";
@@ -6,11 +7,12 @@ import CtaBand from "@/components/site/CtaBand";
 import Reveal from "@/components/site/Reveal";
 import Icon from "@/components/site/Icon";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMeta({
   title: "About",
   description:
     "Instive AI is an engineering-led studio building production AI for supply chain, logistics and warehousing. Instinct paired with the initiative to act.",
-};
+  path: "/about",
+});
 
 const TRIAD = [
   { n: "01", word: "Instinct", line: "We sense what is about to go wrong." },
