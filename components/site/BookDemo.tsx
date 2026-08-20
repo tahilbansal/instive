@@ -45,13 +45,26 @@ const INDUSTRIES = [
 
 const isEmail = (v: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
 
+/** US numbers only: strip everything, drop a leading country code, cap at 10 digits. */
+const phoneDigits = (v: string) => {
+  const d = v.replace(/\D/g, "");
+  return (d.length === 11 && d.startsWith("1") ? d.slice(1) : d).slice(0, 10);
+};
+
+const formatUsPhone = (v: string) => {
+  const d = phoneDigits(v);
+  if (d.length <= 3) return d;
+  if (d.length <= 6) return `(${d.slice(0, 3)}) ${d.slice(3)}`;
+  return `(${d.slice(0, 3)}) ${d.slice(3, 6)}-${d.slice(6)}`;
+};
+
 /** Mounted once (in the root layout). Listens for the open event. */
 export function BookDemoModal() {
   const [open, setOpen] = useState(false);
   const [source, setSource] = useState("cta");
   const [status, setStatus] = useState<"idle" | "sending" | "done" | "error">("idle");
   const [err, setErr] = useState("");
-  const [form, setForm] = useState({ name: "", email: "", company: "", domain: INDUSTRIES[0], notes: "" });
+  const [form, setForm] = useState({ name: "", email: "", company: "", phone: "", domain: INDUSTRIES[0], notes: "" });
 
   useEffect(() => {
     const onOpen = (e: Event) => {
@@ -80,15 +93,30 @@ export function BookDemoModal() {
   const set = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) =>
     setForm((f) => ({ ...f, [k]: e.target.value }));
 
+  const setPhone = (e: React.ChangeEvent<HTMLInputElement>) =>
+    setForm((f) => ({ ...f, phone: formatUsPhone(e.target.value) }));
+
   const submit = async () => {
     if (!form.name.trim() || !isEmail(form.email.trim())) {
       setErr("Please add your name and a valid work email.");
       setStatus("error");
       return;
     }
+    const digits = phoneDigits(form.phone);
+    if (digits && digits.length !== 10) {
+      setErr("That phone number looks incomplete. Use a 10 digit US number.");
+      setStatus("error");
+      return;
+    }
     setStatus("sending");
     setErr("");
-    const payload = { ...form, name: form.name.trim(), email: form.email.trim(), source: `book_demo_${source}` };
+    const payload = {
+      ...form,
+      name: form.name.trim(),
+      email: form.email.trim(),
+      phone: digits ? `+1${digits}` : "",
+      source: `book_demo_${source}`,
+    };
     try {
       const res = await fetch(`${window.location.origin}/api/blueprint-sessions`, {
         method: "POST",
@@ -187,13 +215,46 @@ export function BookDemoModal() {
                   <input style={fieldStyle} value={form.company} onChange={set("company")} placeholder="Acme Logistics" />
                 </div>
                 <div>
-                  <label style={labelStyle}>Industry</label>
-                  <select style={fieldStyle} value={form.domain} onChange={set("domain")}>
-                    {INDUSTRIES.map((d) => (
-                      <option key={d}>{d}</option>
-                    ))}
-                  </select>
+                  <label htmlFor="demo-phone" style={labelStyle}>
+                    Phone <span style={{ textTransform: "none", letterSpacing: 0 }}>(optional, US)</span>
+                  </label>
+                  <div style={{ position: "relative" }}>
+                    <span
+                      aria-hidden="true"
+                      style={{
+                        position: "absolute",
+                        left: 13,
+                        top: "50%",
+                        transform: "translateY(-50%)",
+                        color: "var(--text-muted)",
+                        fontFamily: "var(--font-mono)",
+                        fontSize: 14,
+                        pointerEvents: "none",
+                      }}
+                    >
+                      +1
+                    </span>
+                    <input
+                      id="demo-phone"
+                      style={{ ...fieldStyle, paddingLeft: 38 }}
+                      value={form.phone}
+                      onChange={setPhone}
+                      placeholder="(555) 123-4567"
+                      type="tel"
+                      inputMode="tel"
+                      autoComplete="tel-national"
+                      aria-describedby="demo-consent-note"
+                    />
+                  </div>
                 </div>
+              </div>
+              <div>
+                <label style={labelStyle}>Industry</label>
+                <select style={fieldStyle} value={form.domain} onChange={set("domain")}>
+                  {INDUSTRIES.map((d) => (
+                    <option key={d}>{d}</option>
+                  ))}
+                </select>
               </div>
               <div>
                 <label style={labelStyle}>The workflow that costs you most</label>
@@ -215,8 +276,10 @@ export function BookDemoModal() {
                   <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h9M9 4l4 4-4 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
                 )}
               </button>
-              <p className="text-[12px] text-center" style={{ color: "var(--text-muted)", fontFamily: "var(--font-mono)" }}>
+              <p id="demo-consent-note" className="text-[12px] text-center leading-relaxed" style={{ color: "var(--text-muted)", fontFamily: "var(--font-mono)" }}>
                 Goes straight to the team. No sales sequence.
+                <br />
+                By submitting, you agree that Instive AI may contact you regarding your inquiry.
               </p>
             </div>
           </div>
