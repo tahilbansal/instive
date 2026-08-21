@@ -5,6 +5,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const nodemailer = require("nodemailer");
 const cors = require("cors");
+const { demoRequestEmail, leadEmail, DEFAULT_CONSENT_TEXT } = require("./emails");
 
 const app = express();
 app.use(express.json());
@@ -46,8 +47,13 @@ const BlueprintSession = mongoose.model("BlueprintSession", new mongoose.Schema(
   name:    { type: String, required: true, trim: true },
   email:   { type: String, required: true, trim: true, lowercase: true },
   company: { type: String, trim: true },
+  // E.164, US only (+15551234567). Optional.
+  phone:   { type: String, trim: true },
   domain:  { type: String, trim: true },
   notes:   { type: String, trim: true },
+  // The exact disclosure shown at submission, kept so contact permission is auditable.
+  consentText: { type: String, trim: true },
+  consentAt:   { type: Date },
   source:  { type: String, default: "blueprint_modal" },
   createdAt: { type: Date, default: Date.now }
 }));
@@ -65,6 +71,15 @@ const transporter = nodemailer.createTransport({
 
 const isEmail = (v) => typeof v === "string" && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
 
+const NOTIFY_TO = process.env.NOTIFY_EMAIL || "contact@instiveai.com";
+
+/** US only: 10 digits (or 11 with a leading 1) -> E.164. Anything else -> "". */
+const normalizeUsPhone = (v) => {
+  const d = String(v || "").replace(/\D/g, "");
+  const n = d.length === 11 && d.startsWith("1") ? d.slice(1) : d;
+  return n.length === 10 ? `+1${n}` : "";
+};
+
 /* ---------- Routes ---------- */
 app.post("/api/leads", async (req, res) => {
   try {
@@ -75,9 +90,9 @@ app.post("/api/leads", async (req, res) => {
     if (process.env.SMTP_USER && process.env.SMTP_PASS) {
       await transporter.sendMail({
         from: `"Instive AI Alerts" <${process.env.SMTP_USER}>`,
-        to: "contact@instiveai.com",
-        subject: `New Lead: ${email}`,
-        text: `A new lead has subscribed.\nEmail: ${email}\nSource: ${source}`
+        to: NOTIFY_TO,
+        replyTo: email,
+        ...leadEmail(lead)
       }).catch(err => console.error("Mail Error:", err.message));
     }
 
@@ -89,16 +104,22 @@ app.post("/api/leads", async (req, res) => {
 
 app.post("/api/blueprint-sessions", async (req, res) => {
   try {
-    const { name, email, company, domain, notes, source } = req.body || {};
+    const { name, email, company, phone, domain, notes, consentText, source } = req.body || {};
     if (!name || !isEmail(email)) return res.status(400).json({ ok: false, error: "Name and valid email required" });
-    const doc = await BlueprintSession.create({ name, email, company, domain, notes, source });
+    const doc = await BlueprintSession.create({
+      name, email, company, domain, notes, source,
+      phone: normalizeUsPhone(phone),
+      // Submitting the form is the consent action; record what was shown and when.
+      consentText: consentText || DEFAULT_CONSENT_TEXT,
+      consentAt: new Date(),
+    });
 
     if (process.env.SMTP_USER && process.env.SMTP_PASS) {
       await transporter.sendMail({
         from: `"Instive AI Alerts" <${process.env.SMTP_USER}>`,
-        to: "contact@instiveai.com",
-        subject: `New Blueprint Session: ${company}`,
-        text: `Name: ${name}\nEmail: ${email}\nCompany: ${company}\nDomain: ${domain}\nNotes: ${notes}\nSource: ${source}`
+        to: NOTIFY_TO,
+        replyTo: email,
+        ...demoRequestEmail(doc)
       }).catch(err => console.error("Mail Error:", err.message));
     }
 

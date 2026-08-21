@@ -51,6 +51,9 @@ const phoneDigits = (v: string) => {
   return (d.length === 11 && d.startsWith("1") ? d.slice(1) : d).slice(0, 10);
 };
 
+/** Shown under the submit button and sent with the payload so the record matches the UI. */
+const CONSENT_TEXT = "By submitting, you agree that Instive AI may contact you regarding your inquiry.";
+
 const formatUsPhone = (v: string) => {
   const d = phoneDigits(v);
   if (d.length <= 3) return d;
@@ -115,6 +118,7 @@ export function BookDemoModal() {
       name: form.name.trim(),
       email: form.email.trim(),
       phone: digits ? `+1${digits}` : "",
+      consentText: CONSENT_TEXT,
       source: `book_demo_${source}`,
     };
     try {
@@ -279,7 +283,7 @@ export function BookDemoModal() {
               <p id="demo-consent-note" className="text-[12px] text-center leading-relaxed" style={{ color: "var(--text-muted)", fontFamily: "var(--font-mono)" }}>
                 Goes straight to the team. No sales sequence.
                 <br />
-                By submitting, you agree that Instive AI may contact you regarding your inquiry.
+                {CONSENT_TEXT}
               </p>
             </div>
           </div>
