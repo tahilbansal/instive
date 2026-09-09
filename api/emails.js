@@ -84,10 +84,18 @@ const noteBlock = (label, text) => `
     <div style="background:${C.panel};border:1px solid ${C.line};border-left:3px solid ${C.signal};border-radius:8px;padding:14px 16px;font-size:15px;line-height:1.6;color:${C.body};white-space:pre-wrap;">${esc(text)}</div>
   </td></tr>`;
 
-const consentBlock = (text, at, hasPhone) => `
+/**
+ * `express` means they ticked a call/text checkbox (the standalone form);
+ * otherwise consent is implied by submitting (the modal).
+ */
+const consentBlock = (text, at, { hasPhone, express }) => `
   <tr><td style="padding:22px 28px 0;">
     <div style="background:${C.signalSoft};border:1px solid #bbe7dc;border-radius:8px;padding:14px 16px;">
-      <div style="font-size:13px;font-weight:700;color:${C.signal};margin-bottom:6px;">&#10003; Consent captured${hasPhone ? " &mdash; email and phone" : ""}</div>
+      <div style="font-size:13px;font-weight:700;color:${C.signal};margin-bottom:6px;">&#10003; ${
+        express
+          ? "Express consent to call or text &mdash; checkbox ticked"
+          : `Consent captured${hasPhone ? " &mdash; email and phone" : ""}`
+      }</div>
       <div style="font-size:13px;line-height:1.6;color:${C.body};">&ldquo;${esc(text)}&rdquo;</div>
       <div style="font-size:12px;color:${C.muted};margin-top:8px;">Agreed at submission &middot; ${esc(stamp(at))}</div>
     </div>
@@ -119,11 +127,15 @@ function demoRequestEmail(d) {
         { label: "Phone", value: phone ? prettyPhone(phone) : "", href: `tel:${phone}` },
         { label: "Company", value: d.company },
         { label: "Industry", value: d.domain },
+        { label: "Best time to call", value: d.bestTime },
         { label: "Source", value: d.source },
         { label: "Received", value: stamp(at) },
       ]) +
       (d.notes ? noteBlock("The workflow that costs them most", d.notes) : "") +
-      consentBlock(consentText, d.consentAt || at, Boolean(phone)) +
+      consentBlock(consentText, d.consentAt || at, {
+        hasPhone: Boolean(phone),
+        express: Boolean(d.phoneConsent),
+      }) +
       actions(d.email, phone)
   );
 
@@ -135,13 +147,16 @@ function demoRequestEmail(d) {
     `Phone:    ${phone ? `${prettyPhone(phone)} (${phone})` : "not provided"}`,
     `Company:  ${d.company || "—"}`,
     `Industry: ${d.domain || "—"}`,
+    `Call at:  ${d.bestTime || "—"}`,
     `Source:   ${d.source || "—"}`,
     `Received: ${stamp(at)}`,
     "",
     `Workflow that costs them most:`,
     d.notes || "—",
     "",
-    `Consent captured${phone ? " (email and phone)" : ""}: "${consentText}"`,
+    d.phoneConsent
+      ? `Express consent to call or text (checkbox ticked): "${consentText}"`
+      : `Consent captured${phone ? " (email and phone)" : ""}: "${consentText}"`,
     `Agreed at submission · ${stamp(d.consentAt || at)}`,
   ].join("\n");
 

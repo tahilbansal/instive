@@ -51,9 +51,13 @@ const BlueprintSession = mongoose.model("BlueprintSession", new mongoose.Schema(
   phone:   { type: String, trim: true },
   domain:  { type: String, trim: true },
   notes:   { type: String, trim: true },
+  // When they asked to be called, for phone outreach.
+  bestTime: { type: String, trim: true },
   // The exact disclosure shown at submission, kept so contact permission is auditable.
-  consentText: { type: String, trim: true },
-  consentAt:   { type: Date },
+  // phoneConsent is true only when they ticked an explicit call/text checkbox.
+  phoneConsent: { type: Boolean, default: false },
+  consentText:  { type: String, trim: true },
+  consentAt:    { type: Date },
   source:  { type: String, default: "blueprint_modal" },
   createdAt: { type: Date, default: Date.now }
 }));
@@ -104,12 +108,14 @@ app.post("/api/leads", async (req, res) => {
 
 app.post("/api/blueprint-sessions", async (req, res) => {
   try {
-    const { name, email, company, phone, domain, notes, consentText, source } = req.body || {};
+    const { name, email, company, phone, domain, notes, bestTime, phoneConsent, consentText, source } = req.body || {};
     if (!name || !isEmail(email)) return res.status(400).json({ ok: false, error: "Name and valid email required" });
     const doc = await BlueprintSession.create({
       name, email, company, domain, notes, source,
       phone: normalizeUsPhone(phone),
+      bestTime,
       // Submitting the form is the consent action; record what was shown and when.
+      phoneConsent: Boolean(phoneConsent),
       consentText: consentText || DEFAULT_CONSENT_TEXT,
       consentAt: new Date(),
     });
