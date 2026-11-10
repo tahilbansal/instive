@@ -32,6 +32,18 @@
   justify-content:space-between;
   border-bottom:1px solid #ffffff19;
 }
+.as-nav-actions {
+  display:flex;
+  align-items:center;
+  gap:18px;
+}
+.as-nav-actions>a {
+  font-size:13px;
+  white-space:nowrap;
+}
+.as-logo-light {
+  display:none;
+}
 .as-brand {
   font-size:30px;
   font-weight:700;
@@ -54,9 +66,6 @@
   font-family:var(--font-mono),monospace;
   font-size:10px;
   letter-spacing:1.6px;
-}
-.as-nav>a:last-child {
-  font-size:13px;
 }
 .as-hero {
   max-width:1320px;
@@ -342,6 +351,18 @@
   font-size:11px;
   display:block;
   margin-top:3px;
+}
+.optional-context {
+  border:1px solid #ffffff25;
+  border-radius:7px;
+  padding:17px 18px;
+  margin:26px 0;
+}
+.optional-context[open] > summary {
+  margin-bottom:20px;
+}
+.optional-context > .field + .field {
+  margin-top:18px;
 }
 .choices {
   display:grid;
@@ -705,6 +726,97 @@
     transform:none;
   }
 }
+/* The assessment follows the site-wide html.light preference. */
+html.light .assessment {
+  --ink:#f5f2ea;
+  --paper:#0e1a24;
+  --as-card:#fffbf5;
+  --as-soft:#ede8dc;
+  --as-muted:#52616b;
+  --as-line:#0e1a2429;
+  --as-accent-text:#8a4d00;
+  color-scheme:light;
+}
+html.light .assessment .as-logo-dark { display:none; }
+html.light .assessment .as-logo-light { display:block; }
+html.light .assessment .as-nav,
+html.light .assessment .as-footer,
+html.light .assessment .as-benefits,
+html.light .assessment .hero-bottom,
+html.light .assessment .form-footer { border-color:var(--as-line); }
+html.light .assessment .intro,
+html.light .assessment .micro,
+html.light .assessment .subtext,
+html.light .assessment .as-rail>p,
+html.light .assessment .as-rail li,
+html.light .assessment .progress-label,
+html.light .assessment .result-heading p,
+html.light .assessment .report-actions span,
+html.light .assessment .metrics article>span,
+html.light .assessment .metrics small,
+html.light .assessment .metrics p,
+html.light .assessment .panel p,
+html.light .assessment .review-cta p,
+html.light .assessment caption,
+html.light .assessment legend small,
+html.light .assessment .field,
+html.light .assessment .next-steps,
+html.light .assessment .hero-bottom>span,
+html.light .assessment .hero-bottom p,
+html.light .assessment .as-footer { color:var(--as-muted); }
+html.light .assessment .eyebrow,
+html.light .assessment h1 em,
+html.light .assessment .as-benefits b,
+html.light .assessment .as-rail li.active,
+html.light .assessment .as-rail li.done>span,
+html.light .assessment .assumptions summary>span,
+html.light .assessment .workflow-list span,
+html.light .assessment .metrics .featured strong { color:var(--as-accent-text); }
+html.light .assessment .hero-card,
+html.light .assessment .choice,
+html.light .assessment .scenario-tabs,
+html.light .assessment .metrics article,
+html.light .assessment .panel { background:var(--as-card); border-color:var(--as-line); color:var(--paper); }
+html.light .assessment .hero-card { box-shadow:0 20px 65px #0e1a2414; }
+html.light .assessment .card-top,
+html.light .assessment .route-visual small,
+html.light .assessment .branches>div,
+html.light .assessment .hero-card>p { color:var(--as-muted); }
+html.light .assessment .route-visual>div:not(.branches),
+html.light .assessment .branches>div { background:var(--as-soft); border-color:var(--as-line); }
+html.light .assessment .branches b { color:var(--paper); }
+html.light .assessment .hero-card>p { border-color:var(--as-line); }
+html.light .assessment .route-visual .accent-box { color:var(--as-accent-text); }
+html.light .assessment .optional-context,
+html.light .assessment .as-rail li>span,
+html.light .assessment .secondary,
+html.light .assessment .report-actions button,
+html.light .assessment .field input,
+html.light .assessment .field select,
+html.light .assessment th,
+html.light .assessment td { border-color:var(--as-line); }
+html.light .assessment .choice:hover { border-color:#a86400; }
+html.light .assessment .choice.selected,
+html.light .assessment .metrics .featured { background:#ffb23e24; border-color:#b87319; }
+html.light .assessment .choice.selected>span:last-child { color:var(--as-accent-text); }
+html.light .assessment .field input,
+html.light .assessment .field select { background:#fff; color:var(--paper); }
+html.light .assessment .field input::placeholder { color:#64717a; }
+html.light .assessment .note { background:#ffb23e1c; color:#3b4143; }
+html.light .assessment .text-button,
+html.light .assessment .secondary,
+html.light .assessment .report-actions button,
+html.light .assessment .scenario-tabs button { color:var(--paper); }
+html.light .assessment .scenario-tabs { background:var(--as-soft); }
+html.light .assessment .scenario-tabs button.active { background:var(--paper); color:#fff; }
+html.light .assessment .bar { background:var(--as-soft); }
+html.light .assessment .bar>div { background:#748995; }
+html.light .assessment .bar.future>div { background:#b87319; }
+html.light .assessment .error { color:#9d251b; border-color:#b3332780; }
+html.light .assessment .primary { background:#ffb23e; color:#0e1a24; }
+html.light .assessment .primary:hover { background:#f4a426; }
+html.light .assessment progress::-webkit-progress-bar { background:var(--as-soft); }
+html.light .assessment .workflow-list span { background:#ffb23e24; border-color:#b8731966; }
 @media(max-width:900px) {
   .as-hero {
     gap:30px;
@@ -832,6 +944,9 @@
     font-size:11px;
   }
 }
+@media(max-width:420px) {
+  .as-nav-actions>a { display:none; }
+}
 @media(prefers-reduced-motion:reduce) {
   .assessment * {
     animation:none!important;
@@ -917,6 +1032,8 @@
   width: 192px;
   height: auto;
 }
+.assessment .as-brand img.as-logo-light { display:none; }
+html.light .assessment .as-brand img.as-logo-light { display:block; }
 .custom-field { margin-top: 16px; }
 .field .assumption-slider {
   accent-color: #ffb23e;
@@ -930,5 +1047,6 @@
   .as-brand img { width: 160px; }
 }
 .range-hint { color: #a6b4bd; font-size: 10px; line-height: 1.6; }
+html.light .assessment .range-hint { color:var(--as-muted); }
 .rate-disclosure { padding: 4px 18px; border: 1px solid #ffb23e40; border-radius: 7px; background: #ffb23e08; margin: 18px 0; }
 .save-banner{padding:16px 20px;background:#ffb23e09;border:1px solid #ffb23e40;border-radius:7px;font-size:13px;display:flex;gap:20px;align-items:center;justify-content:space-between;margin-bottom:20px}.save-banner button{flex-shrink:0}@media(max-width:650px){.save-banner{align-items:flex-start;flex-direction:column}}
