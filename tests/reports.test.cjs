@@ -9,7 +9,7 @@ const request = (body, route='/assessment/reports', cookie) => new NextRequest('
 test('canonical snapshot includes all filled questions, assumptions and server-calculated results',()=>{ const f=fixture(); f.results=[{value:9999999}]; f.answers.otherRole='Hidden stale answer'; const report=buildReport(f); assert.equal(report.results[1].value,11289.6); assert.ok(report.questions.some(q=>q.question==='Your name' && q.answer==='Alex Rivera')); assert.match(report.text,/30 USD\/hour \(illustrative assumption/); assert.equal(report.answers.otherRole,undefined); assert.equal(report.answers.hours,undefined); assert.ok(!report.text.includes('Hidden stale answer')); });
 test('snapshot rejects unknown workflows, incomplete answers and malformed assumptions',()=>{for(const mutate of [f=>f.answers.workflow='__proto__',f=>f.answers.systems=[],f=>f.assumptions[0].suitable=[],f=>f.answers.detail='',f=>f.selected=7]){const f=fixture();mutate(f);assert.throws(()=>buildReport(f));}});
 test('admin session is signed, expires, rejects tampering, and fails closed without configuration',()=>{
-  const original=process.env.ASSESSMENT_ADMIN_PASSWORD; process.env.ASSESSMENT_ADMIN_PASSWORD='a-test-password-of-at-least-24-characters';
+  const original=process.env.ASSESSMENT_ADMIN_PASSWORD; process.env.ASSESSMENT_ADMIN_PASSWORD='test1234';
   try { assert.equal(realStorage.checkPassword('bad'),false);assert.equal(realStorage.checkPassword(process.env.ASSESSMENT_ADMIN_PASSWORD),true);const token=realStorage.sessionToken();const req=new NextRequest('https://instiveai.com/admin/assessments/data',{headers:{cookie:'instive_assessment_admin='+token}});assert.equal(realStorage.isAdmin(req),true);const bad=new NextRequest(req.url,{headers:{cookie:'instive_assessment_admin=1.'+token.split('.')[1]}});assert.equal(realStorage.isAdmin(bad),false);delete process.env.ASSESSMENT_ADMIN_PASSWORD;assert.equal(realStorage.isAdmin(req),false); } finally { if(original)process.env.ASSESSMENT_ADMIN_PASSWORD=original;else delete process.env.ASSESSMENT_ADMIN_PASSWORD; }
 });
 test('saving creates once, updates by revision, checks ownership, and reports DB failures',async()=>{
@@ -32,4 +32,12 @@ test('email requires ownership and consent, attaches a PDF, and records failures
   try { const f={...fixture(),email:'person@example.com',consent:true}; const req=()=>request({id:f.id,token:f.token,email:f.email,consent:f.consent},'/assessment/reports/email');
     f.consent=false;assert.equal((await POST(req())).status,400);f.consent=true;owner=false;assert.equal((await POST(req())).status,404);owner=true;assert.equal((await POST(req())).status,200);assert.equal(sent.attachments[0].contentType,'application/pdf');assert.equal(status,'sent');failMail=true;assert.equal((await POST(req())).status,502);assert.equal(status,'failed');
   } finally {for(const [key,v] of [['SMTP_USER',env.user],['SMTP_PASS',env.pass]])if(v)process.env[key]=v;else delete process.env[key];}
+});
+
+test('admin password minimum is eight characters',()=>{
+ const original=process.env.ASSESSMENT_ADMIN_PASSWORD;
+ try {
+  process.env.ASSESSMENT_ADMIN_PASSWORD='1234567';assert.equal(realStorage.adminConfigured(),false);
+  process.env.ASSESSMENT_ADMIN_PASSWORD='test1234';assert.equal(realStorage.adminConfigured(),true);assert.equal(realStorage.checkPassword('test1234'),true);
+ } finally {if(original)process.env.ASSESSMENT_ADMIN_PASSWORD=original;else delete process.env.ASSESSMENT_ADMIN_PASSWORD;}
 });

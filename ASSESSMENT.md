@@ -17,14 +17,14 @@ Open `/admin/assessments`. Features:
 - Full question/answer view, canonical report, assumptions, results, generation/update times, email address and delivery status.
 - PDF download for any selected report.
 
-Set `ASSESSMENT_ADMIN_PASSWORD` to a strong secret of at least 24 characters. A random local password was generated in the gitignored `.env.local`; read that file to sign in locally. Do not commit it. Configure a separate production password in Vercel. Changing it invalidates existing sessions. Production cookies require HTTPS. This is one shared administrative credential, not individual accounts or role-based access control.
+Set `ASSESSMENT_ADMIN_PASSWORD` to a strong secret of at least 8 characters. A random local password was generated in the gitignored `.env.local`; read that file to sign in locally. Do not commit it. Configure a separate production password in Vercel. Changing it invalidates existing sessions. Production cookies require HTTPS. This is one shared administrative credential, not individual accounts or role-based access control.
 
 Private report data is returned only by authenticated server routes and uses `Cache-Control: no-store`. The admin page has noindex metadata and is not in the sitemap. Anonymous users cannot retrieve reports by ID. No admin secret is bundled into client code.
 
 ## Required environment
 
 - `MONGODB_URI`: running MongoDB. Production should use TLS, restricted network access, and a least-privilege application account.
-- `ASSESSMENT_ADMIN_PASSWORD`: admin login secret, minimum 24 characters.
+- `ASSESSMENT_ADMIN_PASSWORD`: admin login secret, minimum 8 characters.
 - `SMTP_USER`, `SMTP_PASS`: required for email delivery.
 - `SMTP_HOST`: defaults to smtp.gmail.com.
 - `SMTP_PORT`: defaults to 465. Other ports require STARTTLS.

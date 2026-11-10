@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { adminConfigured, checkPassword, connect, allow, clientKey, fail, readBody, sameOrigin, sessionToken, setSession } from '@/lib/assessment/storage';
 export const runtime = 'nodejs';
 export async function POST(req: NextRequest) {
-  if (!adminConfigured()) return fail(503,'Admin access needs ASSESSMENT_ADMIN_PASSWORD (at least 24 characters) configured on the server.');
+  if (!adminConfigured()) return fail(503,'Admin access needs ASSESSMENT_ADMIN_PASSWORD (at least 8 characters) configured on the server.');
   let body; try { body = await readBody(req,1000); } catch { return fail(400,'Invalid request'); }
   try {
     await connect();

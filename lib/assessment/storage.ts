@@ -33,7 +33,7 @@ export async function allow(key: string, max: number) {
 }
 export const validIdentity = (body: any) => body && /^[a-f0-9-]{36}$/.test(body.id) && /^[a-f0-9-]{36}$/.test(body.token);
 const cookieName = 'instive_assessment_admin';
-function secret() { const value = process.env.ASSESSMENT_ADMIN_PASSWORD; return value && value.length >= 24 ? value : null; }
+function secret() { const value = process.env.ASSESSMENT_ADMIN_PASSWORD; return value && value.length >= 8 ? value : null; }
 export const adminConfigured = () => Boolean(secret());
 export const checkPassword = (value: unknown) => typeof value === 'string' && !!secret() && timingSafeEqual(Buffer.from(digest(value)), Buffer.from(digest(secret()!)));
 export function sessionToken() { const expires = String(Date.now()+8*3600000); return `${expires}.${createHmac('sha256',secret()!).update(expires).digest('hex')}`; }
