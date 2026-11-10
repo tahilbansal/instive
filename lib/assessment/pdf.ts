@@ -11,7 +11,7 @@ export async function reportPdf(text: string, fontBytes: Uint8Array) {
   const addPage = () => { page = doc.addPage([595,842]); page.drawRectangle({ x:0,y:778,width:595,height:64,color:ink }); page.drawText('INSTIVE AI / OPERATIONS ASSESSMENT', { x:40,y:803,size:12,font,color:rgb(1,1,1) }); page.drawRectangle({ x:40,y:776,width:70,height:3,color:amber }); y = 748; };
   addPage();
   // Wrap by measured glyph widths, including unbroken references and long custom answers.
-  for (const raw of text.replace(/\r/g,'').split('\n')) {
+  for (const raw of text.replace(/\r/g,'').replace(/[−–—]/g, '-').replace(/→/g, '->').split('\n')) {
     const line = raw.replace(/[\u0000-\u0008\u000b\u000c\u000e-\u001f]/g,'');
     const heading = /^[A-Z &]+$/.test(line) && line.length > 3;
     const size = heading ? 11 : 9.5;
