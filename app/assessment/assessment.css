@@ -911,3 +911,21 @@
     color:#333!important;
   }
 }
+
+.as-brand img {
+  display: block;
+  width: 192px;
+  height: auto;
+}
+.custom-field { margin-top: 16px; }
+.field .assumption-slider {
+  accent-color: #ffb23e;
+  padding: 0;
+  height: 28px;
+  min-height: 28px;
+  border: 0;
+  cursor: pointer;
+}
+@media (max-width: 650px) {
+  .as-brand img { width: 160px; }
+}

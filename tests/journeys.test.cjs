@@ -19,3 +19,29 @@ test('required answers and invalid numbers block progression', () => { const u =
 test('zero workload exposes low value; editing assumptions recalculates and handles empty values', () => { const u = ui(); context(u, 'Distribution'); workload(u, 'orders', 0); assert.match(u.content(), /Limited capacity benefit/); u.field('Additional oversight', '0'); assert.match(u.content(), /0 hours of human work remain/); u.field('Tasks suitable', ''); assert.match(u.content(), /Suitable share must be between/); u.field('Tasks suitable', '60'); assert.match(u.content(), /0 hours of human work remain/); });
 test('changing business type clears stale workflow and presents relevant branches', () => { const u = ui(); context(u, 'Carrier / fleet'); workload(u, 'compliance'); u.click('Edit answers'); u.click('Distribution'); u.next(); assert.ok(!u.content().includes('Fleet compliance')); u.next(); assert.match(u.content(), /Choose a bottleneck/); });
 test('voluntary inquiry shows truthful failure and success feedback', async () => { const u = ui(); context(u, 'Freight forwarding'); workload(u, 'documents'); u.click('Request a workflow review'); const originalForm = global.FormData; const originalFetch = global.fetch; global.FormData = class { get(key) { return { name: 'Test', email: 'test@example.com', company: 'Test', consent: 'on', website: '' }[key]; } }; try { global.fetch = async () => ({ ok: false }); await act(async () => { await u.view.root.findAllByType('form')[0].props.onSubmit({ preventDefault() {}, currentTarget: {} }); }); assert.match(u.content(), /could not save your request/); global.fetch = async () => ({ ok: true }); await act(async () => { await u.view.root.findAllByType('form')[0].props.onSubmit({ preventDefault() {}, currentTarget: {} }); }); assert.match(u.content(), /Your request has been saved/); } finally { global.FormData = originalForm; global.fetch = originalFetch; } });
+test('custom answers and name carry through results and follow-up', () => {
+  const u = ui(); u.click('Find my opportunity'); u.field('Your name (optional)', 'Alex Rivera');
+  const otherIn = legend => { const group = u.view.root.findAllByType('fieldset').find(n => text(n.findByType('legend')).includes(legend)); const button = group.findAllByType('button').find(n => text(n.children[0]) === 'Other'); act(() => button.props.onClick()); };
+  otherIn('Which best describes'); u.field('Describe your role', 'Process specialist');
+  otherIn('What kind of business'); u.field('Describe your business type', 'Cold chain operator'); u.field('Your operations team size', '11–50'); u.next();
+  u.click('Freight documentation'); otherIn('Which documents'); u.field('Describe the manual step', 'Temperature records');
+  otherIn('Which systems'); u.field('Name your other systems', 'ColdTrack'); u.next();
+  u.click('I know total weekly hours'); u.field('Combined staff hours per week', '20'); u.next();
+  otherIn('What does this manual work cause'); u.field('Describe the impact', 'Lost traceability'); u.click('Ready this quarter'); u.click('Discovery with the team'); u.next();
+  for (const answer of ['Alex Rivera', 'Process specialist', 'Cold chain operator', 'Temperature records', 'ColdTrack', 'Lost traceability']) assert.ok(u.content().includes(answer), answer);
+  u.click('Request a workflow review'); assert.equal(u.view.root.findByProps({ name: 'name' }).props.defaultValue, 'Alex Rivera');
+});
+test('sliders synchronize numerical inputs and selected scenario without changing other scenarios', () => {
+  const u = ui(); context(u, 'Distribution'); workload(u, 'orders');
+  const slider = u.view.root.findByProps({ 'aria-label': 'Tasks suitable for automation slider' });
+  act(() => slider.props.onChange({ target: { value: '90' } }));
+  const group = u.view.root.findAllByType('label').find(n => text(n).startsWith('Tasks suitable for automation'));
+  assert.equal(group.findAllByType('input')[0].props.value, 90);
+  assert.match(u.content(), /8.8 hours of human work remain/);
+  u.click('Conservative'); assert.equal(u.view.root.findByProps({ 'aria-label': 'Tasks suitable for automation slider' }).props.value, 40);
+  u.click('Moderate'); assert.equal(u.view.root.findByProps({ 'aria-label': 'Tasks suitable for automation slider' }).props.value, 90);
+});
+test('Other requires a nonempty description and ignores it once deselected', () => {
+  const u = ui(); u.click('Find my opportunity'); u.click('Other'); u.field('Describe your role', '   '); u.click('Distribution'); u.field('Your operations team size', '1–10'); u.next(); assert.match(u.content(), /Select your role/);
+  u.click('COO'); u.next(); assert.match(u.content(), /Where does work get stuck/);
+});
