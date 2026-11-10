@@ -56,3 +56,25 @@ test('workload question sliders fill answers and retain typed values above the i
   u.field('Loaded labor cost/hour', '40'); assert.match(u.content(), /40 USD\/hour \(entered by you\)/);
   u.field('Loaded labor cost/hour', ''); const optOut = u.view.root.findAllByType('input').find(n => n.props.type === 'checkbox' && n.props.checked === true); act(() => optOut.props.onChange({ target: { checked: false } })); assert.match(u.content(), /Hours-only assessment/);
 });
+test('generated report auto-saves with full answers, retries failure, and gates email until saved', async () => {
+  const original = global.fetch; let failSave = true, submissions = [], emailSent;
+  global.fetch = async (url, options) => {
+    const body = JSON.parse(options.body);
+    if (url === '/assessment/reports') { submissions.push(body); return {ok:!failSave}; }
+    if (url === '/assessment/reports/email') { emailSent=body; return {ok:true,json:async()=>({ok:true})}; }
+    throw new Error('Unexpected request');
+  };
+  const u = ui();
+  try {
+    context(u,'Distribution'); workload(u,'orders');
+    assert.ok(!u.content().includes('Download report'));assert.ok(u.content().includes('Download PDF'));
+    await act(async()=>{await new Promise(resolve=>setTimeout(resolve,550));});
+    assert.match(u.content(),/could not be saved/);u.click('Email my report');
+    assert.equal(u.view.root.findAllByType('button').find(n=>text(n)==='Email my PDF').props.disabled,true);
+    failSave=false;u.click('Retry saving');await act(async()=>{await new Promise(resolve=>setTimeout(resolve,550));});
+    assert.match(u.content(),/Saved to Instive/);assert.ok(submissions.some(body=>body.answers.workflow==='orders' && body.storageNotice && body.assumptions.length===3));
+    const originalForm=global.FormData;global.FormData=class { get(key){return key==='email'?'report@example.com':'on';} };
+    try {await act(async()=>{await u.view.root.findAllByType('form')[0].props.onSubmit({preventDefault(){},currentTarget:{}});});}finally{global.FormData=originalForm;}
+    assert.equal(emailSent.email,'report@example.com');assert.match(u.content(),/Your PDF report has been sent/);
+  } finally {act(()=>u.view.unmount());global.fetch=original;}
+});

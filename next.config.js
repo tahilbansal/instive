@@ -21,6 +21,7 @@ const legacyRewrites = [
 ];
 
 const nextConfig = {
+  experimental: { outputFileTracingIncludes: { "/assessment/reports/email": ["./public/fonts/NotoSans-Regular.ttf"] } },
   async rewrites() {
     return {
       // Funnel every /api/* request to the existing Express serverless function
