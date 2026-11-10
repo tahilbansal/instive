@@ -52,3 +52,11 @@ Deploy this checkout through the existing Vercel project after configuring the a
 ## Existing dependency audit
 
 The repository dependency audit reports 11 affected packages (including critical advisories in the existing Next.js 14.2.5 and proxy-addr versions). This feature does not migrate the site framework or the legacy Express/email stack. Resolve the dependency advisories and rerun the complete site regression checks before public deployment. The audit output is dependency-level evidence, not a claim that every advisory is exploitable on this route.
+
+## Question sliders and illustrative labor values
+
+Workload questions have sliders for tasks/week, minutes/task, combined hours/week, and working weeks/year. Exact numeric entry remains available and expands slider ranges up to the validated limit.
+
+When the labor-rate field is blank, the UI explicitly offers illustrative rates: USD 30, GBP 25, EUR 30, INR 500, CAD 40, AUD 45 per hour. These are configurable planning placeholders, not researched wage benchmarks or exchange-rate equivalents. Entered rates (including zero) override defaults. Users can opt out for hours-only results. The dashboard, text report, print report, and submitted inquiry disclose the effective rate and whether it was assumed. Defaults live in `lib/assessment/engine.js`.
+
+Generating results does not save a report. Refreshing/closing the tab clears it. Download and print are local exports; only a consenting follow-up submission persists the report in MongoDB (`assessmentinquiries`).

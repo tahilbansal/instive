@@ -929,3 +929,5 @@
 @media (max-width: 650px) {
   .as-brand img { width: 160px; }
 }
+.range-hint { color: #a6b4bd; font-size: 10px; line-height: 1.6; }
+.rate-disclosure { padding: 4px 18px; border: 1px solid #ffb23e40; border-radius: 7px; background: #ffb23e08; margin: 18px 0; }

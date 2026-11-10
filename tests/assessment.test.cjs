@@ -12,3 +12,11 @@ test('blank labor rate suppresses money and payback; known zero costs allowed', 
 test('payback suppressed when any cost missing or net benefit not positive', () => { for (const change of [{ implementation: '' }, { ongoing: '' }, { ongoing: 100000 }]) assert.equal(calculate({ ...base, ...change }, scenarios[1]).payback, null); });
 test('invalid numerical inputs are rejected', () => { for (const [key, values] of Object.entries({ volume: [-1, '', Infinity, NaN, 10000001], minutes: [0, -1, 'abc'], weeks: [0, 53], rate: [-1, Infinity], ongoing: [-1], implementation: [-1] })) for (const v of values) assert.throws(() => calculate({ ...base, [key]: v }, scenarios[1])); for (const key of ['suitable', 'review', 'exceptions']) for (const value of [-1, 101, NaN, '']) assert.throws(() => calculate(base, { ...scenarios[1], [key]: value })); });
 test('default scenarios are ordered and recoverable + remaining equals baseline', () => { const rs = scenarios.map(s => calculate(base, s)); assert.ok(rs[0].recovered < rs[1].recovered && rs[1].recovered < rs[2].recovered); for (const r of rs) approx(r.recovered + r.remaining, r.weekly); });
+test('illustrative rate is explicit, currency-specific, and overridden by a supplied zero or other rate', () => {
+  const input = { ...base, rate: '', useAssumedRate: true, currency: 'USD' };
+  const r = calculate(input, scenarios[1]); assert.equal(r.rate, 30); assert.equal(r.rateAssumed, true); approx(r.value, 11289.6);
+  assert.equal(calculate({ ...input, currency: 'INR' }, scenarios[1]).rate, 500);
+  for (const rate of [0, 55]) { const supplied = calculate({ ...input, rate }, scenarios[1]); assert.equal(supplied.rate, rate); assert.equal(supplied.rateAssumed, false); }
+  assert.equal(calculate({ ...input, useAssumedRate: false }, scenarios[1]).value, null);
+  assert.throws(() => calculate({ ...input, currency: 'UNKNOWN' }, scenarios[1]));
+});
