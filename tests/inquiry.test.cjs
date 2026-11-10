@@ -1,0 +1,15 @@
+const { test } = require('node:test');
+const assert = require('node:assert/strict');
+const load = require('./load-ts.cjs');
+const { NextRequest } = require('next/server');
+let saved = [], updates = [], count = 1, mailFails = false;
+const inquiry = { create: async data => { saved.push(data); return { ...data, _id: 'test-id' }; }, updateOne: async (_, value) => updates.push(value) };
+const mongoose = { models: { AssessmentInquiry: inquiry, AssessmentLimit: { findOneAndUpdate: async () => ({ count }) } }, connection: { readyState: 1 }, Schema: function() {} };
+const { POST } = load('app/assessment/inquiry/route.ts', { mongoose, nodemailer: { createTransport: () => ({ sendMail: async () => { if (mailFails) throw new Error('mock failure'); } }) } });
+const payload = { name: 'Test Person', company: 'Test logistics', email: 'test@example.com', consent: true, report: 'Test report', website: '' };
+const request = (body = payload, origin = 'https://instiveai.com') => new NextRequest('https://instiveai.com/assessment/inquiry', { method: 'POST', headers: { origin, 'content-type': 'application/json' }, body: JSON.stringify(body) });
+test('rejects cross-origin, malformed input, missing consent, spam trap and oversized report', async () => { assert.equal((await POST(request(payload, 'https://other.example'))).status, 403); for (const change of [{ consent: false }, { email: 'bad' }, { website: 'bot' }, { report: 'a'.repeat(18001) }, { name: { $gt: '' } }]) assert.equal((await POST(request({ ...payload, ...change }))).status, 400); assert.equal(saved.length, 0); });
+test('missing database configuration fails honestly', async () => { delete process.env.MONGODB_URI; assert.equal((await POST(request())).status, 503); });
+test('persists consent and report; notification absence is recorded', async () => { process.env.MONGODB_URI = 'mock-only'; delete process.env.SMTP_USER; delete process.env.SMTP_PASS; assert.equal((await POST(request())).status, 201); assert.equal(saved.at(-1).report, 'Test report'); assert.ok(saved.at(-1).consentAt instanceof Date); assert.equal(updates.at(-1).notificationStatus, 'not-configured'); });
+test('durable throttle rejects repeat inquiries', async () => { count = 4; const before = saved.length; assert.equal((await POST(request())).status, 429); assert.equal(saved.length, before); count = 1; });
+test('email failure preserves inquiry and records failure; successful mail recorded', async () => { process.env.SMTP_USER = 'mock@example.com'; process.env.SMTP_PASS = 'mock'; mailFails = true; assert.equal((await POST(request())).status, 201); assert.equal(updates.at(-1).notificationStatus, 'failed'); mailFails = false; assert.equal((await POST(request())).status, 201); assert.equal(updates.at(-1).notificationStatus, 'sent'); });

@@ -7,6 +7,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   // Top-level marketing routes, ordered by priority.
   const staticRoutes: Array<{ path: string; priority: number; freq: MetadataRoute.Sitemap[number]["changeFrequency"] }> = [
+    { path: "/assessment", priority: 0.9, freq: "monthly" },
     { path: "/", priority: 1.0, freq: "weekly" },
     { path: "/solutions", priority: 0.9, freq: "weekly" },
     { path: "/industries", priority: 0.9, freq: "weekly" },
