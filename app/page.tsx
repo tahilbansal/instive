@@ -36,6 +36,10 @@ export default function HomePage() {
         <SolutionsSection />
         <IntegrationsSection />
         <Industries />
+        <section className="relative z-10 px-6 py-12 text-center" style={{borderTop:"1px solid var(--line)"}}>
+          <h2 className="text-2xl font-semibold mb-3" style={{color:"var(--text-primary)"}}>Real workflows. Practical impact.</h2>
+          <a href="/testimonials" className="font-semibold" style={{color:"var(--signal)"}}>Explore project stories and testimonials →</a>
+        </section>
         <FinalCta />
       </main>
       <Footer />
