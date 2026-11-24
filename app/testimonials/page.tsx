@@ -7,17 +7,17 @@ import CtaBand from "@/components/site/CtaBand";
 import Reveal from "@/components/site/Reveal";
 
 export const metadata: Metadata = pageMeta({
-  title: "Testimonials & project stories",
-  description: "Explore wholesale, ERP, accounting and freight automation projects and pilots.",
+  title: "Testimonials",
+  description: "Client and pilot feedback on wholesale, accounting and freight automation.",
   path: "/testimonials",
 });
 
-const projects = [
-  { title: "Quote to Odoo", sector: "Wholesale · ERP", body: "Automating quotation processing inside an existing Odoo workflow.", result: "1–2 hours → 5–10 minutes", detail: "Reported quotation processing time.", status: "Implementation" },
-  { title: "Sivo wholesale ordering", sector: "Wholesale · Order management", body: "A simpler way for a wholesale grocery business to manage orders, track their progress and organize inventory.", result: "One connected workflow", detail: "Ordering, tracking and inventory.", status: "Implementation" },
-  { title: "Orders to QuickBooks", sector: "Wholesale · Accounting", body: "An order integration connecting wholesale operations to QuickBooks, designed to reduce duplicate data entry.", result: "Connected order data", detail: "Order management and accounting integration.", status: "Implementation" },
-  { title: "Email to TMS", sector: "Freight · Logistics", body: "A pilot connecting incoming email to a transportation management system, targeting less manual work and faster processing.", result: "Less manual entry", detail: "Pilot objective; results not yet confirmed.", status: "Pilot in development" },
-  { title: "Load tender to rate confirmation", sector: "Freight · Carrier operations", body: "A pilot to capture load tenders, enter them into the TMS and send rate confirmations to carriers.", result: "Tender → TMS → carrier", detail: "Pilot objective; results not yet confirmed.", status: "Pilot in development" },
+const testimonials = [
+  { name: "Sehajpal Singh", role: "Chief Operating Officer", company: "Capital Supplies", location: "Texas, USA", initials: "SS", workflow: "Quotation automation · Odoo", type: "Implementation", quote: "What used to take us an hour or two now takes just 5–10 minutes. The integration with Odoo has made our quotation process much simpler and helps us handle more requests." },
+  { name: "Anil", role: "Wholesale grocery store owner", company: "", location: "", initials: "A", workflow: "Sivo · Wholesale ordering", type: "Implementation", quote: "Sivo has made it much easier to manage our wholesale orders, track them and keep our inventory organized. Having everything in one place makes a big difference in our day-to-day work." },
+  { name: "Javid", role: "", company: "A One Wholesale", location: "", initials: "J", workflow: "Order integration · QuickBooks", type: "Implementation", quote: "Connecting our orders with QuickBooks makes managing the business much simpler. It cuts down on repetitive entry and keeps our ordering and accounting connected." },
+  { name: "Louis Satana", role: "", company: "", location: "", initials: "LS", workflow: "Email to TMS", type: "Pilot", quote: "The email-to-TMS pilot addresses a very practical problem. There is real potential to save time and effort by reducing the manual work involved in transferring information from emails." },
+  { name: "Vikram Sharma", role: "Chief Operating Officer", company: "Velocity Services", location: "", initials: "VS", workflow: "Load tender · TMS · Rate confirmation", type: "Pilot", quote: "Connecting load tenders, TMS entry and carrier rate confirmations in a single workflow is a promising approach. It could free up our team to focus more on freight operations instead of repetitive administrative tasks." },
 ];
 
 export default function TestimonialsPage() {
@@ -25,30 +25,34 @@ export default function TestimonialsPage() {
     <>
       <Nav />
       <main className="relative" style={{ backgroundColor: "var(--bg-primary)" }}>
-        <PageHeader eyebrow="Project stories & testimonials" title={<>Real workflows. <span className="text-gradient">Practical impact.</span></>} sub="From wholesale order management to freight operations, explore the work behind our approach to automation." crumbs={[{ label: "Home", href: "/" }, { label: "Testimonials" }]} secondary={{ label: "See our work", href: "/case-studies" }} />
+        <PageHeader eyebrow="Testimonials" title={<>What people say <span className="text-gradient">about our work.</span></>} sub="Perspectives from wholesale businesses and logistics professionals on making everyday operations simpler." crumbs={[{ label: "Home", href: "/" }, { label: "Testimonials" }]} secondary={{ label: "See our work", href: "/case-studies" }} />
         <section className="relative z-10 px-6 py-20">
           <div className="max-w-7xl mx-auto">
-            <h2 className="text-3xl font-semibold mb-3" style={{color:"var(--text-primary)"}}>Project highlights</h2>
-            <p className="mb-10" style={{color:"var(--text-secondary)"}}>Implementation summaries and pilot objectives. Attributed client feedback will appear here once approved.</p>
+            <p className="mb-8 text-sm" style={{color:"var(--text-muted)"}}>Proposed testimonial wording based on engagement summaries; pending individual review and approval. These are not verified direct quotes.</p>
             <div className="grid gap-6 md:grid-cols-2">
-              {projects.map((p,i) => (
-                <Reveal key={p.title} delay={i * 60} className={"surface-card p-8 flex flex-col gap-4 " + (i === 0 ? "md:col-span-2" : "")}>
+              {testimonials.map((t,i) => (
+                <Reveal key={t.name} delay={i * 60} as="article" className={"surface-card p-7 sm:p-9 flex flex-col gap-5 " + (i === 0 ? "md:col-span-2" : "")}>
                   <div className="flex flex-wrap items-center justify-between gap-3">
-                    <span className="text-xs uppercase tracking-widest" style={{color:"var(--signal)"}}>{p.sector}</span>
-                    <span className="text-xs border rounded-full px-3 py-1" style={{borderColor:"var(--line)",color:"var(--text-secondary)"}}>{p.status}</span>
+                    <span className="text-xs uppercase tracking-widest" style={{color:"var(--signal)"}}>{t.workflow}</span>
+                    <span className="text-xs border rounded-full px-3 py-1" style={{borderColor:"var(--line)",color:"var(--text-secondary)"}}>{t.type}</span>
                   </div>
-                  <h3 className="text-2xl font-semibold" style={{color:"var(--text-primary)"}}>{p.title}</h3>
-                  <p className="leading-relaxed" style={{color:"var(--text-secondary)"}}>{p.body}</p>
-                  <div className="mt-auto pt-4 border-t" style={{borderColor:"var(--line)"}}>
-                    <p className="text-2xl font-semibold" style={{color:"var(--signal)"}}>{p.result}</p>
-                    <p className="text-sm mt-1" style={{color:"var(--text-muted)"}}>{p.detail}</p>
+                  <span aria-hidden="true" className="text-5xl leading-none" style={{color:"var(--signal)"}}>“</span>
+                  <p className={"leading-relaxed font-medium " + (i === 0 ? "text-2xl sm:text-3xl max-w-4xl" : "text-lg")} style={{color:"var(--text-primary)"}}>{t.quote}</p>
+                  <div className="mt-auto pt-5 border-t flex items-center gap-4" style={{borderColor:"var(--line)"}}>
+                    <div aria-hidden="true" className="w-12 h-12 rounded-full grid place-items-center font-semibold shrink-0" style={{backgroundColor:"var(--bg-secondary)",color:"var(--signal)",border:"1px solid var(--line)"}}>{t.initials}</div>
+                    <div>
+                      <p className="font-semibold" style={{color:"var(--text-primary)"}}>{t.name}</p>
+                      <p className="text-sm" style={{color:"var(--text-secondary)"}}>{[t.role,t.company].filter(Boolean).join(" · ")}</p>
+                      {t.location && <p className="text-xs mt-1" style={{color:"var(--text-muted)"}}>{t.location}</p>}
+                      <p className="text-xs mt-1" style={{color:"var(--text-muted)"}}>Draft · approval pending</p>
+                    </div>
                   </div>
                 </Reveal>
               ))}
             </div>
           </div>
         </section>
-        <CtaBand title="What could we automate for you?" sub="Explore a pilot around your existing systems and a clearly defined business outcome." secondary={{label:"Explore integrations",href:"/integrations"}} />
+        <CtaBand title="Let’s make your operations simpler." sub="Explore a pilot around your existing systems and a clearly defined business outcome." secondary={{label:"Explore integrations",href:"/integrations"}} />
       </main>
       <Footer />
     </>
