@@ -974,6 +974,7 @@ export const NAV_MENU: NavItem[] = [
   { label: "Integrations", href: "/integrations" },
   { label: "Resources", menu: RESOURCE_LINKS, cols: 1 },
   { label: "About", href: "/about" },
+  { label: "Testimonials", href: "/testimonials" },
 ];
 
 export const FOOTER_NAV: { title: string; links: { label: string; href: string }[] }[] = [
@@ -995,6 +996,7 @@ export const FOOTER_NAV: { title: string; links: { label: string; href: string }
       { label: "About", href: "/about" },
       { label: "Integrations", href: "/integrations" },
       { label: "Case studies", href: "/case-studies" },
+      { label: "Testimonials", href: "/testimonials" },
       { label: "Mockups", href: "/mockups" },
       { label: "Book a demo", href: BOOK_CALL },
     ],
